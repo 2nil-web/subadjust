@@ -3,7 +3,7 @@
 **A GUI and command line tool to correct the timeline of subtitles in .srt format**
 
 The GUI aims to be self-explanatory, but some indications might be useful :
-![](assets/QuickDoc.svg "Quick doc")
+![](assets/QuickDoc.jpg "Quick doc")
 
 It also has an inline help saying :
 
