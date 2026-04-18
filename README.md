@@ -5,14 +5,14 @@
 The GUI aims to be self-explanatory, but some indications might be useful :
 ![](assets/QuickDoc.jpg "Quick doc")
 
-It also has an inline help saying :
+It also has an inline help :
 
 ```
 Subadjust version 1.0.0
 Copyright © D. LALANNE - MIT License - No warranty of any kind.
 A tool that allows to process subtitles files.
-Using the batch mode allows processing at the command line or by script.
-Meanwhile using the GUI mode adds a search and replace feature with regular expressions.
+The batch mode allows processing at the command line or by script.
+Meanwhile the GUI mode adds a search and replace feature with regular expressions.
 
 Usage: subadjust [OPTIONS] ARGUMENT
 Available options

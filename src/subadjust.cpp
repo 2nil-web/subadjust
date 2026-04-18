@@ -265,7 +265,7 @@ If none of these are defined, the default is to send the WARN and following log 
                     // option_info(""),
                 });
 
-  myopt.set_desc("A tool that allows to process subtitles files.\nUsing the batch mode allows processing at the command line or by script.\nMeanwhile using the GUI mode adds a search and replace feature with regular expressions.");
+  myopt.set_desc("A tool that allows to process subtitles files.\nThe batch mode allows processing at the command line or by script.\nMeanwhile the GUI mode adds a search and replace feature with regular expressions.");
 
   // Calls to logFunctions before opt.parse will not work correctly ...
   myopt.parse();
