@@ -292,6 +292,7 @@ If none of these are defined, the default is to send the WARN and following log 
     }
   }
 
+  OS::use_theme("METRO");
   bool file_read_ok = file_read(file);
 
   if (run_pre_proc && file_read_ok && csub.vec().size() > 0)
@@ -367,9 +368,7 @@ If none of these are defined, the default is to send the WARN and following log 
 
       // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
       if (!abs_path.empty() && (!file_is_modified || fl_choice("It seems that the subtitle file has been modified.\nDo you still want to reload it ?", "No", "Yes", 0L)))
-        //////////////////////////////
         file_read(abs_path);
-      ////////////////////////////////
       // sub_adjust->deactivate();
     });
 
