@@ -1,11 +1,11 @@
 # SubAdjust
 
-**A GUI and command line tool to correct the timeline of subtitles in .srt format**
+*A GUI and command line tool to modify the timeline of subtitles in .srt format*
 
 The GUI aims to be self-explanatory, but some indications might be useful :
-![](assets/QuickDoc.jpg "Quick doc")
+![](assets/QuickDoc.svg "Quick doc")
 
-It also has an inline help :
+There is also has an inline help :
 
 ```
 Subadjust version 1.0.0
@@ -59,5 +59,10 @@ These 2 previous options have precedence on the environments variable LOG and LO
 If none of these are defined, the default is to send the WARN and following log messages into the file "C:\UnixTools\msys64\tmp\subadjust.log".
 ```
 
-It compiles and run under both Windows (With Visual Studio and g++) and Linux (With g++), thanks to [FLTK](https://www.fltk.org).
-Should behave equal under macOS ...
+It compiles and run under both Windows (With Visual Studio and g++) and Linux (With g++), thanks to [FLTK](https://www.fltk.org). Should behave the same way under macOS ...
+
+*To do : *
+
+- *i18n and l10n*
+
+- *Detail prerequisites for the build (make, gcc, visual studio, fltk ...)*
