@@ -3,9 +3,10 @@
 **A GUI and command line tool to correct the timeline of subtitles in .srt format**
 
 The GUI aims to be self-explanatory, but some indications might be useful :
-![](assets/QuickDoc.png "Quick doc")
+![](assets/QuickDoc.svg "Quick doc")
 
 It also has an inline help saying :
+
 ```
 Subadjust version 1.0.0
 Copyright © D. LALANNE - MIT License - No warranty of any kind.
@@ -60,4 +61,3 @@ If none of these are defined, the default is to send the WARN and following log 
 
 It compiles and run under both Windows (With Visual Studio and g++) and Linux (With g++), thanks to [FLTK](https://www.fltk.org).
 Should behave equal under macOS ...
-
