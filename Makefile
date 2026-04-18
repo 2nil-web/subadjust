@@ -43,6 +43,7 @@ TARGET_DIR=build/gcc/linux
 ifeq ($(BUILD_SYS),)
 BUILD_SYS=gcc
 endif
+MAGICK=convert
 else
 MSBUILD=/c/Program\ Files/Microsoft\ Visual\ Studio/18/Community/MSBuild/Current/Bin/amd64/MSBuild.exe	
 MAGICK=magick
