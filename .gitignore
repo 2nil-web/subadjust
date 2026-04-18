@@ -1,0 +1,14 @@
+*_ui.cpp
+*_ui.h
+*.d
+*.o
+*.obj
+.vs
+*.exe
+build
+RES/
+*.old
+toto*
+*.vcxproj.user
+app_info*
+*.srtt

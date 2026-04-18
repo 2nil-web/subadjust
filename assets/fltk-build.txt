@@ -1,0 +1,31 @@
+Fltk is widely available under linux and under MSys2 even for Visual Studio/vcpkg
+In any case a fresh fltk build is necessary do what follow :
+
+Clone fltk git repo: git clone https://github.com/fltk/fltk.git
+cd fltk
+
+if needed switch to latest 1.4 version : git checkout release-1.4.4
+or stay on master
+
+Build for Linux (Ubuntu-24.04) :
+--------------------------------
+* git describe --exact-match --tags 2>/dev/null && VERS=-$(git describe --exact-match --tags) || VERS=""
+* Install X11-dev and Mesa3D : apt install libx11-dev; apt install libgl1-mesa-dev
+* Build fltk :
+  cmake -DCMAKE_INSTALL_PREFIX:PATH=/opt/fltk-${VERS} . -B build
+  cmake --build build
+* Install fltk : cmake --install build
+
+Build for Windows 11 and msvc 2026 (using dev prompt for VS 18) :
+-----------------------------------------------------------------
+* Configure :
+:: set VERS=-latest
+:: set VERS=-1.5.0
+set VERS=-1.4.4
+cmake -S . -B build%VERS% -G "Visual Studio 18 2026" -A x64 -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX:PATH=C:\fltk%VERS% -DFLTK_BUILD_EXAMPLES=OFF
+* Build :
+cmake --build build%VERS% --config Debug --target INSTALL
+cmake --build build%VERS% --config Release --target INSTALL
+* Install :
+cmake --install build%VERS%
+

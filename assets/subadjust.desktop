@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=SubAdjust
+Comment=
+Exec=/root/fltk-subadjust/build/gcc/linux/subadjust
+Icon=/root/fltk-subadjust/subadjust.svg
+Path=
+Terminal=false
+StartupNotify=false

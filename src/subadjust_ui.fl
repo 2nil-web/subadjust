@@ -1,0 +1,217 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0404
+header_name {.h}
+code_name {.cxx}
+Function {make_window()} {open
+} {
+  Fl_Window main_window {open
+    xywh {2358 55 385 645} type Double box UP_BOX resizable
+    code0 {\#include <FL/Fl_Int_Input.H>}
+    code1 {\#include <FL/Fl_Float_Input.H>}
+    code2 {\#include "Fl_Time_Input.H"}
+    code3 {\#include "Fl_Live_Spinner.h"} size_range {384 600 0 0} visible
+  } {
+    Fl_Group {} {open
+      xywh {2 0 380 284}
+    } {
+      Fl_Menu_Button {} {
+        label File selected
+        xywh {5 2 50 26}
+      } {
+        MenuItem file_open {
+          label {Open ...}
+          xywh {0 0 100 20} shortcut 0x4006f divider
+        }
+        MenuItem file_save {
+          label Save
+          xywh {0 0 100 20} shortcut 0x40073
+        }
+        MenuItem file_save_as {
+          label {Save As ...}
+          xywh {0 0 100 20} shortcut 0x50073 divider
+        }
+        MenuItem file_reload {
+          label Reload
+          xywh {0 0 100 20} shortcut 0x50072
+        }
+      }
+      Fl_Button app_prefs {
+        label Help
+        xywh {65 2 20 26} hide
+      }
+      Fl_Button app_about {
+        label About
+        xywh {325 2 53 26}
+      }
+      Fl_Button app_save_quit {
+        label {Save/Quit}
+        tooltip {Save your file and exit from the app.
+Available shortcut is 'Ctrl-X'.} xywh {83 2 79 26} shortcut 0x40078
+      }
+      Fl_Button app_quit {
+        label {&Quit}
+        xywh {171 2 51 26} shortcut 0x40071
+      }
+      Fl_Group {} {open
+        xywh {3 30 377 130} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
+      } {
+        Fl_Group {} {
+          label {Go to middle ...}
+          xywh {5 32 287 59} box BORDER_FRAME color 37 align 17
+        } {
+          Fl_Button goto_middle_line {
+            label Line
+            xywh {16 58 80 26}
+          }
+          Fl_Button goto_middle_sub {
+            label Sub
+            xywh {106 58 80 26}
+          }
+          Fl_Button goto_middle_time {
+            label Time
+            xywh {196 58 80 26}
+          }
+        }
+        Fl_Group {} {
+          label {Go to line, sub or time value ...} open
+          xywh {5 95 287 57} box BORDER_FRAME color 37 align -207
+        } {
+          Fl_Spinner goto_line {
+            tooltip {Go to text line ...} xywh {7 123 60 22} labeltype NO_LABEL when 1 maximum 10000
+          }
+          Fl_Spinner goto_sub {
+            tooltip {Go to subtitle number ..} xywh {69 123 58 22} labeltype NO_LABEL maximum 10000
+          }
+          Fl_Input time_to_go {
+            tooltip {Search in the subtitle, line whose timstamp is close to ...} xywh {129 123 160 22} labeltype NO_LABEL
+            class Fl_Time_Input
+          }
+        }
+        Fl_Button goto_start {
+          label Start
+          xywh {293 38 84 26}
+        }
+        Fl_Button goto_end {
+          label End
+          xywh {293 67 84 26}
+        }
+        Fl_Button del_first_sub {
+          label {Del first sub}
+          tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} xywh {293 100 84 26}
+        }
+        Fl_Button del_last_sub {
+          label {Del last sub}
+          tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} xywh {294 129 83 26}
+        }
+      }
+      Fl_Group {} {
+        label {Subtitle adjustment by ...} open
+        xywh {2 165 378 116} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
+      } {
+        Fl_Group {} {
+          label Limits
+          xywh {173 205 205 76} box BORDER_FRAME color 37 labelfont 3 align -207
+        } {
+          Fl_Input time_start {
+            label Begin
+            tooltip {The start time of the sub} xywh {216 225 160 22} when 1
+            class Fl_Time_Input
+          }
+          Fl_Input time_end {
+            label End
+            tooltip {The end time of the sub} xywh {216 250 160 22} when 1
+            class Fl_Time_Input
+          }
+        }
+        Fl_Group {} {
+          label Coefficients
+          tooltip {Begin and end offsets are in floating point seconds.
+They are added to their corresponding time limit} xywh {4 167 167 110} box BORDER_FRAME color 37 labelfont 3 align -207
+        } {
+          Fl_Input offset_start {
+            tooltip {An offset that applies to the beginning of the sub,  in floating point seconds} xywh {86 221 83 22} labeltype NO_LABEL when 5
+            class Fl_Float_Input
+          }
+          Fl_Input offset_stop {
+            tooltip {An offset that applies to the end of the sub,  in floating seconds} xywh {86 250 83 22} labeltype NO_LABEL when 5
+            class Fl_Float_Input
+          }
+          Fl_Input dur_coeff {
+            tooltip {A coefficient that allows to grow or shrink the sub duration} xywh {77 189 92 22} labeltype NO_LABEL when 5
+            class Fl_Float_Input
+          }
+          Fl_Box {} {
+            label {Duration
+factor}
+            xywh {4 183 73 34}
+          }
+          Fl_Box {} {
+            label {Begin and
+end offsets
+(in seconds)}
+            xywh {5 220 73 54}
+          }
+        }
+        Fl_Button sub_adjust {
+          label Adjustment
+          tooltip {Will adjust the subtitles text according to the limits, offsets or duration coefficient, settings.} xywh {176 169 102 30} labelfont 1 labelsize 15
+        }
+        Fl_Button sub_reparse {
+          label Reparse
+          tooltip {Will forcibly parse the subtitles text and accordingly modify the settings} xywh {293 170 83 28} labelsize 15
+        }
+      }
+      Fl_Box {} {
+        xywh {382 0 0 161} labeltype NO_LABEL align 8 hide resizable
+      }
+    }
+    Fl_Group {} {open
+      tooltip {You may apply regex pattern, with case sensitivity or not.
+All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 88} box BORDER_FRAME color 37
+    } {
+      Fl_Group {} {open
+        xywh {4 287 137 57}
+      } {
+        Fl_Button find {
+          label Find
+          tooltip {Will find the next occurrence of the find pattern, the one actually pointed by the cursor is not taken into account.} xywh {7 289 56 26}
+        }
+        Fl_Button replace_next {
+          label {Repl Next}
+          tooltip {Search and replace only the next occurence of your pattern. Can be undone.} xywh {67 289 72 26} align 128
+        }
+        Fl_Button replace_all {
+          label {Repl All   }
+          tooltip {Search and replace all occurrences of your pattern. Can be undone.} xywh {67 318 72 26}
+        }
+        Fl_Box {} {
+          xywh {136 289 3 54} labeltype NO_LABEL labelsize 10 hide
+        }
+        Fl_Check_Button case_sensitive_find {
+          label Case
+          tooltip {Run case sensitive find or not} xywh {7 320 58 22} down_box DOWN_BOX
+        }
+      }
+      Fl_Group {} {open
+        xywh {142 285 238 59} resizable
+      } {
+        Fl_Input_Choice str_find {
+          tooltip {For more details about ECMAScript regex, see https://en.cppreference.com/w/cpp/regex/ecmascript.html} xywh {142 289 236 22} labeltype NO_LABEL
+        } {}
+        Fl_Input_Choice str_replace {
+          xywh {142 318 236 22} labeltype NO_LABEL
+        } {}
+      }
+      Fl_Box {} {
+        xywh {64 347 1 26} labeltype NO_LABEL labelsize 10 hide
+      }
+      Fl_Output file_path {
+        label {File path}
+        xywh {68 345 309 22}
+      }
+    }
+    Fl_Text_Editor file_content {
+      xywh {4 376 376 266} labeltype NO_LABEL resizable
+    }
+  }
+}
