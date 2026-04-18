@@ -61,7 +61,7 @@ If none of these are defined, the default is to send the WARN and following log 
 
 It compiles and run under both Windows (With Visual Studio and g++) and Linux (With g++), thanks to [FLTK](https://www.fltk.org). Should behave the same way under macOS ...
 
-*To do : *
+*To do :*
 
 - *i18n and l10n*
 
