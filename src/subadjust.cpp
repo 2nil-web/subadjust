@@ -292,7 +292,6 @@ If none of these are defined, the default is to send the WARN and following log 
     }
   }
 
-  OS::use_theme("METRO");
   bool file_read_ok = file_read(file);
 
   if (run_pre_proc && file_read_ok && csub.vec().size() > 0)
