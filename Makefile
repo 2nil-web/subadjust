@@ -89,12 +89,12 @@ ${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_ui.cpp : ${SRC_DIR}/${PREFIX}_ui.
 ${SRC_DIR}/${PREFIX}.cpp ${SRC_DIR}/file_features.cpp ${SRC_DIR}/edit_features.cpp ${SRC_DIR}/prefs.cpp : ${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_icon.h ${SRC_DIR}/${PREFIX}.ico
 
 #	@fold -w 253 ${PREFIX}.svg | sed -e 's/"/\\"/g;s/\(.*\)/"\1" \\/' >>${PREFIX}_icon.h
-${SRC_DIR}/${PREFIX}_icon.h : ${PREFIX}.svg
+${SRC_DIR}/${PREFIX}_icon.h : ${SRC_DIR}/${PREFIX}.svg
 	@echo -n "const char *svg_data=" >$@
 	@sed -e 's/"/\\"/g;s/\(.*\)/"\1" \\/' $< >>$@
 	@echo ";" >>$@
 
-${SRC_DIR}/${PREFIX}.ico : ${PREFIX}.svg
+${SRC_DIR}/${PREFIX}.ico : ${SRC_DIR}/${PREFIX}.svg
 	${MAGICK} -density 256x256 -background none $< -define icon:auto-resize=128,96,64,48,32,16 -colors 256 $@
 #	${MAGICK} $< -density 300 -define icon:auto-resize=128,96,64,48,32,16 -background none $@
 
