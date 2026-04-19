@@ -11,4 +11,5 @@ RES/
 toto*
 *.vcxproj.user
 app_info_check.txt
+app_info.h
 *.srtt
