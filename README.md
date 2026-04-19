@@ -2,10 +2,10 @@
 
 ***A GUI and command line tool to modify the timeline of subtitles in .srt format***
 
-<u>The GUI aims to be self-explanatory, but some indications might be useful :</u>
+<ins>The GUI aims to be self-explanatory, but some indications might be useful :</ins>
 ![](assets/QuickDoc.svg "Quick doc")
 
-<u>There is also has an inline help :</u>
+<ins>There is also has an inline help :</ins>
 
 ```
 Subadjust version 1.0.0
@@ -59,14 +59,11 @@ These 2 previous options have precedence on the environments variable LOG and LO
 If none of these are defined, the default is to send the WARN and following log messages into the file "C:\UnixTools\msys64\tmp\subadjust.log".
 ```
 
-<u>Technical insight:</u>
-
+<ins>Technical insight:</ins>
 It compiles and run under both Windows (With Visual Studio and g++) and Linux (With g++), thanks to [FLTK](https://www.fltk.org). Should behave the same way under macOS ...
 
-<u>*To do :*</u>
-
+<ins>*To do :*</ins>
 - *i18n and l10n*
-
 - *Detail prerequisites for the build (make, gcc, visual studio, fltk ...)*
-
-- *Delivery*
+- *Add automated Setup and Delivery to the build workflow*
+- *Add feature to read and write vtt format*
