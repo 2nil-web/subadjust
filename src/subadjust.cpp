@@ -151,31 +151,6 @@ std::string TxtError()
 }
 #endif
 
-static void cons_warning(const char * format,...)
-{
-  va_list args;
-  va_start(args, format);
-  printf(format, args);
-  va_end(args);
-
-}
-
-static void cons_error(const char* format, ...) {
-  va_list args;
-  va_start(args, format);
-  printf(format, args);
-  va_end(args);
-}
-
-static void cons_fatal(const char* format, ...)
-{
-  va_list args;
-  va_start(args, format);
-  printf(format, args);
-  va_end(args);
-
-}
-
 std::string theme = "";
 bool gui_mode = true;
 #define SIMPLE_CB [](Fl_Widget *, void *)->void
@@ -337,10 +312,9 @@ If none of these are defined, the default is to send the WARN and following log 
         theme = "";
 
   } else {
-    logT("Non gui error func branch");
-    Fl::warning=cons_warning;
-    Fl::error=cons_error;
-    Fl::fatal=cons_fatal;
+    txt_buf.transcoding_warning_action=[](Fl_Text_Buffer* t) -> void {
+      if (t->input_file_was_transcoded) logW("Displayed text contains the UTF-8 transcoding of the input file which was not UTF-8 encoded. Some changes may have occurred.");
+    };
   }
 
   bool file_read_ok = file_read(file);

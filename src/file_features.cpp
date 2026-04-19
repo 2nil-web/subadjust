@@ -193,13 +193,15 @@ bool file_read(std::filesystem::path abs_path)
 
   if (!abs_path.is_absolute())
     abs_path = std::filesystem::absolute(abs_path);
-  // logD("file_read; ", abs_path);
+   logD("file_read - bef loadfile ", abs_path);
 
   if (txt_buf.loadfile(abs_path.string().c_str()) == 0)
   {
+    logD("Before parse file_read: diff");
     bool diff = csub.diff(txt_buf.text());
-    logT("After parse file_read: ", (diff ? "" : "no "), "change");
+    logD("After parse file_read: ", (diff ? "" : "no "), "change");
 
+   logD("file_read - bef transcoded ", abs_path);
     if (txt_buf.input_file_was_transcoded || diff)
     {
       if (diff)
