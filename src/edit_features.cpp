@@ -21,11 +21,14 @@
 
 // Expect an int that when positive, is a line index
 // When negative, take its absolute value as a percentage of the line count
-void to_line(int d)
+bool to_line(int d)
 {
   logT("to_line - d: ", d);
   if (txt_buf.text() == nullptr || txt_buf.count_lines(0, -1) < 1)
-    return;
+  {
+    goto_line->value(1);
+    return false;
+  }
 
   file_content->scroll(1, 0);
   int line, nl = file_content->count_lines(0, -1, true);
@@ -79,6 +82,8 @@ void to_line(int d)
   time_to_go->set_time_str(stime);
   file_content->insert_position(pos);
   logT("to_line2 - pos: [", pos, "], line: [", line, "], sub: [", ins, "], stime: [", stime, "]");
+
+  return true;
 }
 
 // Expect an int that when positive, is a subtitle index
@@ -87,108 +92,125 @@ int to_sub(int d)
 {
   file_content->scroll(1, 0);
   csub.parse(txt_buf.text());
-  int ins = d;
-  int ns = (int)csub.vec().size();
-  if (goto_sub->maximum() > (int)ns)
-    goto_sub->maximum((int)ns);
-  logT("to_sub1 - d: ", d, ", ins: ", ins);
 
-  if (d >= 0)
+  if (csub.vec().size() > 1)
   {
-    if (d < 1)
+    int ins = d;
+    int ns = (int)csub.vec().size();
+    if (goto_sub->maximum() > (int)ns)
+      goto_sub->maximum((int)ns);
+    logT("to_sub1 - d: ", d, ", ins: ", ins);
+
+    if (d >= 0)
     {
-      ins = ns;
-      d = ns;
+      if (d < 1)
+      {
+        ins = ns;
+        d = ns;
+      }
+      else if (d > ns)
+      {
+        ins = 1;
+        d = 1;
+      }
     }
-    else if (d > ns)
+    else
     {
+      d = -d;
+      ins = (int)((double)(d * ns) / 100);
+    }
+
+    int nl = 1, pos = 1;
+    std::string needle;
+    int found;
+
+    if (ins < 2)
+      file_content->scroll(1, 0);
+    else
+    {
+      std::string needle = "\n\n" + std::to_string(ins) + '\n';
+      found = txt_buf.search_forward(0, needle.c_str(), &pos);
+      if (found)
+      {
+        nl = 3 + file_content->count_lines(1, pos, true);
+        file_content->scroll(nl, nl);
+      }
+    }
+
+    if (ins < 1)
       ins = 1;
-      d = 1;
-    }
-  }
-  else
-  {
-    d = -d;
-    ins = (int)((double)(d * ns) / 100);
-  }
-
-  int nl = 1, pos = 1;
-  std::string needle;
-  int found;
-
-  if (ins < 2)
-    file_content->scroll(1, 0);
-  else
-  {
-    std::string needle = "\n\n" + std::to_string(ins) + '\n';
-    found = txt_buf.search_forward(0, needle.c_str(), &pos);
-    if (found)
+    logT("to_sub2 - ins: ", ins);
+    if (goto_sub->value() != ins)
     {
-      nl = 3 + file_content->count_lines(1, pos, true);
-      file_content->scroll(nl, nl);
+      goto_sub->value(ins);
     }
+
+    goto_line->value(nl);
+    int pos2;
+    if (d > 1)
+    {
+      txt_buf.search_forward(pos + 1, "\n", &pos);
+      txt_buf.search_forward(pos + 1, "\n", &pos);
+    }
+    txt_buf.search_forward(pos + 1, " -->", &pos2);
+    logT("to_sub3  - pos: ", pos, ", pos2: ", pos2);
+    std::string stime = txt_buf.text_range(pos2 - 12, pos2);
+    time_to_go->set_time_str(stime);
+    logT("to_sub4  - text from pos:[", txt_buf.text_range(pos + 1, pos2), ']');
+    pos = file_content->line_start(pos);
+    file_content->insert_position(pos);
+    logT("to_sub5  - pos: [", pos, "], line: [", nl, "], sub: [", ins, "], stime: [", stime, "]");
+
+    return ins;
   }
 
-  if (ins < 1)
-    ins = 1;
-  logT("to_sub2 - ins: ", ins);
-  if (goto_sub->value() != ins)
-  {
-    goto_sub->value(ins);
-  }
-
-  goto_line->value(nl);
-  int pos2;
-  if (d > 1)
-  {
-    txt_buf.search_forward(pos + 1, "\n", &pos);
-    txt_buf.search_forward(pos + 1, "\n", &pos);
-  }
-  txt_buf.search_forward(pos + 1, " -->", &pos2);
-  logT("to_sub3  - pos: ", pos, ", pos2: ", pos2);
-  std::string stime = txt_buf.text_range(pos2 - 12, pos2);
-  time_to_go->set_time_str(stime);
-  logT("to_sub4  - text from pos:[", txt_buf.text_range(pos + 1, pos2), ']');
-  pos = file_content->line_start(pos);
-  file_content->insert_position(pos);
-  logT("to_sub5  - pos: [", pos, "], line: [", nl, "], sub: [", ins, "], stime: [", stime, "]");
-
-  return ins;
+  goto_sub->value(1);
+  return 1;
 }
 
 // Expect an int that when positive, is a time in milliseconds
 // When negative, take its absolute value as a percentage of the subtitle duration
-void to_time(int d)
+bool to_time(int d)
 {
   file_content->scroll(1, 0);
   csub.parse(txt_buf.text());
 
-  if (d < 0)
+  if (csub.vec().size() > 0 && d < csub.vec().back().appearance)
   {
-    d = -d * csub.vec()[csub.vec().size() - 1].disappearance / 100;
-    logT("to_time1 - last ts: ", csub.vec()[csub.vec().size() - 1].disappearance, ", half ts: ", csub.vec()[csub.vec().size() - 1].disappearance / 2, ", d: ", d);
+    if (d < 0)
+    {
+      d = -d * csub.vec()[csub.vec().size() - 1].disappearance / 100;
+      logT("to_time1 - last ts: ", csub.vec()[csub.vec().size() - 1].disappearance, ", half ts: ", csub.vec()[csub.vec().size() - 1].disappearance / 2, ", d: ", d);
+    }
+
+    sSub ssub;
+    int line = csub.line_by_timestamp(d, ssub);
+    logT("to_time2(line_by_timestamp) - line: [", line, "], appearance: ", ms_to_str(ssub.appearance), ", disappearance: ", ms_to_str(ssub.disappearance));
+    file_content->scroll(line, line);
+    logT("to_time3 - line1: [", line, "]");
+    int maxl = file_content->count_lines(0, -1, true);
+    if (line < maxl)
+      goto_line->value(line + 1);
+    else
+      goto_line->value(line);
+    logT("to_time4 - line2: [", line, "]");
+    int ins = ssub.index + 1;
+    goto_sub->value(ins);
+    time_to_go->set_time_ms(d);
+    int pos = txt_buf.skip_lines(0, line);
+    logT("to_time5 - line3: [", line, "]");
+
+    file_content->insert_position(pos);
+    std::string stime = ms_to_str(d);
+    logT("to_time7 - pos: [", pos, "], line: [", line, "], sub: [", ins, "], stime: [", stime, "]", ", appearance: ", ms_to_str(ssub.appearance), ", disappearance: ", ms_to_str(ssub.disappearance));
+
+    return true;
   }
-
-  sSub ssub;
-  int line = csub.line_by_timestamp(d, ssub);
-  logT("to_time2(line_by_timestamp) - line: [", line, "], appearance: ", ms_to_str(ssub.appearance), ", disappearance: ", ms_to_str(ssub.disappearance));
-  file_content->scroll(line, line);
-  logT("to_time3 - line1: [", line, "]");
-  int maxl = file_content->count_lines(0, -1, true);
-  if (line < maxl)
-    goto_line->value(line + 1);
   else
-    goto_line->value(line);
-  logT("to_time4 - line2: [", line, "]");
-  int ins = ssub.index + 1;
-  goto_sub->value(ins);
-  time_to_go->set_time_ms(d);
-  int pos = txt_buf.skip_lines(0, line);
-  logT("to_time5 - line3: [", line, "]");
-
-  file_content->insert_position(pos);
-  std::string stime = ms_to_str(d);
-  logT("to_time7 - pos: [", pos, "], line: [", line, "], sub: [", ins, "], stime: [", stime, "]", ", appearance: ", ms_to_str(ssub.appearance), ", disappearance: ", ms_to_str(ssub.disappearance));
+  {
+    time_to_go->set_time_ms(0);
+    return false;
+  }
 }
 
 bool is_valid_regex(std::regex &re)
