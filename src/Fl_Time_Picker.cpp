@@ -178,14 +178,14 @@ void Fl_Time_Picker::draw()
   fl_draw_box(FL_BORDER_BOX, 0, 0, w(), h(), FL_WHITE);
 
   // En-têtes alignés sur les colonnes du widget parent.
-  const char *hdrs24[] = {"H", "Min", "Sec", "ms", nullptr};
-  const char *hdrs12[] = {"H", "Min", "Sec", "AM/PM", nullptr};
-  const char *hdrs24ms[] = {"H", "Min", "Sec", "ms", "AM/PM"};
-  const char *hdrs12ms[] = {"H", "Min", "Sec", "ms", "AM/PM"};
+  const char *hdrs24[] = {"H", " Min", " Sec ", "ms", nullptr};
+  const char *hdrs12[] = {"H", " Min", " Sec ", "AM/PM", nullptr};
+  const char *hdrs24ms[] = {"H", " Min", " Sec ", "ms", "AM/PM"};
+  const char *hdrs12ms[] = {"H", " Min", " Sec ", "ms", "AM/PM"};
   const char **hdrs = use24_ ? (show_ms_ ? hdrs24ms : hdrs24) : (show_ms_ ? hdrs12ms : hdrs12);
 
-  fl_font(fm_.font, fm_.size);
-  fl_color(FL_DARK3);
+  fl_font(fm_.font, fm_.size-4);
+  fl_color(0);
   for (int c = 0; c < ncols_; c++)
   {
     fl_push_clip(col_x_[c], 0, col_w_[c], header_h_);
