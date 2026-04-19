@@ -151,6 +151,31 @@ std::string TxtError()
 }
 #endif
 
+static void cons_warning(const char * format,...)
+{
+  va_list args;
+  va_start(args, format);
+  printf(format, args);
+  va_end(args);
+
+}
+
+static void cons_error(const char* format, ...) {
+  va_list args;
+  va_start(args, format);
+  printf(format, args);
+  va_end(args);
+}
+
+static void cons_fatal(const char* format, ...)
+{
+  va_list args;
+  va_start(args, format);
+  printf(format, args);
+  va_end(args);
+
+}
+
 std::string theme = "";
 bool gui_mode = true;
 #define SIMPLE_CB [](Fl_Widget *, void *)->void
@@ -290,15 +315,7 @@ If none of these are defined, the default is to send the WARN and following log 
       logW("Silently ignoring -i/-modify-input in GUI mode");
       modify_input = false;
     }
-  }
 
-  bool file_read_ok = file_read(file);
-
-  if (run_pre_proc && file_read_ok && csub.vec().size() > 0)
-    pre_process(pp_time_start, pp_time_stop, pp_offs_start, pp_offs_stop, pp_dur_k);
-
-  if (gui_mode)
-  {
     // Main window
     make_window();
     fl_message_title_default("SubAdjust");
@@ -319,6 +336,20 @@ If none of these are defined, the default is to send the WARN and following log 
       if (!OS::use_theme(theme))
         theme = "";
 
+  } else {
+    logT("Non gui error func branch");
+    Fl::warning=cons_warning;
+    Fl::error=cons_error;
+    Fl::fatal=cons_fatal;
+  }
+
+  bool file_read_ok = file_read(file);
+
+  if (run_pre_proc && file_read_ok && csub.vec().size() > 0)
+    pre_process(pp_time_start, pp_time_stop, pp_offs_start, pp_offs_stop, pp_dur_k);
+
+  if (gui_mode)
+  {
     gui_display(file_read_ok);
     main_window->show();
 
