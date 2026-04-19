@@ -507,6 +507,26 @@ std::string merge_menu(const std::string key, Fl_Input_Choice *ic, std::string _
   return smenu;
 }
 
+void reset_prefs()
+{
+  logT("Resetting prefs");
+  window.set("xpos", 40);
+  window.set("ypos", 20);
+  window.set("width", 384);
+  window.set("height", 600);
+  window.set("theme", "METRO");
+  window.set("case", 0);
+  window.set("find value", "");
+  window.set("replace value", "");
+
+  window.set("find menu", "\\{\\\\an8\\}|(..:..:..,...)|<font|<font color=\"#......\">");
+  window.set("replace menu", "||$1");
+
+  std::filesystem::remove(instance_name);
+  const std::filesystem::path already_opened_list;
+  std::filesystem::remove(already_opened_list);
+}
+
 void set_prefs()
 {
   // On ne sauvegarde les préférences que de la première instance

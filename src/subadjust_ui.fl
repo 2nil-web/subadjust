@@ -4,8 +4,8 @@ header_name {.h}
 code_name {.cxx}
 Function {make_window()} {open
 } {
-  Fl_Window main_window {open
-    xywh {2358 55 385 645} type Double box UP_BOX resizable
+  Fl_Window main_window {open selected
+    xywh {2358 55 384 645} type Double box UP_BOX resizable
     code0 {\#include <FL/Fl_Int_Input.H>}
     code1 {\#include <FL/Fl_Float_Input.H>}
     code2 {\#include "Fl_Time_Input.H"}
@@ -15,7 +15,7 @@ Function {make_window()} {open
       xywh {2 0 380 284}
     } {
       Fl_Menu_Button {} {
-        label File selected
+        label File
         xywh {5 2 50 26}
       } {
         MenuItem file_open {
@@ -167,7 +167,7 @@ end offsets
     }
     Fl_Group {} {open
       tooltip {You may apply regex pattern, with case sensitivity or not.
-All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 88} box BORDER_FRAME color 37
+All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 60} box BORDER_FRAME color 37
     } {
       Fl_Group {} {open
         xywh {4 287 137 57}
@@ -202,12 +202,24 @@ All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 88} b
           xywh {142 318 236 22} labeltype NO_LABEL
         } {}
       }
+    }
+    Fl_Group {} {open
+      xywh {1 345 378 24}
+    } {
+      Fl_Box file_path_label {
+        label {File path}
+        tooltip {Show the path of the file being currently edited.
+It turns red if there are pending modification.
+Automatic changes may occur if the initial file format is not UTF-8.} xywh {2 345 60 22}
+      }
       Fl_Box {} {
-        xywh {64 347 1 26} labeltype NO_LABEL labelsize 10 hide
+        xywh {62 345 3 22} labeltype NO_LABEL hide
       }
       Fl_Output file_path {
         label {File path}
-        xywh {68 345 309 22}
+        tooltip {Show the path of the file being currently edited.
+It turns red if there are pending modification.
+Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 345 314 22} labeltype NO_LABEL resizable
       }
     }
     Fl_Text_Editor file_content {

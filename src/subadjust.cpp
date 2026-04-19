@@ -61,7 +61,13 @@ void about_msg(Fl_Widget *, void *v)
   if (!fl_choice("%s", "More info ...", "Ok", 0L, about_msg.c_str()))
   {
     fl_message_position(main_window->x_root(), main_window->y_root() + 60, 0);
+    Fl_Font actual_font = fl_message_font_;
+    Fl_Fontsize actual_size = fl_message_size_;
+#include <FL/names.h>
+    logI("actual_font: ", fl_fontnames[actual_font], ", actual_size: ", actual_size);
+    fl_message_font(FL_COURIER_BOLD, 10);
     fl_message("%s", opt->usage().c_str());
+    fl_message_font(actual_font, actual_size);
   }
 }
 
@@ -220,6 +226,8 @@ int main(int argc, char **argv)
 
                     option_info(""),
                     option_info(
+                        'r', "reset-pref", [&](s_opt_params &) -> void { reset_prefs(); }, "Reset the preferences to default values."),
+                    option_info(
                         'x', "xpos", [&](s_opt_params &p) -> void { x = std::stoi(p.val); }, "Set the x origin of the subadjust window.", required),
                     option_info(
                         'y', "ypos", [&](s_opt_params &p) -> void { y = std::stoi(p.val); }, "Set the y origin of the subadjust window.", required),
@@ -311,9 +319,10 @@ If none of these are defined, the default is to send the WARN and following log 
       if (!OS::use_theme(theme))
         theme = "";
 
-  } else {
-    txt_buf.transcoding_warning_action=[](Fl_Text_Buffer* t) -> void {
-      if (t->input_file_was_transcoded) logW("Displayed text contains the UTF-8 transcoding of the input file which was not UTF-8 encoded. Some changes may have occurred.");
+    //  } else {
+    txt_buf.transcoding_warning_action = [](Fl_Text_Buffer *t) -> void {
+      if (t->input_file_was_transcoded)
+        logW("Displayed text contains the UTF-8 transcoding of the input file which was not UTF-8 encoded. Some changes may have occurred.");
     };
   }
 

@@ -78,6 +78,8 @@ FLUID=${FLTK_DIR}/bin/fluid
 PATH:=${FLTK_DIR}/bin:${PATH}
 TARGET=${TARGET_DIR}/${PREFIX}${EXEXT}
 
+.PHONY: FORCE
+
 all : ${TARGET}
 
 gcc : ${TARGET}
@@ -129,7 +131,7 @@ endif
 
 ${TARGET_DIR}/${PREFIX}.d ${TARGET_DIR}/options.d : ${SRC_DIR}/app_info.h
 
-ALL_SRCS=$(wildcard *.cpp) $(wildcard *.h)
+ALL_SRCS=$(wildcard ${SRC_DIR}/*.cpp) $(wildcard ${SRC_DIR}/*.h)
 format :
 	@echo "Formatting with clang, the following files: ${ALL_SRCS}"
 	@clang-format -style="{ BasedOnStyle: Microsoft, ColumnLimit: 256, IndentWidth: 2, TabWidth: 2, UseTab: Never }" --sort-includes -i ${ALL_SRCS}
@@ -148,7 +150,7 @@ ${SRC_DIR}/app_info.json : ${SRC_DIR}/app_info_check.txt
 	dos2unix $@
 
 # Pour regénérer silencieusement app_info.h et app_info.json dès qu'un des champs app_info ou copyright ou decoration ou commit, est modifié.
-${SRC_DIR}/app_info_check.txt :
+${SRC_DIR}/app_info_check.txt : FORCE
 	@${ECHOE} "Version:${VERSION}, copyright:${COPYRIGHT}, decoration:${DECORATION}, commit:${COMMIT}, platform:${PLATFORM}" >$@.new
 	@-( if [ ! -f $@ ]; then cp $@.new $@; sleep 0.4; fi )
 	@-( if diff $@.new $@ >/dev/null 2>&1; then rm -f $@.new; else mv -f $@.new $@; rm -f ${PREFIX}.iss ${PREFIX}-standalone.iss; fi )

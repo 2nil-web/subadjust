@@ -2966,7 +2966,7 @@ void OS::use_dark_theme()
   _current_theme = (int)Theme::DARK;
 }
 
-#ifndef NO_BRUSHED_METAL
+#ifndef BRUSHED_METAL
 /******************************* Brushed Metal ********************************/
 static const uchar brushed_metal_png_buffer[] = {
 #include "brushed-metal.dat"
