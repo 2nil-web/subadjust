@@ -9,7 +9,7 @@
 #include "utils.h"
 
 // <=> $LOCALAPPDATA/Temp/DEF_LOG || /tmp/DEF_LOG
-const std::filesystem::path DEF_LOG(std::filesystem::temp_directory_path() / "subadjust.log");
+static std::filesystem::path DEF_LOG(std::filesystem::temp_directory_path() / "subadjust.log");
 
 // Log priorities
 // ALL < TRACE < INFO < DEBUG < WARN < ERROR < FATAL < OFF

@@ -98,7 +98,8 @@ void send2log(eLogLevel llvl, std::filesystem::path pth, int ln, std::string msg
   {
     une_fois = false;
     if (logfile.empty())
-      std::cout << "To see logs on console, set the environment variable 'LOGFILE' to 'console' else set it to a valid filename.\nAnd set environment variable 'LOG' to one of the following values: ALL < TRACE < DEBUG < INFO < WARN < ERROR < FATAL < OFF."
+
+      std::cout << "To see logs on console, set the environment variable 'LOGFILE' to 'console' else set it to a valid filename (default is " << DEF_LOG.make_preferred().string() << ").\nAnd set environment variable 'LOG' to one of the following values: ALL < TRACE < DEBUG < INFO < WARN < ERROR < FATAL < OFF."
                 << std::endl;
   }
 
