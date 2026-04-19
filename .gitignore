@@ -10,5 +10,5 @@ RES/
 *.old
 toto*
 *.vcxproj.user
-app_info*
+app_info_check.txt
 *.srtt
