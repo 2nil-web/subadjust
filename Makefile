@@ -84,6 +84,10 @@ all : ${TARGET}
 
 gcc : ${TARGET}
 
+upx : ${TARGET}
+	( strip ${TARGET} | true  ) >/dev/null 2>&1
+	( ${UPX} ${TARGET} | true  ) >/dev/null 2>&1
+
 # FLUID file rules
 ${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_ui.cpp : ${SRC_DIR}/${PREFIX}_ui.fl
 	@echo "Fluid Gen"
