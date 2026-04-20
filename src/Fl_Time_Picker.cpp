@@ -193,12 +193,12 @@ void Fl_Time_Picker::draw()
     fl_pop_clip();
   }
 
-  //fl_color(fl_lighter(FL_GRAY));
+  // fl_color(fl_lighter(FL_GRAY));
   fl_color(FL_BLACK);
   fl_line(0, header_h_ - 1, w(), header_h_ - 1);
 
   // Separateurs verticaux entre colonnes (sur le bord gauche de chaque colonne sauf la 1ere).
-  //fl_color(fl_lighter(FL_GRAY));
+  // fl_color(fl_lighter(FL_GRAY));
   fl_color(FL_BLACK);
   for (int c = 1; c < ncols_; c++)
     fl_line(col_x_[c], 0, col_x_[c], h() - footer_h_);
@@ -208,7 +208,7 @@ void Fl_Time_Picker::draw()
 
   int fy = h() - footer_h_;
   fl_color(FL_BLACK);
-  //fl_color(fl_lighter(FL_GRAY));
+  // fl_color(fl_lighter(FL_GRAY));
   fl_line(0, fy, w(), fy);
 
   int bx = ok_x(), by = btn_y();
