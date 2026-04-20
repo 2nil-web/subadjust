@@ -60,6 +60,7 @@ If none of these are defined, the default is to send the WARN and following log 
 ```
 
 <ins>Technical insight:</ins>
+
 It compiles and run under both Windows (With Visual Studio and g++) and Linux (With g++), thanks to FLTK. Should behave the same way under macOS ...
 
 <ins>Thanks and copyrights (If necessary):</ins>
