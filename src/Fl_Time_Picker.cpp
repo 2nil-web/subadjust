@@ -178,10 +178,10 @@ void Fl_Time_Picker::draw()
   fl_draw_box(FL_BORDER_BOX, 0, 0, w(), h(), FL_WHITE);
 
   // En-têtes alignés sur les colonnes du widget parent.
-  const char *hdrs24[] = {"H", " Min", " Sec ", "ms", nullptr};
-  const char *hdrs12[] = {"H", " Min", " Sec ", "AM/PM", nullptr};
-  const char *hdrs24ms[] = {"H", " Min", " Sec ", "ms", "AM/PM"};
-  const char *hdrs12ms[] = {"H", " Min", " Sec ", "ms", "AM/PM"};
+  const char *hdrs24[] = {"H", " Min", " Sec", "ms", nullptr};
+  const char *hdrs12[] = {"H", " Min", " Sec", "AM/PM", nullptr};
+  const char *hdrs24ms[] = {"H", " Min", " Sec", "ms", "AM/PM"};
+  const char *hdrs12ms[] = {"H", " Min", " Sec", "ms", "AM/PM"};
   const char **hdrs = use24_ ? (show_ms_ ? hdrs24ms : hdrs24) : (show_ms_ ? hdrs12ms : hdrs12);
 
   fl_font(fm_.font, fm_.size - 4);
@@ -193,11 +193,13 @@ void Fl_Time_Picker::draw()
     fl_pop_clip();
   }
 
-  fl_color(fl_lighter(FL_GRAY));
+  //fl_color(fl_lighter(FL_GRAY));
+  fl_color(FL_BLACK);
   fl_line(0, header_h_ - 1, w(), header_h_ - 1);
 
   // Separateurs verticaux entre colonnes (sur le bord gauche de chaque colonne sauf la 1ere).
-  fl_color(fl_lighter(FL_GRAY));
+  //fl_color(fl_lighter(FL_GRAY));
+  fl_color(FL_BLACK);
   for (int c = 1; c < ncols_; c++)
     fl_line(col_x_[c], 0, col_x_[c], h() - footer_h_);
 
@@ -205,7 +207,8 @@ void Fl_Time_Picker::draw()
     draw_col(c, col_x_[c], col_w_[c]);
 
   int fy = h() - footer_h_;
-  fl_color(fl_lighter(FL_GRAY));
+  fl_color(FL_BLACK);
+  //fl_color(fl_lighter(FL_GRAY));
   fl_line(0, fy, w(), fy);
 
   int bx = ok_x(), by = btn_y();
