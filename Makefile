@@ -85,8 +85,14 @@ all : ${TARGET}
 gcc : ${TARGET}
 
 upx : ${TARGET}
-	( strip ${TARGET} | true  ) >/dev/null 2>&1
-	( upx ${TARGET} | true  ) >/dev/null 2>&1
+	@( strip ${TARGET} | true  ) >/dev/null 2>&1
+	@( upx ${TARGET} | true  ) >/dev/null 2>&1
+
+SETUP_PKG=${ASSETS}/${PREFIX}-${VERSION}-${SYS_VER}.zip
+SETUP_DEP=README.pdf ${TARGET}
+
+README.pdf : README.md
+	pandoc -o $@ --pdf-engine=xelatex $<
 
 # FLUID file rules
 ${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_ui.cpp : ${SRC_DIR}/${PREFIX}_ui.fl
