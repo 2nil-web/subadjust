@@ -80,22 +80,24 @@ TARGET=${TARGET_DIR}/${PREFIX}${EXEXT}
 
 .PHONY: FORCE
 
-all : ${TARGET}
+all : ${TARGET} assets/QuickDoc.jpg
 
 gcc : ${TARGET}
 
-upx : ${TARGET}
-	@( strip ${TARGET} | true  ) >/dev/null 2>&1
-	@( upx ${TARGET} | true  ) >/dev/null 2>&1
+assets/QuickDoc.jpg : assets/QuickDoc.svg
+	${MAGICK} $< $@
+
 
 SETUP_PKG=${PREFIX}-${VERSION}-${SYS_VER}.zip
 
-assets/${SETUP_PKG} : README.md ${TARGET} upx
+assets/${SETUP_PKG} : README.md ${TARGET}
+	@( strip ${TARGET} | true  ) >/dev/null 2>&1
+	@( upx ${TARGET} | true  ) >/dev/null 2>&1
 	@mkdir -p assets/setup
 	@pandoc -V geometry:paperwidth=210mm -V geometry:paperheight=297mm -V geometry:margin=1cm -o assets/setup/README.pdf README.md
 	@cp ${TARGET} assets/setup
 	@cd assets/setup && zip -rq ../${SETUP_PKG} .
-	@echo "Package $@ is ready"
+	@echo "Package assets/${SETUP_PKG} is ready"
 	@rm -rf assets/setup
 
 setup : assets/${SETUP_PKG}
