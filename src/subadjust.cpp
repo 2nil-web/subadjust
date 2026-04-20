@@ -63,8 +63,8 @@ void about_msg(Fl_Widget *, void *v)
     fl_message_position(main_window->x_root(), main_window->y_root() + 60, 0);
     Fl_Font actual_font = fl_message_font_;
     Fl_Fontsize actual_size = fl_message_size_;
-#include <FL/names.h>
-    logI("actual_font: ", fl_fontnames[actual_font], ", actual_size: ", actual_size);
+    // #include <FL/names.h>
+    //     logI("actual_font: ", fl_fontnames[actual_font], ", actual_size: ", actual_size);
     fl_message_font(FL_COURIER_BOLD, 10);
     fl_message("%s", opt->usage().c_str());
     fl_message_font(actual_font, actual_size);
@@ -159,7 +159,7 @@ std::string TxtError()
 
 std::string theme = "";
 bool gui_mode = true;
-#define SIMPLE_CB [](Fl_Widget *, void *)->void
+#define SIMPLE_CB [](Fl_Widget *, void *) -> void
 int main(int argc, char **argv)
 {
   std::string file = "", ofilename = "";
