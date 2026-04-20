@@ -13,3 +13,7 @@ toto*
 app_info_check.txt
 app_info.h
 *.srtt
+github_access.sh
+setup/
+assets/README.pdf
+assets/*.zip

@@ -49,7 +49,7 @@ MSBUILD=/c/Program\ Files/Microsoft\ Visual\ Studio/18/Community/MSBuild/Current
 MAGICK=magick
 EXEXT=.exe
 FLTK_DIR=/c/fltk-1.4.4
-TARGET_DIR=build/msvc/win
+TARGET_DIR=build/msvc/win/x64/Release
 ifeq ($(BUILD_SYS),)
 BUILD_SYS=msvc
 endif
@@ -88,11 +88,21 @@ upx : ${TARGET}
 	@( strip ${TARGET} | true  ) >/dev/null 2>&1
 	@( upx ${TARGET} | true  ) >/dev/null 2>&1
 
-SETUP_PKG=${ASSETS}/${PREFIX}-${VERSION}-${SYS_VER}.zip
-SETUP_DEP=README.pdf ${TARGET}
+SETUP_PKG=${PREFIX}-${VERSION}-${SYS_VER}.zip
 
-README.pdf : README.md
-	pandoc -o $@ --pdf-engine=xelatex $<
+assets/${SETUP_PKG} : README.md ${TARGET} upx
+	@mkdir -p assets/setup
+	@pandoc -V geometry:paperwidth=210mm -V geometry:paperheight=297mm -V geometry:margin=1cm -o assets/setup/README.pdf README.md
+	@cp ${TARGET} assets/setup
+	@cd assets/setup && zip -rq ../${SETUP_PKG} .
+	@echo "Package $@ is ready"
+	@rm -rf assets/setup
+
+setup : assets/${SETUP_PKG}
+
+deliv : assets/${SETUP_PKG}
+	@echo "Delivering it to github."
+	@./assets/github_release.sh $<
 
 # FLUID file rules
 ${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_ui.cpp : ${SRC_DIR}/${PREFIX}_ui.fl

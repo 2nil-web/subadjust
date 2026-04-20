@@ -1,13 +1,16 @@
 # SubAdjust
 
-***A GUI and command line tool to modify the timeline of subtitles in .srt format***
+###### ***A GUI and command line tool to modify the timeline of subtitles in .srt format***
 
-<ins>The GUI aims to be self-explanatory, but some indications might be useful :</ins>
+
+<ins>***The GUI aims to be self-explanatory, but some indications might be useful :***</ins>
+
 ![](assets/QuickDoc.svg "Quick doc")
 
-<ins>There is also has an inline help :</ins>
 
-```
+<ins>***There is also has an inline help :***</ins>
+
+```bash
 Subadjust version 1.0.0
 Copyright © D. LALANNE - MIT License - No warranty of any kind.
 A tool that allows to process subtitles files.
@@ -19,7 +22,8 @@ Available options
  -V, --version             Output version information and exit.
  -H, --help                Display this message and exit. This option implies -V/--version.
 
- -f, --file ARG            Name of the file to read. It is the same than directly passing a file name without this option.
+ -f, --file ARG            Name of the file to read. It is the same than directly passing a file name
+ without this option.
  -g, --gui-mode            Process the input file and show it with the gui.
  -c, --batch-mode          Process the input the file and print the result.
 
@@ -39,14 +43,16 @@ These 2 previous options only have meaning in batch mode, they are ignored in GU
  -w, --width ARG           Set the width of the subadjust window.
  -h, --height ARG          Set the height of the subadjust window.
  -t, --theme ARG           Set the graphic theme to use. It is a string to choose between one of :
-    classic, aero, metro, aqua, greybird, ocean, blue, olive, rose_gold, dark, brushed_metal or high_contrast.
-These 5 previous options only have effect in GUI mode. In this case, they have precedence and will update what is defined in the configuration file.
+    classic, aero, metro, aqua, greybird, ocean, blue, olive, rose_gold, dark,
+    brushed_metal or high_contrast.
+These 5 previous options only have effect in GUI mode. In this case, they have precedence and will update
+what is defined in the configuration file.
 The configuration file is located there : "C:\Users\dplal\AppData\Roaming\dplalanne.fr\subadjust.prefs".
 
  -l, --log-level ARG       Set the level of the log messages to display :
     ALL: All the messages.
     TRACE: Almost all messages, at least those finer than the INFO level.
-    INFO: Informational messages that highlight the application's progress at a coarser level.
+    INFO: Informational messages that highlight the application’s progress at a coarser level.
     DEBUG: Fine-grained events, the most useful for debugging an application.
     WARN: Potentially dangerous situations.
     ERROR: Errors that might still allow the application to continue running.
@@ -54,26 +60,30 @@ The configuration file is located there : "C:\Users\dplal\AppData\Roaming\dplala
     OFF: Disables logging.
  -m, --log-file ARG        Define the file where log messages will be stored.
     Default it to store them in the following file C:\UnixTools\msys64\tmp\subadjust.log
-    The special value 'console' will allows to output the log messages to the console, if possible.
+    The special value "console" will allows to output the log messages to the console, if possible.
 These 2 previous options have precedence on the environments variable LOG and LOGFILE.
-If none of these are defined, the default is to send the WARN and following log messages into the file "C:\UnixTools\msys64\tmp\subadjust.log".
+If none of these are defined, the default is to send the WARN and following log messages into the file
+"C:\UnixTools\msys64\tmp\subadjust.log".
 ```
 
-<ins>Technical insight:</ins>
+
+<ins>***Technical insight:***</ins>
 
 It compiles and run under both Windows (With Visual Studio and g++) and Linux (With g++), thanks to FLTK. Should behave the same way under macOS ...
 
-<ins>Thanks and copyrights (If necessary):</ins>
+
+<ins>***Thanks and copyrights (If necessary):***</ins>
 
 - To [Bill Spitzak](https://github.com/spitzak) and others, of course, for the wonderful [FLTK](https://www.fltk.org) tool.
 - To [**Rangi42**](https://github.com/Rangi42), [**dannye**](https://github.com/dannye) and [Remy Oukaour](https://github.com/roukaour) for the fltk graphical theme enhancement, which I've somewhat hacked.
 - To [Claude](https://claude.ai) for the help on developing the Fl_Time_Input, whose design is largely inspired by Chrome's time selector.
 
-<ins>*To do :*</ins>
+
+<ins>***To do :***</ins>
 
 - *i18n and l10n*
 - *Detail prerequisites for the build (make, gcc, visual studio, fltk ...)*
 - *Add automated Setup and Delivery to the build workflow*
 - *Add feature to read and write vtt format*
 - *Finalize the preference management*
-- *Fix all the bugs (No, there aren't any!!)* 😠😅
+- *Fix all the bugs (No, there aren't any!!)*
