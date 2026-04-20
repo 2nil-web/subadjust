@@ -29,7 +29,7 @@ function gh_curr_rel () {
 
   if [ "${OS}" = "Windows_NT" ]
   then
-    SYS_VER=${OS}_$( wmic os get Version | grep -v Version | tr -d ' ')
+    SYS_VER=${OS}_$(powershell -Command '(Get-WmiObject -class Win32_OperatingSystem).Version')
     #SYS_VER=$(systeminfo | grep -i version | grep -i syst | sed 's/.*: *\(.*\) *.*/\1/')
   else
     OS_ID=$(sed -n 's/^ID=//p' /etc/os-release)
