@@ -67,7 +67,7 @@ It compiles and run under both Windows (With Visual Studio and g++) and Linux (W
 
 - To [Bill Spitzak](https://github.com/spitzak) and others, of course, for the wonderful [FLTK](https://www.fltk.org) tool.
 - To [**Rangi42**](https://github.com/Rangi42), [**dannye**](https://github.com/dannye) and [Remy Oukaour](https://github.com/roukaour) for the fltk graphical theme enhancement, which I've somewhat hacked.
-- To [Claude](https://claude.ai) for the help on developing the Fl_Time_Input, which is largely inspired by the Chrome time selector (I think...).
+- To [Claude](https://claude.ai) for the help on developing the Fl_Time_Input, whose design is largely inspired by Chrome's time selector.
 
 <ins>*To do :*</ins>
 
