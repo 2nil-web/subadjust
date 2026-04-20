@@ -83,7 +83,6 @@ It compiles and run under both Windows (With Visual Studio and g++) and Linux (W
 
 - *i18n and l10n*
 - *Detail prerequisites for the build (make, gcc, visual studio, fltk ...)*
-- *Add automated Setup and Delivery to the build workflow*
 - *Add feature to read and write vtt format*
 - *Finalize the preference management*
 - *Fix all the bugs (No, there aren't any!!)*
