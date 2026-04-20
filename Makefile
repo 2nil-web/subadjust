@@ -80,13 +80,17 @@ TARGET=${TARGET_DIR}/${PREFIX}${EXEXT}
 
 .PHONY: FORCE
 
-all : ${TARGET}
+all : ${TARGET} assets/QuickDoc.jpg
 
 gcc : ${TARGET}
 
 upx : ${TARGET}
 	@( strip ${TARGET} | true  ) >/dev/null 2>&1
 	@( upx ${TARGET} | true  ) >/dev/null 2>&1
+
+assets/QuickDoc.jpg : assets/QuickDoc.svg
+	${MAGICK} $< $@
+
 
 SETUP_PKG=${PREFIX}-${VERSION}-${SYS_VER}.zip
 
