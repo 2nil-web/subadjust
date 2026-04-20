@@ -5,6 +5,8 @@
 <ins>The GUI aims to be self-explanatory, but some indications might be useful :</ins>
 ![](assets/QuickDoc.svg "Quick doc")
 
+
+
 <ins>There is also has an inline help :</ins>
 
 ```
@@ -59,16 +61,24 @@ These 2 previous options have precedence on the environments variable LOG and LO
 If none of these are defined, the default is to send the WARN and following log messages into the file "C:\UnixTools\msys64\tmp\subadjust.log".
 ```
 
+
+
 <ins>Technical insight:</ins>
 It compiles and run under both Windows (With Visual Studio and g++) and Linux (With g++), thanks to FLTK. Should behave the same way under macOS ...
 
+
+
 <ins>Thanks and copyrights (If necessary):</ins>
 
-To Bill Spitzak and others, of course, for the wonderful [FLTK](https://www.fltk.org) tool.
-To [**Rangi42** Rangi](https://github.com/Rangi42), [**dannye**](https://github.com/dannye) and [Remy Oukaour](https://github.com/roukaour) for the fltk graphical theme enhancement, which I've somewhat hacked.
-To [Claude](https://claude.ai) for the help on developing the Fl_Time_Input, which is largely inspired by the Chrome time selector (I think...).
+- To Bill Spitzak and others, of course, for the wonderful [FLTK](https://www.fltk.org) tool.
 
-<ins>*To do :*</ins>
+- To [**Rangi42** Rangi](https://github.com/Rangi42), [**dannye**](https://github.com/dannye) and [Remy Oukaour](https://github.com/roukaour) for the fltk graphical theme enhancement, which I've somewhat hacked.
+
+- To [Claude](https://claude.ai) for the help on developing the Fl_Time_Input, which is largely inspired by the Chrome time selector (I think...).
+  
+  
+  
+  <ins>*To do :*</ins>
 
 - *i18n and l10n*
 - *Detail prerequisites for the build (make, gcc, visual studio, fltk ...)*
