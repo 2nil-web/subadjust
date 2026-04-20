@@ -184,7 +184,7 @@ void Fl_Time_Picker::draw()
   const char *hdrs12ms[] = {"H", " Min", " Sec ", "ms", "AM/PM"};
   const char **hdrs = use24_ ? (show_ms_ ? hdrs24ms : hdrs24) : (show_ms_ ? hdrs12ms : hdrs12);
 
-  fl_font(fm_.font, fm_.size-4);
+  fl_font(fm_.font, fm_.size - 4);
   fl_color(0);
   for (int c = 0; c < ncols_; c++)
   {

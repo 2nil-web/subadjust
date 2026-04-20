@@ -62,8 +62,6 @@ size_t file_size(const char *f);
 size_t file_size(FILE *f);
 void open_ifstream(std::ifstream &ifs, const char *f);
 bool check_read(FILE *file, uchar *expected, size_t n);
-uint16_t read_uint16(FILE *file);
-size_t read_rmp_size(FILE *file);
 char *my_strerror(int errn);
 std::string trim(const std::string &, std::string seps = "");
 std::string trim(std::string &, std::string seps = "");

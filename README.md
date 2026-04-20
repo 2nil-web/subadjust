@@ -60,11 +60,19 @@ If none of these are defined, the default is to send the WARN and following log 
 ```
 
 <ins>Technical insight:</ins>
-It compiles and run under both Windows (With Visual Studio and g++) and Linux (With g++), thanks to [FLTK](https://www.fltk.org). Should behave the same way under macOS ...
+It compiles and run under both Windows (With Visual Studio and g++) and Linux (With g++), thanks to FLTK. Should behave the same way under macOS ...
+
+<ins>Thanks and copyrights (If necessary):</ins>
+
+To Bill Spitzak and others, of course, for the wonderful [FLTK](https://www.fltk.org) tool.
+To [**Rangi42** Rangi](https://github.com/Rangi42), [**dannye**](https://github.com/dannye) and [Remy Oukaour](https://github.com/roukaour) for the fltk graphical theme enhancement, which I've somewhat hacked.
+To [Claude](https://claude.ai) for the help on developing the Fl_Time_Input, which is largely inspired by the Chrome time selector (I think...).
 
 <ins>*To do :*</ins>
+
 - *i18n and l10n*
 - *Detail prerequisites for the build (make, gcc, visual studio, fltk ...)*
 - *Add automated Setup and Delivery to the build workflow*
 - *Add feature to read and write vtt format*
-- *Correct every bug (No there are not !!)*
+- *Finalize the preference management*
+- *Fix all the bugs (No, there aren't any!!)* 😠😅
