@@ -6,6 +6,7 @@ UNAME=$(shell uname)
 ifeq (${OS},Windows_NT)
 SYS_VER=${OS}_$(shell powershell -Command '(Get-WmiObject -class Win32_OperatingSystem).Version')
 ECHOE=echo -e
+PATH:=/ucrt64/bin:${PATH}
 else # If not defined then set it to "uname -s" value
 ifeq (${OS},)
 OS=$(shell uname -s)

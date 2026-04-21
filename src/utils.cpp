@@ -92,6 +92,17 @@ std::string my_getenv(const std::string var, bool msg_if_empty)
   return sVal;
 }
 
+std::filesystem::path personal_dir() {
+  std::filesystem::path var;
+#ifdef _WIN32
+  var=my_getenv("USERPROFILE");
+#else
+  var=my_getenv("HOME");
+#endif
+
+  return var;
+}
+
 // Set env var
 // Return true if OK else false
 bool my_setenv(const std::string var, const std::string val)
