@@ -155,6 +155,7 @@
     <ClCompile Include="src/log.cpp" />
     <ClCompile Include="src/options.cpp" />
     <ClCompile Include="src/feed.cpp" />
+    <ClCompile Include="src/place.cpp" />
     <ClCompile Include="src/prefs.cpp" />
     <ClCompile Include="src/subs.cpp" />
     <ClCompile Include="src/themes.cpp" />
@@ -172,6 +173,7 @@
     <ClCompile Include="src/log.h" />
     <ClCompile Include="src/options.h" />
     <ClCompile Include="src/feed.h" />
+    <ClCompile Include="src/place.h" />
     <ClCompile Include="src/prefs.h" />
     <ClCompile Include="src/subs.h" />
     <ClCompile Include="src/themes.h" />

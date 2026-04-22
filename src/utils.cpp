@@ -123,21 +123,24 @@ bool create_directory_if_possible(std::filesystem::path p)
     return std::filesystem::create_directory(p);
 }
 
+bool create_file(std::filesystem::path p)
+{
+  std::ofstream f(p);
+  if (f)
+  {
+    f.close();
+    return true;
+  }
+  else
+    return false;
+}
+
 bool create_file_if_possible(std::filesystem::path p)
 {
   if (std::filesystem::exists(p))
     return false;
   else
-  {
-    std::ofstream f(p);
-    if (f)
-    {
-      f.close();
-      return true;
-    }
-    else
-      return false;
-  }
+    return create_file(p);
 }
 
 #ifdef _WIN32
