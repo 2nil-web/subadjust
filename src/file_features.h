@@ -24,6 +24,6 @@ void cui_display(bool, std::ostream &);
 
 bool file_handler(bool for_read = true);
 bool srt_save();
-void remove_opened();
+void remove_opened(bool all = false);
 
 #endif /* FILE_FEATURES_H */

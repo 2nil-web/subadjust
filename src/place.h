@@ -21,6 +21,7 @@ public:
   bool leave();
   void wont_leave();
   void will_leave();
+  bool is_empty();
   ~place();
 };
 

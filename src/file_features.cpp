@@ -85,50 +85,56 @@ void file_modified(int, int nInserted, int nDeleted, int, const char *, void *)
     set_file_state(true);
 }
 
-const std::filesystem::path already_opened_list = std::filesystem::temp_directory_path() / "already_opened"; // <=> $LOCALAPPDATA/Temp/already_opened || /tmp/already_opened || C:\UnixTools\msys64\tmp
+// $USERPROFILE/.subadjust_admin/already_opened || $HOME/already_opened
+const std::filesystem::path already_opened_list(admin_file(".already_opened"));
 
-void remove_opened()
+void remove_opened(bool all)
 {
-  static bool already_done = false;
-  if (already_done)
-    return;
-  already_done = true;
-
-  // logD("remove_opened");
-  if (file_path->value() != nullptr)
+  if (all)
+    std::filesystem::remove(already_opened_list);
+  else
   {
-    std::string abs_path(file_path->value());
-    logD("remove_opened, to remove file: [", abs_path, ']');
-    std::string line;
-    std::vector<std::string> all_files;
-    bool to_update = false;
+    static bool already_done = false;
+    if (already_done)
+      return;
+    already_done = true;
 
-    std::ifstream ifs(already_opened_list);
-    while (std::getline(ifs, line))
+    // logD("remove_opened");
+    if (file_path->value() != nullptr)
     {
-      trim(line);
+      std::string abs_path(file_path->value());
+      logD("remove_opened, to remove file: [", abs_path, ']');
+      std::string line;
+      std::vector<std::string> all_files;
+      bool to_update = false;
 
-      if (line == abs_path && !to_update)
+      std::ifstream ifs(already_opened_list);
+      while (std::getline(ifs, line))
       {
-        to_update = true;
-      }
-      else
-      {
-        all_files.push_back(line);
-      }
-    }
-    ifs.close();
+        trim(line);
 
-    if (to_update)
-    {
-      logD("from: " + already_opened_list.string() + ", all_files.size(): ", all_files.size());
-      std::ofstream ofs(already_opened_list, std::ios::trunc);
-      for (std::string file : all_files)
-      {
-        logD("Update already_opened: ", file);
-        ofs << file << std::endl;
+        if (line == abs_path && !to_update)
+        {
+          to_update = true;
+        }
+        else
+        {
+          all_files.push_back(line);
+        }
       }
-      ofs.close();
+      ifs.close();
+
+      if (to_update)
+      {
+        logD("from: " + already_opened_list.string() + ", all_files.size(): ", all_files.size());
+        std::ofstream ofs(already_opened_list, std::ios::trunc);
+        for (std::string file : all_files)
+        {
+          logD("Update already_opened: ", file);
+          ofs << file << std::endl;
+        }
+        ofs.close();
+      }
     }
   }
 }

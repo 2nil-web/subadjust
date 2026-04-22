@@ -4,16 +4,18 @@ set MSYSDIR=C:\UnixTools\msys64
 PATH %PATH%;%MSYSDIR%\usr\bin
 set EDITOR=gvim
 
-runset "%EDITOR% %APPDATA%\dplalanne.fr\subadjust.prefs" 3245 0 600 440
 
-runset "%EDITOR% %MSYSDIR%\tmp\subadjust_juxtaposing_management" 3245 432 600 160
-runset "%EDITOR% %MSYSDIR%\tmp\already_opened" 3245 582 600 160
+cd /D %USERPROFILE%\Documents\home\00-subadjust\src
+start .
+cd /D %USERPROFILE%\.subadjust\
+start .
 
-runset "%EDITOR% %LOCALAPPDATA%\Temp\subadjust_juxtaposing_management" 3245 732 600 160
-runset "%EDITOR% %LOCALAPPDATA%\Temp\already_opened" 3245 882 600 160
+runset "%EDITOR% %APPDATA%\dplalanne.fr\subadjust.prefs" 3160 160 690 530
+::runset "%EDITOR% %USERPROFILE%\.subadjust\juxtaposing_management" 3245 732 600 160
+runset "%EDITOR% %USERPROFILE%\.subadjust\.already_opened" 3160 682 690 360
 
-mintty -p 1920,200 -s 185x25 -i %MSYSDIR%\ucrt64.ico -
+cd /D %USERPROFILE%\.subadjust
+mintty -p 1920,205 -s 174x25 -i %MSYSDIR%\ucrt64.ico -
 ::e tail -f %LOCALAPPDATA%\Temp\subadjust.log
-mintty -p 1920,620 -s 185x25 -i %MSYSDIR%\ucrt64.ico -
-cd /D %USERPROFILE%\Documents\home\00-fltk_subadjust
-explorer .
+mintty -p 1920,625 -s 174x25 -i %MSYSDIR%\ucrt64.ico -
+

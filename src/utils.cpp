@@ -52,6 +52,7 @@
 #pragma warning(pop)
 #endif
 
+#include "log.h"
 #include "utils.h"
 
 #ifdef _WIN32
@@ -118,7 +119,7 @@ bool my_setenv(const std::string var, const std::string val)
 bool create_directory_if_possible(std::filesystem::path p)
 {
   if (std::filesystem::is_directory(p))
-    return false;
+    return true;
   else
     return std::filesystem::create_directory(p);
 }
@@ -141,6 +142,23 @@ bool create_file_if_possible(std::filesystem::path p)
     return false;
   else
     return create_file(p);
+}
+
+std::filesystem::path admin_file(std::filesystem::path filename, std::filesystem::path parent_dir)
+{
+  std::filesystem::path p;
+  create_directory_if_possible(parent_dir);
+
+#ifdef _WIN32
+  int attr = GetFileAttributes(p.wstring().c_str());
+  if ((attr & FILE_ATTRIBUTE_HIDDEN) == 0)
+  {
+    SetFileAttributes(p.wstring().c_str(), attr | FILE_ATTRIBUTE_HIDDEN);
+  }
+#endif
+  p = parent_dir / filename;
+  logD("admin_file: ", p);
+  return p;
 }
 
 #ifdef _WIN32

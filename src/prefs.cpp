@@ -9,6 +9,7 @@
 
 #include "file_features.h"
 #include "log.h"
+#include "place.h"
 #include "prefs.h"
 #include "subadjust_ui.h"
 #include "themes.h"
@@ -268,159 +269,83 @@ void correct_geometry(int &x, int &y, int &w, int &h)
   logD("Correc apres - x: ", x, ", y: ", y, ", w: ", w, ", h: ", h);
 }
 
-const std::filesystem::path instance_name(std::filesystem::temp_directory_path() / "subadjust_juxtaposing_management"); // <=> $LOCALAPPDATA/Temp/subadjust_juxtaposing_management || /tmp/subadjust_juxtaposing_management
-int my_inst_index = 0;
+// $USERPROFILE/.subadjust_admin || $HOME/.subadjust_admin/juxtaposing_management
+const std::filesystem::path placement_dir(admin_file("juxtaposing_management"));
+place placement_file(placement_dir);
 
-// Start to manage the main window multiple instances juxtaposing.
-
-// Il faudrait améliorer ce fonctionnement,  même si ce n'est pas fondamentale, en gérant le contenu du fichier 'instance_name', comme suit :
-// Une ligne par instance, contenant : pid, x, y, w, h.
-// Si le fichier est absent ou vide alors, l'instance qui le créé ou y ajoute la première ligne est alors, "l'instance initiale" qui sera la seule modifiant les préférences.
-// La première ligne doit toujours correspondre à la plus ancienne instance en cours (Pas forcémment l'instance initiale) mais qui fait office de référence pour le positionnement des suivantes.
-// Chaque ligne est mise à jour à chaque fois que l'instance lui correspondant est déplacer et /ou repositionnée.
-// Si on quitte la plus ancienne instance alors sa ligne, étant la première du fichier, est effacée et la suivante, devenant la "nouvelle première ligne", correspondra à la nouvelle instance la plus ancienne faisant office de référence pour le
-// positionnement des suivantes.
-void juxtaposing_manage(const int _x, const int _y, const int _w, const int _h, bool force_ruling = false)
+// Management of the multiple instances main window juxtaposing, juxtaposing rules are :
+//   1) Only the first appearing windows will have its configuration parameters saved in the preferences file
+//   2) The first appearing window's position will be use as the starting point for all others
+//   3) The first appearing window's dimenson will be use for all others
+//   4) Juxtaposing is done from left to right on the whole work area
+//   5) Once reached the rightest side of the work area then go back to leftest side
+//   6) If one of the window disappears its place will be used by the next appearing one
+void juxtaposing_manage(const int x, const int y, const int w, const int h, bool force_ruling = false)
 {
-  int work_width, work_height, inst_count, inst_inc, x = _x, old_x = _x, y = _y, w = _w, h = _h;
-  get_my_work_area(work_width, work_height);
-  logD("JUXTA POS - work_area: (", work_width, ", ", work_height, ")");
+  int new_x = x;
 
-  // La première instance du programme sert à définir le comportement d'affichage initiale des suivantes.
-  // Sa géométrie permet de définir s'il y aura incrémentation ou décrémentation de la position horizontale des suivantes
-  if (!std::filesystem::exists(instance_name) || std::filesystem::file_size(instance_name) == 0 || force_ruling)
+  // Recompute x origin for app instances after the first one
+  if (placement_file.number() > 0 && !force_ruling)
   {
-    inst_count = 1;
-    // If twice my current windows width is still inside my screen work area then will increment x origin else will decrement it
-    if (x < work_width / 2)
-      inst_inc = 1;
-    else
-      inst_inc = -1;
-  }
-  else
-  {
-    if (std::filesystem::exists(instance_name))
-    {
-      // 📖 Les autres se contente donc de se juxtaposer à la première, dans les limites de la zone de travail.
-      std::ifstream ifs(instance_name);
-      ifs >> inst_count >> inst_inc >> x >> y >> w >> h;
-
-      if (inst_count < 1 || inst_count > 100)
-        inst_count = 1;
-
-      if (inst_inc != 1 && inst_inc != -1)
-      {
-        if (x < work_width / 2)
-          inst_inc = 1;
-        else
-          inst_inc = -1;
-      }
-
-      correct_geometry(x, y, w, h);
-      old_x = x;
-      ifs.close();
-
-      // ✏️ Modification of my_inst_index and inst_count
-      my_inst_index = inst_count;
-      x += inst_count * inst_inc * w;
-      inst_count++;
-
-      // Cycle x origin to horizontal limits of the work area
-      if (inst_inc == 1)
-      {
-        if (x > work_width - w)
-          x = 8;
-      }
-      else
-      {
-        if (x < 0)
-          x = work_width - w;
-      }
-    }
+    int work_width, work_height;
+    get_my_work_area(work_width, work_height);
+    new_x = x + placement_file.number() * w;
+    // Cycle between work area origin +30 and width -30
+    if (new_x > work_width - 30)
+      new_x = 30;
   }
 
-  // Move main window
-  if (!force_ruling)
-  {
-    correct_geometry(x, y, w, h);
-    main_window->resize(x, y, w, h);
-  }
-
+  main_window->resize(new_x, y, w, h);
+  logD("juxtaposing_manage - placement_file.number: ", placement_file.number(), ", x: ", new_x, ", y: ", y, ", w: ", w, ", h: ", h);
   fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
-
-  logD("juxtaposing_manage - my_inst_index: ", my_inst_index, ", count: ", inst_count, ", inst_inc: ", inst_inc, ", x: ", old_x, ", y: ", y, ", w: ", w, ", h: ", h);
-
-  // 💾 Écriture des données
-  std::ofstream ofs(instance_name, std::ios::trunc);
-  ofs << inst_count << ' ' << inst_inc << ' ' << old_x << ' ' << y << ' ' << w << ' ' << h << std::endl;
-  ofs.close();
 }
 
-// Si la première instance du programme bouge, alors changement des repères de juxtaposition et redéfinition si incrémentation ou décrémentation.
+// Si la première instance du programme bouge, alors changement des repères de juxtaposition pour les suivantes
 int juxtaposing_update(int)
 {
-  if (my_inst_index == 0)
+  static int x = main_window->x_root(), y = main_window->y_root(), w = main_window->w(), h = main_window->h();
+
+  if (placement_file.number() == 0)
   {
-    static int prev_x = -1, prev_y = -1, prev_w = -1, prev_h = -1;
-    int x = main_window->x_root(), y = main_window->y_root(), w = main_window->w(), h = main_window->h();
-    if (x != prev_x || y != prev_y || w != prev_w || h != prev_h)
+
+    if (x != main_window->x_root())
     {
-      correct_geometry(x, y, w, h);
-      juxtaposing_manage(x, y, w, h, true);
-      prev_x = x;
-      prev_y = y;
-      prev_w = w;
-      prev_h = h;
+      x = main_window->x_root();
+      window.set("xpos", x);
+    }
+
+    if (y != main_window->y_root())
+    {
+      y = main_window->y_root();
+      window.set("ypos", y);
+    }
+
+    if (w != main_window->w())
+    {
+      w = main_window->w();
+      window.set("width", w);
+    }
+
+    if (h != main_window->h())
+    {
+      h = main_window->h();
+      window.set("height", h);
     }
   }
 
+  logD("juxtaposing_update - placement_file.number: ", placement_file.number(), ", x: ", x, ", y: ", y, ", w: ", w, ", h: ", h);
   return 0;
 }
 
 void juxtaposing_end()
 {
-  static bool already_done = false;
-  if (already_done)
-    return;
-  already_done = true;
+  logD("juxtaposing_end - placement_file.number: ", placement_file.number());
+  placement_file.leave();
 
-  remove_opened();
-
-  // Remove instance_name
-  if (std::filesystem::exists(instance_name))
-  {
-    if (my_inst_index == 0)
-    {
-      logD("juxtaposing_end");
-      std::filesystem::remove(instance_name);
-    }
-    else
-    {
-      // Decremente inst_count dans instance_name
-      int inst_count, inst_inc, x, y, w, h;
-      std::ifstream ifs(instance_name);
-      ifs >> inst_count >> inst_inc >> x >> y >> w >> h;
-      correct_geometry(x, y, w, h);
-
-      if (inst_inc != 1 && inst_inc != -1)
-      {
-        int work_width, work_height;
-        get_my_work_area(work_width, work_height);
-        if (x < work_width / 2)
-          inst_inc = 1;
-        else
-          inst_inc = -1;
-      }
-
-      ifs.close();
-      inst_count--;
-      if (inst_count < 1 || inst_count > 100)
-        inst_count = 1;
-      std::ofstream ofs(instance_name, std::ios::trunc);
-      ofs << inst_count << ' ' << inst_inc << ' ' << x << ' ' << y << ' ' << w << ' ' << h << std::endl;
-      ofs.close();
-    }
-  }
+  if (placement_file.is_empty())
+    remove_opened(true);
+  else
+    remove_opened();
 }
 
 void get_prefs(int x, int y, int w, int h)
@@ -457,16 +382,7 @@ void get_prefs(int x, int y, int w, int h)
 
   trace_prefs();
 }
-/*
-std::string pref_get_string(Fl_Preferences &pref, const std::string key, const std::string def_val)
-{
-  char *pval;
-  pref.get(key.c_str(), pval, def_val.c_str());
-  std::string val = pval;
-  free(pval);
-  return val;
-}
-*/
+
 // Merge menu in memory to its counterpart in the pref file
 std::string merge_menu(const std::string key, Fl_Input_Choice *ic, std::string _val)
 {
@@ -522,29 +438,27 @@ void reset_prefs()
   window.set("find menu", "\\{\\\\an8\\}|(..:..:..,...)|<font|<font color=\"#......\">");
   window.set("replace menu", "||$1");
 
-  std::filesystem::remove(instance_name);
+  std::filesystem::remove_all(placement_dir);
   const std::filesystem::path already_opened_list;
   std::filesystem::remove(already_opened_list);
 }
 
 void set_prefs()
 {
-  // On ne sauvegarde les préférences que de la première instance
-  if (my_inst_index == 0)
+  // On ne sauvegarde la geometrie que de la première instance
+  if (placement_file.number() == 0)
   {
     logT("Saving prefs");
     window.set("xpos", main_window->x_root());
     window.set("ypos", main_window->y_root());
     window.set("width", main_window->w());
     window.set("height", main_window->h());
-
-    window.set("theme", OS::current_theme_string().c_str());
-
-    window.set("case", case_sensitive_find->value());
-
-    window.set("find value", str_find->value());
-    window.set("replace value", str_replace->value());
   }
+
+  window.set("theme", OS::current_theme_string().c_str());
+  window.set("case", case_sensitive_find->value());
+  window.set("find value", str_find->value());
+  window.set("replace value", str_replace->value());
 
   // Always merge menus
   merge_menu("find menu", str_find, str_find->value());

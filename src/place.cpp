@@ -54,6 +54,7 @@ place::place(std::filesystem::path _directory, int _max_index)
 
   max_index = _max_index;
   take_place();
+  do_leave = true;
 }
 
 bool place::leave()
@@ -77,11 +78,13 @@ bool place::leave()
 int place::number()
 {
   return _number;
-};
+}
+
 void place::wont_leave()
 {
   do_leave = false;
 }
+
 void place::will_leave()
 {
   do_leave = true;
@@ -90,6 +93,13 @@ void place::will_leave()
 place::~place()
 {
   leave();
+}
+
+bool place::is_empty()
+{
+  if (!std::filesystem::exists(directory) || (std::filesystem::is_directory(directory) && std::filesystem::is_empty(directory)))
+    return true;
+  return false;
 }
 
 #ifdef USE_EXAMPLE
