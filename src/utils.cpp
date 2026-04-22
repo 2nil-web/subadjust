@@ -92,12 +92,13 @@ std::string my_getenv(const std::string var, bool msg_if_empty)
   return sVal;
 }
 
-std::filesystem::path personal_dir() {
+std::filesystem::path personal_dir()
+{
   std::filesystem::path var;
 #ifdef _WIN32
-  var=my_getenv("USERPROFILE");
+  var = my_getenv("USERPROFILE");
 #else
-  var=my_getenv("HOME");
+  var = my_getenv("HOME");
 #endif
 
   return var;
@@ -112,6 +113,31 @@ bool my_setenv(const std::string var, const std::string val)
 #else
   return setenv((char *)var.c_str(), (char *)val.c_str(), 1) == 0;
 #endif
+}
+
+bool create_directory_if_possible(std::filesystem::path p)
+{
+  if (std::filesystem::is_directory(p))
+    return false;
+  else
+    return std::filesystem::create_directory(p);
+}
+
+bool create_file_if_possible(std::filesystem::path p)
+{
+  if (std::filesystem::exists(p))
+    return false;
+  else
+  {
+    std::ofstream f(p);
+    if (f)
+    {
+      f.close();
+      return true;
+    }
+    else
+      return false;
+  }
 }
 
 #ifdef _WIN32

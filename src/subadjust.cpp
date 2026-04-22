@@ -159,7 +159,7 @@ std::string TxtError()
 
 std::string theme = "";
 bool gui_mode = true;
-#define SIMPLE_CB [](Fl_Widget *, void *) -> void
+#define SIMPLE_CB [](Fl_Widget *, void *)->void
 int main(int argc, char **argv)
 {
   std::string file = "", ofilename = "";

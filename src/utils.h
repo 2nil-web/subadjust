@@ -6,6 +6,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
+#include <filesystem>
 #include <fstream>
 #include <limits>
 #include <stdint.h>
@@ -53,6 +54,8 @@ typedef uint64_t size64_t;
 std::string my_getenv(const std::string, bool msg_if_empty = false);
 bool my_setenv(const std::string, const std::string);
 std::filesystem::path personal_dir();
+bool create_file_if_possible(std::filesystem::path);
+bool create_directory_if_possible(std::filesystem::path);
 bool starts_with_ignore_case(std::string_view s, std::string_view p);
 bool ends_with_ignore_case(std::string_view s, std::string_view p);
 void add_dot_ext(const char *f, const char *ext, char *s);
