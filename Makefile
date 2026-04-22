@@ -81,7 +81,7 @@ TARGET=${TARGET_DIR}/${PREFIX}${EXEXT}
 
 .PHONY: FORCE
 
-all : ${TARGET} assets/QuickDoc.jpg
+all : ${TARGET} #assets/QuickDoc.jpg
 
 gcc : ${TARGET}
 
