@@ -47,7 +47,11 @@ void place::reset()
 
 place::place(std::filesystem::path _directory, int _max_index)
 {
-  directory = _directory;
+  if (_directory.empty())
+    directory = personal_dir() / ".places";
+  else
+    directory = _directory;
+
   max_index = _max_index;
   take_place();
 }
