@@ -86,7 +86,7 @@ void file_modified(int, int nInserted, int nDeleted, int, const char *, void *)
 }
 
 // $USERPROFILE/.subadjust_admin/already_opened || $HOME/already_opened
-const std::filesystem::path already_opened_list(admin_file(".already_opened"));
+const std::filesystem::path already_opened_list(admin_file("already_opened"));
 
 void remove_opened(bool all)
 {

@@ -269,7 +269,7 @@ void correct_geometry(int &x, int &y, int &w, int &h)
   logD("Correc apres - x: ", x, ", y: ", y, ", w: ", w, ", h: ", h);
 }
 
-// $USERPROFILE/.subadjust_admin || $HOME/.subadjust_admin/juxtaposing_management
+// $USERPROFILE/.subadjust_admin/juxtaposing_management || $HOME/.subadjust_admin/juxtaposing_management
 const std::filesystem::path placement_dir(admin_file("juxtaposing_management"));
 place placement_file(placement_dir);
 
