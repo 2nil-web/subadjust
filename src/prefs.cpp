@@ -278,7 +278,7 @@ place placement_file(placement_dir);
 //   2) The first appearing window's position will be use as the starting point for all others
 //   3) The first appearing window's dimenson will be use for all others
 //   4) Juxtaposing is done from left to right on the whole work area
-//   5) Once reached the rightest side of the work area then go back to leftest side
+//   5) Horizontally cycle between left most and right most side of the work area
 //   6) If one of the window disappears its place will be used by the next appearing one
 void juxtaposing_manage(const int x, const int y, const int w, const int h, bool force_ruling = false)
 {
@@ -289,10 +289,8 @@ void juxtaposing_manage(const int x, const int y, const int w, const int h, bool
   {
     int work_width, work_height;
     get_my_work_area(work_width, work_height);
-    new_x = x + placement_file.number() * w;
-    // Cycle between work area origin +30 and width -30
-    if (new_x > work_width - 30)
-      new_x = 30;
+    // Cycle within the work area
+    new_x = ( x + placement_file.number() * w ) % work_width;
   }
 
   main_window->resize(new_x, y, w, h);
