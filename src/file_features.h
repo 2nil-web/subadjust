@@ -14,7 +14,7 @@ extern cSub csub;
 void set_file_state(bool modified);
 void file_modified(int pos, int nInserted, int nDeleted, int nRestyled, const char * /*deletedText*/, void *);
 bool file_read(const char *filename);
-bool file_read(const std::string filename = "");
+bool file_read(std::string filename = "");
 bool file_read(std::filesystem::path filename);
 bool file_write(std::string filename);
 
@@ -24,6 +24,7 @@ void cui_display(bool, std::ostream &);
 
 bool file_handler(bool for_read = true);
 bool srt_save();
+void remove_opened(std::filesystem::path);
 void remove_opened(bool all = false);
 
 #endif /* FILE_FEATURES_H */

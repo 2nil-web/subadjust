@@ -10,7 +10,7 @@
 #include "file_features.h"
 #include "log.h"
 #include "place.h"
-#include "prefs.h"
+#include "pref.h"
 #include "subadjust_ui.h"
 #include "themes.h"
 #include "utils.h"
@@ -44,7 +44,7 @@ const std::string pref_filename()
   return ret;
 }
 
-std::string pref_get_string(Fl_Preferences &pref, const std::string key, const std::string def_val)
+std::string pref_get_string(const std::string key, const std::string def_val, Fl_Preferences pref = window)
 {
   char *pval;
   pref.get(key.c_str(), pval, def_val.c_str());
@@ -53,7 +53,7 @@ std::string pref_get_string(Fl_Preferences &pref, const std::string key, const s
   return val;
 }
 
-int pref_get_int(Fl_Preferences &pref, const std::string key, int def_val)
+int pref_get_int(const std::string key, int def_val, Fl_Preferences pref = window)
 {
   int val;
   pref.get(key.c_str(), val, def_val);
@@ -263,7 +263,7 @@ void correct_geometry(int &x, int &y, int &w, int &h)
 const std::filesystem::path placement_dir(admin_file("juxtaposing_management"));
 place placement_file(placement_dir);
 
-void trace_prefs()
+void pref_trace()
 {
   logT("Trace_prefs ", placement_file.number(), " - Main window geometry: (", main_window->x_root(), ", ", main_window->y_root(), ", ", main_window->w(), ", ", main_window->h(), ')');
   /*
@@ -275,7 +275,6 @@ void trace_prefs()
   logT("Trace_prefs -         replace value: ", str_replace->value(), ", replace menu: ", menu_to_string(str_replace));
   */
 }
-
 
 // Management of the multiple instances main window juxtaposing, juxtaposing rules are :
 //   1) Only the first appearing windows will have its configuration parameters saved in the preferences file
@@ -294,7 +293,7 @@ void juxtaposing_manage(const int x, const int y, const int w, const int h, bool
     int work_width, work_height;
     get_my_work_area(work_width, work_height);
     // Cycle within the work area
-    new_x = ( x + placement_file.number() * w ) % work_width;
+    new_x = (x + placement_file.number() * w) % work_width;
   }
 
   main_window->resize(new_x, y, w, h);
@@ -309,9 +308,10 @@ int juxtaposing_update(int)
 
   if (placement_file.number() == 0)
   {
-    int new_x=main_window->x_root(), new_y=main_window->y_root(), new_w=main_window->w(), new_h=main_window->h();
+    int new_x = main_window->x_root(), new_y = main_window->y_root(), new_w = main_window->w(), new_h = main_window->h();
 
-    if (new_x == x && new_y == y && new_w == w && new_h == h) return 0;
+    if (new_x == x && new_y == y && new_w == w && new_h == h)
+      return 0;
 
     if (x != new_x)
     {
@@ -355,19 +355,22 @@ void juxtaposing_end()
   else
     remove_opened();
 }
-
-void get_prefs(int x, int y, int w, int h)
+#define DEF_WIN_X 8
+#define DEF_WIN_Y 30
+#define DEF_WIN_W 384
+#define DEF_WIN_H 1000
+void pref_get(int x, int y, int w, int h)
 {
   //  remove_cr_in_log(false); logI(screen_info_fr()); remove_cr_in_log();
   logT("Restoring prefs");
   if (x == -1)
-    x = pref_get_int(window, "xpos", 8);
+    x = pref_get_int("xpos", DEF_WIN_X);
   if (y == -1)
-    y = pref_get_int(window, "ypos", 30);
+    y = pref_get_int("ypos", DEF_WIN_Y);
   if (w == -1)
-    w = pref_get_int(window, "width", 384);
+    w = pref_get_int("width", DEF_WIN_W);
   if (h == -1)
-    h = pref_get_int(window, "height", 1000);
+    h = pref_get_int("height", DEF_WIN_H);
 
   correct_geometry(x, y, w, h);
   juxtaposing_manage(x, y, w, h);
@@ -377,18 +380,18 @@ void get_prefs(int x, int y, int w, int h)
 
   extern std::string theme;
   if (theme == "")
-    OS::use_theme(pref_get_string(window, "theme", "METRO").c_str());
+    OS::use_theme(pref_get_string("theme", "METRO").c_str());
 
-  case_sensitive_find->value(pref_get_int(window, "case", 0));
+  case_sensitive_find->value(pref_get_int("case", 0));
   // case_find();
 
-  str_find->value(pref_get_string(window, "find value", R"(\{\\an8\})").c_str());
-  str_find->add(dup_anti_slash(pref_get_string(window, "find menu", R"(\{\\an8\}|(..:..:..,...))")).c_str());
+  str_find->value(pref_get_string("find value", R"(\{\\an8\})").c_str());
+  str_find->add(dup_anti_slash(pref_get_string("find menu", R"(\{\\an8\}|(..:..:..,...))")).c_str());
 
-  str_replace->value(pref_get_string(window, "replace value", "").c_str());
-  str_replace->add(dup_anti_slash(pref_get_string(window, "replace menu", R"(|$1)")).c_str());
+  str_replace->value(pref_get_string("replace value", "").c_str());
+  str_replace->add(dup_anti_slash(pref_get_string("replace menu", R"(|$1)")).c_str());
 
-  trace_prefs();
+  pref_trace();
 }
 
 // Merge menu in memory to its counterpart in the pref file
@@ -431,13 +434,13 @@ std::string merge_menu(const std::string key, Fl_Input_Choice *ic, std::string _
   return smenu;
 }
 
-void reset_prefs()
+void pref_reset()
 {
   logT("Resetting prefs");
-  window.set("xpos", 40);
-  window.set("ypos", 20);
-  window.set("width", 384);
-  window.set("height", 600);
+  window.set("xpos", DEF_WIN_X);
+  window.set("ypos", DEF_WIN_Y);
+  window.set("width", DEF_WIN_W);
+  window.set("height", DEF_WIN_H);
   window.set("theme", "METRO");
   window.set("case", 0);
   window.set("find value", "");
@@ -452,7 +455,7 @@ void reset_prefs()
   std::filesystem::remove(already_opened_list);
 }
 
-void set_prefs()
+void pref_set()
 {
   // On ne sauvegarde la geometrie que de la première instance
   if (placement_file.number() == 0)
@@ -473,7 +476,51 @@ void set_prefs()
   merge_menu("find menu", str_find, str_find->value());
   merge_menu("replace menu", str_replace, str_replace->value());
 
-  trace_prefs();
+  pref_trace();
 
   juxtaposing_end();
+}
+
+int old_theme, old_x, old_y, old_w, old_h, work_w, work_h;
+
+void mw_resize(Fl_Widget *wid, void *v)
+{
+  int x = std::stoi(mw_x->value()), y = std::stoi(mw_y->value()), w = std::stoi(mw_w->value()), h = std::stoi(mw_h->value());
+  if (x > 0 && y > 0 && x + w < work_w && y + h < work_h)
+    main_window->resize(x, y, w, h);
+}
+
+void pref_dialog()
+{
+  old_theme = OS::current_theme();
+  old_x = main_window->x_root();
+  old_y = main_window->y_root();
+  old_w = main_window->w();
+  old_h = main_window->h();
+  get_my_work_area(work_w, work_h);
+
+  theme_choice->value(old_theme);
+  mw_x->value(old_x);
+  mw_y->value(old_y);
+  mw_w->value(old_w);
+  mw_h->value(old_h);
+
+  theme_choice->add("CLASSIC|AERO|METRO|AQUA|GREYBIRD|OCEAN|BLUE|OLIVE|ROSE_GOLD|DARK|BRUSHED_METAL|HIGH_CONTRAST");
+  theme_choice->value(old_theme);
+  theme_choice->callback(SIMPLE_CB { OS::use_theme(theme_choice->value()); });
+
+  mw_x->callback(mw_resize);
+  mw_y->callback(mw_resize);
+  mw_w->callback(mw_resize);
+  mw_h->callback(mw_resize);
+
+  ok_config->callback(SIMPLE_CB { config->hide(); });
+
+  cancel_config->callback(SIMPLE_CB {
+    OS::use_theme(old_theme);
+    main_window->resize(old_x, old_y, old_w, old_h);
+    config->hide();
+  });
+
+  config->show();
 }

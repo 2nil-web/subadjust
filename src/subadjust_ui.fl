@@ -4,7 +4,7 @@ header_name {.h}
 code_name {.cxx}
 Function {make_window()} {open
 } {
-  Fl_Window main_window {open selected
+  Fl_Window main_window {open
     xywh {2358 55 384 645} type Double box UP_BOX resizable
     code0 {\#include <FL/Fl_Int_Input.H>}
     code1 {\#include <FL/Fl_Float_Input.H>}
@@ -36,8 +36,8 @@ Function {make_window()} {open
         }
       }
       Fl_Button app_prefs {
-        label Help
-        xywh {65 2 20 26} hide
+        label Preferences
+        xywh {69 2 83 26}
       }
       Fl_Button app_about {
         label About
@@ -46,11 +46,11 @@ Function {make_window()} {open
       Fl_Button app_save_quit {
         label {Save/Quit}
         tooltip {Save your file and exit from the app.
-Available shortcut is 'Ctrl-X'.} xywh {83 2 79 26} shortcut 0x40078
+Available shortcut is 'Ctrl-X'.} xywh {167 2 79 26} shortcut 0x40078
       }
       Fl_Button app_quit {
         label {&Quit}
-        xywh {171 2 51 26} shortcut 0x40071
+        xywh {255 2 51 26} shortcut 0x40071
       }
       Fl_Group {} {open
         xywh {3 30 377 130} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
@@ -216,7 +216,7 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {2 34
         xywh {62 345 3 22} labeltype NO_LABEL hide
       }
       Fl_Output file_path {
-        label {File path}
+        label {File path} selected
         tooltip {Show the path of the file being currently edited.
 It turns red if there are pending modification.
 Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 345 314 22} labeltype NO_LABEL resizable
@@ -224,6 +224,43 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
     }
     Fl_Text_Editor file_content {
       xywh {4 376 376 266} labeltype NO_LABEL resizable
+    }
+  }
+  Fl_Window config {
+    label Configuration open
+    xywh {2753 55 371 180} type Double visible
+  } {
+    Fl_Choice theme_choice {
+      label {Theme:} open
+      xywh {72 9 122 22} down_box BORDER_BOX
+    } {}
+    Fl_Return_Button ok_config {
+      label OK
+      xywh {57 142 86 22}
+    }
+    Fl_Button cancel_config {
+      label Cancel
+      xywh {237 142 64 22}
+    }
+    Fl_Input mw_x {
+      label {x origin:}
+      xywh {72 55 92 22}
+      class Fl_Int_Input
+    }
+    Fl_Input mw_y {
+      label {y origin:}
+      xywh {72 85 92 22}
+      class Fl_Int_Input
+    }
+    Fl_Input mw_w {
+      label {width:}
+      xywh {250 55 92 22}
+      class Fl_Int_Input
+    }
+    Fl_Input mw_h {
+      label {height:}
+      xywh {250 85 92 22}
+      class Fl_Int_Input
     }
   }
 }

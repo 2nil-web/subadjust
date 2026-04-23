@@ -3726,6 +3726,7 @@ int OS::theme_from_string(std::string str)
 
     if (n >= (int)themeStrVec.size())
       n = (int)Theme::CLASSIC;
+
     return n;
   }
 }
@@ -3735,6 +3736,8 @@ std::vector<std::function<void()>> OS::theme_funcs = {use_classic_theme, use_aer
 
 bool OS::use_theme(int theme)
 {
+  logD("themes: ", themes_string(), " - str: ", themeStrVec[theme], " ==> ", theme);
+
   use_native_fonts();
   if (theme >= (int)Theme::CLASSIC && theme <= (int)Theme::HIGH_CONTRAST)
   {
@@ -3749,7 +3752,7 @@ bool OS::use_theme(std::string stheme)
 {
   if (!use_theme(theme_from_string(stheme)))
   {
-    logE(stheme, " does not exist");
+    logE("theme: ", stheme, " does not exist");
     return false;
   }
 

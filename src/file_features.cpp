@@ -15,10 +15,13 @@
 #include "edit_features.h"
 #include "file_features.h"
 #include "log.h"
+#include "options.h"
 #include "subadjust_ui.h"
 #include "subs.h"
 #include "themes.h"
 #include "utils.h"
+
+extern options myopt; // Pour récupérer progname
 
 Fl_Text_Buffer txt_buf;
 bool file_is_modified = false;
@@ -88,6 +91,43 @@ void file_modified(int, int nInserted, int nDeleted, int, const char *, void *)
 // $USERPROFILE/.subadjust_admin/already_opened || $HOME/already_opened
 const std::filesystem::path already_opened_list(admin_file("already_opened"));
 
+void remove_opened(std::filesystem::path abs_path)
+{
+  //  std::string abs_path(file_path->value());
+  logD("remove_opened, to remove file: [", abs_path, ']');
+  std::string line;
+  std::vector<std::string> all_files;
+  bool to_update = false;
+
+  std::ifstream ifs(already_opened_list);
+  while (std::getline(ifs, line))
+  {
+    trim(line);
+
+    if (line == abs_path && !to_update)
+    {
+      to_update = true;
+    }
+    else
+    {
+      all_files.push_back(line);
+    }
+  }
+  ifs.close();
+
+  if (to_update)
+  {
+    logD("from: " + already_opened_list.string() + ", all_files.size(): ", all_files.size());
+    std::ofstream ofs(already_opened_list, std::ios::trunc);
+    for (std::string file : all_files)
+    {
+      logD("Update already_opened: ", file);
+      ofs << file << std::endl;
+    }
+    ofs.close();
+  }
+}
+
 void remove_opened(bool all)
 {
   if (all)
@@ -101,41 +141,7 @@ void remove_opened(bool all)
 
     // logD("remove_opened");
     if (file_path->value() != nullptr)
-    {
-      std::string abs_path(file_path->value());
-      logD("remove_opened, to remove file: [", abs_path, ']');
-      std::string line;
-      std::vector<std::string> all_files;
-      bool to_update = false;
-
-      std::ifstream ifs(already_opened_list);
-      while (std::getline(ifs, line))
-      {
-        trim(line);
-
-        if (line == abs_path && !to_update)
-        {
-          to_update = true;
-        }
-        else
-        {
-          all_files.push_back(line);
-        }
-      }
-      ifs.close();
-
-      if (to_update)
-      {
-        logD("from: " + already_opened_list.string() + ", all_files.size(): ", all_files.size());
-        std::ofstream ofs(already_opened_list, std::ios::trunc);
-        for (std::string file : all_files)
-        {
-          logD("Update already_opened: ", file);
-          ofs << file << std::endl;
-        }
-        ofs.close();
-      }
-    }
+      remove_opened(file_path->value());
   }
 }
 
@@ -189,7 +195,7 @@ bool file_read(const char *pfile)
   return file_read(filename);
 }
 
-bool file_read(const std::string filename)
+bool file_read(std::string filename)
 {
   return file_read(std::filesystem::path(trim(filename)));
 }
@@ -204,15 +210,11 @@ bool file_read(std::filesystem::path abs_path)
 
   if (!abs_path.is_absolute())
     abs_path = std::filesystem::absolute(abs_path);
-  logD("file_read - bef loadfile ", abs_path);
 
   if (txt_buf.loadfile(abs_path.string().c_str()) == 0)
   {
-    logD("Before parse file_read: diff");
     bool diff = csub.diff(txt_buf.text());
-    logD("After parse file_read: ", (diff ? "" : "no "), "change");
 
-    logD("file_read - bef transcoded ", abs_path);
     if (txt_buf.input_file_was_transcoded || diff)
     {
       if (diff)
@@ -312,6 +314,13 @@ void gui_display(bool file_read_ok, bool test_already_opened)
 
     txt_buf.transcoding_warning_action = nullptr;
     do_set_file_state();
+
+    std::string old_t = "";
+    if (main_window->label())
+      old_t = std::string("old title: ") + main_window->label() + ", ";
+    std::string title = myopt.progname + " - " + current_abs_path.stem().string();
+    main_window->label(title.c_str());
+
     file_content->scroll(1, 0);
     to_line(1);
     file_content->show_cursor(1);
@@ -382,7 +391,9 @@ bool file_handler(bool for_read)
     logT("PICKED: %s\n", fsel.filename());
     if (for_read)
     {
-      file_read(fsel.filename());
+      if (!current_abs_path.empty())
+        remove_opened(current_abs_path);
+      gui_display(file_read(fsel.filename()));
     }
     else
       file_write(fsel.filename());

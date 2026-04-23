@@ -33,7 +33,7 @@ ISO8601 := $(shell date +%Y-%m-%dT%H:%M:%SZ)
 PLATFORM="${SYS_VER} $(shell uname -m)"
 
 PREFIX=subadjust
-SRCS=${PREFIX}_ui.cpp ${PREFIX}.cpp themes.cpp utils.cpp subs.cpp Fl_Time_Input.cpp Fl_Time_Picker.cpp file_features.cpp edit_features.cpp log.cpp prefs.cpp options.cpp feed.cpp place.cpp
+SRCS=${PREFIX}_ui.cpp ${PREFIX}.cpp themes.cpp utils.cpp subs.cpp Fl_Time_Input.cpp Fl_Time_Picker.cpp file_features.cpp edit_features.cpp log.cpp pref.cpp options.cpp feed.cpp place.cpp
 SRCS:=$(addprefix  ${SRC_DIR}/,${SRCS})
 
 ifeq ($(findstring NT-, $(UNAME)),)
@@ -112,7 +112,7 @@ ${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_ui.cpp : ${SRC_DIR}/${PREFIX}_ui.
 	@echo "Fluid Gen"
 	cd ${SRC_DIR} && ${FLUID} -c -o .cpp ${PREFIX}_ui.fl
 
-${SRC_DIR}/${PREFIX}.cpp ${SRC_DIR}/file_features.cpp ${SRC_DIR}/edit_features.cpp ${SRC_DIR}/prefs.cpp : ${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_icon.h ${SRC_DIR}/${PREFIX}.ico
+${SRC_DIR}/${PREFIX}.cpp ${SRC_DIR}/file_features.cpp ${SRC_DIR}/edit_features.cpp ${SRC_DIR}/pref.cpp : ${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_icon.h ${SRC_DIR}/${PREFIX}.ico
 
 #	@fold -w 253 ${PREFIX}.svg | sed -e 's/"/\\"/g;s/\(.*\)/"\1" \\/' >>${PREFIX}_icon.h
 ${SRC_DIR}/${PREFIX}_icon.h : ${SRC_DIR}/${PREFIX}.svg

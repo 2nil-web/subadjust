@@ -34,7 +34,7 @@ Si LOG n'est pas défini alors que LOGFILE l'est, le niveau de journalisation pa
 */
 
 std::vector<std::pair<std::string, eLogLevel>> vLogLev = {
-    {"ALL", LEVEL_ALL}, {"TRACE", LEVEL_TRACE}, {"DEBUG", LEVEL_DEBUG}, {"INFO", LEVEL_INFO}, {"WARN", LEVEL_WARN}, {"ERROR", LEVEL_ERROR}, {"FATAL", LEVEL_FATAL}, {"OFF", LEVEL_OFF},
+    {"ALL", LEVEL_ALL}, {"TRACE", LEVEL_TRACE}, {"INFO", LEVEL_INFO}, {"DEBUG", LEVEL_DEBUG}, {"WARN", LEVEL_WARN}, {"ERROR", LEVEL_ERROR}, {"FATAL", LEVEL_FATAL}, {"OFF", LEVEL_OFF},
 };
 
 std::string get_sloglev(eLogLevel ll)
@@ -86,22 +86,13 @@ void remove_cr_in_log(bool rm)
   log_remove_cr = rm;
 }
 
-static bool une_fois = true;
+static bool une_fois = false;
 void send2log(eLogLevel llvl, std::filesystem::path pth, int ln, std::string msg)
 {
   eLogLevel eEnvLog = LEVEL_WARN;
 
   std::string envLog = my_getenv("LOG");
   std::string logfile = my_getenv("LOGFILE");
-
-  if (une_fois)
-  {
-    une_fois = false;
-    if (logfile.empty())
-
-      std::cout << "To see logs on console, set the environment variable 'LOGFILE' to 'console' else set it to a valid filename (Default \"" << DEF_LOG.make_preferred().string()
-                << "\").\nAnd set environment variable 'LOG' to one of the following values: ALL < TRACE < INFO < DEBUG < WARN < ERROR < FATAL < OFF (Actually \"" << get_sloglev(eEnvLog) << "\")." << std::endl;
-  }
 
   if (envLog.empty())
   {
@@ -121,6 +112,15 @@ void send2log(eLogLevel llvl, std::filesystem::path pth, int ln, std::string msg
 
   if (logfile != "console" && eEnvLog == LEVEL_OFF)
     eEnvLog = LEVEL_ALL;
+
+  if (une_fois)
+  {
+    une_fois = false;
+    if (logfile.empty())
+
+      std::cout << "To see logs on console, set the environment variable 'LOGFILE' to 'console' else set it to a valid filename (Default is \"" << DEF_LOG.make_preferred().string()
+                << "\").\nAnd set environment variable 'LOG' to one of the following values: ALL < TRACE < INFO < DEBUG < WARN < ERROR < FATAL < OFF (Default is \"" << envLog << "\")." << std::endl;
+  }
 
   // std::cout << "LEVEL_OFF: " << LEVEL_OFF << ", LOG: " << envLog << "==" << eEnvLog << ", LOGFILE: " << logfile << std::endl;
   if (eEnvLog == LEVEL_OFF || llvl < eEnvLog)

@@ -22,7 +22,7 @@
 #include "file_features.h"
 #include "log.h"
 #include "options.h"
-#include "prefs.h"
+#include "pref.h"
 #include "subadjust_icon.h"
 #include "subadjust_ui.h"
 #include "subs.h"
@@ -122,7 +122,7 @@ void quit_cb(Fl_Widget *, void *)
     }
     else
     {
-      set_prefs();
+      pref_set();
       delete main_window;
     }
   }
@@ -159,7 +159,9 @@ std::string TxtError()
 
 std::string theme = "";
 bool gui_mode = true;
-#define SIMPLE_CB [](Fl_Widget *, void *)->void
+options myopt;
+std::string opt_level = "";
+
 int main(int argc, char **argv)
 {
   std::string file = "", ofilename = "";
@@ -168,114 +170,116 @@ int main(int argc, char **argv)
   bool run_pre_proc = false;
   int pp_time_start = -1, pp_time_stop = -1, pp_dur_k = 0, pp_offs_start = 0, pp_offs_stop = 0;
 
-  options myopt(argc, argv,
-                {
-                    option_info(""),
-                    option_info(
-                        'f', "file", [&](s_opt_params &p) -> void { file = p.val; }, "Name of the file to read. It is the same than directly passing a file name without this option.", required),
+  myopt.set(argc, argv,
+            {
+                option_info(""),
+                option_info(
+                    'f', "file", [&](s_opt_params &p) -> void { file = p.val; }, "Name of the file to read. It is the same than directly passing a file name as an argument without this option.", required),
 
-                    option_info(
-                        'g', "gui-mode", [&](s_opt_params &) -> void { gui_mode = true; }, "Process the input file and show it with the gui."),
-                    option_info(
-                        'c', "batch-mode", [&](s_opt_params &) -> void { gui_mode = false; }, "Process the input the file and print the result."),
+                option_info(
+                    'g', "gui-mode", [&](s_opt_params &) -> void { gui_mode = true; }, "Process the input file and show it with the gui, this is the default behavior."),
+                option_info(
+                    'c', "batch-mode", [&](s_opt_params &) -> void { gui_mode = false; }, "Process the input the file and print the result."),
 
-                    option_info(""),
-                    option_info(
-                        'b', "begin-time",
-                        [&](s_opt_params &p) -> void {
-                          run_pre_proc = true;
-                          pp_time_start = str_to_ms(p.val);
-                        },
-                        "Change the beginning time stamp to the provided argument.", required),
-                    option_info(
-                        'e', "end-time",
-                        [&](s_opt_params &p) -> void {
-                          run_pre_proc = true;
-                          pp_time_stop = str_to_ms(p.val);
-                        },
-                        "Change the end time stamp to the provided argument.", required),
-                    option_info(
-                        'k', "duration-coeff",
-                        [&](s_opt_params &p) -> void {
-                          run_pre_proc = true;
-                          pp_dur_k = std::stoi(p.val);
-                        },
-                        "Change the duration coefficient to the provided argument.", required),
-                    option_info(
-                        'a', "start-offset",
-                        [&](s_opt_params &p) -> void {
-                          run_pre_proc = true;
-                          pp_offs_start = stoi(p.val);
-                        },
-                        "Change the start offset to the provided argument.", required),
-                    option_info(
-                        's', "stop-offset",
-                        [&](s_opt_params &p) -> void {
-                          run_pre_proc = true;
-                          pp_offs_stop = stoi(p.val);
-                        },
-                        "Change the stop offset to the provided argument.", required),
-                    option_info("These 5 previous options are processed after reading the file and have effect in both GUI and batch mode."),
+                option_info(""),
+                option_info(
+                    'b', "begin-time",
+                    [&](s_opt_params &p) -> void {
+                      run_pre_proc = true;
+                      pp_time_start = str_to_ms(p.val);
+                    },
+                    "Change the beginning time stamp to the provided argument.", required),
+                option_info(
+                    'e', "end-time",
+                    [&](s_opt_params &p) -> void {
+                      run_pre_proc = true;
+                      pp_time_stop = str_to_ms(p.val);
+                    },
+                    "Change the end time stamp to the provided argument.", required),
+                option_info(
+                    'k', "duration-coeff",
+                    [&](s_opt_params &p) -> void {
+                      run_pre_proc = true;
+                      pp_dur_k = std::stoi(p.val);
+                    },
+                    "Change the duration coefficient to the provided argument.", required),
+                option_info(
+                    'a', "start-offset",
+                    [&](s_opt_params &p) -> void {
+                      run_pre_proc = true;
+                      pp_offs_start = stoi(p.val);
+                    },
+                    "Change the start offset to the provided argument.", required),
+                option_info(
+                    's', "stop-offset",
+                    [&](s_opt_params &p) -> void {
+                      run_pre_proc = true;
+                      pp_offs_stop = stoi(p.val);
+                    },
+                    "Change the stop offset to the provided argument.", required),
+                option_info("These 5 previous options are processed after reading the file and have effect in both GUI and batch mode."),
 
-                    option_info(""),
-                    option_info(
-                        'o', "output-file", [&](s_opt_params &p) -> void { ofilename = p.val; }, "Write the processing result into the file whose name is passed as argument.", required),
-                    option_info(
-                        'i', "modify-input", [&](s_opt_params &) -> void { modify_input = true; }, "Write the processing result into the same input file."),
-                    option_info("These 2 previous options only have meaning in batch mode, they are ignored in GUI mode."),
+                option_info(""),
+                option_info(
+                    'o', "output-file", [&](s_opt_params &p) -> void { ofilename = p.val; }, "Write the processing result into the file whose name is passed as argument.", required),
+                option_info(
+                    'i', "modify-input", [&](s_opt_params &) -> void { modify_input = true; }, "Write the processing result into the same input file."),
+                option_info("These 2 previous options only have meaning in batch mode, they are ignored in GUI mode."),
 
-                    option_info(""),
-                    option_info(
-                        'r', "reset-pref", [&](s_opt_params &) -> void { reset_prefs(); }, "Reset the preferences to default values."),
-                    option_info(
-                        'x', "xpos", [&](s_opt_params &p) -> void { x = std::stoi(p.val); }, "Set the x origin of the subadjust window.", required),
-                    option_info(
-                        'y', "ypos", [&](s_opt_params &p) -> void { y = std::stoi(p.val); }, "Set the y origin of the subadjust window.", required),
-                    option_info(
-                        'w', "width", [&](s_opt_params &p) -> void { w = std::stoi(p.val); }, "Set the width of the subadjust window.", required),
-                    option_info(
-                        'h', "height", [&](s_opt_params &p) -> void { h = std::stoi(p.val); }, "Set the height of the subadjust window.", required),
-                    option_info(
-                        't', "theme", [](s_opt_params &p) -> void { theme = p.val; }, R"EOF(Set the graphic theme to use. It is a string to choose between one of :
+                option_info(""),
+                option_info(
+                    'r', "reset-pref", [&](s_opt_params &) -> void { pref_reset(); }, "Reset the preferences to default values."),
+                option_info(
+                    'x', "xpos", [&](s_opt_params &p) -> void { x = std::stoi(p.val); }, "Set the x origin of the subadjust window.", required),
+                option_info(
+                    'y', "ypos", [&](s_opt_params &p) -> void { y = std::stoi(p.val); }, "Set the y origin of the subadjust window.", required),
+                option_info(
+                    'w', "width", [&](s_opt_params &p) -> void { w = std::stoi(p.val); }, "Set the width of the subadjust window.", required),
+                option_info(
+                    'h', "height", [&](s_opt_params &p) -> void { h = std::stoi(p.val); }, "Set the height of the subadjust window.", required),
+                option_info(
+                    't', "theme", [](s_opt_params &p) -> void { theme = p.val; }, R"EOF(Set the graphic theme to use. It is a string to choose between one of :
     classic, aero, metro, aqua, greybird, ocean, blue, olive, rose_gold, dark, brushed_metal or high_contrast.)EOF",
-                        required),
-                    option_info(R"EOF(These 5 previous options only have effect in GUI mode. In this case, they have precedence and will update what is defined in the configuration file.
+                    required),
+                option_info(R"EOF(These 5 previous options only have effect in GUI mode. In this case, they have precedence and will update what is defined in the configuration file.
 The configuration file is located there : ")EOF" +
-                                std::filesystem::path(pref_filename()).make_preferred().string() + "\"."),
+                            std::filesystem::path(pref_filename()).make_preferred().string() + "\"."),
 
-                    option_info(""),
-                    option_info(
-                        'l', "log-level",
-                        [&](s_opt_params &p) -> void {
-                          std::transform(p.val.begin(), p.val.end(), p.val.begin(), ::toupper);
-                          eLogLevel ll = get_eloglev(p.val);
-                          if (ll != LEVEL_UNDEFINED)
-                            my_setenv("LOG", p.val);
-                          // std::cout << ll << ", " << my_getenv("LOG") << std::endl;
-                        },
-                        R"EOF(Set the level of the log messages to display :
-    ALL: All the messages.
-    TRACE: Almost all messages, at least those finer than the INFO level.
-    INFO: Informational messages that highlight the application's progress at a coarser level.
-    DEBUG: Fine-grained events, the most useful for debugging an application.
-    WARN: Potentially dangerous situations.
-    ERROR: Errors that might still allow the application to continue running.
-    FATAL: Very serious errors that will likely cause the application to crash.
-    OFF: Disables logging.)EOF",
-                        required),
-                    option_info(
-                        'm', "log-file", [&](s_opt_params &p) -> void { my_setenv("LOG", p.val); }, R"EOF(Define the file where log messages will be stored.
+                option_info(""),
+                option_info(
+                    'l', "log-level",
+                    [&](s_opt_params &p) -> void {
+                      std::transform(p.val.begin(), p.val.end(), p.val.begin(), ::toupper);
+                      eLogLevel ll = get_eloglev(p.val);
+                      if (ll != LEVEL_UNDEFINED)
+                      {
+                        my_setenv("LOG", p.val);
+                        opt_level = p.val;
+                      }
+                      // std::cout << ll << ", " << my_getenv("LOG") << std::endl;
+                    },
+                    R"EOF(Set the level of the log messages to display :
+    ALL   All the messages.
+    TRACE Almost all messages, at least those finer than the INFO level.
+    INFO  Informational messages that highlight the application's progress at a coarser level.
+    DEBUG Fine-grained events, the most useful for debugging an application.
+    WARN  Potentially dangerous situations.
+    ERROR Errors that might still allow the application to continue running.
+    FATAL Very serious errors that will likely cause the application to crash.
+    OFF   Disables logging.)EOF",
+                    required),
+                option_info(
+                    'm', "log-file", [&](s_opt_params &p) -> void { my_setenv("LOGFILE", p.val); }, R"EOF(Define the file where log messages will be stored.
     Default it to store them in the following file )EOF" + DEF_LOG.string() + "\n    The special value 'console' will allows to output the log messages to the console, if possible.",
-                        required),
-                    option_info(R"EOF(These 2 previous options have precedence on the environments variable LOG and LOGFILE.
-If none of these are defined, the default is to send the WARN and following log messages into the file ")EOF" +
-                                DEF_LOG.string() + "\"."),
-                    // option_info(""),
-                });
+                    required),
+                //                option_info(R"EOF(These 2 previous options have precedence on the environments variable LOG and LOGFILE.
+                option_info(R"EOF(If none of these are defined, the default is to send the WARN and following log messages into the file ")EOF" + DEF_LOG.string() + "\"."),
+                // option_info(""),
+            });
 
   myopt.set_desc("A tool that allows to process subtitles files.\nThe batch mode allows processing at the command line or by script.\nMeanwhile the GUI mode adds a search and replace feature with regular expressions.");
 
-  // Calls to logFunctions before opt.parse will not work correctly ...
+  // Calls to logFunctions before opt.parse may not work correctly ...
   myopt.parse();
 
   // Text objects (file path and content)
@@ -305,7 +309,7 @@ If none of these are defined, the default is to send the WARN and following log 
     main_window->icon(&svg);
     //  main_window->wait_for_expose();
     Fl::scrollbar_size(14);
-    get_prefs(x, y, w, h);
+    pref_get(x, y, w, h);
 
     fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
 
@@ -338,6 +342,7 @@ If none of these are defined, the default is to send the WARN and following log 
 
     // Pref
     app_prefs->callback(SIMPLE_CB {
+#ifdef NO_CONFIG_DLG
       std::string pf = std::filesystem::path(pref_filename()).make_preferred().string();
       logD("pf: ", pf);
       const std::string msg = "To do ...\nBut you may consider editing the following file:\n" + pf + "\nDo you want to proceed ?";
@@ -357,6 +362,9 @@ If none of these are defined, the default is to send the WARN and following log 
       std::system(edit.c_str());
 #endif
       }
+#else
+      pref_dialog();
+#endif
     });
 
     // About
@@ -381,7 +389,9 @@ If none of these are defined, the default is to send the WARN and following log 
 
       // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
       if (!abs_path.empty() && (!file_is_modified || fl_choice("It seems that the subtitle file has been modified.\nDo you still want to reload it ?", "No", "Yes", 0L)))
-        file_read(abs_path);
+      {
+        gui_display(file_read(abs_path), false);
+      }
       // sub_adjust->deactivate();
     });
 

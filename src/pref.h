@@ -8,9 +8,13 @@
 #ifdef _MSVC_LANG
 #pragma warning(pop)
 #endif
-void reset_prefs();
-void set_prefs();
-void get_prefs(int, int, int, int);
+
+#define SIMPLE_CB [](Fl_Widget *, void *)->void
+
+void pref_reset();
+void pref_set();
+void pref_get(int, int, int, int);
+void pref_dialog();
 void case_find(Fl_Widget *w = nullptr, void *v = nullptr);
 const std::string pref_filename();
 #endif /* PREFS_H */

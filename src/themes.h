@@ -21,6 +21,10 @@ class OS
 public:
   static std::string themes_string();
   static std::string current_theme_string();
+  static int current_theme()
+  {
+    return _current_theme;
+  };
   static bool use_theme(std::string stheme = {});
   static bool use_theme(int theme);
 
