@@ -44,16 +44,6 @@ const std::string pref_filename()
   return ret;
 }
 
-void trace_prefs()
-{
-  logT("Preferences file name: ", pref_filename());
-  logT("Main window geometry: (", main_window->x_root(), ", ", main_window->y_root(), ", ", main_window->w(), ", ", main_window->h(), ')');
-  logT("Theme: ", OS::themes_string());
-  logT("Find case sensitivity: ", case_sensitive_find->value());
-  logT("Patterns - find value: ", str_find->value(), ", find menu: ", menu_to_string(str_find));
-  logT("        replace value: ", str_replace->value(), ", replace menu: ", menu_to_string(str_replace));
-}
-
 std::string pref_get_string(Fl_Preferences &pref, const std::string key, const std::string def_val)
 {
   char *pval;
@@ -273,6 +263,20 @@ void correct_geometry(int &x, int &y, int &w, int &h)
 const std::filesystem::path placement_dir(admin_file("juxtaposing_management"));
 place placement_file(placement_dir);
 
+void trace_prefs()
+{
+  logT("Trace_prefs ", placement_file.number(), " - Main window geometry: (", main_window->x_root(), ", ", main_window->y_root(), ", ", main_window->w(), ", ", main_window->h(), ')');
+  /*
+  logT("Trace_prefs - Preferences file name: ", pref_filename());
+  logT("Trace_prefs - Main window geometry: (", main_window->x_root(), ", ", main_window->y_root(), ", ", main_window->w(), ", ", main_window->h(), ')');
+  logT("Trace_prefs - Theme: ", OS::themes_string());
+  logT("Trace_prefs - Find case sensitivity: ", case_sensitive_find->value());
+  logT("Trace_prefs - Patterns - find value: ", str_find->value(), ", find menu: ", menu_to_string(str_find));
+  logT("Trace_prefs -         replace value: ", str_replace->value(), ", replace menu: ", menu_to_string(str_replace));
+  */
+}
+
+
 // Management of the multiple instances main window juxtaposing, juxtaposing rules are :
 //   1) Only the first appearing windows will have its configuration parameters saved in the preferences file
 //   2) The first appearing window's position will be use as the starting point for all others
@@ -301,37 +305,43 @@ void juxtaposing_manage(const int x, const int y, const int w, const int h, bool
 // Si la première instance du programme bouge, alors changement des repères de juxtaposition pour les suivantes
 int juxtaposing_update(int)
 {
-  static int x = main_window->x_root(), y = main_window->y_root(), w = main_window->w(), h = main_window->h();
+  static int x = -1, y = -1, w = -1, h = -1;
 
   if (placement_file.number() == 0)
   {
+    int new_x=main_window->x_root(), new_y=main_window->y_root(), new_w=main_window->w(), new_h=main_window->h();
 
-    if (x != main_window->x_root())
+    if (new_x == x && new_y == y && new_w == w && new_h == h) return 0;
+
+    if (x != new_x)
     {
-      x = main_window->x_root();
+      x = new_x;
       window.set("xpos", x);
     }
 
-    if (y != main_window->y_root())
+    if (y != new_y)
     {
-      y = main_window->y_root();
+      y = new_y;
       window.set("ypos", y);
     }
 
-    if (w != main_window->w())
+    if (w != new_w)
     {
-      w = main_window->w();
+      w = new_w;
       window.set("width", w);
     }
 
-    if (h != main_window->h())
+    if (h != new_h)
     {
-      h = main_window->h();
+      h = new_h;
       window.set("height", h);
     }
+
+    // Force la mise à jour des données de préférence
+    window.flush();
+    logD("juxtaposing_update ", placement_file.number(), " - x: ", x, ", y: ", y, ", w: ", w, ", h: ", h);
   }
 
-  logD("juxtaposing_update - placement_file.number: ", placement_file.number(), ", x: ", x, ", y: ", y, ", w: ", w, ", h: ", h);
   return 0;
 }
 
@@ -435,6 +445,7 @@ void reset_prefs()
 
   window.set("find menu", "\\{\\\\an8\\}|(..:..:..,...)|<font|<font color=\"#......\">");
   window.set("replace menu", "||$1");
+  window.flush();
 
   std::filesystem::remove_all(placement_dir);
   const std::filesystem::path already_opened_list;

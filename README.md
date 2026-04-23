@@ -2,15 +2,13 @@
 
 ###### ***A GUI and command line tool to modify the timeline of subtitles in .srt format***
 
-
 <ins>***The GUI aims to be self-explanatory, but some indications might be useful :***</ins>
 
 ![](assets/QuickDoc.svg "Quick doc")
 
+<ins>***There is also an inline help :***</ins>
 
-<ins>***There is also has an inline help :***</ins>
-
-```bash
+```
 Subadjust version 1.0.0
 Copyright © D. LALANNE - MIT License - No warranty of any kind.
 A tool that allows to process subtitles files.
@@ -66,18 +64,15 @@ If none of these are defined, the default is to send the WARN and following log 
 "C:\UnixTools\msys64\tmp\subadjust.log".
 ```
 
-
 <ins>***Technical insight:***</ins>
 
 It compiles and run under both Windows (With Visual Studio and g++) and Linux (With g++), thanks to FLTK. Should behave the same way under macOS ...
-
 
 <ins>***Thanks and copyrights (If necessary):***</ins>
 
 - To [Bill Spitzak](https://github.com/spitzak) and others, of course, for the wonderful [FLTK](https://www.fltk.org) tool.
 - To [**Rangi42**](https://github.com/Rangi42), [**dannye**](https://github.com/dannye) and [Remy Oukaour](https://github.com/roukaour) for the fltk graphical theme enhancement, which I've somewhat hacked.
 - To [Claude](https://claude.ai) for the help on developing the Fl_Time_Input, whose design is largely inspired by Chrome's time selector.
-
 
 <ins>***To do :***</ins>
 
