@@ -12,7 +12,7 @@ start .
 
 runset "%EDITOR% %APPDATA%\dplalanne.fr\subadjust.prefs" 3160 160 690 530
 ::runset "%EDITOR% %USERPROFILE%\.subadjust\juxtaposing_management" 3245 732 600 160
-runset "%EDITOR% %USERPROFILE%\.subadjust\.already_opened" 3160 682 690 360
+runset "%EDITOR% %USERPROFILE%\.subadjust\already_opened" 3160 682 690 360
 
 cd /D %USERPROFILE%\.subadjust
 mintty -p 1920,205 -s 174x25 -i %MSYSDIR%\ucrt64.ico -
