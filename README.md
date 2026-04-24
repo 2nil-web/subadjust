@@ -76,5 +76,4 @@ Although not tested, but should behave the same way under macOS ...
 - *i18n and l10n*
 - *Detail prerequisites for the build (make, gcc, visual studio, fltk ...)*
 - *Add feature to read and write vtt format*
-- 
 - *Fix all the bugs (No, there aren't any!!)*
