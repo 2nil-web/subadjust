@@ -318,8 +318,11 @@ void gui_display(bool file_read_ok, bool test_already_opened)
     std::string old_t = "";
     if (main_window->label())
       old_t = std::string("old title: ") + main_window->label() + ", ";
-    std::string title = myopt.progname + " - " + current_abs_path.stem().string();
-    main_window->label(title.c_str());
+    std::string title = myopt.Progname + " - " + current_abs_path.stem().string();
+    logD("TITLE: ", old_t, title.c_str());
+    char t[1024];
+    strncpy(t, title.c_str(), 1024);
+    main_window->label(t);
 
     file_content->scroll(1, 0);
     to_line(1);
