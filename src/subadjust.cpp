@@ -123,6 +123,10 @@ void quit_cb(Fl_Widget *, void *)
     else
     {
       pref_set();
+      if (config->shown()) {
+        config->hide();
+        delete config;
+      }
       delete main_window;
     }
   }

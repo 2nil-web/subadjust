@@ -5,11 +5,10 @@ code_name {.cxx}
 Function {make_window()} {open
 } {
   Fl_Window main_window {open
-    xywh {2358 55 384 645} type Double box UP_BOX resizable
+    xywh {2370 273 384 650} type Double box UP_BOX resizable
     code0 {\#include <FL/Fl_Int_Input.H>}
     code1 {\#include <FL/Fl_Float_Input.H>}
-    code2 {\#include "Fl_Time_Input.H"}
-    code3 {\#include "Fl_Live_Spinner.h"} size_range {384 600 0 0} visible
+    code2 {\#include "Fl_Time_Input.H"} size_range {384 600 0 0} visible
   } {
     Fl_Group {} {open
       xywh {2 0 380 284}
@@ -216,19 +215,19 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {2 34
         xywh {62 345 3 22} labeltype NO_LABEL hide
       }
       Fl_Output file_path {
-        label {File path} selected
+        label {File path}
         tooltip {Show the path of the file being currently edited.
 It turns red if there are pending modification.
 Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 345 314 22} labeltype NO_LABEL resizable
       }
     }
     Fl_Text_Editor file_content {
-      xywh {4 376 376 266} labeltype NO_LABEL resizable
+      xywh {4 376 376 269} labeltype NO_LABEL resizable
     }
   }
   Fl_Window config {
     label Configuration open
-    xywh {2753 55 371 180} type Double visible
+    xywh {2374 49 371 180} type Double visible
   } {
     Fl_Choice theme_choice {
       label {Theme:} open
@@ -244,23 +243,27 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
     }
     Fl_Input mw_x {
       label {x origin:}
-      xywh {72 55 92 22}
+      xywh {72 63 92 22} when 1
       class Fl_Int_Input
     }
     Fl_Input mw_y {
       label {y origin:}
-      xywh {72 85 92 22}
+      xywh {72 93 92 22} when 1
       class Fl_Int_Input
     }
     Fl_Input mw_w {
       label {width:}
-      xywh {250 55 92 22}
+      xywh {250 63 92 22} when 1
       class Fl_Int_Input
     }
     Fl_Input mw_h {
-      label {height:}
-      xywh {250 85 92 22}
+      label {height:} selected
+      xywh {250 93 92 22} when 1
       class Fl_Int_Input
+    }
+    Fl_Box geo_not_saved {
+      label {The geometry of this instance will not be saved}
+      xywh {22 33 320 24} hide
     }
   }
 }

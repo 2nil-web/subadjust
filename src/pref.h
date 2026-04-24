@@ -9,6 +9,16 @@
 #pragma warning(pop)
 #endif
 
+#define DEF_WIN_X 40
+#define DEF_WIN_Y 40
+#define DEF_WIN_W 384
+#define DEF_WIN_H 1000
+
+#define MIN_X 0
+#define MIN_Y 30
+#define MIN_W DEF_WIN_W
+#define MIN_H 600
+
 #define SIMPLE_CB [](Fl_Widget *, void *)->void
 
 void pref_reset();

@@ -220,28 +220,30 @@ void correct_geometry(int &x, int &y, int &w, int &h)
   logD("Correc - wmax: ", wmax, ", hmax: ", hmax);
   logD("Correc avant - x: ", x, ", y: ", y, ", w: ", w, ", h: ", h);
 
-  if (w < 384 || w > wmax)
+  if (w < MIN_W || w > wmax)
   {
-    logW("width(", w, ") greater than ", wmax, " has been corrected to fit into the work area");
-    w = 384;
+    logW("width(", w, ") has been corrected to fit between ", MIN_W, " and ", wmax);
+    if (w < MIN_W) w = MIN_W;
+    else w = wmax;
   }
 
-  if (h < 500 || h > hmax)
+  if (h < MIN_H || h > hmax)
   {
-    logW("height(", h, ") greater than ", hmax, " has been corrected to fit into the work area");
-    h = 500;
+    logW("height(", h, ") has been corrected to fit between ", MIN_H, " and ", hmax);
+    if (h < MIN_H) h = MIN_H;
+    else h = hmax;
   }
 
-  if (x < 0)
+  if (x < MIN_X)
   {
     logW("Negative x origin has been corrected to fit into the work area");
-    x = 8;
+    x = MIN_X;
   }
 
-  if (y < 0)
+  if (y < MIN_Y)
   {
     logW("Negative y origin has been corrected to fit into the work area");
-    y = 8;
+    y = MIN_Y;
   }
 
   if (x > wmax)
@@ -301,18 +303,34 @@ void juxtaposing_manage(const int x, const int y, const int w, const int h, bool
   fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
 }
 
+void chg_coord(Fl_Int_Input* w, int new_val)
+{
+  if (Fl::focus() != w && w->changed() == 0) {
+    logD("juxtaposing_update - changing cfg x, y, w, h");
+    //w->when(0);
+    w->value(new_val);
+    w->redraw();
+    //w->when(FL_WHEN_CHANGED | FL_WHEN_RELEASE);
+  }
+}
+
 // Si la première instance du programme bouge, alors changement des repères de juxtaposition pour les suivantes
 int juxtaposing_update(int)
 {
   static int x = -1, y = -1, w = -1, h = -1;
+  int new_x = main_window->x_root(), new_y = main_window->y_root(), new_w = main_window->w(), new_h = main_window->h();
+
+  if (new_x == x && new_y == y && new_w == w && new_h == h) return 0;
+
+  if (config->shown()) {
+    chg_coord(mw_x, new_x);
+    chg_coord(mw_y, new_y);
+    chg_coord(mw_w, new_w);
+    chg_coord(mw_h, new_h);
+  }
 
   if (placement_file.number() == 0)
   {
-    int new_x = main_window->x_root(), new_y = main_window->y_root(), new_w = main_window->w(), new_h = main_window->h();
-
-    if (new_x == x && new_y == y && new_w == w && new_h == h)
-      return 0;
-
     if (x != new_x)
     {
       x = new_x;
@@ -355,10 +373,7 @@ void juxtaposing_end()
   else
     remove_opened();
 }
-#define DEF_WIN_X 8
-#define DEF_WIN_Y 30
-#define DEF_WIN_W 384
-#define DEF_WIN_H 1000
+
 void pref_get(int x, int y, int w, int h)
 {
   //  remove_cr_in_log(false); logI(screen_info_fr()); remove_cr_in_log();
@@ -483,11 +498,20 @@ void pref_set()
 
 int old_theme, old_x, old_y, old_w, old_h, work_w, work_h;
 
-void mw_resize(Fl_Widget *wid, void *v)
+void mw_resize(Fl_Widget *, void *)
 {
   int x = std::stoi(mw_x->value()), y = std::stoi(mw_y->value()), w = std::stoi(mw_w->value()), h = std::stoi(mw_h->value());
-  if (x > 0 && y > 0 && x + w < work_w && y + h < work_h)
+  if (x >= 0 && y >= 0 && x + w <= work_w && y + h <= work_h) {
+    logD("mw_resize: (", x, ", ", y, ", ", w, ", ", h, ")");
     main_window->resize(x, y, w, h);
+  }
+}
+
+void unconfig(Fl_Widget*, void*)
+{
+    OS::use_theme(old_theme);
+    main_window->resize(old_x, old_y, old_w, old_h);
+    config->hide();
 }
 
 void pref_dialog()
@@ -514,13 +538,23 @@ void pref_dialog()
   mw_w->callback(mw_resize);
   mw_h->callback(mw_resize);
 
-  ok_config->callback(SIMPLE_CB { config->hide(); });
-
-  cancel_config->callback(SIMPLE_CB {
-    OS::use_theme(old_theme);
-    main_window->resize(old_x, old_y, old_w, old_h);
+  ok_config->callback(SIMPLE_CB {
     config->hide();
+    old_x = main_window->x_root();
+    old_y = main_window->y_root();
+    old_w = main_window->w();
+    old_h = main_window->h();
+    correct_geometry(old_x, old_y, old_w, old_h);
+    main_window->resize(old_x, old_y, old_w, old_h);
   });
+
+  cancel_config->callback(unconfig);
+  config->callback(unconfig);
+
+  if (placement_file.number() == 0)
+    geo_not_saved->hide();
+  else
+    geo_not_saved->show();
 
   config->show();
 }
