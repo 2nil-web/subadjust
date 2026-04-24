@@ -321,7 +321,11 @@ void gui_display(bool file_read_ok, bool test_already_opened)
     std::string title = myopt.Progname + " - " + current_abs_path.stem().string();
     logD("TITLE: ", old_t, title.c_str());
     char t[1024];
+#ifdef _WIN32
+    strcpy_s(t, 1024, title.c_str());
+#else
     strncpy(t, title.c_str(), 1024);
+#endif
     main_window->label(t);
 
     file_content->scroll(1, 0);
