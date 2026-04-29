@@ -58,6 +58,7 @@ using opti_dq = std::deque<option_info>;
 class options
 {
 public:
+  std::filesystem::path full_path = {};
   std::string progname = {};
   std::string Progname = {}; // Same as progname but with a capital letter at its start
   arg_dq args = {};

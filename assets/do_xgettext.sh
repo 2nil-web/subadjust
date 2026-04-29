@@ -14,7 +14,7 @@
 #
 # Génération du .mo
 # mkdir -p locale/fr/LC_MESSAGES
-# msgfmt --output-file=fr/LC_MESSAGES/subadjust.mo src/locale/fr/subadjust.po
+# msgfmt --output-file=locale/fr/LC_MESSAGES/subadjust.mo src/locale/fr/subadjust.po
 #
 # for i in *.{h,cpp}
 #do

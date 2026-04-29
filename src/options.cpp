@@ -64,7 +64,8 @@ std::ostream &operator<<(std::ostream &os, option_info &opt)
 
 void options::set(int argc, char **argv, opti_dq p_opt_inf)
 {
-  Progname = progname = std::filesystem::path(argv[0]).stem().string();
+  full_path = std::filesystem::path(argv[0]);
+  Progname = progname = full_path.stem().string();
   Progname[0] = std::toupper(Progname[0]);
 
   args.insert(args.begin(), argv + 1, argv + argc);

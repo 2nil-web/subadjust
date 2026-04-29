@@ -146,6 +146,7 @@ CXXFLAGS += $(shell ${FLTK_CONFIG} --use-gl --use-images --cxxflags )
 #LDFLAGS += -fno-rtti
 #LDLIBS = $(shell ${FLTK_CONFIG} --use-gl --use-images --ldflags )
 LDLIBS += $(shell ${FLTK_CONFIG} --use-gl --use-images --ldstaticflags | sed 's/.dll//g' )
+LDLIBS += -lintl -liconv
 LINK     = $(CXX)
 ${TARGET} : ${OBJS}
 	$(LINK.cc) ${OBJS} $(LOADLIBES) $(LDLIBS) -o $@
