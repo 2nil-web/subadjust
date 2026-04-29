@@ -73,8 +73,8 @@ public:
   void parse(std::filesystem::path);
   std::string usage(size_t max_width = 0);
   std::ostream &usage(std::ostream &, size_t max_width = 0);
-  std::string version();
-  std::ostream &version(std::ostream &);
+  std::string version(bool trac = false);
+  std::ostream &version(std::ostream &, bool trac = false);
   void set_desc(std::string);
 
 private:

@@ -26,7 +26,6 @@ endif
 endif
 
 VERSION=$(shell git describe --abbrev=0 --tags 2>/dev/null || echo 'Unknown')
-COPYRIGHT=Copyright © D. LALANNE - MIT License - No warranty of any kind.
 DECORATION=
 COMMIT=$(shell git rev-parse --short HEAD 2>/dev/null || echo 'Unknown')
 ISO8601 := $(shell date +%Y-%m-%dT%H:%M:%SZ)
@@ -163,18 +162,18 @@ format :
 # Génération du app_info.h intégré dans l'appli
 ${SRC_DIR}/app_info.h : ${SRC_DIR}/app_info_check.txt
 	@${ECHOE} "Building C++ header $@"
-	@${ECHOE} "#ifndef APP_INFO_H\n#define APP_INFO_H\nstruct\n{\n  std::string name, version, copyright, decoration, commit, created_at, platform;\n} app_info = {\"${PREFIX}\", \"${VERSION}\", \"${COPYRIGHT}\", \"${DECORATION}\", \"${COMMIT}\", \"${ISO8601}\", \"${PLATFORM}\"};\n#endif" >$@
+	@${ECHOE} "#ifndef APP_INFO_H\n#define APP_INFO_H\nstruct\n{\n  std::string name, version, decoration, commit, created_at, platform;\n} app_info = {\"${PREFIX}\", \"${VERSION}\", \"${DECORATION}\", \"${COMMIT}\", \"${ISO8601}\", \"${PLATFORM}\"};\n#endif" >$@
 	dos2unix $@
 
 # Génération du app_info.json intégré dans le paquetage
 ${SRC_DIR}/app_info.json : ${SRC_DIR}/app_info_check.txt
 	@${ECHOE} "Building json file $@"
-	@${ECHOE} -e '{ "name":"${PREFIX}", "version":"${VERSION}", copyright:"${COPYRIGHT}", "decoration":"${DECORATION}", "commit":"${COMMIT}","created_at":"${ISO8601}, "platform":"${PLATFORM}" }' >$@
+	@${ECHOE} -e '{ "name":"${PREFIX}", "version":"${VERSION}", "decoration":"${DECORATION}", "commit":"${COMMIT}","created_at":"${ISO8601}, "platform":"${PLATFORM}" }' >$@
 	dos2unix $@
 
-# Pour regénérer silencieusement app_info.h et app_info.json dès qu'un des champs app_info ou copyright ou decoration ou commit, est modifié.
+# Pour regénérer silencieusement app_info.h et app_info.json dès qu'un des champs app_info ou decoration ou commit, est modifié.
 ${SRC_DIR}/app_info_check.txt : FORCE
-	@${ECHOE} "Version:${VERSION}, copyright:${COPYRIGHT}, decoration:${DECORATION}, commit:${COMMIT}, platform:${PLATFORM}" >$@.new
+	@${ECHOE} "Version:${VERSION}, decoration:${DECORATION}, commit:${COMMIT}, platform:${PLATFORM}" >$@.new
 	@-( if [ ! -f $@ ]; then cp $@.new $@; sleep 0.4; fi )
 	@-( if diff $@.new $@ >/dev/null 2>&1; then rm -f $@.new; else mv -f $@.new $@; rm -f ${PREFIX}.iss ${PREFIX}-standalone.iss; fi )
 

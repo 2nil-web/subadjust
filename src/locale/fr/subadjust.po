@@ -1,0 +1,269 @@
+# French translations for Subadjust package.
+# Copyright (C) 2026 THE Subadjust'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Subadjust package.
+# root <root@home.dplalanne.fr>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: subadjust 1.0.0\n"
+"Report-Msgid-Bugs-To: dpl@nosite.net\n"
+"POT-Creation-Date: 2026-04-28 17:31+0200\n"
+"PO-Revision-Date: 2026-04-28 17:39+0200\n"
+"Last-Translator: root <root@home.dplalanne.fr>\n"
+"Language-Team: French <traduc@traduc.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid ""
+"\n"
+"    The special value 'console' will allows to output the log messages to "
+"the console, if possible."
+msgstr ""
+"\n"
+"    La valeur spéciale 'console' permet d'afficher les messages de journalisation directement dans la console, quand c'est possible."
+
+msgid ""
+"\n"
+"Do you want to proceed ?"
+msgstr ""
+"\n"
+"Voulez-vous continuer ?"
+
+msgid ""
+"A tool that allows to process subtitles files.\n"
+"The batch mode allows processing at the command line or by script.\n"
+"Meanwhile the GUI mode adds a search and replace feature with regular "
+"expressions."
+msgstr ""
+"Outil d'édition des fichiers de sous-titres.\n"
+"Le mode batch permet le traitement en ligne de commande ou par script.\n"
+"Le mode GUI ajoute une fonction de recherche et de remplacement avec des expressions régulières."
+
+msgid "Change the beginning time stamp to the provided argument."
+msgstr "Modifie l'horodatage de début selon l'argument fourni."
+
+msgid "Change the duration coefficient to the provided argument."
+msgstr "Modifie le coefficient de durée selon l'argument fourni."
+
+msgid "Change the end time stamp to the provided argument."
+msgstr "Modifie l'horodatage de fin selon l'argument fourni."
+
+msgid "Change the start offset to the provided argument."
+msgstr "Modifie le décalage de début selon l'argument fourni."
+
+msgid "Change the stop offset to the provided argument."
+msgstr "Modifie le décalage de fin selon l'argument fourni."
+
+msgid ""
+"Define the file where log messages will be stored.\n"
+"    Default it to store them in the following file "
+msgstr ""
+"Définissez le fichier où les messages de journalisation seront stockés.\n"
+"    Par défaut, ils seront stockés dans le fichier suivant "
+
+msgid ""
+"Displayed text contains the UTF-8 transcoding of the input file which was "
+"not UTF-8 encoded. Some changes may have occurred."
+msgstr "Le texte affiché contient la transcodage UTF-8 du fichier d'entrée qui n'était pas encodé en UTF-8. Des modifications ont pu se produire."
+
+msgid ""
+"If none of these are defined, the default is to send the WARN and following "
+"log messages into the file \""
+msgstr ""
+"Si aucune de ces options n'est définie, le comportement par défaut consiste à envoyer l'avertissement et les messages de journalisation suivants dans le fichier \""
+
+msgid ""
+"It seems that the subtitle file has been modified.\n"
+"Do you still want to quit without saving it ?"
+msgstr ""
+"Il semble que le fichier de sous-titres ait été modifié.\n"
+"Voulez-vous tout de même quitter sans l'enregistrer ?"
+
+msgid ""
+"It seems that the subtitle file has been modified.\n"
+"Do you still want to reload it ?"
+msgstr ""
+"Il semble que le fichier de sous-titres ait été modifié.\n"
+"Voulez-vous tout de même le recharger ?"
+
+#. fl_message("%s", about_msg.c_str());
+msgid "More info ..."
+msgstr "Plus d'infos ..."
+
+msgid ""
+"Name of the file to read. It is the same than directly passing a file name "
+"as an argument without this option."
+msgstr ""
+"Nom du fichier à lire. Identique à un passage direct du nom de fichier "
+" en argument sans cette option."
+
+msgid "No"
+msgstr "Non"
+
+msgid "Ok"
+msgstr "Ok"
+
+msgid ""
+"Process the input file and show it with the gui, this is the default "
+"behavior."
+msgstr ""
+"Traiter le fichier d'entrée et l'afficher dans l'interface graphique. C'est le comportement par défaut."
+
+msgid "Process the input the file and print the result."
+msgstr "Traiter le fichier d'entrée et afficher le résultat."
+
+msgid "Reset the preferences to default values."
+msgstr "Réinitialiser les préférences aux valeurs par défaut."
+
+msgid ""
+"Set the graphic theme to use. It is a string to choose between one of :\n"
+"    classic, aero, metro, aqua, greybird, ocean, blue, olive, rose_gold, "
+"dark, brushed_metal or high_contrast."
+msgstr ""
+"Définir le thème graphique à utiliser. Il s'agit d'une chaîne de caractères permettant de choisir parmi les options suivantes :\n"
+" classic, aero, metro, aqua, greybird, ocean, blue, olive, rose_gold, "
+"dark, brushed_metal ou high_contrast."
+
+msgid "Set the height of the subadjust window."
+msgstr "Définir la hauteur de la fenêtre subadjust."
+
+msgid ""
+"Set the level of the log messages to display :\n"
+"    ALL   All the messages.\n"
+"    TRACE Almost all messages, at least those finer than the INFO level.\n"
+"    INFO  Informational messages that highlight the application's progress "
+"at a coarser level.\n"
+"    DEBUG Fine-grained events, the most useful for debugging an "
+"application.\n"
+"    WARN  Potentially dangerous situations.\n"
+"    ERROR Errors that might still allow the application to continue "
+"running.\n"
+"    FATAL Very serious errors that will likely cause the application to "
+"crash.\n"
+"    OFF   Disables logging."
+msgstr ""
+"Définir le niveau d'affichage des messages de journalisation :\n"
+"    ALL   Tous les messages.\n"
+"    TRACE Presque tous les messages. au moins ceux de niveau plus fin que INFO.\n"
+"    INFO  Messages d'information qui mettent en évidence la progression de l'application "
+" à un niveau plus grossier.\n"
+"    DEBUG Événements précis, les plus utiles pour le débogage d'une "
+"application.\n"
+"    WARN  Situations potentiellement dangereuses.\n"
+"    ERROR Erreurs qui peuvent encore permettre à l'application de continuer à "
+"fonctionner.\n"
+"    FATAL Erreurs très graves qui entraîneront probablement le 'plantage' de l'application.\n"
+"    OFF   Désactive la journalisation."
+
+msgid "Set the width of the subadjust window."
+msgstr "Définit la largeur de la fenêtre subadjust."
+
+msgid "Set the x origin of the subadjust window."
+msgstr "Définit l'origine en x de la fenêtre subadjust"
+
+msgid "Set the y origin of the subadjust window."
+msgstr "Définit l'origine en y de la fenêtre subadjust"
+
+msgid "Silently ignoring -i/-modify-input in GUI mode"
+msgstr ""
+
+msgid "Silently ignoring -o/-output-file in GUI mode"
+msgstr "Ignorance silencieuse de l'option -i/-modify-input en mode GUI"
+
+msgid ""
+"These 2 previous options only have meaning in batch mode, they are ignored "
+"in GUI mode."
+msgstr ""
+"Ces deux options précédentes n'ont de sens qu'en mode batch ; elles sont ignorées "
+"en mode GUI."
+
+msgid ""
+"These 5 previous options are processed after reading the file and have "
+"effect in both GUI and batch mode."
+msgstr ""
+"Ces cinq options précédentes sont traitées après la lecture du fichier et ont un effet à la fois en mode GUI et en mode batch."
+
+msgid ""
+"These 5 previous options only have effect in GUI mode. In this case, they "
+"have precedence and will update what is defined in the configuration file.\n"
+"The configuration file is located there : \""
+msgstr ""
+"Ces 5 options précédentes n'ont d'effet qu'en mode GUI. Dans ce cas, elles "
+"ont priorité et mettront à jour les valeurs définies dans le fichier de configuration.\n"
+"Le fichier de configuration se trouve ici : \""
+
+msgid ""
+"To do ...\n"
+"But you may consider editing the following file:\n"
+msgstr ""
+"À faire…\n"
+"Vous pouvez toutefois envisager de modifier le fichier suivant :\n"
+
+msgid "Unable to open file "
+msgstr "Impossible d'ouvrir le fichier "
+
+msgid ""
+"Write the processing result into the file whose name is passed as argument."
+msgstr ""
+"Écrire le résultat du traitement dans le fichier dont le nom est passé en argument."
+
+msgid "Write the processing result into the same input file."
+msgstr "Écrire le résultat du traitement dans le même fichier d'entrée."
+
+msgid "Yes"
+msgstr "Oui"
+
+msgid ""
+"Your actual changes will be lost. Do you still want to open another file?"
+msgstr ""
+"Vos modifications seront perdues. Voulez-vous tout de même ouvrir un autre fichier ?"
+
+msgid " [OPTIONS] ARGUMENT\n"
+msgstr ""
+
+msgid "', ignoring it."
+msgstr "', on l'ignore."
+
+msgid "', ignoring this command."
+msgstr "', on ignore cette commande."
+
+msgid "', ignoring this option."
+msgstr "', on ignore cette option."
+
+msgid "Available commands and their shortcut\n"
+msgstr "Les commandes disponible et leur raccourcis\n"
+
+msgid "Available options\n"
+msgstr "Options disponibles\n"
+
+msgid "Display this message and exit. This option implies -V/--version."
+msgstr "Affiche ce message et sort. Cette option implique l'option -V."
+
+msgid "Missing argument to '"
+msgstr "Argument manquant à '"
+
+msgid "Output version information and exit."
+msgstr "Affiche les informations de version et sort."
+
+msgid "SECRET_OPTION provided for traceability when needed (debug)."
+msgstr ""
+
+msgid "Unknown long option '--"
+msgstr "Option longue inconnue '--"
+
+msgid "Unknown short option '-"
+msgstr "Option courte inconnue '-"
+
+msgid "Unknown command '"
+msgstr "Commande inconnue '"
+
+msgid "Usage: "
+msgstr "Utilisation: "
+
+msgid "Copyright © D. LALANNE - MIT License - No warranty of any kind."
+msgstr "Copyright © D. LALANNE - Licence MIT - Sans garantie d'aucune sorte."
+
+

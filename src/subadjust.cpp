@@ -34,31 +34,11 @@ Fl_SVG_Image svg(0, svg_data);
 void about_msg(Fl_Widget *, void *v)
 {
   options *opt = (options *)v;
-  std::string about_msg = opt->Progname + " version " + app_info.version;
-
-  if (!app_info.decoration.empty())
-    about_msg += ' ' + app_info.decoration;
-  about_msg += '\n' + app_info.copyright;
-
-  if (Fl::event_key(FL_Control_L) || Fl::event_key(FL_Control_R))
-  {
-    std::string traceability("");
-
-    if (!app_info.commit.empty())
-      traceability += app_info.commit;
-
-    traceability += " built for " + app_info.platform;
-    if (!app_info.created_at.empty())
-      traceability += " on " + app_info.created_at;
-
-    Fl::copy(traceability.c_str(), (int)traceability.size(), 1);
-    about_msg += "\n[" + traceability + ']';
-  }
+  std::string about_msg = opt->version(Fl::event_key(FL_Control_L) || Fl::event_key(FL_Control_R));
 
   // svg.scale(18, 18); fl_message_icon_label(""); fl_message_icon()->image(svg);
   fl_message_position(main_window->x_root(), main_window->y_root() + 60, 0);
-  //  fl_message("%s", about_msg.c_str());
-  if (!fl_choice("%s", "More info ...", "Ok", 0L, about_msg.c_str()))
+  if (!fl_choice("%s", _("More info ..."), _("Ok"), 0L, about_msg.c_str()))
   {
     fl_message_position(main_window->x_root(), main_window->y_root() + 60, 0);
     Fl_Font actual_font = fl_message_font_;
@@ -115,7 +95,7 @@ void quit_cb(Fl_Widget *, void *)
     already_done = true;
 
     fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
-    if (file_is_modified && !fl_choice("It seems that the subtitle file has been modified.\nDo you still want to quit without saving it ?", "No", "Yes", 0L))
+    if (file_is_modified && !fl_choice(_("It seems that the subtitle file has been modified.\nDo you still want to quit without saving it ?"), _("No"), _("Yes"), 0L))
     {
       already_done = false;
       return;
@@ -123,7 +103,8 @@ void quit_cb(Fl_Widget *, void *)
     else
     {
       pref_set();
-      if (config->shown()) {
+      if (config->shown())
+      {
         config->hide();
         delete config;
       }
@@ -166,8 +147,17 @@ bool gui_mode = true;
 options myopt;
 std::string opt_level = "";
 
+const std::filesystem::path locdir(".");
 int main(int argc, char **argv)
 {
+  /* Setting the i18n environment */
+  setlocale(LC_ALL, "");
+  setlocale(LC_CTYPE, "");
+  setlocale(LC_MESSAGES, "");
+  std::cout << locdir.string() << std::endl;
+  bindtextdomain("subadjust", locdir.string().c_str());
+  textdomain("subadjust");
+
   std::string file = "", ofilename = "";
   int x = -1, y = -1, w = -1, h = -1;
   bool modify_input = false;
@@ -178,12 +168,12 @@ int main(int argc, char **argv)
             {
                 option_info(""),
                 option_info(
-                    'f', "file", [&](s_opt_params &p) -> void { file = p.val; }, "Name of the file to read. It is the same than directly passing a file name as an argument without this option.", required),
+                    'f', "file", [&](s_opt_params &p) -> void { file = p.val; }, _("Name of the file to read. It is the same than directly passing a file name as an argument without this option."), required),
 
                 option_info(
-                    'g', "gui-mode", [&](s_opt_params &) -> void { gui_mode = true; }, "Process the input file and show it with the gui, this is the default behavior."),
+                    'g', "gui-mode", [&](s_opt_params &) -> void { gui_mode = true; }, _("Process the input file and show it with the gui, this is the default behavior.")),
                 option_info(
-                    'c', "batch-mode", [&](s_opt_params &) -> void { gui_mode = false; }, "Process the input the file and print the result."),
+                    'c', "batch-mode", [&](s_opt_params &) -> void { gui_mode = false; }, _("Process the input the file and print the result.")),
 
                 option_info(""),
                 option_info(
@@ -192,61 +182,61 @@ int main(int argc, char **argv)
                       run_pre_proc = true;
                       pp_time_start = str_to_ms(p.val);
                     },
-                    "Change the beginning time stamp to the provided argument.", required),
+                    _("Change the beginning time stamp to the provided argument."), required),
                 option_info(
                     'e', "end-time",
                     [&](s_opt_params &p) -> void {
                       run_pre_proc = true;
                       pp_time_stop = str_to_ms(p.val);
                     },
-                    "Change the end time stamp to the provided argument.", required),
+                    _("Change the end time stamp to the provided argument."), required),
                 option_info(
                     'k', "duration-coeff",
                     [&](s_opt_params &p) -> void {
                       run_pre_proc = true;
                       pp_dur_k = std::stoi(p.val);
                     },
-                    "Change the duration coefficient to the provided argument.", required),
+                    _("Change the duration coefficient to the provided argument."), required),
                 option_info(
                     'a', "start-offset",
                     [&](s_opt_params &p) -> void {
                       run_pre_proc = true;
                       pp_offs_start = stoi(p.val);
                     },
-                    "Change the start offset to the provided argument.", required),
+                    _("Change the start offset to the provided argument."), required),
                 option_info(
                     's', "stop-offset",
                     [&](s_opt_params &p) -> void {
                       run_pre_proc = true;
                       pp_offs_stop = stoi(p.val);
                     },
-                    "Change the stop offset to the provided argument.", required),
-                option_info("These 5 previous options are processed after reading the file and have effect in both GUI and batch mode."),
+                    _("Change the stop offset to the provided argument."), required),
+                option_info(_("These 5 previous options are processed after reading the file and have effect in both GUI and batch mode.")),
 
                 option_info(""),
                 option_info(
-                    'o', "output-file", [&](s_opt_params &p) -> void { ofilename = p.val; }, "Write the processing result into the file whose name is passed as argument.", required),
+                    'o', "output-file", [&](s_opt_params &p) -> void { ofilename = p.val; }, _("Write the processing result into the file whose name is passed as argument."), required),
                 option_info(
-                    'i', "modify-input", [&](s_opt_params &) -> void { modify_input = true; }, "Write the processing result into the same input file."),
-                option_info("These 2 previous options only have meaning in batch mode, they are ignored in GUI mode."),
+                    'i', "modify-input", [&](s_opt_params &) -> void { modify_input = true; }, _("Write the processing result into the same input file.")),
+                option_info(_("These 2 previous options only have meaning in batch mode, they are ignored in GUI mode.")),
 
                 option_info(""),
                 option_info(
-                    'r', "reset-pref", [&](s_opt_params &) -> void { pref_reset(); }, "Reset the preferences to default values."),
+                    'r', "reset-pref", [&](s_opt_params &) -> void { pref_reset(); }, _("Reset the preferences to default values.")),
                 option_info(
-                    'x', "xpos", [&](s_opt_params &p) -> void { x = std::stoi(p.val); }, "Set the x origin of the subadjust window.", required),
+                    'x', "xpos", [&](s_opt_params &p) -> void { x = std::stoi(p.val); }, _("Set the x origin of the subadjust window."), required),
                 option_info(
-                    'y', "ypos", [&](s_opt_params &p) -> void { y = std::stoi(p.val); }, "Set the y origin of the subadjust window.", required),
+                    'y', "ypos", [&](s_opt_params &p) -> void { y = std::stoi(p.val); }, _("Set the y origin of the subadjust window."), required),
                 option_info(
-                    'w', "width", [&](s_opt_params &p) -> void { w = std::stoi(p.val); }, "Set the width of the subadjust window.", required),
+                    'w', "width", [&](s_opt_params &p) -> void { w = std::stoi(p.val); }, _("Set the width of the subadjust window."), required),
                 option_info(
-                    'h', "height", [&](s_opt_params &p) -> void { h = std::stoi(p.val); }, "Set the height of the subadjust window.", required),
+                    'h', "height", [&](s_opt_params &p) -> void { h = std::stoi(p.val); }, _("Set the height of the subadjust window."), required),
                 option_info(
-                    't', "theme", [](s_opt_params &p) -> void { theme = p.val; }, R"EOF(Set the graphic theme to use. It is a string to choose between one of :
-    classic, aero, metro, aqua, greybird, ocean, blue, olive, rose_gold, dark, brushed_metal or high_contrast.)EOF",
+                    't', "theme", [](s_opt_params &p) -> void { theme = p.val; }, _(R"EOF(Set the graphic theme to use. It is a string to choose between one of :
+    classic, aero, metro, aqua, greybird, ocean, blue, olive, rose_gold, dark, brushed_metal or high_contrast.)EOF"),
                     required),
-                option_info(R"EOF(These 5 previous options only have effect in GUI mode. In this case, they have precedence and will update what is defined in the configuration file.
-The configuration file is located there : ")EOF" +
+                option_info(_(R"EOF(These 5 previous options only have effect in GUI mode. In this case, they have precedence and will update what is defined in the configuration file.
+The configuration file is located there : ")EOF") +
                             std::filesystem::path(pref_filename()).make_preferred().string() + "\"."),
 
                 option_info(""),
@@ -262,7 +252,7 @@ The configuration file is located there : ")EOF" +
                       }
                       // std::cout << ll << ", " << my_getenv("LOG") << std::endl;
                     },
-                    R"EOF(Set the level of the log messages to display :
+                    _(R"EOF(Set the level of the log messages to display :
     ALL   All the messages.
     TRACE Almost all messages, at least those finer than the INFO level.
     INFO  Informational messages that highlight the application's progress at a coarser level.
@@ -270,18 +260,18 @@ The configuration file is located there : ")EOF" +
     WARN  Potentially dangerous situations.
     ERROR Errors that might still allow the application to continue running.
     FATAL Very serious errors that will likely cause the application to crash.
-    OFF   Disables logging.)EOF",
+    OFF   Disables logging.)EOF"),
                     required),
                 option_info(
-                    'm', "log-file", [&](s_opt_params &p) -> void { my_setenv("LOGFILE", p.val); }, R"EOF(Define the file where log messages will be stored.
-    Default it to store them in the following file )EOF" + DEF_LOG.string() + "\n    The special value 'console' will allows to output the log messages to the console, if possible.",
+                    'm', "log-file", [&](s_opt_params &p) -> void { my_setenv("LOGFILE", p.val); }, _(R"EOF(Define the file where log messages will be stored.
+    Default it to store them in the following file )EOF") + DEF_LOG.string() + _("\n    The special value 'console' will allows to output the log messages to the console, if possible."),
                     required),
-                //                option_info(R"EOF(These 2 previous options have precedence on the environments variable LOG and LOGFILE.
-                option_info(R"EOF(If none of these are defined, the default is to send the WARN and following log messages into the file ")EOF" + DEF_LOG.string() + "\"."),
+                //                option_info(_(R"EOF(These 2 previous options have precedence on the environments variable LOG and LOGFILE.)
+                option_info(_(R"EOF(If none of these are defined, the default is to send the WARN and following log messages into the file ")EOF") + DEF_LOG.string() + "\"."),
                 // option_info(""),
             });
 
-  myopt.set_desc("A tool that allows to process subtitles files.\nThe batch mode allows processing at the command line or by script.\nMeanwhile the GUI mode adds a search and replace feature with regular expressions.");
+  myopt.set_desc(_("A tool that allows to process subtitles files.\nThe batch mode allows processing at the command line or by script.\nMeanwhile the GUI mode adds a search and replace feature with regular expressions."));
 
   // Calls to logFunctions before opt.parse may not work correctly ...
   myopt.parse();
@@ -297,13 +287,13 @@ The configuration file is located there : ")EOF" +
   {
     if (!ofilename.empty())
     {
-      logW("Silently ignoring -o/-output-file in GUI mode");
+      logW(_("Silently ignoring -o/-output-file in GUI mode"));
       ofilename = "";
     }
 
     if (modify_input)
     {
-      logW("Silently ignoring -i/-modify-input in GUI mode");
+      logW(_("Silently ignoring -i/-modify-input in GUI mode"));
       modify_input = false;
     }
 
@@ -330,7 +320,7 @@ The configuration file is located there : ")EOF" +
     //  } else {
     txt_buf.transcoding_warning_action = [](Fl_Text_Buffer *t) -> void {
       if (t->input_file_was_transcoded)
-        logW("Displayed text contains the UTF-8 transcoding of the input file which was not UTF-8 encoded. Some changes may have occurred.");
+        logW(_("Displayed text contains the UTF-8 transcoding of the input file which was not UTF-8 encoded. Some changes may have occurred."));
     };
   }
 
@@ -349,7 +339,7 @@ The configuration file is located there : ")EOF" +
 #ifdef NO_CONFIG_DLG
       std::string pf = std::filesystem::path(pref_filename()).make_preferred().string();
       logD("pf: ", pf);
-      const std::string msg = "To do ...\nBut you may consider editing the following file:\n" + pf + "\nDo you want to proceed ?";
+      const std::string msg = _("To do ...\nBut you may consider editing the following file:\n") + pf + _("\nDo you want to proceed ?");
       if (fl_choice("%s", "No", "Yes", 0L, msg.c_str()))
       {
 #ifdef _WIN32
@@ -378,7 +368,7 @@ The configuration file is located there : ")EOF" +
     // file_open->callback();
     file_open->callback(SIMPLE_CB {
       // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
-      if (file_is_modified && !fl_choice("Your actual changes will be lost. Do you still want to open another file?", "No", "Yes", 0L))
+      if (file_is_modified && !fl_choice(_("Your actual changes will be lost. Do you still want to open another file?"), _("No"), _("Yes"), 0L))
         return;
 
       file_handler();
@@ -392,7 +382,7 @@ The configuration file is located there : ")EOF" +
         abs_path = std::filesystem::absolute(file_path->value());
 
       // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
-      if (!abs_path.empty() && (!file_is_modified || fl_choice("It seems that the subtitle file has been modified.\nDo you still want to reload it ?", "No", "Yes", 0L)))
+      if (!abs_path.empty() && (!file_is_modified || fl_choice(_("It seems that the subtitle file has been modified.\nDo you still want to reload it ?"), _("No"), _("Yes"), 0L)))
       {
         gui_display(file_read(abs_path), false);
       }
@@ -476,7 +466,7 @@ The configuration file is located there : ")EOF" +
         ofs.close();
       }
       else
-        std::cerr << "Unable to open file " << ofilename << std::endl;
+        std::cerr << _("Unable to open file ") << ofilename << std::endl;
     }
   }
 }

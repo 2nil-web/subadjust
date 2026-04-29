@@ -94,15 +94,15 @@ options::options(std::string p_progname, arg_dq l_args, opti_dq p_opt_inf)
   set(p_progname, l_args, p_opt_inf);
 }
 
-std::string options::version()
+std::string options::version(bool trac)
 {
   std::string vers = Progname + " version " + app_info.version;
   if (!app_info.decoration.empty())
     vers += ' ' + app_info.decoration;
+  vers += '\n';
+  vers += _("Copyright © D. LALANNE - MIT License - No warranty of any kind.");
 
-  vers += '\n' + app_info.copyright;
-
-  if (traceability_enabled)
+  if (traceability_enabled || trac)
   {
     std::string trac;
     if (!app_info.commit.empty())
@@ -118,9 +118,9 @@ std::string options::version()
   return vers;
 }
 
-std::ostream &options::version(std::ostream &os)
+std::ostream &options::version(std::ostream &os, bool trac)
 {
-  os << version() << std::endl;
+  os << version(trac) << std::endl;
 
   return os;
 }
@@ -164,8 +164,8 @@ std::string options::usage_opt(size_t max_width)
   if (!desc.empty())
     usage += desc + "\n\n";
 
-  usage += "Usage: " + progname + " [OPTIONS] ARGUMENT\n";
-  usage += "Available options\n";
+  usage += _("Usage: ") + progname + _(" [OPTIONS] ARGUMENT\n");
+  usage += _("Available options\n");
 
   size_t longest_opt = 0;
   for (auto opt : opt_inf)
@@ -228,7 +228,7 @@ std::string options::usage_int(size_t max_width)
 {
   std::string usage = {};
 
-  usage += "Available commands/and their shortcut\n";
+  usage += _("Available commands and their shortcut\n");
 
   size_t longest_opt = 0;
   for (auto opt : opt_inf)
@@ -329,7 +329,7 @@ void options::add_default()
           if (!imode)
             exit_after_opt = true;
         },
-        "Display this message and exit. This option implies -V/--version."));
+        _("Display this message and exit. This option implies -V/--version.")));
   }
   if (no_v)
   {
@@ -341,7 +341,7 @@ void options::add_default()
           if (!imode)
             exit_after_opt = true;
         },
-        "Output version information and exit."));
+        _("Output version information and exit.")));
   }
 
   if (no_t)
@@ -355,7 +355,7 @@ void options::add_default()
           if (!imode)
             exit_after_opt = true;
         },
-        "SECRET_OPTION provided for traceability when needed (debug)."));
+        _("SECRET_OPTION provided for traceability when needed (debug).")));
   }
 }
 
@@ -374,7 +374,7 @@ void options::run_opt(option_info opt)
     }
     else if (opt.mode == e_option_mode::required)
     {
-      std::cerr << "Missing argument to '" << opt.short_name << '/' << opt.long_name << "', ignoring this option." << std::endl;
+      std::cerr << _("Missing argument to '-") << opt.short_name << "/--" << opt.long_name << _("', ignoring this option.") << std::endl;
     }
   }
   else
@@ -394,7 +394,7 @@ void options::run_opt(char short_name)
     }
   }
 
-  std::cerr << "Uknown short option '-" << short_name << "', ignoring it." << std::endl;
+  std::cerr << _("Unknown short option '-") << short_name << _("', ignoring it.") << std::endl;
 }
 
 void options::run_opt(std::string long_name)
@@ -406,7 +406,7 @@ void options::run_opt(std::string long_name)
       return;
     }
 
-  std::cerr << "Uknown long option '--" << long_name << "', ignoring it." << std::endl;
+  std::cerr << _("Unknown long option '--") << long_name << _("', ignoring it.") << std::endl;
 }
 
 void options::parse()
@@ -531,7 +531,7 @@ void options::parse(std::istream &is)
           op = {opt.short_name, opt.long_name, r2, 0};
           if (r2.empty() && opt.mode == e_option_mode::required)
           {
-            std::cerr << "Missing argument to '" << opt.short_name << '/' << opt.long_name << "', ignoring this command." << std::endl;
+            std::cerr << _("Missing argument to '-") << opt.short_name << "/--" << opt.long_name << _("', ignoring this command.") << std::endl;
           }
           else
           {
@@ -545,7 +545,7 @@ void options::parse(std::istream &is)
 
       if (unknown_cmd)
       {
-        std::cerr << "Unknown command '" << s << "', ignoring it." << std::endl;
+        std::cerr << _("Unknown command '") << s << _("', ignoring it.") << std::endl;
       }
     }
   }

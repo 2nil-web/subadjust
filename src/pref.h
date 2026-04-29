@@ -19,7 +19,7 @@
 #define MIN_W DEF_WIN_W
 #define MIN_H 600
 
-#define SIMPLE_CB [](Fl_Widget *, void *)->void
+#define SIMPLE_CB [](Fl_Widget *, void *) -> void
 
 void pref_reset();
 void pref_set();

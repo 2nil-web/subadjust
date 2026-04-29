@@ -223,15 +223,19 @@ void correct_geometry(int &x, int &y, int &w, int &h)
   if (w < MIN_W || w > wmax)
   {
     logW("width(", w, ") has been corrected to fit between ", MIN_W, " and ", wmax);
-    if (w < MIN_W) w = MIN_W;
-    else w = wmax;
+    if (w < MIN_W)
+      w = MIN_W;
+    else
+      w = wmax;
   }
 
   if (h < MIN_H || h > hmax)
   {
     logW("height(", h, ") has been corrected to fit between ", MIN_H, " and ", hmax);
-    if (h < MIN_H) h = MIN_H;
-    else h = hmax;
+    if (h < MIN_H)
+      h = MIN_H;
+    else
+      h = hmax;
   }
 
   if (x < MIN_X)
@@ -303,14 +307,15 @@ void juxtaposing_manage(const int x, const int y, const int w, const int h, bool
   fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
 }
 
-void chg_coord(Fl_Int_Input* w, int new_val)
+void chg_coord(Fl_Int_Input *w, int new_val)
 {
-  if (Fl::focus() != w && w->changed() == 0) {
+  if (Fl::focus() != w && w->changed() == 0)
+  {
     logD("juxtaposing_update - changing cfg x, y, w, h");
-    //w->when(0);
+    // w->when(0);
     w->value(new_val);
     w->redraw();
-    //w->when(FL_WHEN_CHANGED | FL_WHEN_RELEASE);
+    // w->when(FL_WHEN_CHANGED | FL_WHEN_RELEASE);
   }
 }
 
@@ -320,9 +325,11 @@ int juxtaposing_update(int)
   static int x = -1, y = -1, w = -1, h = -1;
   int new_x = main_window->x_root(), new_y = main_window->y_root(), new_w = main_window->w(), new_h = main_window->h();
 
-  if (new_x == x && new_y == y && new_w == w && new_h == h) return 0;
+  if (new_x == x && new_y == y && new_w == w && new_h == h)
+    return 0;
 
-  if (config->shown()) {
+  if (config->shown())
+  {
     chg_coord(mw_x, new_x);
     chg_coord(mw_y, new_y);
     chg_coord(mw_w, new_w);
@@ -501,17 +508,18 @@ int old_theme, old_x, old_y, old_w, old_h, work_w, work_h;
 void mw_resize(Fl_Widget *, void *)
 {
   int x = std::stoi(mw_x->value()), y = std::stoi(mw_y->value()), w = std::stoi(mw_w->value()), h = std::stoi(mw_h->value());
-  if (x >= 0 && y >= 0 && x + w <= work_w && y + h <= work_h) {
+  if (x >= 0 && y >= 0 && x + w <= work_w && y + h <= work_h)
+  {
     logD("mw_resize: (", x, ", ", y, ", ", w, ", ", h, ")");
     main_window->resize(x, y, w, h);
   }
 }
 
-void unconfig(Fl_Widget*, void*)
+void unconfig(Fl_Widget *, void *)
 {
-    OS::use_theme(old_theme);
-    main_window->resize(old_x, old_y, old_w, old_h);
-    config->hide();
+  OS::use_theme(old_theme);
+  main_window->resize(old_x, old_y, old_w, old_h);
+  config->hide();
 }
 
 void pref_dialog()

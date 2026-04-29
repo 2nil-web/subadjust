@@ -14,8 +14,19 @@
 #include <string_view>
 #include <vector>
 
+#ifndef _
+#ifdef _MSVC_LANG
+#define _(STRING) STRING
+#else
+#include <libintl.h>
+#include <locale.h>
+#define _(STRING) gettext(STRING)
+#endif
+#endif
+
 #if defined(_WIN32)
 #include <windows.h>
+
 #define DIR_SEP "\\"
 size_t my_wcstombs(char *, const wchar_t *, size_t);
 #else
