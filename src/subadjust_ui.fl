@@ -10,7 +10,7 @@ code_name {.cxx}
 Function {make_window()} {open
 } {
   Fl_Window main_window {open
-    xywh {2370 272 384 651} type Double box UP_BOX resizable
+    xywh {2361 187 384 651} type Double box UP_BOX resizable
     code0 {\#include <FL/Fl_Int_Input.H>}
     code1 {\#include <FL/Fl_Float_Input.H>}
     code2 {\#include "Fl_Time_Input.H"} size_range {384 600 0 0} visible
@@ -178,7 +178,7 @@ For more details about ECMAScript regex, see https://en.cppreference.com/w/cpp/r
         xywh {4 287 148 56}
       } {
         Fl_Button find {
-          label Find selected
+          label Find
           tooltip {Will find the next occurrence of the find pattern, the one actually pointed by the cursor is not taken into account.} xywh {6 289 60 26}
         }
         Fl_Button replace_next {
@@ -201,7 +201,7 @@ For more details about ECMAScript regex, see https://en.cppreference.com/w/cpp/r
         xywh {152 285 228 55}
       } {
         Fl_Input_Choice str_find {
-           xywh {152 289 227 22} labeltype NO_LABEL
+          xywh {152 289 227 22} labeltype NO_LABEL
         } {}
         Fl_Input_Choice str_replace {
           xywh {152 318 227 22} labeltype NO_LABEL resizable
@@ -233,43 +233,55 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
   }
   Fl_Window config {
     label Configuration open
-    xywh {2374 49 371 180} type Double hide
+    xywh {3019 75 355 221} type Double visible
   } {
     Fl_Choice theme_choice {
-      label {Theme:} open
-      xywh {72 9 122 22} down_box BORDER_BOX
+      label {Theme:}
+      xywh {88 5 130 22} down_box BORDER_BOX
     } {}
-    Fl_Return_Button ok_config {
-      label OK
-      xywh {57 142 86 22}
+    Fl_Input_Choice def_font {
+      label {Default font:}
+      tooltip {Insure that the font you select exists on your system.
+If not the default one will be Helvetica} xywh {88 35 150 22}
+    } {}
+    Fl_Output loc_dir {selected
+      tooltip {Show the path where translation files might be} xywh {86 66 260 22} labeltype NO_LABEL
     }
-    Fl_Button cancel_config {
-      label Cancel
-      xywh {237 142 64 22}
+    Fl_Button loc_dir_sel {
+      label Select
+      tooltip {Select the path where translation files might be} xywh {8 66 75 22}
+    }
+    Fl_Box geo_not_saved {
+      label {The geometry of this instance will not be saved.}
+      xywh {22 95 320 22} hide
     }
     Fl_Input mw_x {
       label {X origin:}
-      xywh {84 63 92 22} when 1
+      xywh {80 121 92 22} when 1
       class Fl_Int_Input
     }
     Fl_Input mw_y {
       label {Y origin:}
-      xywh {84 93 92 22} when 1
+      xywh {80 151 92 22} when 1
       class Fl_Int_Input
     }
     Fl_Input mw_w {
       label {Width:}
-      xywh {250 63 92 22} when 1
+      xywh {246 121 92 22} when 1
       class Fl_Int_Input
     }
     Fl_Input mw_h {
       label {Height:}
-      xywh {250 93 92 22} when 1
+      xywh {246 151 92 22} when 1
       class Fl_Int_Input
     }
-    Fl_Box geo_not_saved {
-      label {The geometry of this instance will not be saved.}
-      xywh {22 33 320 24} hide
+    Fl_Return_Button ok_config {
+      label OK
+      xywh {57 189 86 22}
+    }
+    Fl_Button cancel_config {
+      label Cancel
+      xywh {237 189 64 22}
     }
   }
 }

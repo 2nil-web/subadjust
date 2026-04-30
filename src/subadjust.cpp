@@ -365,8 +365,9 @@ The configuration file is located there : ")EOF") +
 
   if (gui_mode)
   {
-    std::string def_font=pref_get_string("default font", "");
-    if (!def_font.empty()) Fl::set_font(FL_HELVETICA, def_font.c_str());
+    std::string def_font = pref_get_string("default_font value", "");
+    if (!def_font.empty())
+      Fl::set_font(FL_HELVETICA, def_font.c_str());
     gui_display(file_read_ok);
     main_window->show();
 
