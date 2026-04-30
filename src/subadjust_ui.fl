@@ -9,7 +9,7 @@ header_name {.h}
 code_name {.cxx}
 Function {make_window()} {open
 } {
-  Fl_Window main_window {open
+  Fl_Window main_window {open selected
     xywh {2370 272 384 651} type Double box UP_BOX resizable
     code0 {\#include <FL/Fl_Int_Input.H>}
     code1 {\#include <FL/Fl_Float_Input.H>}
@@ -171,25 +171,25 @@ end offsets
     }
     Fl_Group {} {open
       tooltip {You may apply regex pattern, with case sensitivity or not.
-All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 60} box BORDER_FRAME color 37
+All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 64} box BORDER_FRAME color 37
     } {
       Fl_Group {} {open
-        xywh {4 287 137 57}
+        xywh {4 287 148 56}
       } {
         Fl_Button find {
           label Find
-          tooltip {Will find the next occurrence of the find pattern, the one actually pointed by the cursor is not taken into account.} xywh {6 289 57 26}
+          tooltip {Will find the next occurrence of the find pattern, the one actually pointed by the cursor is not taken into account.} xywh {6 289 60 26}
         }
         Fl_Button replace_next {
           label {Repl Next}
-          tooltip {Search and replace only the next occurence of your pattern. Can be undone.} xywh {65 289 75 26} align 128
+          tooltip {Search and replace only the next occurence of your pattern. Can be undone.} xywh {66 289 81 26} align 128
         }
         Fl_Button replace_all {
           label {Repl All}
-          tooltip {Search and replace all occurrences of your pattern. Can be undone.} xywh {65 318 75 26}
+          tooltip {Search and replace all occurrences of your pattern. Can be undone.} xywh {66 318 81 22}
         }
         Fl_Box {} {
-          xywh {136 289 3 54} labeltype NO_LABEL labelsize 10 hide
+          xywh {146 289 3 54} labeltype NO_LABEL labelsize 10 hide
         }
         Fl_Check_Button case_sensitive_find {
           label Case
@@ -197,37 +197,37 @@ All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 60} b
         }
       }
       Fl_Group {} {open
-        xywh {142 285 238 59}
+        xywh {152 285 228 55}
       } {
         Fl_Input_Choice str_find {
-          tooltip {For more details about ECMAScript regex, see https://en.cppreference.com/w/cpp/regex/ecmascript.html} xywh {142 289 236 22} labeltype NO_LABEL
+          tooltip {For more details about ECMAScript regex, see https://en.cppreference.com/w/cpp/regex/ecmascript.html} xywh {152 289 227 22} labeltype NO_LABEL
         } {}
         Fl_Input_Choice str_replace {
-          xywh {142 318 236 22} labeltype NO_LABEL resizable
+          xywh {152 318 227 22} labeltype NO_LABEL resizable
         } {}
       }
     }
     Fl_Group {} {open
-      xywh {1 345 378 25}
+      xywh {1 353 378 26}
     } {
       Fl_Box file_path_label {
         label {File path}
         tooltip {Show the path of the file being currently edited.
 It turns red if there are pending modification.
-Automatic changes may occur if the initial file format is not UTF-8.} xywh {2 345 60 22}
+Automatic changes may occur if the initial file format is not UTF-8.} xywh {2 354 60 22}
       }
       Fl_Box {} {
-        xywh {62 345 3 22} labeltype NO_LABEL hide
+        xywh {62 353 3 22} labeltype NO_LABEL hide
       }
       Fl_Output file_path {
         label {File path}
         tooltip {Show the path of the file being currently edited.
 It turns red if there are pending modification.
-Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 348 314 22} labeltype NO_LABEL resizable
+Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 356 314 22} labeltype NO_LABEL resizable
       }
     }
-    Fl_Text_Editor file_content {selected
-      xywh {4 374 376 271} labeltype NO_LABEL resizable
+    Fl_Text_Editor file_content {
+      xywh {4 382 376 271} labeltype NO_LABEL resizable
     }
   }
   Fl_Window config {
