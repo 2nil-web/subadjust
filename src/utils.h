@@ -63,6 +63,8 @@ bool create_directory_if_possible(std::filesystem::path);
 bool create_file(std::filesystem::path);
 bool create_file_if_possible(std::filesystem::path);
 std::filesystem::path admin_file(std::filesystem::path, std::filesystem::path parent_dir = personal_dir() / ".subadjust");
+std::filesystem::path ensure_ends_with(std::filesystem::path p, const std::string &name);
+bool ensure_useful_l10n_dir(std::filesystem::path &p);
 bool starts_with_ignore_case(std::string_view s, std::string_view p);
 bool ends_with_ignore_case(std::string_view s, std::string_view p);
 void add_dot_ext(const char *f, const char *ext, char *s);

@@ -1,4 +1,4 @@
-PATH %PATH%;C:\Users\dplal\Documents\home\01-runset\build\msvc\win\x64\Release
+PATH %PATH%;C:\Users\dplal\Documents\home\10-runset\build\msvc\win\x64\Release
 PATH %PATH%;C:\Program Files\Vim\vim92
 set MSYSDIR=C:\UnixTools\msys64
 PATH %PATH%;%MSYSDIR%\usr\bin

@@ -44,19 +44,23 @@ const std::string pref_filename()
   return ret;
 }
 
-std::string pref_get_string(const std::string key, const std::string def_val, Fl_Preferences pref = window)
+std::string pref_get_string(const std::string key, const std::string def_val, Fl_Preferences *pref)
 {
+  if (pref == nullptr)
+    pref = &window;
   char *pval;
-  pref.get(key.c_str(), pval, def_val.c_str());
+  pref->get(key.c_str(), pval, def_val.c_str());
   std::string val = pval;
   free(pval);
   return val;
 }
 
-int pref_get_int(const std::string key, int def_val, Fl_Preferences pref = window)
+int pref_get_int(const std::string key, int def_val, Fl_Preferences *pref)
 {
+  if (pref == nullptr)
+    pref = &window;
   int val;
-  pref.get(key.c_str(), val, def_val);
+  pref->get(key.c_str(), val, def_val);
   return val;
 }
 
@@ -381,6 +385,8 @@ void juxtaposing_end()
     remove_opened();
 }
 
+std::filesystem::path l10n_dir = "";
+
 void pref_get(int x, int y, int w, int h)
 {
   //  remove_cr_in_log(false); logI(screen_info_fr()); remove_cr_in_log();
@@ -413,6 +419,7 @@ void pref_get(int x, int y, int w, int h)
   str_replace->value(pref_get_string("replace value", "").c_str());
   str_replace->add(dup_anti_slash(pref_get_string("replace menu", R"(|$1)")).c_str());
 
+  l10n_dir = pref_get_string("locale_dir", "");
   pref_trace();
 }
 
@@ -500,6 +507,8 @@ void pref_set()
 
   pref_trace();
 
+  if (!l10n_dir.empty())
+    window.set("l10n_dir", l10n_dir.string().c_str());
   juxtaposing_end();
 }
 

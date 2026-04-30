@@ -7,7 +7,7 @@
 #include <string>
 
 #ifdef _WIN32
-//#define WIN32_LEAN_AND_MEAN
+// #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #endif
 
@@ -148,62 +148,31 @@ bool gui_mode = true;
 options myopt;
 std::string opt_level = "";
 
-bool is_dir(std::filesystem::path p)
-{
-  return std::filesystem::is_directory(std::filesystem::status(p));
-}
-
-void examine_path(std::string s, std::filesystem::path p)
-{
-  std::filesystem::path np(""), op(p), ap(op), cp(op);
-
-  p.make_preferred();
-  // Ensure path does not end with \ or /
-  for (auto it = p.begin(); it != p.end(); ++it) {
-    if (it == p.end() && *it == "") break;
-    np /= *it;
-  }
-
-//  if (*np.end() != "locale") np /= "locale";
-  logD(s, ": [", p, "], newp: [", np, "], end np[", *(--np.end()), "]");
-
-}
-
+// Traverse a predefined list of path to return the first one that point to an absolute, existing not empty directory ending with "locale"
 std::filesystem::path find_locale_dir(std::filesystem::path prog_path)
 {
-  std::filesystem::path p1("/usr/dir/locale");
-  std::filesystem::path p2("\\usr\\locale\\");
-  std::filesystem::path p3("./locale\\");
-  std::filesystem::path p4("/usr/dir");
-  std::filesystem::path p5("\\usr\\");
-  std::filesystem::path p6("./");
-  examine_path("p1", p1);
-  examine_path("p2", p2);
-  examine_path("p3", p3);
-  examine_path("p4", p4);
-  examine_path("p5", p5);
-  examine_path("p6", p6);
+  // On anticipe la récupération du répertoire l10n, s'il existe
+  std::filesystem::path my_l10n_dir = pref_get_string("l10n_dir", "");
+  std::vector<std::filesystem::path> vp = {my_l10n_dir, prog_path.parent_path(), std::filesystem::current_path(), ".", personal_dir(), "/usr/share", "/usr/local/share", my_getenv("locale_dir"), my_getenv("LOCALE_DIR")};
 
-  std::string p3s=p3.string();
-  p3s.pop_back();
-  logD("p1: ", p1, ", p2:", p2, ", p3:", p3, ", p3s:", p3s);
-  static std::vector <std::filesystem::path> vpd = { prog_path.parent_path(), std::filesystem::current_path(), ".", personal_dir(), "/usr/share", "/usr/local/share", my_getenv("local_dir"), my_getenv("LOCAL_DIR") };
-
-/*  for (auto pd : vpd)  {
-    if (ps.empty()) continue;
-    if (pd.ends_with("/") || pd.ends_with("\\")) pd.p
-
-    if (!pd.ends_with("locale") && !pd.ends_with("locale")
-  }*/
-  for (auto pd : vpd)  {
-    if (is_dir(pd / "locale")) return pd / "locale";
+  for (auto p : vp)
+  {
+    if (ensure_useful_l10n_dir(p))
+      logD(p, " useful_l10n_dir");
+    else
+      logD(p, " UNuseful_l10n_dir");
   }
+
+  for (auto p : vp)
+    if (ensure_useful_l10n_dir(p))
+      return p;
 
   logD("No locale found");
   return "";
 }
 
-static void setup_i18n(std::filesystem::path prog_path) {
+static void setup_i18n(std::filesystem::path prog_path)
+{
 #if _WIN32
   _configthreadlocale(_DISABLE_PER_THREAD_LOCALE);
   SetThreadLocale(GetUserDefaultLCID());
@@ -213,12 +182,11 @@ static void setup_i18n(std::filesystem::path prog_path) {
   setlocale(LC_MESSAGES, "");
 #endif
 
-//  bindtextdomain("subadjust", "C:\\Users\\dplal\\Documents\\home\\00-subadjust\\locale");
+  //  bindtextdomain("subadjust", "C:\\Users\\dplal\\Documents\\home\\00-subadjust\\locale");
   bindtextdomain("subadjust", find_locale_dir(prog_path).string().c_str());
   bind_textdomain_codeset("subadjust", "UTF-8");
   textdomain("subadjust");
 }
-
 
 int main(int argc, char **argv)
 {
