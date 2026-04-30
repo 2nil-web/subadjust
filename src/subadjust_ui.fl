@@ -40,21 +40,21 @@ Function {make_window()} {open
         }
       }
       Fl_Button app_prefs {
-        label Preferences
-        xywh {73 2 84 26}
+        label {&Preferences}
+        xywh {73 2 84 26} shortcut 0x40070
       }
       Fl_Button app_save_quit {
-        label {Save/Quit}
+        label {Save/Q&uit}
         tooltip {Save your file and exit from the app.
-Available shortcut is 'Ctrl-X'.} xywh {161 2 91 26} shortcut 0x40078
+Available shortcut is 'Ctrl-X'.} xywh {161 2 91 26} shortcut 0x40075
       }
       Fl_Button app_quit {
         label {&Quit}
         xywh {256 2 51 26} shortcut 0x40071
       }
       Fl_Button app_about {
-        label About
-        xywh {311 2 67 26}
+        label {A&bout}
+        tooltip {Some useful informations about the app (Shortcut Ctrl+B).} xywh {311 2 67 26} shortcut 0x40062
       }
       Fl_Group {} {open
         xywh {3 30 377 130} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
@@ -113,7 +113,7 @@ Available shortcut is 'Ctrl-X'.} xywh {161 2 91 26} shortcut 0x40078
         xywh {2 165 378 116} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
       } {
         Fl_Group {} {
-          label Limits
+          label Limits open
           xywh {173 205 205 76} box BORDER_FRAME color 37 labelfont 3 align -207
         } {
           Fl_Input time_start {
@@ -133,27 +133,27 @@ Available shortcut is 'Ctrl-X'.} xywh {161 2 91 26} shortcut 0x40078
 They are added to their corresponding time limit} xywh {4 167 167 110} box BORDER_FRAME color 37 labelfont 3 align -207
         } {
           Fl_Input offset_start {
-            tooltip {An offset that applies to the beginning of the sub,  in floating point seconds} xywh {86 221 83 22} labeltype NO_LABEL when 5
+            tooltip {An offset that applies to the beginning of the sub,  in floating point seconds} xywh {88 221 79 22} labeltype NO_LABEL when 5
             class Fl_Float_Input
           }
           Fl_Input offset_stop {
-            tooltip {An offset that applies to the end of the sub,  in floating seconds} xywh {86 250 83 22} labeltype NO_LABEL when 5
+            tooltip {An offset that applies to the end of the sub,  in floating seconds} xywh {88 250 79 22} labeltype NO_LABEL when 5
             class Fl_Float_Input
           }
           Fl_Input dur_coeff {
-            tooltip {A coefficient that allows to grow or shrink the sub duration} xywh {77 189 92 22} labeltype NO_LABEL when 5
+            tooltip {A coefficient that allows to grow or shrink the sub duration} xywh {79 189 88 22} labeltype NO_LABEL when 5
             class Fl_Float_Input
           }
           Fl_Box {} {
             label {Duration
 factor}
-            xywh {4 183 73 34}
+            xywh {4 183 74 34}
           }
           Fl_Box {} {
             label {Begin and
 end offsets
 (in seconds)}
-            xywh {5 220 73 54}
+            xywh {5 220 78 54}
           }
         }
         Fl_Button sub_adjust {
@@ -170,22 +170,23 @@ end offsets
       xywh {381 0 0 161} labeltype NO_LABEL align 8 hide
     }
     Fl_Group {} {open
-      tooltip {You may apply regex pattern, with case sensitivity or not.
-All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 64} box BORDER_FRAME color 37
+      tooltip {You may apply regex pattern.
+They all will be uniquely stored for futur reuse.
+For more details about ECMAScript regex, see https://en.cppreference.com/w/cpp/regex/ecmascript.html} xywh {4 285 376 64} box BORDER_FRAME color 37
     } {
       Fl_Group {} {open
         xywh {4 287 148 56}
       } {
         Fl_Button find {
-          label Find
+          label Find selected
           tooltip {Will find the next occurrence of the find pattern, the one actually pointed by the cursor is not taken into account.} xywh {6 289 60 26}
         }
         Fl_Button replace_next {
-          label {Repl Next} selected
+          label {Repl Next}
           tooltip {Search and replace only the next occurence of your pattern. Can be undone.} xywh {68 289 81 26} align 128
         }
         Fl_Button replace_all {
-          label {Repl All} selected
+          label {Repl All}
           tooltip {Search and replace all occurrences of your pattern. Can be undone.} xywh {68 318 81 22}
         }
         Fl_Box {} {
@@ -200,7 +201,7 @@ All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 64} b
         xywh {152 285 228 55}
       } {
         Fl_Input_Choice str_find {
-          tooltip {For more details about ECMAScript regex, see https://en.cppreference.com/w/cpp/regex/ecmascript.html} xywh {152 289 227 22} labeltype NO_LABEL
+           xywh {152 289 227 22} labeltype NO_LABEL
         } {}
         Fl_Input_Choice str_replace {
           xywh {152 318 227 22} labeltype NO_LABEL resizable
@@ -232,7 +233,7 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
   }
   Fl_Window config {
     label Configuration open
-    xywh {2374 49 371 180} type Double visible
+    xywh {2374 49 371 180} type Double hide
   } {
     Fl_Choice theme_choice {
       label {Theme:} open

@@ -281,16 +281,16 @@ msgstr "Sauver sous ..."
 msgid "Reload"
 msgstr "Recharger"
 
-msgid "Preferences"
-msgstr "Préférences"
+msgid "&Preferences"
+msgstr "&Préférences"
 
-msgid "Save/Quit"
-msgstr "Sauve/Quitte"
+msgid "Save/Q&uit"
+msgstr "Sa&uve/Quitte"
 
 msgid "&Quit"
 msgstr "&Quitte"
 
-msgid "About"
+msgid "A&bout"
 msgstr "A propos"
 
 msgid "Go to middle ..."
@@ -348,7 +348,7 @@ msgid "Repl All"
 msgstr "Rempl tous"
 
 msgid "Case"
-msgstr "Maj"
+msgstr "Maj\nmin"
 
 msgid "File path"
 msgstr "Chemin"
@@ -373,4 +373,64 @@ msgstr "Hauteur:"
 
 msgid "Cancel"
 msgstr "Annuler"
+
+msgid "Save your file and exit from the app.\nAvailable shortcut is 'Ctrl-X'."
+msgstr "Enregistre le fichier et quitte l'application.\nRaccourci disponible « Ctrl-X »."
+
+msgid "Some useful informations about the app (Shortcut Ctrl+B)."
+msgstr "Informations sur l'application (Raccourci Ctrl+B)."
+
+msgid "Go to text line ..."	
+msgstr "Aller à la ligne de texte…"
+
+msgid "Go to subtitle number .."	
+msgstr "Aller au numéro du sous-titre…"
+
+msgid "Search in the subtitle, line whose timstamp is close to ..."	
+msgstr "Rechercher dans le sous-titre la ligne dont l'horodatage est proche de…"
+
+msgid "You may undo/redo this action with Ctrl-Z/Ctrl-Y."	
+msgstr "Vous pouvez annuler/rétablir cette action avec Ctrl+Z/Ctrl+Y."
+
+msgid "The start time of the sub"	
+msgstr "Heure de début du sous-titre"
+
+msgid "The end time of the sub"	
+msgstr "Heure de fin du sous-titre"
+
+msgid "Begin and end offsets are in floating point seconds.\nThey are added to their corresponding time limit"
+msgstr "Les décalages de début et de fin sont exprimés en secondes décimale.\nIls sont ajoutés à la limite de temps qui leur correspond.\nEt augmentent ou diminuent la durée des sous-titres en conséquence."
+
+msgid "An offset that applies to the beginning of the sub,  in floating point seconds"	
+msgstr "Décalage appliqué au début du sous-titre (seconde décimale)"
+
+msgid "An offset that applies to the end of the sub,  in floating seconds"	
+msgstr "Décalage appliqué à la fin du sous-titre (seconde décimale)"
+
+msgid "A coefficient that allows to grow or shrink the sub duration"	
+msgstr "Coefficient permettant d'augmenter ou de diminuer la durée du sous-titre"
+
+msgid "Will adjust the subtitles text according to the limits, offsets or duration coefficient, settings."	
+msgstr "Ajuste le texte des sous-titres en fonction des limites, des décalages ou du coefficient de durée."
+
+msgid "Will forcibly parse the subtitles text and accordingly modify the settings"	
+msgstr "Analyse forcée du texte des sous-titres et modification des paramètres en conséquence."
+
+msgid "You may apply regex pattern.\nThey all will be uniquely stored for futur reuse.\nFor more details about ECMAScript regex, see https://en.cppreference.com/w/cpp/regex/ecmascript.html"
+msgstr "Vous pouvez utiliser des expressions régulières.\nElles seront stockées de manière unique pour réutilisation ultérieure.\nPour plus d'informations consultez https://en.cppreference.com/w/cpp/regex/ecmascript.html"
+
+msgid "Will find the next occurrence of the find pattern, the one actually pointed by the cursor is not taken into account."	
+msgstr "Recherche la prochaine occurrence du modèle ; celle sous le curseur n'est pas prise en compte."
+
+msgid "Search and replace only the next occurence of your pattern. Can be undone."	
+msgstr "Recherche et remplacement uniquement de la prochaine occurrence du modèle. Annulable."
+
+msgid "Search and replace all occurrences of your pattern. Can be undone."	
+msgstr "Rechercher et remplacer toutes les occurrences de votre motif. Opération annulable."
+
+msgid "Run case sensitive find or not"	
+msgstr "Recherche qui tient compte de la casse ou non."
+
+msgid "Show the path of the file being currently edited.\nIt turns red if there are pending modification.\nAutomatic changes may occur if the initial file format is not UTF-8."	
+msgstr "Affiche le chemin d'accès du fichier en cours d'édition.\nIl devient rouge en cas de modifications en attente.\nDes modifications automatiques peuvent survenir si le format du fichier d'origine n'est pas UTF-8."
 
