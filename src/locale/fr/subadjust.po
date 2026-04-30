@@ -266,4 +266,111 @@ msgstr "Utilisation: "
 msgid "Copyright © D. LALANNE - MIT License - No warranty of any kind."
 msgstr "Copyright © D. LALANNE - Licence MIT - Sans garantie d'aucune sorte."
 
+msgid "File"
+msgstr "Fichier"
+
+msgid "Open ..."
+msgstr "Ouvrir ..."
+
+msgid "Save"
+msgstr "Sauver"
+
+msgid "Save As ..."
+msgstr "Sauver sous ..."
+
+msgid "Reload"
+msgstr "Recharger"
+
+msgid "Preferences"
+msgstr "Préférences"
+
+msgid "Save/Quit"
+msgstr "Sauve/Quitte"
+
+msgid "&Quit"
+msgstr "&Quitte"
+
+msgid "About"
+msgstr "A propos"
+
+msgid "Go to middle ..."
+msgstr "Aller au milieu ..."
+
+msgid "Line"
+msgstr "Ligne"
+
+msgid "Sub"
+msgstr "Sous-titre"
+
+msgid "Time"
+msgstr "Horodatage"
+
+msgid "Start"
+msgstr "Début"
+
+msgid "Begin"
+msgstr "Début"
+
+msgid "End"
+msgstr "Fin"
+
+msgid "Go to line, sub or time value ..."
+msgstr "Aller à la ligne, sous-titre ou horodatage ..."
+
+msgid "Del first sub"
+msgstr "Retire 1er"
+
+msgid "Del last sub"
+msgstr "ou dernier"
+
+msgid "Duration\nfactor"
+msgstr "Facteur\nde durée"
+
+msgid "Begin and\nend offsets\n(in seconds)"
+msgstr "Début/fin\ndécalage\n(secondes)"
+
+msgid "Adjustment"
+msgstr "Ajustement"
+
+msgid "Reparse"
+msgstr "Réanalyse"
+
+msgid "Limits"
+msgstr "Limites"
+
+msgid "Find"
+msgstr "Cherche"
+
+msgid "Repl Next"
+msgstr "Rempl suiv"
+
+msgid "Repl All"
+msgstr "Rempl tous"
+
+msgid "Case"
+msgstr "Maj"
+
+msgid "File path"
+msgstr "Chemin"
+
+msgid "Theme:"
+msgstr "Thème:"
+
+msgid "The geometry of this instance will not be saved."
+msgstr "La géométrie de cette instance ne sera pas enregistrée."
+
+msgid "X origin:"
+msgstr "Abscisse:"
+
+msgid "Y origin:"
+msgstr "Ordonnée:"
+
+msgid "Width:"
+msgstr "Largeur:"
+
+msgid "Height:"
+msgstr "Hauteur:"
+
+msgid "Cancel"
+msgstr "Annuler"
 

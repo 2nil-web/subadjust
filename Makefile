@@ -80,7 +80,10 @@ TARGET=${TARGET_DIR}/${PREFIX}${EXEXT}
 
 .PHONY: FORCE
 
-all : ${TARGET} #assets/QuickDoc.jpg
+all : ${TARGET} locale/fr/LC_MESSAGES/subadjust.mo
+
+locale/fr/LC_MESSAGES/subadjust.mo : src/locale/fr/subadjust.po
+	msgfmt --output-file=$@ $<
 
 gcc : ${TARGET}
 

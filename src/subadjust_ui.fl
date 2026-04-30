@@ -1,5 +1,10 @@
 # data file for the Fltk User Interface Designer (fluid)
 version 1.0404
+i18n_type 1
+i18n_include {<libintl.h>}
+i18n_conditional {}
+i18n_gnu_function gettext
+i18n_gnu_static_function gettext_noop
 header_name {.h}
 code_name {.cxx}
 Function {make_window()} {open
@@ -11,11 +16,11 @@ Function {make_window()} {open
     code2 {\#include "Fl_Time_Input.H"} size_range {384 600 0 0} visible
   } {
     Fl_Group {} {open
-      xywh {2 0 380 284}
+      xywh {2 0 378 284}
     } {
       Fl_Menu_Button {} {
-        label File
-        xywh {5 2 50 26}
+        label File open
+        xywh {3 2 63 26}
       } {
         MenuItem file_open {
           label {Open ...}
@@ -36,20 +41,20 @@ Function {make_window()} {open
       }
       Fl_Button app_prefs {
         label Preferences
-        xywh {69 2 83 26}
-      }
-      Fl_Button app_about {
-        label About
-        xywh {325 2 53 26}
+        xywh {72 2 84 26}
       }
       Fl_Button app_save_quit {
         label {Save/Quit}
         tooltip {Save your file and exit from the app.
-Available shortcut is 'Ctrl-X'.} xywh {167 2 79 26} shortcut 0x40078
+Available shortcut is 'Ctrl-X'.} xywh {162 2 88 26} shortcut 0x40078
       }
       Fl_Button app_quit {
         label {&Quit}
-        xywh {255 2 51 26} shortcut 0x40071
+        xywh {256 2 51 26} shortcut 0x40071
+      }
+      Fl_Button app_about {
+        label About
+        xywh {313 2 65 26}
       }
       Fl_Group {} {open
         xywh {3 30 377 130} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
@@ -160,9 +165,9 @@ end offsets
           tooltip {Will forcibly parse the subtitles text and accordingly modify the settings} xywh {293 170 83 28} labelsize 15
         }
       }
-      Fl_Box {} {
-        xywh {382 0 0 161} labeltype NO_LABEL align 8 hide resizable
-      }
+    }
+    Fl_Box {} {
+      xywh {381 0 0 161} labeltype NO_LABEL align 8 hide
     }
     Fl_Group {} {open
       tooltip {You may apply regex pattern, with case sensitivity or not.
@@ -173,15 +178,15 @@ All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 60} b
       } {
         Fl_Button find {
           label Find
-          tooltip {Will find the next occurrence of the find pattern, the one actually pointed by the cursor is not taken into account.} xywh {7 289 56 26}
+          tooltip {Will find the next occurrence of the find pattern, the one actually pointed by the cursor is not taken into account.} xywh {6 289 57 26}
         }
         Fl_Button replace_next {
           label {Repl Next}
-          tooltip {Search and replace only the next occurence of your pattern. Can be undone.} xywh {67 289 72 26} align 128
+          tooltip {Search and replace only the next occurence of your pattern. Can be undone.} xywh {65 289 75 26} align 128
         }
         Fl_Button replace_all {
-          label {Repl All   }
-          tooltip {Search and replace all occurrences of your pattern. Can be undone.} xywh {67 318 72 26}
+          label {Repl All}
+          tooltip {Search and replace all occurrences of your pattern. Can be undone.} xywh {65 318 75 26}
         }
         Fl_Box {} {
           xywh {136 289 3 54} labeltype NO_LABEL labelsize 10 hide
@@ -192,18 +197,18 @@ All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 60} b
         }
       }
       Fl_Group {} {open
-        xywh {142 285 238 59} resizable
+        xywh {142 285 238 59}
       } {
         Fl_Input_Choice str_find {
           tooltip {For more details about ECMAScript regex, see https://en.cppreference.com/w/cpp/regex/ecmascript.html} xywh {142 289 236 22} labeltype NO_LABEL
         } {}
         Fl_Input_Choice str_replace {
-          xywh {142 318 236 22} labeltype NO_LABEL
+          xywh {142 318 236 22} labeltype NO_LABEL resizable
         } {}
       }
     }
     Fl_Group {} {open
-      xywh {1 345 378 24}
+      xywh {1 345 378 25}
     } {
       Fl_Box file_path_label {
         label {File path}
@@ -218,11 +223,11 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {2 34
         label {File path}
         tooltip {Show the path of the file being currently edited.
 It turns red if there are pending modification.
-Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 345 314 22} labeltype NO_LABEL resizable
+Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 348 314 22} labeltype NO_LABEL resizable
       }
     }
     Fl_Text_Editor file_content {
-      xywh {4 376 376 269} labeltype NO_LABEL resizable
+      xywh {4 374 376 271} labeltype NO_LABEL resizable
     }
   }
   Fl_Window config {
@@ -242,27 +247,27 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
       xywh {237 142 64 22}
     }
     Fl_Input mw_x {
-      label {x origin:}
-      xywh {72 63 92 22} when 1
+      label {X origin:} selected
+      xywh {84 63 92 22} when 1
       class Fl_Int_Input
     }
     Fl_Input mw_y {
-      label {y origin:}
-      xywh {72 93 92 22} when 1
+      label {Y origin:} selected
+      xywh {84 93 92 22} when 1
       class Fl_Int_Input
     }
     Fl_Input mw_w {
-      label {width:}
+      label {Width:}
       xywh {250 63 92 22} when 1
       class Fl_Int_Input
     }
     Fl_Input mw_h {
-      label {height:} selected
+      label {Height:}
       xywh {250 93 92 22} when 1
       class Fl_Int_Input
     }
     Fl_Box geo_not_saved {
-      label {The geometry of this instance will not be saved}
+      label {The geometry of this instance will not be saved.}
       xywh {22 33 320 24} hide
     }
   }
