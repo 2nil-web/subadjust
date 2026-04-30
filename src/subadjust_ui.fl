@@ -9,7 +9,7 @@ header_name {.h}
 code_name {.cxx}
 Function {make_window()} {open
 } {
-  Fl_Window main_window {open selected
+  Fl_Window main_window {open
     xywh {2370 272 384 651} type Double box UP_BOX resizable
     code0 {\#include <FL/Fl_Int_Input.H>}
     code1 {\#include <FL/Fl_Float_Input.H>}
@@ -181,12 +181,12 @@ All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 64} b
           tooltip {Will find the next occurrence of the find pattern, the one actually pointed by the cursor is not taken into account.} xywh {6 289 60 26}
         }
         Fl_Button replace_next {
-          label {Repl Next}
-          tooltip {Search and replace only the next occurence of your pattern. Can be undone.} xywh {66 289 81 26} align 128
+          label {Repl Next} selected
+          tooltip {Search and replace only the next occurence of your pattern. Can be undone.} xywh {68 289 81 26} align 128
         }
         Fl_Button replace_all {
-          label {Repl All}
-          tooltip {Search and replace all occurrences of your pattern. Can be undone.} xywh {66 318 81 22}
+          label {Repl All} selected
+          tooltip {Search and replace all occurrences of your pattern. Can be undone.} xywh {68 318 81 22}
         }
         Fl_Box {} {
           xywh {146 289 3 54} labeltype NO_LABEL labelsize 10 hide
