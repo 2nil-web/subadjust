@@ -10,7 +10,7 @@ code_name {.cxx}
 Function {make_window()} {open
 } {
   Fl_Window main_window {open
-    xywh {2370 273 384 650} type Double box UP_BOX resizable
+    xywh {2370 272 384 651} type Double box UP_BOX resizable
     code0 {\#include <FL/Fl_Int_Input.H>}
     code1 {\#include <FL/Fl_Float_Input.H>}
     code2 {\#include "Fl_Time_Input.H"} size_range {384 600 0 0} visible
@@ -20,7 +20,7 @@ Function {make_window()} {open
     } {
       Fl_Menu_Button {} {
         label File open
-        xywh {3 2 63 26}
+        xywh {3 2 66 26}
       } {
         MenuItem file_open {
           label {Open ...}
@@ -41,12 +41,12 @@ Function {make_window()} {open
       }
       Fl_Button app_prefs {
         label Preferences
-        xywh {72 2 84 26}
+        xywh {73 2 84 26}
       }
       Fl_Button app_save_quit {
         label {Save/Quit}
         tooltip {Save your file and exit from the app.
-Available shortcut is 'Ctrl-X'.} xywh {162 2 88 26} shortcut 0x40078
+Available shortcut is 'Ctrl-X'.} xywh {161 2 91 26} shortcut 0x40078
       }
       Fl_Button app_quit {
         label {&Quit}
@@ -54,7 +54,7 @@ Available shortcut is 'Ctrl-X'.} xywh {162 2 88 26} shortcut 0x40078
       }
       Fl_Button app_about {
         label About
-        xywh {313 2 65 26}
+        xywh {311 2 67 26}
       }
       Fl_Group {} {open
         xywh {3 30 377 130} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
@@ -226,7 +226,7 @@ It turns red if there are pending modification.
 Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 348 314 22} labeltype NO_LABEL resizable
       }
     }
-    Fl_Text_Editor file_content {
+    Fl_Text_Editor file_content {selected
       xywh {4 374 376 271} labeltype NO_LABEL resizable
     }
   }
@@ -247,12 +247,12 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
       xywh {237 142 64 22}
     }
     Fl_Input mw_x {
-      label {X origin:} selected
+      label {X origin:}
       xywh {84 63 92 22} when 1
       class Fl_Int_Input
     }
     Fl_Input mw_y {
-      label {Y origin:} selected
+      label {Y origin:}
       xywh {84 93 92 22} when 1
       class Fl_Int_Input
     }
