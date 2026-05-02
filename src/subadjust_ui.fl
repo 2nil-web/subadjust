@@ -10,10 +10,10 @@ code_name {.cxx}
 Function {make_window()} {open
 } {
   Fl_Window main_window {open
-    xywh {2361 187 384 651} type Double box UP_BOX resizable
+    xywh {2361 187 384 651} type Double box UP_BOX hide resizable
     code0 {\#include <FL/Fl_Int_Input.H>}
     code1 {\#include <FL/Fl_Float_Input.H>}
-    code2 {\#include "Fl_Time_Input.H"} size_range {384 600 0 0} visible
+    code2 {\#include "Fl_Time_Input.H"} size_range {384 600 0 0}
   } {
     Fl_Group {} {open
       xywh {2 0 378 284}
@@ -233,18 +233,22 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
   }
   Fl_Window config {
     label Configuration open
-    xywh {3019 75 355 221} type Double visible
+    xywh {2961 44 355 221} type Double visible
   } {
     Fl_Choice theme_choice {
       label {Theme:}
       xywh {88 5 130 22} down_box BORDER_BOX
     } {}
-    Fl_Input_Choice def_font {
-      label {Default font:}
+    Fl_Input_Choice font_choice {
+      label {Font name:}
       tooltip {Insure that the font you select exists on your system.
-If not the default one will be Helvetica} xywh {88 35 150 22}
+If not the default one will be Helvetica} xywh {88 35 148 22} down_box BORDER_BOX
     } {}
-    Fl_Output loc_dir {selected
+    Fl_Spinner font_size {
+      label {Font size} selected
+      tooltip {Go to text line ...} xywh {298 35 47 22} when 1 maximum 10000 hide
+    }
+    Fl_Output loc_dir {
       tooltip {Show the path where translation files might be} xywh {86 66 260 22} labeltype NO_LABEL
     }
     Fl_Button loc_dir_sel {

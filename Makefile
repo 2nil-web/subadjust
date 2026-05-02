@@ -32,7 +32,7 @@ ISO8601 := $(shell date +%Y-%m-%dT%H:%M:%SZ)
 PLATFORM="${SYS_VER} $(shell uname -m)"
 
 PREFIX=subadjust
-SRCS=${PREFIX}_ui.cpp ${PREFIX}.cpp themes.cpp utils.cpp subs.cpp Fl_Time_Input.cpp Fl_Time_Picker.cpp file_features.cpp edit_features.cpp log.cpp pref.cpp options.cpp feed.cpp place.cpp
+SRCS=${PREFIX}_ui.cpp ${PREFIX}.cpp themes.cpp utils.cpp subs.cpp Fl_Time_Input.cpp Fl_Time_Picker.cpp file_features.cpp edit_features.cpp log.cpp pref.cpp options.cpp place.cpp # feed.cpp
 SRCS:=$(addprefix  ${SRC_DIR}/,${SRCS})
 
 ifeq ($(findstring NT-, $(UNAME)),)
@@ -89,6 +89,14 @@ gcc : ${TARGET}
 
 assets/QuickDoc.jpg : assets/QuickDoc.svg
 	${MAGICK} $< $@
+
+GXX_COMPILE=/ucrt64/bin/g++.exe -std=c++23 -Wall -pedantic -Wextra -Wno-comment  -I/ucrt64/include -march=nocona -msahf -mtune=generic -O2 -pipe -Wp,-D_FORTIFY_SOURCE=2 -fstack-protector-strong -Wp,-D__USE_MINGW_ANSI_STDIO=1 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -DUNICODE -D_UNICODE  -I src -static -g 
+GXX_LINK_OPT=-mwindows /ucrt64/lib/libfltk_images.a /ucrt64/lib/libjpeg.a /ucrt64/lib/libpng.a /ucrt64/lib/libz.a /ucrt64/lib/libfltk_gl.a -lglu32 -lopengl32 /ucrt64/lib/libfltk.a -lole32 -luuid -lcomctl32 -lws2_32 -lwinspool -lintl -liconv
+fonts${EXEXT} : assets/fonts.cpp
+	${GXX_COMPILE} assets/fonts.cpp ${GXX_LINK_OPT} -o fonts.exe
+
+font_list${EXEXT} : assets/font_list.cpp
+	${GXX_COMPILE} assets/font_list.cpp ${GXX_LINK_OPT} -o font_list${EXEXT}
 
 
 SETUP_PKG=${PREFIX}-${VERSION}-${SYS_VER}.zip

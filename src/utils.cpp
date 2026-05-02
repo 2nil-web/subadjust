@@ -543,11 +543,6 @@ std::string dup_anti_slash(const std::string s)
   return s2;
 }
 
-const char *dup_anti_slash(const char *s)
-{
-  return dup_anti_slash(std::string(s)).c_str();
-}
-
 int process_id()
 {
 #ifdef _WIN32

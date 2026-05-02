@@ -48,11 +48,10 @@ std::string pref_get_string(const std::string key, const std::string def_val, Fl
 {
   if (pref == nullptr)
     pref = &window;
-  char *pval;
-  pref->get(key.c_str(), pval, def_val.c_str());
-  std::string val = pval;
-  free(pval);
-  return val;
+  char *raw=nullptr;
+  pref->get(key.c_str(), raw, def_val.c_str());
+  std::unique_ptr<char, decltype(&free)> pval(raw, &free);
+  return pval ? std::string(pval.get()) : def_val;
 }
 
 int pref_get_int(const std::string key, int def_val, Fl_Preferences *pref)
@@ -275,6 +274,7 @@ place placement_file(placement_dir);
 
 void pref_trace()
 {
+  return;
   logT("Trace_prefs ", placement_file.number(), " - Main window geometry: (", main_window->x_root(), ", ", main_window->y_root(), ", ", main_window->w(), ", ", main_window->h(), ')');
   /*
   logT("Trace_prefs - Preferences file name: ", pref_filename());
@@ -387,6 +387,66 @@ void juxtaposing_end()
 
 std::filesystem::path l10n_dir = "";
 
+struct sfont_info
+{
+  Fl_Font number;
+  int attr;
+  std::string name, sattr;
+  bool any_size=true;
+  std::vector<int> sizes;
+};
+
+void get_fonts_info(Fl_Input_Choice* fc, std::vector<sfont_info> &fis, bool only_normal=false, bool only_any_size=false)
+{
+  int k = Fl::set_fonts();
+
+  for (int i = 0; i < k; i++)
+  {
+    sfont_info fi;
+    fi.name = std::string(Fl::get_font_name((Fl_Font)i, &fi.attr));
+    int *s;
+    int n = Fl::get_font_sizes((Fl_Font)i, s);
+    fi.sizes.clear();
+    if (n > 0)
+    {
+      if (s[0] == 0)
+        fi.any_size = true;
+      else
+      {
+        fi.any_size = false;
+        for (int j = 0; j < n; j++)
+          fi.sizes.push_back(s[j]);
+      }
+    } else fi.any_size=true;
+
+    fi.number = i;
+    fi.sattr = "";
+    if (fi.attr & FL_BOLD)
+      fi.sattr += "@b";
+    if (fi.attr & FL_ITALIC)
+      fi.sattr += "@i";
+    fi.sattr += "@.";
+
+    if ((!only_normal || fi.attr == 0) && (!only_any_size || fi.any_size)) {
+      //logD("FONT: ", fi.number, "; ", fi.name, "; ", fi.attr, "; ", fi.sattr);
+      std::cout << "FONT: " << fi.number << "; " << fi.name << "; " << fi.attr << "; " << fi.sattr << "; " << fi.sizes.size() << std::endl;
+      fc->add(fi.name.c_str());
+      fis.push_back(fi);
+    }
+  }
+
+  std::sort(fis.begin(), fis.end(), [](sfont_info& a, sfont_info& b) {
+    if (a.name < b.name)
+      return true;
+    else if (a.name > b.name)
+      return false;
+    else if (a.sattr < b.sattr)
+      return true;
+    return false;
+  });
+}
+
+
 void pref_get(int x, int y, int w, int h)
 {
   //  remove_cr_in_log(false); logI(screen_info_fr()); remove_cr_in_log();
@@ -407,17 +467,25 @@ void pref_get(int x, int y, int w, int h)
   std::atexit(juxtaposing_end);
 
   extern std::string theme;
-  if (theme == "")
-    OS::use_theme(pref_get_string("theme", "METRO").c_str());
+  if (theme == "") {
+    std::string stheme=pref_get_string("theme", "METRO");
+    OS::use_theme(stheme.c_str());
+  }
 
   case_sensitive_find->value(pref_get_int("case", 0));
   // case_find();
 
-  str_find->value(pref_get_string("find value", R"(\{\\an8\})").c_str());
-  str_find->add(dup_anti_slash(pref_get_string("find menu", R"(\{\\an8\}|(..:..:..,...))")).c_str());
+  std::string fv=pref_get_string("find value", R"(\{\\an8\})");
+  str_find->value(fv.c_str());
 
-  str_replace->value(pref_get_string("replace value", "").c_str());
-  str_replace->add(dup_anti_slash(pref_get_string("replace menu", R"(|$1)")).c_str());
+  std::string sf=dup_anti_slash(pref_get_string("find menu", R"(\{\\an8\}|(..:..:..,...))"));
+  str_find->add(sf.c_str());
+
+  std::string rv=pref_get_string("replace value", "");
+  str_replace->value(rv.c_str());
+
+  std::string sr=dup_anti_slash(pref_get_string("replace menu", R"(|$1)"));
+  str_replace->add(sr.c_str());
 
   l10n_dir = pref_get_string("locale_dir", "");
   pref_trace();
@@ -437,14 +505,14 @@ std::string merge_menu(const std::string key, Fl_Input_Choice *ic, std::string _
 
     mv.push_back(_val);
 
-    char *pval;
-    window.get(key.c_str(), pval, "");
+    char *raw=nullptr;
+    window.get(key.c_str(), raw, "");
+    std::unique_ptr<char, decltype(&free)> pval(raw, &free);
 
-    if (pval && pval[0] != '\0')
+    if (pval && pval.get()[0] != '\0')
     {
       std::string val;
-      std::vector<std::string> mv2 = split(std::string(pval), '|');
-      free(pval);
+      std::vector<std::string> mv2 = split(std::string(pval.get()), '|');
       mv.insert(mv.end(), mv2.begin(), mv2.end());
       // Sort the vector
       sort(mv.begin(), mv.end());
@@ -513,6 +581,8 @@ void pref_set()
 }
 
 int old_theme, old_x, old_y, old_w, old_h, work_w, work_h;
+std::string old_font = "", old_font_menu = "";
+std::filesystem::path old_loc_dir = "";
 
 void mw_resize(Fl_Widget *, void *)
 {
@@ -529,6 +599,7 @@ void unconfig(Fl_Widget *, void *)
   OS::use_theme(old_theme);
   main_window->resize(old_x, old_y, old_w, old_h);
   config->hide();
+  main_window->redraw();
 }
 
 void pref_dialog()
@@ -546,6 +617,34 @@ void pref_dialog()
   mw_w->value(old_w);
   mw_h->value(old_h);
 
+  loc_dir->value(old_loc_dir.string().c_str());
+  loc_dir_sel->callback(SIMPLE_CB{});
+
+  if (font_choice->menu() == nullptr) {
+    std::vector<sfont_info> fis;
+    get_fonts_info(font_choice, fis);
+  }
+
+  font_choice->callback(SIMPLE_CB {
+    if (font_choice->value())
+    {
+      logD("FONT change to: [", font_choice->value(), "]");
+/*      Fl::set_font(FL_HELVETICA, font_choice->value());
+      config->redraw();
+      main_window->redraw();*/
+    }
+  });
+
+  /*
+    font_size->callback(SIMPLE_CB {
+      if (font_size->value() != 0) {
+        logD("FONT size change: ", fl_size(), " ==> ", font_size->value());
+        fl_font(FL_HELVETICA, (int)font_size->value());
+        config->redraw();
+        main_window->redraw();
+      }
+    });
+  */
   theme_choice->add("CLASSIC|AERO|METRO|AQUA|GREYBIRD|OCEAN|BLUE|OLIVE|ROSE_GOLD|DARK|BRUSHED_METAL|HIGH_CONTRAST");
   theme_choice->value(old_theme);
   theme_choice->callback(SIMPLE_CB { OS::use_theme(theme_choice->value()); });

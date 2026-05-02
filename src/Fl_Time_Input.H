@@ -51,7 +51,6 @@ public:
     // Get time by returning a string of the form HH:MM:SS./,SSS AM/PM
     std::string get_time_str();
 
-    const char* value() { return get_time_str().c_str(); };
     void value(const char *p) { if (p) set_time_str(std::string(p)); };
     void value(const std::string s) { set_time_str(s); };
 

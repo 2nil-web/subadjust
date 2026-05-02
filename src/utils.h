@@ -91,6 +91,5 @@ std::string replace_string(std::string, const std::string &, const std::string &
 std::string ISO8601(std::time_t);
 std::string ISO8601_now();
 std::string dup_anti_slash(const std::string);
-const char *dup_anti_slash(const char *);
 int process_id();
 #endif
