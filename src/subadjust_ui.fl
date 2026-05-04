@@ -1,25 +1,20 @@
 # data file for the Fltk User Interface Designer (fluid)
 version 1.0404
-i18n_type 1
-i18n_include {<libintl.h>}
-i18n_conditional {}
-i18n_gnu_function gettext
-i18n_gnu_static_function gettext_noop
 header_name {.h}
 code_name {.cxx}
 Function {make_window()} {open
 } {
   Fl_Window main_window {open
-    xywh {2361 187 384 651} type Double box UP_BOX hide resizable
+    xywh {973 36 386 653} type Double box UP_BOX resizable
     code0 {\#include <FL/Fl_Int_Input.H>}
     code1 {\#include <FL/Fl_Float_Input.H>}
-    code2 {\#include "Fl_Time_Input.H"} size_range {384 600 0 0}
+    code2 {\#include "Fl_Time_Input.H"} size_range {384 600 0 0} visible
   } {
-    Fl_Group {} {open
-      xywh {2 0 378 284}
+    Fl_Group {} {
+      xywh {2 0 380 284}
     } {
       Fl_Menu_Button {} {
-        label File open
+        label File
         xywh {3 2 66 26}
       } {
         MenuItem file_open {
@@ -56,7 +51,7 @@ Available shortcut is 'Ctrl-X'.} xywh {161 2 91 26} shortcut 0x40075
         label {A&bout}
         tooltip {Some useful informations about the app (Shortcut Ctrl+B).} xywh {311 2 67 26} shortcut 0x40062
       }
-      Fl_Group {} {open
+      Fl_Group {} {
         xywh {3 30 377 130} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
       } {
         Fl_Group {} {
@@ -109,11 +104,11 @@ Available shortcut is 'Ctrl-X'.} xywh {161 2 91 26} shortcut 0x40075
         }
       }
       Fl_Group {} {
-        label {Subtitle adjustment by ...} open
+        label {Subtitle adjustment by ...}
         xywh {2 165 378 116} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
       } {
         Fl_Group {} {
-          label Limits open
+          label Limits
           xywh {173 205 205 76} box BORDER_FRAME color 37 labelfont 3 align -207
         } {
           Fl_Input time_start {
@@ -165,127 +160,120 @@ end offsets
           tooltip {Will forcibly parse the subtitles text and accordingly modify the settings} xywh {293 170 83 28} labelsize 15
         }
       }
-    }
-    Fl_Box {} {
-      xywh {381 0 0 161} labeltype NO_LABEL align 8 hide
+      Fl_Box {} {
+        xywh {382 0 0 161} labeltype NO_LABEL align 8 hide resizable
+      }
     }
     Fl_Group {} {open
-      tooltip {You may apply regex pattern.
-They all will be uniquely stored for futur reuse.
-For more details about ECMAScript regex, see https://en.cppreference.com/w/cpp/regex/ecmascript.html} xywh {4 285 376 64} box BORDER_FRAME color 37
+      tooltip {You may apply regex pattern, with case sensitivity or not.
+All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 63} box BORDER_FRAME color 37
     } {
       Fl_Group {} {open
-        xywh {4 287 148 56}
+        xywh {4 287 137 57}
       } {
         Fl_Button find {
           label Find
-          tooltip {Will find the next occurrence of the find pattern, the one actually pointed by the cursor is not taken into account.} xywh {6 289 60 26}
+          tooltip {Will find the next occurrence of the find pattern, the one actually pointed by the cursor is not taken into account.} xywh {7 289 56 26}
         }
         Fl_Button replace_next {
           label {Repl Next}
-          tooltip {Search and replace only the next occurence of your pattern. Can be undone.} xywh {68 289 81 26} align 128
+          tooltip {Search and replace only the next occurence of your pattern. Can be undone.} xywh {67 289 72 26} align 128
         }
         Fl_Button replace_all {
-          label {Repl All}
-          tooltip {Search and replace all occurrences of your pattern. Can be undone.} xywh {68 318 81 22}
-        }
-        Fl_Box {} {
-          xywh {146 289 3 54} labeltype NO_LABEL labelsize 10 hide
+          label {Repl All   }
+          tooltip {Search and replace all occurrences of your pattern. Can be undone.} xywh {67 318 72 26}
         }
         Fl_Check_Button case_sensitive_find {
           label Case
           tooltip {Run case sensitive find or not} xywh {7 320 58 22} down_box DOWN_BOX
         }
       }
-      Fl_Group {} {open
-        xywh {152 285 228 55}
+      Fl_Group {} {
+        xywh {142 285 238 59} resizable
       } {
-        Fl_Input_Choice str_find {
-          xywh {152 289 227 22} labeltype NO_LABEL
+        Fl_Input_Choice str_find {selected
+          tooltip {For more details about ECMAScript regex, see https://en.cppreference.com/w/cpp/regex/ecmascript.html} xywh {142 289 235 22} labeltype NO_LABEL
         } {}
-        Fl_Input_Choice str_replace {
-          xywh {152 318 227 22} labeltype NO_LABEL resizable
+        Fl_Input_Choice str_replace {selected
+          xywh {142 318 235 22} labeltype NO_LABEL
         } {}
       }
     }
-    Fl_Group {} {open
-      xywh {1 353 378 26}
+    Fl_Group {} {
+      xywh {1 348 378 26}
     } {
       Fl_Box file_path_label {
         label {File path}
         tooltip {Show the path of the file being currently edited.
 It turns red if there are pending modification.
-Automatic changes may occur if the initial file format is not UTF-8.} xywh {2 354 60 22}
-      }
-      Fl_Box {} {
-        xywh {62 353 3 22} labeltype NO_LABEL hide
+Automatic changes may occur if the initial file format is not UTF-8.} xywh {2 349 60 22}
       }
       Fl_Output file_path {
         label {File path}
         tooltip {Show the path of the file being currently edited.
 It turns red if there are pending modification.
-Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 356 314 22} labeltype NO_LABEL resizable
+Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 351 314 22} labeltype NO_LABEL resizable
       }
     }
     Fl_Text_Editor file_content {
-      xywh {4 382 376 271} labeltype NO_LABEL resizable
+      xywh {4 377 376 271} labeltype NO_LABEL resizable
     }
   }
   Fl_Window config {
-    label Configuration open
-    xywh {2961 44 355 221} type Double visible
+    label Configuration
+    xywh {2389 48 355 262} type Double hide
   } {
     Fl_Choice theme_choice {
       label {Theme:}
       xywh {88 5 130 22} down_box BORDER_BOX
     } {}
-    Fl_Input_Choice font_choice {
-      label {Font name:}
-      tooltip {Insure that the font you select exists on your system.
-If not the default one will be Helvetica} xywh {88 35 148 22} down_box BORDER_BOX
-    } {}
-    Fl_Spinner font_size {
-      label {Font size} selected
-      tooltip {Go to text line ...} xywh {298 35 47 22} when 1 maximum 10000 hide
+    Fl_Output font_info {
+      tooltip {Show the path where translation files might be} xywh {86 39 260 22} labeltype NO_LABEL
+    }
+    Fl_Button font_sel {
+      label {Select
+font}
+      tooltip {Select the path where translation files might be} xywh {8 31 75 40}
     }
     Fl_Output loc_dir {
-      tooltip {Show the path where translation files might be} xywh {86 66 260 22} labeltype NO_LABEL
+      tooltip {Show the path where translation files might be} xywh {86 90 260 22} labeltype NO_LABEL
     }
     Fl_Button loc_dir_sel {
-      label Select
-      tooltip {Select the path where translation files might be} xywh {8 66 75 22}
+      label {Select l10n
+directory}
+      tooltip {Select the path where translation files might be} xywh {8 82 75 40}
     }
     Fl_Box geo_not_saved {
       label {The geometry of this instance will not be saved.}
-      xywh {22 95 320 22} hide
+      xywh {22 126 320 22} hide
     }
     Fl_Input mw_x {
       label {X origin:}
-      xywh {80 121 92 22} when 1
+      xywh {80 153 92 22} when 1
       class Fl_Int_Input
     }
     Fl_Input mw_y {
       label {Y origin:}
-      xywh {80 151 92 22} when 1
+      xywh {80 183 92 22} when 1
       class Fl_Int_Input
     }
     Fl_Input mw_w {
       label {Width:}
-      xywh {246 121 92 22} when 1
+      xywh {246 153 92 22} when 1
       class Fl_Int_Input
     }
     Fl_Input mw_h {
       label {Height:}
-      xywh {246 151 92 22} when 1
+      xywh {246 183 92 22} when 1
       class Fl_Int_Input
     }
     Fl_Return_Button ok_config {
       label OK
-      xywh {57 189 86 22}
+      xywh {57 221 86 22}
     }
     Fl_Button cancel_config {
       label Cancel
-      xywh {237 189 64 22}
+      xywh {237 221 64 22}
     }
   }
 }

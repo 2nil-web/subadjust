@@ -8,6 +8,7 @@
 #include <thread>
 
 #include "file_features.h"
+#include "fonts.h"
 #include "log.h"
 #include "place.h"
 #include "pref.h"
@@ -48,7 +49,7 @@ std::string pref_get_string(const std::string key, const std::string def_val, Fl
 {
   if (pref == nullptr)
     pref = &window;
-  char *raw=nullptr;
+  char *raw = nullptr;
   pref->get(key.c_str(), raw, def_val.c_str());
   std::unique_ptr<char, decltype(&free)> pval(raw, &free);
   return pval ? std::string(pval.get()) : def_val;
@@ -387,66 +388,6 @@ void juxtaposing_end()
 
 std::filesystem::path l10n_dir = "";
 
-struct sfont_info
-{
-  Fl_Font number;
-  int attr;
-  std::string name, sattr;
-  bool any_size=true;
-  std::vector<int> sizes;
-};
-
-void get_fonts_info(Fl_Input_Choice* fc, std::vector<sfont_info> &fis, bool only_normal=false, bool only_any_size=false)
-{
-  int k = Fl::set_fonts();
-
-  for (int i = 0; i < k; i++)
-  {
-    sfont_info fi;
-    fi.name = std::string(Fl::get_font_name((Fl_Font)i, &fi.attr));
-    int *s;
-    int n = Fl::get_font_sizes((Fl_Font)i, s);
-    fi.sizes.clear();
-    if (n > 0)
-    {
-      if (s[0] == 0)
-        fi.any_size = true;
-      else
-      {
-        fi.any_size = false;
-        for (int j = 0; j < n; j++)
-          fi.sizes.push_back(s[j]);
-      }
-    } else fi.any_size=true;
-
-    fi.number = i;
-    fi.sattr = "";
-    if (fi.attr & FL_BOLD)
-      fi.sattr += "@b";
-    if (fi.attr & FL_ITALIC)
-      fi.sattr += "@i";
-    fi.sattr += "@.";
-
-    if ((!only_normal || fi.attr == 0) && (!only_any_size || fi.any_size)) {
-      //logD("FONT: ", fi.number, "; ", fi.name, "; ", fi.attr, "; ", fi.sattr);
-      std::cout << "FONT: " << fi.number << "; " << fi.name << "; " << fi.attr << "; " << fi.sattr << "; " << fi.sizes.size() << std::endl;
-      fc->add(fi.name.c_str());
-      fis.push_back(fi);
-    }
-  }
-
-  std::sort(fis.begin(), fis.end(), [](sfont_info& a, sfont_info& b) {
-    if (a.name < b.name)
-      return true;
-    else if (a.name > b.name)
-      return false;
-    else if (a.sattr < b.sattr)
-      return true;
-    return false;
-  });
-}
-
-
 void pref_get(int x, int y, int w, int h)
 {
   //  remove_cr_in_log(false); logI(screen_info_fr()); remove_cr_in_log();
@@ -467,24 +408,25 @@ void pref_get(int x, int y, int w, int h)
   std::atexit(juxtaposing_end);
 
   extern std::string theme;
-  if (theme == "") {
-    std::string stheme=pref_get_string("theme", "METRO");
+  if (theme == "")
+  {
+    std::string stheme = pref_get_string("theme", "METRO");
     OS::use_theme(stheme.c_str());
   }
 
   case_sensitive_find->value(pref_get_int("case", 0));
   // case_find();
 
-  std::string fv=pref_get_string("find value", R"(\{\\an8\})");
+  std::string fv = pref_get_string("find value", R"(\{\\an8\})");
   str_find->value(fv.c_str());
 
-  std::string sf=dup_anti_slash(pref_get_string("find menu", R"(\{\\an8\}|(..:..:..,...))"));
+  std::string sf = dup_anti_slash(pref_get_string("find menu", R"(\{\\an8\}|(..:..:..,...))"));
   str_find->add(sf.c_str());
 
-  std::string rv=pref_get_string("replace value", "");
+  std::string rv = pref_get_string("replace value", "");
   str_replace->value(rv.c_str());
 
-  std::string sr=dup_anti_slash(pref_get_string("replace menu", R"(|$1)"));
+  std::string sr = dup_anti_slash(pref_get_string("replace menu", R"(|$1)"));
   str_replace->add(sr.c_str());
 
   l10n_dir = pref_get_string("locale_dir", "");
@@ -505,7 +447,7 @@ std::string merge_menu(const std::string key, Fl_Input_Choice *ic, std::string _
 
     mv.push_back(_val);
 
-    char *raw=nullptr;
+    char *raw = nullptr;
     window.get(key.c_str(), raw, "");
     std::unique_ptr<char, decltype(&free)> pval(raw, &free);
 
@@ -548,8 +490,7 @@ void pref_reset()
   window.flush();
 
   std::filesystem::remove_all(placement_dir);
-  const std::filesystem::path already_opened_list;
-  std::filesystem::remove(already_opened_list);
+  std::filesystem::remove(already_opened_list); // already_opened_list is defined in file_feature.h
 }
 
 void pref_set()
@@ -604,6 +545,47 @@ void unconfig(Fl_Widget *, void *)
 
 void pref_dialog()
 {
+  static bool unpopulated_dialog = true;
+
+  if (unpopulated_dialog)
+  {
+    theme_choice->add("CLASSIC|AERO|METRO|AQUA|GREYBIRD|OCEAN|BLUE|OLIVE|ROSE_GOLD|DARK|BRUSHED_METAL|HIGH_CONTRAST");
+    theme_choice->callback(SIMPLE_CB { OS::use_theme(theme_choice->value()); });
+
+
+    font_sel->callback(SIMPLE_CB{
+      logD(fonts_info_string());
+      show_font_selector();
+    });
+
+    loc_dir_sel->callback(SIMPLE_CB{});
+
+    mw_x->callback(mw_resize);
+    mw_y->callback(mw_resize);
+    mw_w->callback(mw_resize);
+    mw_h->callback(mw_resize);
+
+    ok_config->callback(SIMPLE_CB {
+      config->hide();
+      old_x = main_window->x_root();
+      old_y = main_window->y_root();
+      old_w = main_window->w();
+      old_h = main_window->h();
+      correct_geometry(old_x, old_y, old_w, old_h);
+      main_window->resize(old_x, old_y, old_w, old_h);
+    });
+
+    cancel_config->callback(unconfig);
+    config->callback(unconfig);
+
+    if (placement_file.number() == 0)
+      geo_not_saved->hide();
+    else
+      geo_not_saved->show();
+
+    unpopulated_dialog = false;
+  }
+
   old_theme = OS::current_theme();
   old_x = main_window->x_root();
   old_y = main_window->y_root();
@@ -618,59 +600,7 @@ void pref_dialog()
   mw_h->value(old_h);
 
   loc_dir->value(old_loc_dir.string().c_str());
-  loc_dir_sel->callback(SIMPLE_CB{});
-
-  if (font_choice->menu() == nullptr) {
-    std::vector<sfont_info> fis;
-    get_fonts_info(font_choice, fis);
-  }
-
-  font_choice->callback(SIMPLE_CB {
-    if (font_choice->value())
-    {
-      logD("FONT change to: [", font_choice->value(), "]");
-/*      Fl::set_font(FL_HELVETICA, font_choice->value());
-      config->redraw();
-      main_window->redraw();*/
-    }
-  });
-
-  /*
-    font_size->callback(SIMPLE_CB {
-      if (font_size->value() != 0) {
-        logD("FONT size change: ", fl_size(), " ==> ", font_size->value());
-        fl_font(FL_HELVETICA, (int)font_size->value());
-        config->redraw();
-        main_window->redraw();
-      }
-    });
-  */
-  theme_choice->add("CLASSIC|AERO|METRO|AQUA|GREYBIRD|OCEAN|BLUE|OLIVE|ROSE_GOLD|DARK|BRUSHED_METAL|HIGH_CONTRAST");
   theme_choice->value(old_theme);
-  theme_choice->callback(SIMPLE_CB { OS::use_theme(theme_choice->value()); });
-
-  mw_x->callback(mw_resize);
-  mw_y->callback(mw_resize);
-  mw_w->callback(mw_resize);
-  mw_h->callback(mw_resize);
-
-  ok_config->callback(SIMPLE_CB {
-    config->hide();
-    old_x = main_window->x_root();
-    old_y = main_window->y_root();
-    old_w = main_window->w();
-    old_h = main_window->h();
-    correct_geometry(old_x, old_y, old_w, old_h);
-    main_window->resize(old_x, old_y, old_w, old_h);
-  });
-
-  cancel_config->callback(unconfig);
-  config->callback(unconfig);
-
-  if (placement_file.number() == 0)
-    geo_not_saved->hide();
-  else
-    geo_not_saved->show();
 
   config->show();
 }

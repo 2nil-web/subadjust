@@ -85,7 +85,8 @@ constexpr bool OS::is_dark_theme(int t)
 
 static bool use_font(Fl_Font font, const char *system_name)
 {
-  int num_fonts = Fl::set_fonts(NULL);
+  std::cout << "FONT - before call to ensure_only_one_call_to_set_fonts from use_font in themes.cpp" << std::endl;
+  int num_fonts = ensure_only_one_call_to_set_fonts();
   for (Fl_Font f = 0; f < num_fonts; f++)
   {
     const char *name = Fl::get_font_name(f);

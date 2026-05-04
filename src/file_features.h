@@ -6,10 +6,12 @@
 #include <string>
 
 #include "subs.h"
+#include "utils.h"
 
 extern Fl_Text_Buffer txt_buf;
 extern bool file_is_modified;
 extern cSub csub;
+extern const std::filesystem::path already_opened_list;
 
 void set_file_state(bool modified);
 void file_modified(int pos, int nInserted, int nDeleted, int nRestyled, const char * /*deletedText*/, void *);

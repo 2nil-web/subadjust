@@ -21,6 +21,7 @@
 #include "app_info.h"
 #include "edit_features.h"
 #include "file_features.h"
+#include "fonts.h"
 #include "log.h"
 #include "options.h"
 #include "pref.h"
@@ -337,6 +338,9 @@ The configuration file is located there : ")EOF") +
     main_window->icon(&svg);
     //  main_window->wait_for_expose();
     Fl::scrollbar_size(14);
+
+    get_font_names_cache();   // ← force la capture des noms avant use_native_fonts()
+
     pref_get(x, y, w, h);
 
     fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);

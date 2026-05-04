@@ -15,6 +15,7 @@
 #endif
 
 #include "utils.h"
+#include "fonts.h"
 
 class OS
 {
