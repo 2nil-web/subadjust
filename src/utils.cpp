@@ -184,12 +184,18 @@ bool ensure_useful_l10n_dir(std::filesystem::path &p)
 }
 
 #ifdef _WIN32
-char *my_strcpy(char *dst, const char *src)
+char* my_strcpy(char* dst, const char* src)
 {
-  size_t l = strlen(src);
-  strcpy_s(dst, l, src);
-  return dst;
+    size_t l = strlen(src);
+    strcpy_s(dst, l, src);
+    return dst;
 }
+char* my_strncpy(char* dst, size_t l, const char* src)
+{
+    strcpy_s(dst, l+1, src);
+    return dst;
+}
+
 char *my_strcat(char *dst, const char *src)
 {
   size_t l = strlen(src);
@@ -220,6 +226,13 @@ char *my_strcpy(char *dst, const char *src)
 {
   return strcpy(dst, src);
 }
+
+char* my_strncpy(char* dst, size_t l, const char* src)
+{
+    strncpy(dst, l, src);
+    return dst;
+}
+
 char *my_strcat(char *dst, const char *src)
 {
   return strcat(dst, src);
@@ -418,9 +431,10 @@ int str_to_ms(std::string str)
     m = std::stoi(str.substr(3, 2));
   if (str.size() >= 8)
     s = std::stoi(str.substr(6, 2));
-  if (str.size() >= 12)
-    ms = std::stoi(str.substr(9, 3));
+  if (str.size() >= 10)
+    ms = std::stoi(str.substr(9));
   int millisec = (h * 3600 + m * 60 + s) * 1000 + ms;
+
   return millisec;
 }
 

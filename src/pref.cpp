@@ -543,6 +543,15 @@ void unconfig(Fl_Widget *, void *)
   main_window->redraw();
 }
 
+// Global FLTK callback for drawing all label text
+static int global_font=FL_HELVETICA, global_font_size=14;
+void GlobalDraw(const Fl_Label *o, int X, int Y, int W, int H, Fl_Align a) {
+  //fl_font(o->font, o->size);
+  fl_font(global_font, global_font_size);
+  fl_color((Fl_Color)o->color);
+  fl_draw(o->value, X, Y, W, H, a);//, o->image, G_usesymbols);
+}
+
 void pref_dialog()
 {
   static bool unpopulated_dialog = true;
@@ -552,11 +561,63 @@ void pref_dialog()
     theme_choice->add("CLASSIC|AERO|METRO|AQUA|GREYBIRD|OCEAN|BLUE|OLIVE|ROSE_GOLD|DARK|BRUSHED_METAL|HIGH_CONTRAST");
     theme_choice->callback(SIMPLE_CB { OS::use_theme(theme_choice->value()); });
 
+    static std::vector<sfont_info> fis;
+    get_fonts_info(fis, true);
+    for (auto fi : fis)
+    {
+      font_names->add(fi.face_name.c_str());
+      //logD("FONT: ", fi);
+    }
 
-    font_sel->callback(SIMPLE_CB{
-      logD(fonts_info_string());
-      show_font_selector();
-    });
+
+    font_names->callback([](Fl_Widget *o, void* vfis)->void{
+        std::vector<sfont_info> fis=*((std::vector<sfont_info>*)vfis);
+        int idx=((Fl_Browser*)o)->value();
+        if (idx > 0 && idx < (int)fis.size()) {
+          idx--;
+          logD("FONT - Sel: ", idx+1, "/", fis.size(), " : ", fis[idx]);
+          int last_sel_sz=font_sizes->value();
+          if (last_sel_sz == 0) last_sel_sz=14;
+          logD("FONT SIZE: (", last_sel_sz, ")");
+
+          font_sizes->clear();
+          if (fis[idx].any_size) {
+            for (int i=1; i < 61; i++) {
+              font_sizes->add(std::to_string(i).c_str());
+            }
+
+            if (last_sel_sz < 61) font_sizes->select(last_sel_sz, true);
+            else font_sizes->select(14, true);
+          } else {
+            int i=1;
+            for (auto n:fis[idx].sizes) {
+              font_sizes->add(std::to_string(n).c_str());
+              if (n <= last_sel_sz) {
+                font_sizes->select(i, true);
+                global_font_size=n;
+                logD("FONT SIZE NOT ANY: (", n, ")");
+              }
+              i++;
+            }
+          }
+
+          static std::string font_name="";
+          std::string old_font_name=font_name;
+          font_name=fis[idx].name;
+          logD("FONT NAME: [", old_font_name, "] ==> [", font_name, "], (", fis[idx].face_name, ")");
+          Fl::set_font(FL_HELVETICA, font_name.c_str());
+          global_font=fis[idx].number;
+          global_font_size=last_sel_sz;
+          Fl::set_labeltype(FL_NORMAL_LABEL, GlobalDraw, nullptr);
+          Fl::set_labeltype(FL_FREE_LABELTYPE, GlobalDraw, nullptr);
+//          Fl::set_font(FL_FREE_FONT, FL_HELVETICA);
+//          fl_font(fis[idx].number, last_sel_sz);
+          main_window->redraw();
+          config->redraw();
+        } else logD("FONT - BADSel: ", idx+1);
+    }, (void*)&fis);
+
+//    font_sizes->callback([](Fl_Widget *o, void* vfis)->void{ });
 
     loc_dir_sel->callback(SIMPLE_CB{});
 

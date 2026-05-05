@@ -252,6 +252,7 @@ bool file_write(std::string filename)
   logD("file_write err?:", errn);
   if (errn == 0)
   {
+    reset_param();
     set_file_state(false);
     return true;
   }

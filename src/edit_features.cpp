@@ -365,6 +365,16 @@ void re_replace_all(Fl_Widget *, void *)
   re_replace();
 }
 
+void reset_param()
+{
+  time_start->set_time_ms(csub.vec()[0].appearance);
+  time_end->set_time_ms(csub.vec().back().appearance);
+  offset_start->value(0);
+  offset_stop->value(0);
+  dur_coeff->value(1);
+}
+
+
 void reparse(Fl_Widget *, void *)
 {
   csub.parse(txt_buf.text());
@@ -374,11 +384,7 @@ void reparse(Fl_Widget *, void *)
   txt_buf.replace(0, (int)csub.str().size(), csub.c_str());
 
   csub.parse(txt_buf.text());
-  time_start->set_time_ms(csub.vec()[0].appearance);
-  time_end->set_time_ms(csub.vec().back().appearance);
-  offset_start->value(0);
-  offset_stop->value(0);
-  dur_coeff->value(1);
+  reset_param();
 }
 
 void delete_sub(int nsub)
