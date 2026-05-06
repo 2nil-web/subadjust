@@ -229,7 +229,7 @@ char *my_strcpy(char *dst, const char *src)
 
 char *my_strncpy(char *dst, size_t l, const char *src)
 {
-  strncpy(dst, l, src);
+  strncpy(dst, src, l);
   return dst;
 }
 

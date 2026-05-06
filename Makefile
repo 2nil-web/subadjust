@@ -210,8 +210,9 @@ ifneq ($(MAKECMDGOALS),clean)
 ${TARGET_DIR}/%.d: ${SRC_DIR}/%.cpp
 	@echo Checking header dependencies from $<
 	@mkdir -p ${TARGET_DIR}
-	@echo -n "${TARGET_DIR}/" > $@
-	@$(COMPILE.cpp) -isystem /usr/include -MM $< >> $@
+	@$(COMPILE.cpp) -isystem /usr/include -MM $< >> tmp.d$$
+	@test -s tmp.d$$ && ( echo -n "${TARGET_DIR}/" > $@; cat tmp.d$$ >> $@ )
+	@rm -f tmp.d$$
 
 ifeq ($(BUILD_SYS),gcc)
 ${TARGET_DIR}/%.o: ${SRC_DIR}/%.cpp
