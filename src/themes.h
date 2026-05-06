@@ -14,8 +14,8 @@
 #pragma warning(pop)
 #endif
 
-#include "utils.h"
 #include "fonts.h"
+#include "utils.h"
 
 class OS
 {

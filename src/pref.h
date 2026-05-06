@@ -28,7 +28,8 @@ int pref_get_int(const std::string, int, Fl_Preferences *pref = nullptr);
 void pref_reset();
 void pref_set();
 void pref_get(int, int, int, int);
-void pref_dialog();
+void pref_dialog(Fl_Widget *, void *);
 void case_find(Fl_Widget *w = nullptr, void *v = nullptr);
 const std::string pref_filename();
+void font_redraw(std::string, int, int);
 #endif /* PREFS_H */

@@ -339,7 +339,7 @@ The configuration file is located there : ")EOF") +
     //  main_window->wait_for_expose();
     Fl::scrollbar_size(14);
 
-    get_font_names_cache();   // ← force la capture des noms avant use_native_fonts()
+    get_font_names_cache(); // ← force la capture des noms avant use_native_fonts()
 
     pref_get(x, y, w, h);
 
@@ -369,38 +369,11 @@ The configuration file is located there : ")EOF") +
 
   if (gui_mode)
   {
-    std::string def_font = pref_get_string("font value", "");
-    if (!def_font.empty())
-      Fl::set_font(FL_HELVETICA, def_font.c_str());
     gui_display(file_read_ok);
     main_window->show();
 
     // Pref
-    app_prefs->callback(SIMPLE_CB {
-#ifdef NO_CONFIG_DLG
-      std::string pf = std::filesystem::path(pref_filename()).make_preferred().string();
-      logD("pf: ", pf);
-      const std::string msg = _("To do ...\nBut you may consider editing the following file:\n") + pf + _("\nDo you want to proceed ?");
-      if (fl_choice("%s", "No", "Yes", 0L, msg.c_str()))
-      {
-#ifdef _WIN32
-        //      if (CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE) >= 0)
-        //      {
-        std::wstring stemp = L"\"" + std::wstring(pf.begin(), pf.end()) + L"\"";
-        if ((INT_PTR)ShellExecute(nullptr, L"edit", stemp.c_str(), nullptr, nullptr, SW_SHOWNORMAL) < 32)
-          logD(std::to_string(GetLastError()));
-//        CoUninitialize();
-//      }
-#else
-      std::string edit("\""+std::filesystem::path("gvim").make_preferred().string()+"\" "+pf+" &");
-      logD("edit: ", edit);
-      std::system(edit.c_str());
-#endif
-      }
-#else
-      pref_dialog();
-#endif
-    });
+    app_prefs->callback(pref_dialog);
 
     // About
     app_about->callback(about_msg, (void *)&myopt);
@@ -488,7 +461,12 @@ The configuration file is located there : ")EOF") +
     sub_reparse->callback(reparse);
 
     to_line(1);
-    Fl::flush();
+    std::string font_name = pref_get_string("font name", "");
+    int font_num = pref_get_int("font number", FL_HELVETICA);
+    int font_sz = pref_get_int("font size", 14);
+    if (!font_name.empty() || font_num != FL_HELVETICA || font_sz != 14)
+      font_redraw(font_name, font_num, font_sz);
+    //    Fl::flush();
     return Fl::run();
   }
   else

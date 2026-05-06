@@ -430,6 +430,7 @@ void pref_get(int x, int y, int w, int h)
   str_replace->add(sr.c_str());
 
   l10n_dir = pref_get_string("locale_dir", "");
+
   pref_trace();
 }
 
@@ -489,10 +490,16 @@ void pref_reset()
   window.set("replace menu", "||$1");
   window.flush();
 
+  window.set("l10n_dir", "");
+  window.set("font name", "");
+  window.set("font number", "");
+  window.set("font size", "");
   std::filesystem::remove_all(placement_dir);
   std::filesystem::remove(already_opened_list); // already_opened_list is defined in file_feature.h
 }
 
+static std::string global_font_name = "";
+static int global_font_number = FL_HELVETICA, global_font_size = 14;
 void pref_set()
 {
   // On ne sauvegarde la geometrie que de la première instance
@@ -518,11 +525,17 @@ void pref_set()
 
   if (!l10n_dir.empty())
     window.set("l10n_dir", l10n_dir.string().c_str());
+
+  window.set("font name", global_font_name.c_str());
+  window.set("font size", global_font_size);
+  window.set("font number", global_font_number);
+
   juxtaposing_end();
 }
 
 int old_theme, old_x, old_y, old_w, old_h, work_w, work_h;
-std::string old_font = "", old_font_menu = "";
+std::string old_font_name;
+int old_font_number, old_font_size;
 std::filesystem::path old_loc_dir = "";
 
 void mw_resize(Fl_Widget *, void *)
@@ -539,20 +552,115 @@ void unconfig(Fl_Widget *, void *)
 {
   OS::use_theme(old_theme);
   main_window->resize(old_x, old_y, old_w, old_h);
+  font_redraw(old_font_name, old_font_number, old_font_size);
   config->hide();
-  main_window->redraw();
 }
 
 // Global FLTK callback for drawing all label text
-static int global_font=FL_HELVETICA, global_font_size=14;
-void GlobalDraw(const Fl_Label *o, int X, int Y, int W, int H, Fl_Align a) {
-  //fl_font(o->font, o->size);
-  fl_font(global_font, global_font_size);
+void GlobalDraw(const Fl_Label *o, int X, int Y, int W, int H, Fl_Align a)
+{
+  // fl_font(o->font, o->size);
+  fl_font(global_font_number, global_font_size);
   fl_color((Fl_Color)o->color);
-  fl_draw(o->value, X, Y, W, H, a);//, o->image, G_usesymbols);
+  fl_draw(o->value, X, Y, W, H, a); //, o->image, G_usesymbols);
 }
 
-void pref_dialog()
+void font_redraw(std::string font_name, int font_number, int font_size)
+{
+  if (font_name.empty())
+    global_font_name = Fl::get_font_name(FL_HELVETICA, nullptr);
+  else
+  {
+    global_font_name = font_name;
+    //    Fl::set_font(FL_HELVETICA, global_font_name.c_str());
+  }
+
+  logD("FONT rdw - name: ", font_name, ", size: ", font_size, ", number: ", font_number);
+  global_font_number = font_number;
+  global_font_size = font_size;
+  Fl::set_labeltype(FL_NORMAL_LABEL, GlobalDraw, nullptr);
+  Fl::set_labeltype(FL_FREE_LABELTYPE, GlobalDraw, nullptr);
+  //    Fl::set_font(FL_FREE_FONT, FL_HELVETICA);
+  fl_font(font_number, font_size);
+  //  Fl::flush();
+  main_window->redraw();
+  file_content->textfont(font_number);
+  file_content->textsize(font_size);
+  file_content->redraw();
+  config->redraw();
+  //  Fl::flush();
+}
+
+void font_manage(Fl_Widget *, void *vfis)
+{
+  std::vector<sfont_info> fis = *((std::vector<sfont_info> *)vfis);
+  int ifn = font_names->value();
+  int ifs = font_sizes->value();
+  int last_sel_sz;
+  if (ifs == 0)
+    last_sel_sz = 14;
+  else
+    last_sel_sz = std::stoi(font_sizes->text(ifs));
+
+  if (ifn > 0 && ifn < (int)fis.size())
+  {
+    ifn--;
+    logD("FONT mng - name: ", fis[ifn].name, ", size: ", last_sel_sz, ", number: ", ifn, "/", fis.size());
+
+    font_sizes->clear();
+    if (fis[ifn].any_size)
+    {
+      for (int i = 1; i < 61; i++)
+      {
+        font_sizes->add(std::to_string(i).c_str());
+      }
+
+      if (last_sel_sz < 61)
+        font_sizes->select(last_sel_sz, true);
+      else
+        font_sizes->select(14, true);
+    }
+    else
+    {
+      int actual_sel_sz = 14;
+      int i = 1;
+      for (auto n : fis[ifn].sizes)
+      {
+        font_sizes->add(std::to_string(n).c_str());
+        if (n <= last_sel_sz)
+        {
+          font_sizes->select(i, true);
+          actual_sel_sz = n;
+          logD("FONT SIZE NOT ANY: (", n, ")");
+        }
+        i++;
+      }
+
+      if (font_sizes->value() != 0)
+        last_sel_sz = actual_sel_sz;
+    }
+
+    font_redraw(fis[ifn].name, fis[ifn].number, last_sel_sz);
+  }
+  else
+    logD("FONT - Bad name (", ifn, ") or size (", ifs, ") selection");
+}
+
+void view_config(Fl_Widget *, void *)
+{
+  std::string config_file = std::filesystem::path(pref_filename()).make_preferred().string();
+#ifdef _WIN32
+  std::wstring stemp = L"\"" + std::wstring(config_file.begin(), config_file.end()) + L"\"";
+  if ((INT_PTR)ShellExecute(nullptr, L"edit", stemp.c_str(), nullptr, nullptr, SW_SHOWNORMAL) < 32)
+    logD(std::to_string(GetLastError()));
+#else
+  std::string edit("\"" + std::filesystem::path("gvim").make_preferred().string() + "\" " + config_file + " &");
+  logD("edit: ", edit);
+  std::system(edit.c_str());
+#endif
+}
+
+void pref_dialog(Fl_Widget *, void *)
 {
   static bool unpopulated_dialog = true;
 
@@ -562,62 +670,15 @@ void pref_dialog()
     theme_choice->callback(SIMPLE_CB { OS::use_theme(theme_choice->value()); });
 
     static std::vector<sfont_info> fis;
-    get_fonts_info(fis, true);
+    get_fonts_info(fis, true, true);
     for (auto fi : fis)
     {
       font_names->add(fi.face_name.c_str());
-      //logD("FONT: ", fi);
+      // logD("FONT: ", fi);
     }
 
-
-    font_names->callback([](Fl_Widget *o, void* vfis)->void{
-        std::vector<sfont_info> fis=*((std::vector<sfont_info>*)vfis);
-        int idx=((Fl_Browser*)o)->value();
-        if (idx > 0 && idx < (int)fis.size()) {
-          idx--;
-          logD("FONT - Sel: ", idx+1, "/", fis.size(), " : ", fis[idx]);
-          int last_sel_sz=font_sizes->value();
-          if (last_sel_sz == 0) last_sel_sz=14;
-          logD("FONT SIZE: (", last_sel_sz, ")");
-
-          font_sizes->clear();
-          if (fis[idx].any_size) {
-            for (int i=1; i < 61; i++) {
-              font_sizes->add(std::to_string(i).c_str());
-            }
-
-            if (last_sel_sz < 61) font_sizes->select(last_sel_sz, true);
-            else font_sizes->select(14, true);
-          } else {
-            int i=1;
-            for (auto n:fis[idx].sizes) {
-              font_sizes->add(std::to_string(n).c_str());
-              if (n <= last_sel_sz) {
-                font_sizes->select(i, true);
-                global_font_size=n;
-                logD("FONT SIZE NOT ANY: (", n, ")");
-              }
-              i++;
-            }
-          }
-
-          static std::string font_name="";
-          std::string old_font_name=font_name;
-          font_name=fis[idx].name;
-          logD("FONT NAME: [", old_font_name, "] ==> [", font_name, "], (", fis[idx].face_name, ")");
-          Fl::set_font(FL_HELVETICA, font_name.c_str());
-          global_font=fis[idx].number;
-          global_font_size=last_sel_sz;
-          Fl::set_labeltype(FL_NORMAL_LABEL, GlobalDraw, nullptr);
-          Fl::set_labeltype(FL_FREE_LABELTYPE, GlobalDraw, nullptr);
-//          Fl::set_font(FL_FREE_FONT, FL_HELVETICA);
-//          fl_font(fis[idx].number, last_sel_sz);
-          main_window->redraw();
-          config->redraw();
-        } else logD("FONT - BADSel: ", idx+1);
-    }, (void*)&fis);
-
-//    font_sizes->callback([](Fl_Widget *o, void* vfis)->void{ });
+    font_names->callback(font_manage, (void *)&fis);
+    font_sizes->callback(font_manage, (void *)&fis);
 
     loc_dir_sel->callback(SIMPLE_CB{});
 
@@ -647,6 +708,17 @@ void pref_dialog()
     unpopulated_dialog = false;
   }
 
+  if (Fl::event_key(FL_Control_L) || Fl::event_key(FL_Control_R))
+  {
+    config_view->show();
+    config_view->callback(view_config);
+  }
+  else
+  {
+    config_view->hide();
+    config_view->callback(SIMPLE_CB{});
+  }
+
   old_theme = OS::current_theme();
   old_x = main_window->x_root();
   old_y = main_window->y_root();
@@ -662,6 +734,10 @@ void pref_dialog()
 
   loc_dir->value(old_loc_dir.string().c_str());
   theme_choice->value(old_theme);
+
+  old_font_name = global_font_name;
+  old_font_number = global_font_number;
+  old_font_size = global_font_size;
 
   config->show();
 }

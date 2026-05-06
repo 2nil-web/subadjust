@@ -58,8 +58,8 @@ typedef uint64_t size64_t;
 
 std::string my_getenv(const std::string, bool msg_if_empty = false);
 bool my_setenv(const std::string, const std::string);
-char* my_strcpy(char* dst, const char* src);
-char* my_strncpy(char* dst, size_t l, const char* src);
+char *my_strcpy(char *dst, const char *src);
+char *my_strncpy(char *dst, size_t l, const char *src);
 char *my_strcat(char *dst, const char *src);
 std::filesystem::path personal_dir();
 bool create_directory_if_possible(std::filesystem::path);

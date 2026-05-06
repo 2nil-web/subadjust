@@ -184,16 +184,16 @@ bool ensure_useful_l10n_dir(std::filesystem::path &p)
 }
 
 #ifdef _WIN32
-char* my_strcpy(char* dst, const char* src)
+char *my_strcpy(char *dst, const char *src)
 {
-    size_t l = strlen(src);
-    strcpy_s(dst, l, src);
-    return dst;
+  size_t l = strlen(src);
+  strcpy_s(dst, l, src);
+  return dst;
 }
-char* my_strncpy(char* dst, size_t l, const char* src)
+char *my_strncpy(char *dst, size_t l, const char *src)
 {
-    strcpy_s(dst, l+1, src);
-    return dst;
+  strcpy_s(dst, l + 1, src);
+  return dst;
 }
 
 char *my_strcat(char *dst, const char *src)
@@ -227,10 +227,10 @@ char *my_strcpy(char *dst, const char *src)
   return strcpy(dst, src);
 }
 
-char* my_strncpy(char* dst, size_t l, const char* src)
+char *my_strncpy(char *dst, size_t l, const char *src)
 {
-    strncpy(dst, l, src);
-    return dst;
+  strncpy(dst, l, src);
+  return dst;
 }
 
 char *my_strcat(char *dst, const char *src)

@@ -374,7 +374,6 @@ void reset_param()
   dur_coeff->value(1);
 }
 
-
 void reparse(Fl_Widget *, void *)
 {
   csub.parse(txt_buf.text());

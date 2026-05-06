@@ -4,7 +4,7 @@ header_name {.h}
 code_name {.cxx}
 Function {make_window()} {open
 } {
-  Fl_Window main_window {
+  Fl_Window main_window {open
     xywh {2363 187 386 653} type Double box UP_BOX hide resizable
     code0 {\#include <FL/Fl_Int_Input.H>}
     code1 {\#include <FL/Fl_Float_Input.H>}
@@ -221,18 +221,22 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
   }
   Fl_Window config {
     label Configuration open
-    xywh {2758 190 350 387} type Double resizable size_range {350 400 600 0} visible
+    xywh {2783 178 350 387} type Double resizable size_range {350 400 600 0} visible
   } {
     Fl_Group {} {open
       xywh {2 2 346 110}
     } {
       Fl_Choice theme_choice {
         label {Theme:}
-        xywh {60 5 190 22} down_box BORDER_BOX
+        xywh {60 5 170 22} down_box BORDER_BOX
       } {}
+      Fl_Button config_view {
+        label {Edit config file}
+        xywh {240 5 102 22}
+      }
       Fl_Box geo_not_saved {
         label {The geometry of this instance will not be saved.}
-        xywh {9 30 330 22} hide
+        xywh {9 30 330 22}
       }
       Fl_Input mw_x {
         label {X origin:}
@@ -271,23 +275,27 @@ directory}
       }
     }
     Fl_Browser font_names {
-      label {Font names} selected
-      xywh {6 182 302 160} type Hold align 1 resizable
+      label {Font names}
+      tooltip {Changes the font face for all the GUI labels
+And also for the subtitles editor field
+But not for the other fields} xywh {6 182 302 160} type Hold align 1 resizable
     }
     Fl_Browser font_sizes {
-      label Sizes
-      xywh {308 182 40 160} type Hold align 1
+      label Sizes selected
+      tooltip {Changes the font size for all the GUI labels
+And also for the subtitles editor field
+But not for the other fields} xywh {308 182 40 160} type Hold align 1
     }
     Fl_Group {} {open
-      xywh {2 348 346 34}
+      xywh {2 346 346 36}
     } {
       Fl_Return_Button ok_config {
         label OK
-        xywh {49 354 86 22}
+        xywh {47 350 86 26}
       }
       Fl_Button cancel_config {
         label Cancel
-        xywh {225 354 86 22}
+        xywh {223 350 86 26}
       }
       Fl_Box {} {
         xywh {345 350 1 28} labeltype NO_LABEL resizable

@@ -92,7 +92,7 @@ std::vector<sSub> cSub::to_vec()
 }
 
 const std::regex cSub::re_index("(\\d+)");
-//const std::regex cSub::re_times("(\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d)[^\\S\\n]+-->[^\\S\\n]+(\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d)");
+// const std::regex cSub::re_times("(\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d)[^\\S\\n]+-->[^\\S\\n]+(\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d)");
 const std::regex cSub::re_times("(.*:.*:.*..*)[^\\S\\n]+-->[^\\S\\n]+(.*:.*:.*..*)");
 
 std::string cSub::to_str(bool dot)
