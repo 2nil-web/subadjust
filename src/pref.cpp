@@ -1,6 +1,6 @@
 
 #include <FL/Fl.H>
-#include <FL/filename.H>
+#include <FL/Fl_Native_File_Chooser.H>
 #include <FL/fl_ask.H>
 #include <filesystem>
 #include <iostream>
@@ -388,6 +388,70 @@ void juxtaposing_end()
 
 std::filesystem::path l10n_dir = "";
 
+// Ensure/force that path p is/to an absolute path ending with "locale"
+// Return the transformed path in that way and true if it is an existing not empty directory
+bool ensure_useful_l10n_dir(std::filesystem::path &p)
+{
+  p = p.lexically_normal();
+  if (p.filename() != "locale")
+    p /= "locale";
+  p = std::filesystem::absolute(p);
+  return (std::filesystem::is_directory(p) && !std::filesystem::is_empty(p));
+}
+
+// Traverse a predefined list of path to return the first one that point to an absolute, existing not empty directory ending with "locale"
+std::filesystem::path find_locale_dir(std::filesystem::path prog_path, bool anticipate_dir)
+{
+  // On anticipe la récupération du répertoire l10n, s'il existe
+  std::vector<std::filesystem::path> vp = {prog_path, std::filesystem::current_path(), ".", personal_dir(), "/usr/share", "/usr/local/share", my_getenv("locale_dir"), my_getenv("LOCALE_DIR")};
+
+  // Insert the locale dir provided in the config file if wanted and if there is
+  if (anticipate_dir)
+  {
+    std::filesystem::path my_l10n_dir = pref_get_string("locale_dir", "");
+    logD("anticipate l10n_dir: ", my_l10n_dir);
+    /*if (ensure_useful_l10n_dir(my_l10n_dir))*/ vp.insert(vp.begin(), my_l10n_dir);
+  }
+  /*
+    for (auto p : vp)
+    {
+      if (ensure_useful_l10n_dir(p))
+        logD(p, " useful_l10n_dir");
+      else
+        logD(p, " UNuseful_l10n_dir");
+    }
+  */
+  for (auto p : vp)
+  {
+    if (ensure_useful_l10n_dir(p))
+    {
+      logD("Found useful l10n_dir: ", p);
+      return p;
+    }
+  }
+
+  logD("No l10n_dir found");
+  return "";
+}
+
+void setup_i18n(std::filesystem::path prog_path, bool anticipate_dir)
+{
+#if _WIN32
+  _configthreadlocale(_DISABLE_PER_THREAD_LOCALE);
+  SetThreadLocale(GetUserDefaultLCID());
+#else
+  setlocale(LC_ALL, "");
+  setlocale(LC_CTYPE, "");
+  setlocale(LC_MESSAGES, "");
+#endif
+
+  std::filesystem::path my_l10n_dir = find_locale_dir(prog_path, anticipate_dir);
+  logD("my_l10n_dir: ", my_l10n_dir);
+  bindtextdomain("subadjust", my_l10n_dir.string().c_str());
+  bind_textdomain_codeset("subadjust", "UTF-8");
+  textdomain("subadjust");
+}
+
 void pref_get(int x, int y, int w, int h)
 {
   //  remove_cr_in_log(false); logI(screen_info_fr()); remove_cr_in_log();
@@ -490,7 +554,7 @@ void pref_reset()
   window.set("replace menu", "||$1");
   window.flush();
 
-  window.set("l10n_dir", "");
+  window.set("locale_dir", "");
   window.set("font name", "");
   window.set("font number", "");
   window.set("font size", "");
@@ -524,7 +588,7 @@ void pref_set()
   pref_trace();
 
   if (!l10n_dir.empty())
-    window.set("l10n_dir", l10n_dir.string().c_str());
+    window.set("locale_dir", l10n_dir.string().c_str());
 
   window.set("font name", global_font_name.c_str());
   window.set("font size", global_font_size);
@@ -534,6 +598,7 @@ void pref_set()
 }
 
 int old_theme, old_x, old_y, old_w, old_h, work_w, work_h;
+std::filesystem::path old_l10n_dir;
 std::string old_font_name;
 int old_font_number, old_font_size;
 std::filesystem::path old_loc_dir = "";
@@ -553,6 +618,12 @@ void unconfig(Fl_Widget *, void *)
   OS::use_theme(old_theme);
   main_window->resize(old_x, old_y, old_w, old_h);
   font_redraw(old_font_name, old_font_number, old_font_size);
+
+  if (ensure_useful_l10n_dir(old_l10n_dir) && l10n_dir != old_l10n_dir)
+  {
+    l10n_dir = old_l10n_dir;
+    setup_i18n(l10n_dir, false);
+  }
   config->hide();
 }
 
@@ -680,7 +751,34 @@ void pref_dialog(Fl_Widget *, void *)
     font_names->callback(font_manage, (void *)&fis);
     font_sizes->callback(font_manage, (void *)&fis);
 
-    loc_dir_sel->callback(SIMPLE_CB{});
+    loc_dir_sel->callback(SIMPLE_CB {
+      Fl_Native_File_Chooser ld_sel;
+
+      ld_sel.options(Fl_Native_File_Chooser::Option::NEW_FOLDER | Fl_Native_File_Chooser::Option::PREVIEW);
+      ld_sel.title("Select locale folder");
+      ld_sel.type(Fl_Native_File_Chooser::Type::BROWSE_DIRECTORY);
+      switch (ld_sel.show())
+      {
+      case -1:
+        // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
+        fl_alert("%s", ld_sel.errmsg());
+        break; // ERROR
+      case 1:
+        logT("CANCEL\n");
+        break; // CANCEL
+      default:
+        logT("PICKED: %s\n", ld_sel.filename());
+        loc_dir->value(ld_sel.filename());
+        file_path->value(std::filesystem::absolute(ld_sel.filename()).string().c_str());
+        std::filesystem::path new_l10n_dir(ld_sel.filename());
+
+        if (ensure_useful_l10n_dir(new_l10n_dir) && l10n_dir != new_l10n_dir)
+        {
+          l10n_dir = new_l10n_dir;
+          setup_i18n(l10n_dir, false);
+        }
+      }
+    });
 
     mw_x->callback(mw_resize);
     mw_y->callback(mw_resize);
@@ -732,9 +830,10 @@ void pref_dialog(Fl_Widget *, void *)
   mw_w->value(old_w);
   mw_h->value(old_h);
 
-  loc_dir->value(old_loc_dir.string().c_str());
   theme_choice->value(old_theme);
 
+  old_l10n_dir = l10n_dir;
+  loc_dir->value(old_l10n_dir.string().c_str());
   old_font_name = global_font_name;
   old_font_number = global_font_number;
   old_font_size = global_font_size;

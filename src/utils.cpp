@@ -172,17 +172,6 @@ std::filesystem::path ensure_ends_with(std::filesystem::path p, const std::strin
   return p;
 }
 
-// Ensure/force that path p is/to an absolute path ending with "locale"
-// Return the transformed path in that way and true if it is an existing not empty directory
-bool ensure_useful_l10n_dir(std::filesystem::path &p)
-{
-  p = p.lexically_normal();
-  if (p.filename() != "locale")
-    p /= "locale";
-  p = std::filesystem::absolute(p);
-  return (std::filesystem::is_directory(p) && !std::filesystem::is_empty(p));
-}
-
 #ifdef _WIN32
 char *my_strcpy(char *dst, const char *src)
 {

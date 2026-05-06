@@ -1,14 +1,19 @@
 # data file for the Fltk User Interface Designer (fluid)
 version 1.0404
+i18n_type 1
+i18n_include {<libintl.h>}
+i18n_conditional {}
+i18n_gnu_function gettext
+i18n_gnu_static_function gettext_noop
 header_name {.h}
 code_name {.cxx}
 Function {make_window()} {open
 } {
   Fl_Window main_window {open
-    xywh {2363 187 386 653} type Double box UP_BOX hide resizable
+    xywh {2363 187 386 653} type Double box UP_BOX resizable
     code0 {\#include <FL/Fl_Int_Input.H>}
     code1 {\#include <FL/Fl_Float_Input.H>}
-    code2 {\#include "Fl_Time_Input.H"} size_range {384 600 0 0}
+    code2 {\#include "Fl_Time_Input.H"} size_range {384 600 0 0} visible
   } {
     Fl_Group {} {open
       xywh {2 0 380 284}
@@ -240,12 +245,12 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
       }
       Fl_Input mw_x {
         label {X origin:}
-        xywh {66 57 92 22} when 1
+        xywh {74 57 92 22} when 1
         class Fl_Int_Input
       }
       Fl_Input mw_y {
         label {Y origin:}
-        xywh {66 87 92 22} when 1
+        xywh {74 87 92 22} when 1
         class Fl_Int_Input
       }
       Fl_Input mw_w {
@@ -268,10 +273,14 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
       Fl_Button loc_dir_sel {
         label {Locale
 directory}
-        tooltip {Select the path where translation files might be} xywh {5 116 70 40}
+        tooltip {Select the path where translation files might be
+⚠️Changing this value implies restarting the application⚠️
+⚠️If the change is not valid, it will not be taking into account⚠️} xywh {5 116 70 40}
       }
-      Fl_Output loc_dir {
-        tooltip {Show the path where translation files might be} xywh {82 126 260 22} labeltype NO_LABEL resizable
+      Fl_Output loc_dir {selected
+        tooltip {Show the path where translation files might be
+⚠️Changing this value implies restarting the application⚠️
+⚠️If the change is not valid, it will not be taking into account⚠️} xywh {82 126 260 22} labeltype NO_LABEL resizable
       }
     }
     Fl_Browser font_names {
@@ -281,7 +290,7 @@ And also for the subtitles editor field
 But not for the other fields} xywh {6 182 302 160} type Hold align 1 resizable
     }
     Fl_Browser font_sizes {
-      label Sizes selected
+      label Sizes
       tooltip {Changes the font size for all the GUI labels
 And also for the subtitles editor field
 But not for the other fields} xywh {308 182 40 160} type Hold align 1

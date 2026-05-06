@@ -149,49 +149,9 @@ bool gui_mode = true;
 options myopt;
 std::string opt_level = "";
 
-// Traverse a predefined list of path to return the first one that point to an absolute, existing not empty directory ending with "locale"
-std::filesystem::path find_locale_dir(std::filesystem::path prog_path)
-{
-  // On anticipe la récupération du répertoire l10n, s'il existe
-  std::filesystem::path my_l10n_dir = pref_get_string("l10n_dir", "");
-  std::vector<std::filesystem::path> vp = {my_l10n_dir, prog_path.parent_path(), std::filesystem::current_path(), ".", personal_dir(), "/usr/share", "/usr/local/share", my_getenv("locale_dir"), my_getenv("LOCALE_DIR")};
-
-  for (auto p : vp)
-  {
-    if (ensure_useful_l10n_dir(p))
-      logD(p, " useful_l10n_dir");
-    else
-      logD(p, " UNuseful_l10n_dir");
-  }
-
-  for (auto p : vp)
-    if (ensure_useful_l10n_dir(p))
-      return p;
-
-  logD("No locale found");
-  return "";
-}
-
-static void setup_i18n(std::filesystem::path prog_path)
-{
-#if _WIN32
-  _configthreadlocale(_DISABLE_PER_THREAD_LOCALE);
-  SetThreadLocale(GetUserDefaultLCID());
-#else
-  setlocale(LC_ALL, "");
-  setlocale(LC_CTYPE, "");
-  setlocale(LC_MESSAGES, "");
-#endif
-
-  //  bindtextdomain("subadjust", "C:\\Users\\dplal\\Documents\\home\\00-subadjust\\locale");
-  bindtextdomain("subadjust", find_locale_dir(prog_path).string().c_str());
-  bind_textdomain_codeset("subadjust", "UTF-8");
-  textdomain("subadjust");
-}
-
 int main(int argc, char **argv)
 {
-  setup_i18n(argv[0]);
+  setup_i18n(std::filesystem::path(argv[0]).parent_path());
 
   std::string file = "", ofilename = "";
   int x = -1, y = -1, w = -1, h = -1;

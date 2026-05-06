@@ -23,6 +23,7 @@
 
 #define SIMPLE_CB [](Fl_Widget *, void *)->void
 
+void setup_i18n(std::filesystem::path, bool anticipate_dir = true);
 std::string pref_get_string(const std::string, const std::string, Fl_Preferences *pref = nullptr);
 int pref_get_int(const std::string, int, Fl_Preferences *pref = nullptr);
 void pref_reset();
