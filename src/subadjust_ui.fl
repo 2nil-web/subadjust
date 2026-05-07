@@ -10,10 +10,11 @@ code_name {.cxx}
 Function {make_window()} {open
 } {
   Fl_Window main_window {open
-    xywh {2363 187 386 653} type Double box UP_BOX resizable
+    xywh {2363 187 386 653} type Double box UP_BOX hide resizable
     code0 {\#include <FL/Fl_Int_Input.H>}
     code1 {\#include <FL/Fl_Float_Input.H>}
-    code2 {\#include "Fl_Time_Input.H"} size_range {384 600 0 0} visible
+    code2 {\#include <FL/Fl_SVG_Image.H>}
+    code3 {\#include "Fl_Time_Input.H"} size_range {384 600 0 0}
   } {
     Fl_Group {} {open
       xywh {2 0 380 284}
@@ -277,7 +278,7 @@ directory}
 ⚠️Changing this value implies restarting the application⚠️
 ⚠️If the change is not valid, it will not be taking into account⚠️} xywh {5 116 70 40}
       }
-      Fl_Output loc_dir {selected
+      Fl_Output loc_dir {
         tooltip {Show the path where translation files might be
 ⚠️Changing this value implies restarting the application⚠️
 ⚠️If the change is not valid, it will not be taking into account⚠️} xywh {82 126 260 22} labeltype NO_LABEL resizable
@@ -296,19 +297,23 @@ And also for the subtitles editor field
 But not for the other fields} xywh {308 182 40 160} type Hold align 1
     }
     Fl_Group {} {open
-      xywh {2 346 346 36}
+      xywh {8 346 260 36}
     } {
       Fl_Return_Button ok_config {
         label OK
-        xywh {47 350 86 26}
+        xywh {23 350 86 26}
       }
       Fl_Button cancel_config {
         label Cancel
-        xywh {223 350 86 26}
+        xywh {167 350 86 26}
       }
       Fl_Box {} {
-        xywh {345 350 1 28} labeltype NO_LABEL resizable
+        xywh {258 350 1 28} labeltype NO_LABEL resizable
       }
+    }
+    Fl_Button config_reset {
+      label {↩️} selected
+      tooltip {Restore the subadjust configuration to its default values.} xywh {314 351 24 24}
     }
   }
 }

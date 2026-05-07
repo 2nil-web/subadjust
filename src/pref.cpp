@@ -12,6 +12,7 @@
 #include "log.h"
 #include "place.h"
 #include "pref.h"
+#include "reset_icon.h"
 #include "subadjust_ui.h"
 #include "themes.h"
 #include "utils.h"
@@ -554,10 +555,10 @@ void pref_reset()
   window.set("replace menu", "||$1");
   window.flush();
 
-  window.set("locale_dir", "");
-  window.set("font name", "");
-  window.set("font number", "");
-  window.set("font size", "");
+  window.delete_entry("locale_dir");
+  window.delete_entry("font name");
+  window.delete_entry("font number");
+  window.delete_entry("font size");
   std::filesystem::remove_all(placement_dir);
   std::filesystem::remove(already_opened_list); // already_opened_list is defined in file_feature.h
 }
@@ -650,7 +651,7 @@ void font_redraw(std::string font_name, int font_number, int font_size)
   global_font_number = font_number;
   global_font_size = font_size;
   Fl::set_labeltype(FL_NORMAL_LABEL, GlobalDraw, nullptr);
-  Fl::set_labeltype(FL_FREE_LABELTYPE, GlobalDraw, nullptr);
+  //Fl::set_labeltype(FL_FREE_LABELTYPE, GlobalDraw, nullptr);
   //    Fl::set_font(FL_FREE_FONT, FL_HELVETICA);
   fl_font(font_number, font_size);
   //  Fl::flush();
@@ -802,6 +803,11 @@ void pref_dialog(Fl_Widget *, void *)
       geo_not_saved->hide();
     else
       geo_not_saved->show();
+
+    config_reset->callback(SIMPLE_CB {
+      myprefs.clear();
+      window.clear();
+    });
 
     unpopulated_dialog = false;
   }

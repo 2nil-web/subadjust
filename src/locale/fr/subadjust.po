@@ -285,10 +285,10 @@ msgid "&Preferences"
 msgstr "&Préférences"
 
 msgid "Save/Q&uit"
-msgstr "Sa&uve/Quitte"
+msgstr "Sa&uver/Quitter"
 
 msgid "&Quit"
-msgstr "&Quitte"
+msgstr "&Quitter"
 
 msgid "A&bout"
 msgstr "A propos"
@@ -321,7 +321,7 @@ msgid "Del first sub"
 msgstr "Retire 1er"
 
 msgid "Del last sub"
-msgstr "ou dernier"
+msgstr "Ou dernier"
 
 msgid "Duration\nfactor"
 msgstr "Facteur\nde durée"

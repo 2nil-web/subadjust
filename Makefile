@@ -118,17 +118,11 @@ deliv : assets/${SETUP_PKG}
 	@./assets/github_release.sh $<
 
 # FLUID file rules
-${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_ui.cpp : ${SRC_DIR}/${PREFIX}_ui.fl
+${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_ui.cpp : ${SRC_DIR}/${PREFIX}_ui.fl ${SRC_DIR}/reset_icon.h
 	@echo "Fluid Gen"
 	cd ${SRC_DIR} && ${FLUID} -c -o .cpp ${PREFIX}_ui.fl
 
 ${SRC_DIR}/${PREFIX}.cpp ${SRC_DIR}/file_features.cpp ${SRC_DIR}/edit_features.cpp ${SRC_DIR}/pref.cpp : ${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_icon.h ${SRC_DIR}/${PREFIX}.ico
-
-#	@fold -w 253 ${PREFIX}.svg | sed -e 's/"/\\"/g;s/\(.*\)/"\1" \\/' >>${PREFIX}_icon.h
-${SRC_DIR}/${PREFIX}_icon.h : ${SRC_DIR}/${PREFIX}.svg
-	@echo -n "const char *svg_data=" >$@
-	@sed -e 's/"/\\"/g;s/\(.*\)/"\1" \\/' $< >>$@
-	@echo ";" >>$@
 
 ${SRC_DIR}/${PREFIX}.ico : ${SRC_DIR}/${PREFIX}.svg
 	${MAGICK} -density 256x256 -background none $< -define icon:auto-resize=128,96,64,48,32,16 -colors 256 $@
@@ -213,6 +207,20 @@ ${TARGET_DIR}/%.d: ${SRC_DIR}/%.cpp
 	@$(COMPILE.cpp) -isystem /usr/include -MM $< >> tmp.d$$
 	@test -s tmp.d$$ && ( echo -n "${TARGET_DIR}/" > $@; cat tmp.d$$ >> $@ )
 	@rm -f tmp.d$$
+
+%.png : %.svg
+	inkscape --export-type=png --export-background-opacity=0 $<
+
+UC = $(shell echo '$1' | tr '[:lower:]' '[:upper:]')
+#	sed 's/"/\\"/g;s/\(.*\)/"\1" \\//' -e '$ s/.$//' $2 >>$4; 
+define svg2h
+	echo -ne '#ifndef $3\n#define $3\nconst char* $1_svg_data=R"SVG(' >$4; \
+	cat $2 >>$4; \
+	echo -ne ")SVG\";\n#endif /* $3 */" >> $4
+endef
+
+${SRC_DIR}/%_icon.h : ${SRC_DIR}/%.svg
+	@$(call svg2h,$*,$<,$(call UC,$*)_SVG_DATA_H,$@)
 
 ifeq ($(BUILD_SYS),gcc)
 ${TARGET_DIR}/%.o: ${SRC_DIR}/%.cpp
