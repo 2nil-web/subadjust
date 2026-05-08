@@ -118,7 +118,7 @@ deliv : assets/${SETUP_PKG}
 	@./assets/github_release.sh $<
 
 # FLUID file rules
-${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_ui.cpp : ${SRC_DIR}/${PREFIX}_ui.fl ${SRC_DIR}/reset_icon.h
+${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_ui.cpp : ${SRC_DIR}/${PREFIX}_ui.fl
 	@echo "Fluid Gen"
 	cd ${SRC_DIR} && ${FLUID} -c -o .cpp ${PREFIX}_ui.fl
 

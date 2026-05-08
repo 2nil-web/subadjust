@@ -12,7 +12,6 @@
 #include "log.h"
 #include "place.h"
 #include "pref.h"
-#include "reset_icon.h"
 #include "subadjust_ui.h"
 #include "themes.h"
 #include "utils.h"
@@ -651,8 +650,8 @@ void font_redraw(std::string font_name, int font_number, int font_size)
   global_font_number = font_number;
   global_font_size = font_size;
   Fl::set_labeltype(FL_NORMAL_LABEL, GlobalDraw, nullptr);
-  //Fl::set_labeltype(FL_FREE_LABELTYPE, GlobalDraw, nullptr);
-  //    Fl::set_font(FL_FREE_FONT, FL_HELVETICA);
+  // Fl::set_labeltype(FL_FREE_LABELTYPE, GlobalDraw, nullptr);
+  //     Fl::set_font(FL_FREE_FONT, FL_HELVETICA);
   fl_font(font_number, font_size);
   //  Fl::flush();
   main_window->redraw();
