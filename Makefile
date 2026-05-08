@@ -5,12 +5,12 @@ UNAME=$(shell uname)
 # OS is defined only under Windows
 ifeq (${OS},Windows_NT)
 SYS_VER=${OS}_$(shell powershell -Command '(Get-WmiObject -class Win32_OperatingSystem).Version')
-ECHOE=echo -e
+ECHO=/bin/echo
 PATH:=/ucrt64/bin:${PATH}
 else # If not defined then set it to "uname -s" value
 ifeq (${OS},)
 OS=$(shell uname -s)
-ECHOE=echo
+ECHO=/bin/echo
 endif
 endif
 
@@ -80,7 +80,7 @@ TARGET=${TARGET_DIR}/${PREFIX}${EXEXT}
 
 .PHONY: FORCE
 
-all : ${TARGET} locale/fr/LC_MESSAGES/subadjust.mo
+all : ${SRC_DIR}/${PREFIX}_ui.h ${TARGET} locale/fr/LC_MESSAGES/subadjust.mo
 
 locale/fr/LC_MESSAGES/subadjust.mo : src/locale/fr/subadjust.po
 	msgfmt --output-file=$@ $<
@@ -169,23 +169,24 @@ format :
 
 # Génération du app_info.h intégré dans l'appli
 ${SRC_DIR}/app_info.h : ${SRC_DIR}/app_info_check.txt
-	@${ECHOE} "Building C++ header $@"
-	@${ECHOE} "#ifndef APP_INFO_H\n#define APP_INFO_H\nstruct\n{\n  std::string name, version, decoration, commit, created_at, platform;\n} app_info = {\"${PREFIX}\", \"${VERSION}\", \"${DECORATION}\", \"${COMMIT}\", \"${ISO8601}\", \"${PLATFORM}\"};\n#endif" >$@
+	@${ECHO} -e "Building C++ header $@"
+	@${ECHO} -e "#ifndef APP_INFO_H\n#define APP_INFO_H\nstruct\n{\n  std::string name, version, decoration, commit, created_at, platform;\n} app_info = {\"${PREFIX}\", \"${VERSION}\", \"${DECORATION}\", \"${COMMIT}\", \"${ISO8601}\", \"${PLATFORM}\"};\n#endif" >$@
 	dos2unix $@
 
 # Génération du app_info.json intégré dans le paquetage
 ${SRC_DIR}/app_info.json : ${SRC_DIR}/app_info_check.txt
-	@${ECHOE} "Building json file $@"
-	@${ECHOE} -e '{ "name":"${PREFIX}", "version":"${VERSION}", "decoration":"${DECORATION}", "commit":"${COMMIT}","created_at":"${ISO8601}, "platform":"${PLATFORM}" }' >$@
+	@${ECHO} -e "Building json file $@"
+	@${ECHO} -e -e '{ "name":"${PREFIX}", "version":"${VERSION}", "decoration":"${DECORATION}", "commit":"${COMMIT}","created_at":"${ISO8601}, "platform":"${PLATFORM}" }' >$@
 	dos2unix $@
 
 # Pour regénérer silencieusement app_info.h et app_info.json dès qu'un des champs app_info ou decoration ou commit, est modifié.
 ${SRC_DIR}/app_info_check.txt : FORCE
-	@${ECHOE} "Version:${VERSION}, decoration:${DECORATION}, commit:${COMMIT}, platform:${PLATFORM}" >$@.new
+	@${ECHO} -e "Version:${VERSION}, decoration:${DECORATION}, commit:${COMMIT}, platform:${PLATFORM}" >$@.new
 	@-( if [ ! -f $@ ]; then cp $@.new $@; sleep 0.4; fi )
 	@-( if diff $@.new $@ >/dev/null 2>&1; then rm -f $@.new; else mv -f $@.new $@; rm -f ${PREFIX}.iss ${PREFIX}-standalone.iss; fi )
 
 cfg : 
+	@echo "ECHO: ${ECHO}"
 	@echo "Building TARGET [${TARGET}] for system [${UNAME}] with built tool [${BUILD_SYS}]"
 	@echo "fltk tools come from ${FLTK_DIR}"
 	@echo "CPPFLAGS: ${CPPFLAGS}"
@@ -197,7 +198,7 @@ cfg :
 
 clean :
 	 rm -rf build/msvc build/gcc
-	 rm -f $(OBJS) $(SRCS:.cpp=.d) ${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_ui.cpp ${SRC_DIR}/app_info_check.txt ${SRC_DIR}/app_info.h ${SRC_DIR}/app_info.json *~
+	 rm -f $(OBJS) $(SRCS:.cpp=.d) ${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_ui.cpp ${SRC_DIR}/*_icon.h ${SRC_DIR}/app_info_check.txt ${SRC_DIR}/app_info.h ${SRC_DIR}/app_info.json *~
 
 ifneq ($(MAKECMDGOALS),clean)
 # Implicit rule for building dep file from .c
@@ -214,9 +215,9 @@ ${TARGET_DIR}/%.d: ${SRC_DIR}/%.cpp
 UC = $(shell echo '$1' | tr '[:lower:]' '[:upper:]')
 #	sed 's/"/\\"/g;s/\(.*\)/"\1" \\//' -e '$ s/.$//' $2 >>$4; 
 define svg2h
-	echo -ne '#ifndef $3\n#define $3\nconst char* $1_svg_data=R"SVG(' >$4; \
+	${ECHO} -ne '#ifndef $3\n#define $3\nconst char* $1_svg_data=R"SVG(' >$4; \
 	cat $2 >>$4; \
-	echo -ne ")SVG\";\n#endif /* $3 */" >> $4
+	${ECHO} -ne ")SVG\";\n#endif /* $3 */" >> $4
 endef
 
 ${SRC_DIR}/%_icon.h : ${SRC_DIR}/%.svg
