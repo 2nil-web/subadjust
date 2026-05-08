@@ -816,11 +816,15 @@ void pref_dialog(Fl_Widget *, void *)
   {
     config_view->show();
     config_view->callback(view_config);
+    config_reset->show();
+    config_reset->callback(view_config);
   }
   else
   {
     config_view->hide();
     config_view->callback(SIMPLE_CB{});
+    config_reset->hide();
+    config_reset->callback(SIMPLE_CB{});
   }
 
   old_theme = OS::current_theme();

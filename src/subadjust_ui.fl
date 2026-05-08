@@ -10,18 +10,18 @@ code_name {.cxx}
 Function {make_window()} {open
 } {
   Fl_Window main_window {open
-    xywh {2363 187 386 653} type Double box UP_BOX hide resizable
+    xywh {2363 187 386 653} type Double box UP_BOX resizable
     code0 {\#include <FL/Fl_Int_Input.H>}
     code1 {\#include <FL/Fl_Float_Input.H>}
     code2 {\#include <FL/Fl_SVG_Image.H>}
-    code3 {\#include "Fl_Time_Input.H"} size_range {384 600 0 0}
+    code3 {\#include "Fl_Time_Input.H"} size_range {384 600 0 0} visible
   } {
     Fl_Group {} {open
       xywh {2 0 380 284}
     } {
       Fl_Menu_Button {} {
-        label File
-        xywh {3 2 66 26}
+        label {📁/💾}
+        tooltip {File operations (Open, Save, Reload)} xywh {3 2 70 26} labelsize 18
       } {
         MenuItem file_open {
           label {Open ...}
@@ -41,21 +41,21 @@ Function {make_window()} {open
         }
       }
       Fl_Button app_prefs {
-        label {&Preferences}
-        xywh {73 2 84 26} shortcut 0x40070
+        label {💻}
+        tooltip {Preferences/Setting (Shortcut Ctrl+p)} xywh {80 2 60 26} shortcut 0x40070 labelsize 18
       }
       Fl_Button app_save_quit {
-        label {Save/Q&uit}
+        label {💾/⏻}
         tooltip {Save your file and exit from the app.
-Available shortcut is 'Ctrl-X'.} xywh {161 2 91 26} shortcut 0x40075
+Available shortcut is 'Ctrl-X'.} xywh {159 2 60 26} shortcut 0x40075 labelsize 18
       }
       Fl_Button app_quit {
-        label {&Quit}
-        xywh {256 2 51 26} shortcut 0x40071
+        label {⏻}
+        xywh {242 2 60 26} shortcut 0x40071 labelsize 18
       }
       Fl_Button app_about {
-        label {A&bout}
-        tooltip {Some useful informations about the app (Shortcut Ctrl+B).} xywh {311 2 67 26} shortcut 0x40062
+        label {☰}
+        tooltip {Some useful informations about the app (Shortcut Ctrl+B).} xywh {313 2 60 26} shortcut 0x40062 labelsize 18
       }
       Fl_Group {} {
         xywh {3 30 377 130} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
@@ -221,7 +221,7 @@ It turns red if there are pending modification.
 Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 351 314 22} labeltype NO_LABEL resizable
       }
     }
-    Fl_Text_Editor file_content {
+    Fl_Text_Editor file_content {selected
       xywh {4 377 376 271} labeltype NO_LABEL resizable
     }
   }
@@ -312,7 +312,7 @@ But not for the other fields} xywh {308 182 40 160} type Hold align 1
       }
     }
     Fl_Button config_reset {
-      label {↩️} selected
+      label {↩️}
       tooltip {Restore the subadjust configuration to its default values.} xywh {314 351 24 24}
     }
   }
