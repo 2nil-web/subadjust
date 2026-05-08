@@ -36,8 +36,8 @@ SRCS=${PREFIX}_ui.cpp ${PREFIX}.cpp themes.cpp utils.cpp subs.cpp Fl_Time_Input.
 SRCS:=$(addprefix  ${SRC_DIR}/,${SRCS})
 
 ifeq ($(findstring NT-, $(UNAME)),)
-#FLTK_DIR=/opt/fltk-1.5
-FLTK_DIR=/opt/fltk-1.4.5
+#FLTK_DIR=/opt/fltk/1.5
+FLTK_DIR=/opt/fltk/1.4.5
 EXEXT=
 TARGET_DIR=build/gcc/linux
 ifeq ($(BUILD_SYS),)
@@ -48,7 +48,7 @@ else
 MSBUILD=/c/Program\ Files/Microsoft\ Visual\ Studio/18/Community/MSBuild/Current/Bin/amd64/MSBuild.exe	
 MAGICK=magick
 EXEXT=.exe
-FLTK_DIR=/c/fltk-1.4.4
+FLTK_DIR=/c/fltk/1.4.5
 TARGET_DIR=build/msvc/win/x64/Release
 ifeq ($(BUILD_SYS),)
 BUILD_SYS=msvc
