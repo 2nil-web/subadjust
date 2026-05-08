@@ -189,6 +189,7 @@ cfg :
 	@echo "ECHO: ${ECHO}"
 	@echo "Building TARGET [${TARGET}] for system [${UNAME}] with built tool [${BUILD_SYS}]"
 	@echo "fltk tools come from ${FLTK_DIR}"
+	@which ${FLTK_CONFIG}
 	@echo "CPPFLAGS: ${CPPFLAGS}"
 	@echo "LINK.cc: ${LINK.cc}"
 	@echo "SRCS: ${SRCS}"

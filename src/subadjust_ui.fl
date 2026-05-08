@@ -1,5 +1,5 @@
 # data file for the Fltk User Interface Designer (fluid)
-version 1.0404
+version 1.0405
 i18n_type 1
 i18n_include {<libintl.h>}
 i18n_conditional {}
@@ -19,43 +19,47 @@ Function {make_window()} {open
     Fl_Group {} {open
       xywh {2 0 380 284}
     } {
-      Fl_Menu_Button {} {
-        label {📁/💾}
-        tooltip {File operations (Open, Save, Reload)} xywh {3 2 70 26} labelsize 18
+      Fl_Menu_Button file_menu {
+        label File
+        tooltip {File operations (Open, Save, Reload)} image {../assets/svg_icons/folder - floppy.svg} compress_image 1 xywh {53 1 20 28} labeltype NO_LABEL labelsize 18 align 512
       } {
         MenuItem file_open {
           label {Open ...}
-          xywh {0 0 100 20} shortcut 0x4006f divider
+          image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/folder.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x4006f divider
         }
         MenuItem file_save {
           label Save
-          xywh {0 0 100 20} shortcut 0x40073
+          image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/floppy.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x40073
         }
         MenuItem file_save_as {
           label {Save As ...}
-          xywh {0 0 100 20} shortcut 0x50073 divider
+          image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/save as.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x50073 divider
         }
         MenuItem file_reload {
           label Reload
-          xywh {0 0 100 20} shortcut 0x50072
+          image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/reload.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x50072
         }
+      }
+      Fl_Box menu_image {
+        label label
+        image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/folder - floppy.svg} compress_image 1 xywh {3 0 48 26} labeltype NO_LABEL align 512
       }
       Fl_Button app_prefs {
         label {💻}
-        tooltip {Preferences/Setting (Shortcut Ctrl+p)} xywh {80 2 60 26} shortcut 0x40070 labelsize 18
+        tooltip {Preferences/Setting (Shortcut Ctrl+p)} image {../assets/svg_icons/settings.svg} compress_image 1 xywh {254 1 48 28} shortcut 0x40070 labeltype NO_LABEL labelsize 18 align 512
       }
       Fl_Button app_save_quit {
         label {💾/⏻}
         tooltip {Save your file and exit from the app.
-Available shortcut is 'Ctrl-X'.} xywh {159 2 60 26} shortcut 0x40075 labelsize 18
+Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} compress_image 1 xywh {90 1 72 28} shortcut 0x40075 labeltype NO_LABEL labelsize 18 align 512
       }
       Fl_Button app_quit {
         label {⏻}
-        xywh {242 2 60 26} shortcut 0x40071 labelsize 18
+        image {../assets/svg_icons/exit.svg} compress_image 1 xywh {181 1 48 28} shortcut 0x40071 labeltype NO_LABEL labelsize 18 align 512
       }
       Fl_Button app_about {
         label {☰}
-        tooltip {Some useful informations about the app (Shortcut Ctrl+B).} xywh {313 2 60 26} shortcut 0x40062 labelsize 18
+        tooltip {Some useful informations about the app (Shortcut Ctrl+B).} image {../assets/svg_icons/question.svg} compress_image 1 xywh {331 1 48 28} shortcut 0x40062 labeltype NO_LABEL labelsize 18 align 512
       }
       Fl_Group {} {
         xywh {3 30 377 130} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
@@ -227,7 +231,7 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
   }
   Fl_Window config {
     label Configuration open
-    xywh {2783 178 350 387} type Double resizable size_range {350 400 600 0} visible
+    xywh {2783 178 350 387} type Double size_range {350 400 600 0} visible
   } {
     Fl_Group {} {open
       xywh {2 2 346 110}
@@ -288,7 +292,7 @@ directory}
       label {Font names}
       tooltip {Changes the font face for all the GUI labels
 And also for the subtitles editor field
-But not for the other fields} xywh {6 182 302 160} type Hold align 1 resizable
+But not for the other fields} xywh {6 182 302 160} type Hold align 1
     }
     Fl_Browser font_sizes {
       label Sizes
@@ -312,8 +316,7 @@ But not for the other fields} xywh {308 182 40 160} type Hold align 1
       }
     }
     Fl_Button config_reset {
-      label {↩️}
-      tooltip {Restore the subadjust configuration to its default values.} xywh {314 351 24 24}
+      tooltip {Restore the subadjust configuration to its default values.} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/reload.svg} compress_image 1 xywh {314 351 24 24} labeltype NO_LABEL align 512
     }
   }
 }

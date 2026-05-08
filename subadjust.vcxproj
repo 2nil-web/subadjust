@@ -89,7 +89,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\fltk-1.4.4\include;src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\fltk\1.4.5\include;src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -120,13 +120,13 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\fltk-1.4.4\include;src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\fltk\1.4.5\include;src</AdditionalIncludeDirectories>
       <AdditionalOptions>/Wv:19.33 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\fltk-1.4.4\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\fltk\1.4.5\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);fltk.lib;fltk_images.lib;fltk_jpeg.lib;fltk_png.lib;fltk_z.lib;user32.lib;gdi32.lib;gdiplus.lib;comctl32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;ws2_32.lib;wldap32.lib;crypt32.lib;Normaliz.lib;Crypt32.lib;shlwapi.lib;mpr.lib;Pathcch.lib;Dwmapi.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -139,13 +139,13 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\fltk-1.4.4\include;src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\fltk\1.4.5\include;src</AdditionalIncludeDirectories>
       <AdditionalOptions>/Wv:19.33 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\fltk-1.4.4\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\fltk\1.4.5\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionlDependencies);fltkd.lib;fltk_imagesd.lib;fltk_jpegd.lib;fltk_pngd.lib;fltk_zd.lib;user32.lib;gdi32.lib;gdiplus.lib;comctl32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;ws2_32.lib;wldap32.lib;crypt32.lib;Normaliz.lib;Crypt32.lib;shlwapi.lib;mpr.lib;Pathcch.lib;Dwmapi.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
