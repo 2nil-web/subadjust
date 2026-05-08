@@ -21,7 +21,7 @@ Build for Windows 11 and msvc 2026 (using dev prompt for VS 18) :
 * Configure :
 :: set VERS=-latest
 :: set VERS=-1.5.0
-set VERS=-1.4.4
+set VERS=-1.4.5
 cmake -S . -B build%VERS% -G "Visual Studio 18 2026" -A x64 -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX:PATH=C:\fltk%VERS% -DFLTK_BUILD_EXAMPLES=OFF
 * Build :
 cmake --build build%VERS% --config Debug --target INSTALL

@@ -37,7 +37,7 @@ SRCS:=$(addprefix  ${SRC_DIR}/,${SRCS})
 
 ifeq ($(findstring NT-, $(UNAME)),)
 #FLTK_DIR=/opt/fltk-1.5
-FLTK_DIR=/opt/fltk-1.4.4
+FLTK_DIR=/opt/fltk-1.4.5
 EXEXT=
 TARGET_DIR=build/gcc/linux
 ifeq ($(BUILD_SYS),)
