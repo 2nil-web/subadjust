@@ -106,7 +106,7 @@ assets/${SETUP_PKG} : README.md ${TARGET}
 	@( upx ${TARGET} | true  ) >/dev/null 2>&1
 	@mkdir -p assets/setup
 	@pandoc -V geometry:paperwidth=210mm -V geometry:paperheight=297mm -V geometry:margin=1cm -o assets/setup/README.pdf README.md
-	@cp ${TARGET} assets/setup
+	@cp ${TARGET} ${TARGET_DIR}/*.dll assets/setup
 	@cd assets/setup && zip -rq ../${SETUP_PKG} .
 	@echo "Package assets/${SETUP_PKG} is ready"
 	@rm -rf assets/setup
