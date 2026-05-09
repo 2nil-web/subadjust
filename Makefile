@@ -106,6 +106,7 @@ assets/${SETUP_PKG} : README.md ${TARGET}
 	@( upx ${TARGET} | true  ) >/dev/null 2>&1
 	@mkdir -p assets/setup
 	@pandoc -V geometry:paperwidth=210mm -V geometry:paperheight=297mm -V geometry:margin=1cm -o assets/setup/README.pdf README.md
+	@cp -R locale assets/setup
 	@cp ${TARGET} assets/setup
 ifeq (${OS},Windows_NT)
 	@cp ${TARGET_DIR}/*.dll assets/setup

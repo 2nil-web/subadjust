@@ -19,7 +19,12 @@
 SCRIPT=$(realpath "$0")
 # <=> SCRIPT="$(readlink --canonicalize-existing "$0")"
 SCRIPTPATH=$(dirname "$SCRIPT")
+if [ -f ${SCRIPTPATH}/github_access.sh ]; then
 . ${SCRIPTPATH}/github_access.sh
+else
+  echo "Missing github access, aborting"
+  exit 1
+fi
 
 function gh_curr_rel () {
   asset_path=$1
@@ -92,6 +97,8 @@ function gh_curr_rel () {
     upl_res=$(echo ${post_res} | jq -r 'select(.errors[].code != null)|.errors[].code')
   fi
 
+  #echo "$upl_res"
+
   # If post return any error code "already_exists" then there is a need to update an already existing release
   if [ "$upl_res" = "already_exists" ]
   then
@@ -102,7 +109,12 @@ function gh_curr_rel () {
 
     #echo "asset_post: $asset_post"
     #echo "ASSET_ID  : $ASSET_ID"
-    curl -sX PATCH -H "Authorization: Bearer ${gh_tok}" ${gh_rel_endp}/assets/${ASSET_ID} -d "${asset_post}" >/dev/null
+
+    #echo "DELETING OLD RELEASE"
+    curl -sX DELETE -H "Authorization: Bearer ${gh_tok}" ${gh_rel_endp}/assets/${ASSET_ID} -d "${asset_post}" >/dev/null
+    
+    #echo "UPLOADING NEW RELEASE"
+    curl -sX PATCH  -H "Authorization: Bearer ${gh_tok}" ${gh_rel_endp}/assets/${ASSET_ID} -d "${asset_post}" >/dev/null
   else
     echo "Uploading a new github release asset."
   fi
