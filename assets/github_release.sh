@@ -112,7 +112,7 @@ function gh_curr_rel () {
 
     #echo "DELETING OLD RELEASE"
     curl -sX DELETE -H "Authorization: Bearer ${gh_tok}" ${gh_rel_endp}/assets/${ASSET_ID} -d "${asset_post}" >/dev/null
-    
+    sleep 2
     #echo "UPLOADING NEW RELEASE"
     curl -sX PATCH  -H "Authorization: Bearer ${gh_tok}" ${gh_rel_endp}/assets/${ASSET_ID} -d "${asset_post}" >/dev/null
   else
