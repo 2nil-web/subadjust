@@ -99,22 +99,21 @@ function gh_curr_rel () {
 
   #echo "$upl_res"
 
-  # If post return any error code "already_exists" then there is a need to update an already existing release
+  # If post return the error code "already_exists" then there is a need to delete the previous release and repeat the upload of the new one
   if [ "$upl_res" = "already_exists" ]
   then
     echo "Updating an already existing github release asset."
-    # Essayer de cacher le message "error (at <stdin>:0): Cannot iterate over null (null)"
     ASSET_ID=$(curl -sH "Authorization: Bearer ${gh_tok}" ${gh_rel_endp}/${RELEASE_ID}/assets | jq -r '.[]|.name,.id' | sed 'N;s/\n/;/' | sed -n "s/${asset_name};//p") >/dev/null
     asset_post="{\"name\":\"$asset_name\",\"label\":\"$asset_name\"}"
 
     #echo "asset_post: $asset_post"
     #echo "ASSET_ID  : $ASSET_ID"
 
-    #echo "DELETING OLD RELEASE"
-    curl -sX DELETE -H "Authorization: Bearer ${gh_tok}" ${gh_rel_endp}/assets/${ASSET_ID} -d "${asset_post}" >/dev/null
-    sleep 2
-    #echo "UPLOADING NEW RELEASE"
-    curl -sX PATCH  -H "Authorization: Bearer ${gh_tok}" ${gh_rel_endp}/assets/${ASSET_ID} -d "${asset_post}" >/dev/null
+    curl -sX "DELETE" -H "Authorization: Bearer ${gh_tok}" ${gh_rel_endp}/assets/${ASSET_ID} -d "${asset_post}" >/dev/null
+    #sleep 5
+    post_res=$(curl -sX POST -H "Authorization: Bearer ${gh_tok}" -H "Content-Type: application/octet-stream" ${gh_upl_url}?name=${asset_name} --data-binary "@${asset_path}")
+    #echo "$post_res"
+    #curl -sX "PATCH"  -H "Authorization: Bearer ${gh_tok}" ${gh_rel_endp}/assets/${ASSET_ID} -d "${asset_post}" >/dev/null
   else
     echo "Uploading a new github release asset."
   fi
