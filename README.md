@@ -73,7 +73,7 @@ Although not tested, but should behave the same way under macOS ...
 
 <ins>***To do :***</ins>
 
-- *i18n and l10n*
+- *i18n and l10n partly done*
 - *Detail prerequisites for the build (make, gcc, visual studio, fltk ...)*
 - *Add feature to read and write vtt format*
 - *Fix all the bugs (No, there aren't any!!)*
