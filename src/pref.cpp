@@ -75,6 +75,22 @@ void case_find(Fl_Widget *w, void *v)
     case_sensitive_find->label("Nocase");
 }
 
+void main_window_resize(int x, int y, int w, int h)
+{
+  // For some reason it is now necessary to call hotspot before calling resize
+  // At least to ensure the positionning as designed for this app
+  // Don't know if one is enough or
+  bool once = true;
+  if (once)
+  {
+    main_window->hotspot(0, 0, 0);
+    once = false;
+  }
+
+  //  logD("juxtaposing main_window_resize: (", x, ", ", y, ", ", w, ", ", h, ")");
+  main_window->resize(x, y, w, h);
+}
+
 std::string screen_info()
 {
   int x, y, w, h, sc;
@@ -298,6 +314,7 @@ void juxtaposing_manage(const int x, const int y, const int w, const int h, bool
 {
   int new_x = x;
 
+  logD("juxtaposing_manage ", placement_file.number(), " - new_x: ", new_x);
   // Recompute x origin for app instances after the first one
   if (placement_file.number() > 0 && !force_ruling)
   {
@@ -307,8 +324,8 @@ void juxtaposing_manage(const int x, const int y, const int w, const int h, bool
     new_x = (x + placement_file.number() * w) % work_width;
   }
 
-  main_window->resize(new_x, y, w, h);
-  logD("juxtaposing_manage - placement_file.number: ", placement_file.number(), ", x: ", new_x, ", y: ", y, ", w: ", w, ", h: ", h);
+  main_window_resize(new_x, y, w, h);
+  logD("juxtaposing_manage ", placement_file.number(), " - (", new_x, ", ", y, ", ", w, ", ", h, ")");
   fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
 }
 
@@ -331,15 +348,21 @@ int juxtaposing_update(int)
   int new_x = main_window->x_root(), new_y = main_window->y_root(), new_w = main_window->w(), new_h = main_window->h();
 
   if (new_x == x && new_y == y && new_w == w && new_h == h)
-    return 0;
-
-  if (config->shown())
   {
+    return 0;
+  }
+
+  if (config_dialog->shown())
+  {
+    logD("juxtaposing_update - config_dialog shown");
     chg_coord(mw_x, new_x);
     chg_coord(mw_y, new_y);
     chg_coord(mw_w, new_w);
     chg_coord(mw_h, new_h);
   }
+  logD("juxtaposing_update ");
+  logD("juxtaposing_update ", placement_file.number(), "     - (", x, ", ", y, ", ", w, ", ", h, ")");
+  logD("juxtaposing_update ", placement_file.number(), " NEW - (", new_x, ", ", new_y, ", ", new_w, ", ", new_h, ")");
 
   if (placement_file.number() == 0)
   {
@@ -369,7 +392,7 @@ int juxtaposing_update(int)
 
     // Force la mise à jour des données de préférence
     window.flush();
-    logD("juxtaposing_update ", placement_file.number(), " - x: ", x, ", y: ", y, ", w: ", w, ", h: ", h);
+    logD("juxtaposing_update ", placement_file.number(), " FSH - (", x, ", ", y, ", ", w, ", ", h, ")");
   }
 
   return 0;
@@ -467,7 +490,9 @@ void pref_get(int x, int y, int w, int h)
 
   correct_geometry(x, y, w, h);
   juxtaposing_manage(x, y, w, h);
+
   Fl::add_handler(juxtaposing_update);
+
   std::at_quick_exit(juxtaposing_end);
   std::atexit(juxtaposing_end);
 
@@ -538,15 +563,18 @@ std::string merge_menu(const std::string key, Fl_Input_Choice *ic, std::string _
   return smenu;
 }
 
-void pref_reset()
+void old_pref_reset()
 {
   logT("Resetting prefs");
   window.set("xpos", DEF_WIN_X);
   window.set("ypos", DEF_WIN_Y);
   window.set("width", DEF_WIN_W);
   window.set("height", DEF_WIN_H);
+
   window.set("theme", "METRO");
+
   window.set("case", 0);
+
   window.set("find value", "");
   window.set("replace value", "");
 
@@ -558,6 +586,14 @@ void pref_reset()
   window.delete_entry("font name");
   window.delete_entry("font number");
   window.delete_entry("font size");
+  std::filesystem::remove_all(placement_dir);
+  std::filesystem::remove(already_opened_list); // already_opened_list is defined in file_feature.h
+}
+
+void pref_reset()
+{
+  logT("Resetting prefs");
+  myprefs.clear();
   std::filesystem::remove_all(placement_dir);
   std::filesystem::remove(already_opened_list); // already_opened_list is defined in file_feature.h
 }
@@ -609,14 +645,16 @@ void mw_resize(Fl_Widget *, void *)
   if (x >= 0 && y >= 0 && x + w <= work_w && y + h <= work_h)
   {
     logD("mw_resize: (", x, ", ", y, ", ", w, ", ", h, ")");
-    main_window->resize(x, y, w, h);
+    main_window_resize(x, y, w, h);
+    logD("main_window_resize(x, y, w, h): (", x, ", ", y, ", ", w, ", ", h, ")");
   }
 }
 
 void unconfig(Fl_Widget *, void *)
 {
   OS::use_theme(old_theme);
-  main_window->resize(old_x, old_y, old_w, old_h);
+  main_window_resize(old_x, old_y, old_w, old_h);
+  logD("main_window_resize(old_x, old_y, old_w, h): (", old_x, ", ", old_y, ", ", old_w, ", ", old_h, ")");
   font_redraw(old_font_name, old_font_number, old_font_size);
 
   if (ensure_useful_l10n_dir(old_l10n_dir) && l10n_dir != old_l10n_dir)
@@ -624,7 +662,7 @@ void unconfig(Fl_Widget *, void *)
     l10n_dir = old_l10n_dir;
     setup_i18n(l10n_dir, false);
   }
-  config->hide();
+  config_dialog->hide();
 }
 
 // Global FLTK callback for drawing all label text
@@ -658,7 +696,7 @@ void font_redraw(std::string font_name, int font_number, int font_size)
   file_content->textfont(font_number);
   file_content->textsize(font_size);
   file_content->redraw();
-  config->redraw();
+  config_dialog->redraw();
   //  Fl::flush();
 }
 
@@ -786,17 +824,18 @@ void pref_dialog(Fl_Widget *, void *)
     mw_h->callback(mw_resize);
 
     ok_config->callback(SIMPLE_CB {
-      config->hide();
+      config_dialog->hide();
       old_x = main_window->x_root();
       old_y = main_window->y_root();
       old_w = main_window->w();
       old_h = main_window->h();
       correct_geometry(old_x, old_y, old_w, old_h);
-      main_window->resize(old_x, old_y, old_w, old_h);
+      main_window_resize(old_x, old_y, old_w, old_h);
+      logD("main_window_resize(old_x, old_y, old_w, h): (", old_x, ", ", old_y, ", ", old_w, ", ", old_h, ")");
     });
 
     cancel_config->callback(unconfig);
-    config->callback(unconfig);
+    config_dialog->callback(unconfig);
 
     if (placement_file.number() == 0)
       geo_not_saved->hide();
@@ -808,22 +847,31 @@ void pref_dialog(Fl_Widget *, void *)
       window.clear();
     });
 
+    config_view->callback(view_config);
+    config_reset->callback(SIMPLE_CB {
+      pref_reset();
+      main_window_resize(DEF_WIN_X, DEF_WIN_Y, DEF_WIN_W, DEF_WIN_H);
+      logD("main_window_resize(DEF_WIN_X, DEF_WIN_Y, DEF_WIN_W, DEF_WIN_H): (", DEF_WIN_X, ", ", DEF_WIN_Y, ", ", DEF_WIN_W, ", ", DEF_WIN_H, ")");
+      theme_choice->value(2);
+      OS::use_theme(theme_choice->value());
+      case_sensitive_find->value(0);
+      case_sensitive_find->label("Nocase");
+    });
+
     unpopulated_dialog = false;
   }
 
   if (Fl::event_key(FL_Control_L) || Fl::event_key(FL_Control_R))
   {
     config_view->show();
-    config_view->callback(view_config);
     config_reset->show();
-    config_reset->callback(view_config);
   }
   else
   {
     config_view->hide();
-    config_view->callback(SIMPLE_CB{});
+    // config_view->callback(SIMPLE_CB{});
     config_reset->hide();
-    config_reset->callback(SIMPLE_CB{});
+    // config_reset->callback(SIMPLE_CB{});
   }
 
   old_theme = OS::current_theme();
@@ -847,5 +895,5 @@ void pref_dialog(Fl_Widget *, void *)
   old_font_number = global_font_number;
   old_font_size = global_font_size;
 
-  config->show();
+  config_dialog->show();
 }

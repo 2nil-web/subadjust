@@ -12,7 +12,7 @@
 #endif
 
 #define DEF_WIN_X 40
-#define DEF_WIN_Y 40
+#define DEF_WIN_Y 30
 #define DEF_WIN_W 384
 #define DEF_WIN_H 1000
 

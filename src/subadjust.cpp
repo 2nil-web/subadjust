@@ -100,16 +100,15 @@ void quit_cb(Fl_Widget *, void *)
       already_done = false;
       return;
     }
-    else
+
+    if (config_dialog->shown())
     {
-      pref_set();
-      if (config->shown())
-      {
-        config->hide();
-        delete config;
-      }
-      delete main_window;
+      config_dialog->hide();
+      delete config_dialog;
     }
+
+    pref_set();
+    delete main_window;
   }
 }
 
@@ -331,6 +330,13 @@ The configuration file is located there : ")EOF") +
     gui_display(file_read_ok);
     main_window->show();
 
+    Fl_Menu_Item menutable[] = {{"button", FL_F + 4, 0, 0, FL_MENU_TOGGLE}, {0}};
+
+    Fl_Menu_Button mb(0, 0, 100, 40, "&popup");
+    mb.type(Fl_Menu_Button::POPUP3);
+    mb.menu(menutable);
+    // mb.callback(test_cb);
+
     // Pref
     app_prefs->callback(pref_dialog);
 
@@ -425,7 +431,8 @@ The configuration file is located there : ")EOF") +
     int font_sz = pref_get_int("font size", 14);
     if (!font_name.empty() || font_num != FL_HELVETICA || font_sz != 14)
       font_redraw(font_name, font_num, font_sz);
-    //    Fl::flush();
+
+    Fl::flush();
     return Fl::run();
   }
   else

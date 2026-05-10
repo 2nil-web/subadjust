@@ -10,7 +10,7 @@ code_name {.cxx}
 Function {make_window()} {open
 } {
   Fl_Window main_window {open
-    xywh {2363 187 386 653} type Double box UP_BOX resizable
+    xywh {2280 174 386 653} type Double box UP_BOX resizable
     code0 {\#include <FL/Fl_Int_Input.H>}
     code1 {\#include <FL/Fl_Float_Input.H>}
     code2 {\#include <FL/Fl_SVG_Image.H>}
@@ -20,8 +20,8 @@ Function {make_window()} {open
       xywh {2 0 380 284}
     } {
       Fl_Menu_Button file_menu {
-        label File
-        tooltip {File operations (Open, Save, Reload)} image {../assets/svg_icons/folder - floppy.svg} compress_image 1 xywh {53 1 20 28} labeltype NO_LABEL labelsize 18 align 512
+        label File selected
+        tooltip {File operations (Open, Save, Reload)} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/folder - floppy.svg} compress_image 1 xywh {3 1 76 28} align 512
       } {
         MenuItem file_open {
           label {Open ...}
@@ -40,28 +40,24 @@ Function {make_window()} {open
           image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/reload.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x50072
         }
       }
-      Fl_Box menu_image {
-        label label
-        image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/folder - floppy.svg} compress_image 1 xywh {3 0 48 26} labeltype NO_LABEL align 512
-      }
       Fl_Button app_prefs {
         label {💻}
-        tooltip {Preferences/Setting (Shortcut Ctrl+p)} image {../assets/svg_icons/settings.svg} compress_image 1 xywh {254 1 48 28} shortcut 0x40070 labeltype NO_LABEL labelsize 18 align 512
+        tooltip {Preferences/Setting (Shortcut Ctrl+p)} image {../assets/svg_icons/settings.svg} compress_image 1 xywh {262 1 48 28} shortcut 0x40070 labeltype NO_LABEL labelsize 18 align 512
       }
       Fl_Button app_save_quit {
         label {💾/⏻}
         tooltip {Save your file and exit from the app.
-Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} compress_image 1 xywh {90 1 72 28} shortcut 0x40075 labeltype NO_LABEL labelsize 18 align 512
+Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} compress_image 1 xywh {91 1 82 28} shortcut 0x40075 labeltype NO_LABEL labelsize 18 align 512
       }
       Fl_Button app_quit {
         label {⏻}
-        image {../assets/svg_icons/exit.svg} compress_image 1 xywh {181 1 48 28} shortcut 0x40071 labeltype NO_LABEL labelsize 18 align 512
+        image {../assets/svg_icons/exit.svg} compress_image 1 xywh {192 1 48 28} shortcut 0x40071 labeltype NO_LABEL labelsize 18 align 512
       }
       Fl_Button app_about {
         label {☰}
         tooltip {Some useful informations about the app (Shortcut Ctrl+B).} image {../assets/svg_icons/question.svg} compress_image 1 xywh {331 1 48 28} shortcut 0x40062 labeltype NO_LABEL labelsize 18 align 512
       }
-      Fl_Group {} {
+      Fl_Group {} {open
         xywh {3 30 377 130} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
       } {
         Fl_Group {} {
@@ -98,19 +94,19 @@ Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} c
         }
         Fl_Button goto_start {
           label Start
-          xywh {293 38 84 26}
+          tooltip {Goto start of file} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/goto-start.svg} compress_image 1 xywh {293 38 64 26} labeltype NO_LABEL align 512
         }
         Fl_Button goto_end {
           label End
-          xywh {293 67 84 26}
+          tooltip {Goto end of file} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/goto-end.svg} compress_image 1 xywh {313 67 64 26} labeltype NO_LABEL align 512
         }
         Fl_Button del_first_sub {
           label {Del first sub}
-          tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} xywh {293 100 84 26}
+          tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/delete start subtitle.svg} compress_image 1 xywh {293 100 74 26} labeltype NO_LABEL align 512
         }
         Fl_Button del_last_sub {
           label {Del last sub}
-          tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} xywh {294 129 83 26}
+          tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/delete end subtitle.svg} compress_image 1 xywh {303 129 74 26} labeltype NO_LABEL align 512
         }
       }
       Fl_Group {} {
@@ -225,11 +221,11 @@ It turns red if there are pending modification.
 Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 351 314 22} labeltype NO_LABEL resizable
       }
     }
-    Fl_Text_Editor file_content {selected
+    Fl_Text_Editor file_content {
       xywh {4 377 376 271} labeltype NO_LABEL resizable
     }
   }
-  Fl_Window config {
+  Fl_Window config_dialog {
     label Configuration open
     xywh {2783 178 350 387} type Double size_range {350 400 600 0} visible
   } {
@@ -241,8 +237,7 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
         xywh {60 5 170 22} down_box BORDER_BOX
       } {}
       Fl_Button config_view {
-        label {Edit config file}
-        xywh {240 5 102 22}
+        tooltip {Edit the configuration file..} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/modify - settings.svg} compress_image 1 xywh {274 2 66 24} labeltype NO_LABEL align 512
       }
       Fl_Box geo_not_saved {
         label {The geometry of this instance will not be saved.}
@@ -316,7 +311,8 @@ But not for the other fields} xywh {308 182 40 160} type Hold align 1
       }
     }
     Fl_Button config_reset {
-      tooltip {Restore the subadjust configuration to its default values.} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/reload.svg} compress_image 1 xywh {314 351 24 24} labeltype NO_LABEL align 512
+      tooltip {Restore the subadjust configuration to its default values.
+A restart of the app is necessary for the whole change to take effect.} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/reload.svg} compress_image 1 xywh {314 351 24 24} labeltype NO_LABEL align 512
     }
   }
 }
