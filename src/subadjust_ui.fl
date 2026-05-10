@@ -20,7 +20,7 @@ Function {make_window()} {open
       xywh {2 0 380 284}
     } {
       Fl_Menu_Button file_menu {
-        label File selected
+        label File
         tooltip {File operations (Open, Save, Reload)} image {../assets/svg_icons/folder - floppy.svg} compress_image 1 xywh {3 1 76 28} align 512
       } {
         MenuItem file_open {
@@ -61,20 +61,20 @@ Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} c
         xywh {3 30 377 130} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
       } {
         Fl_Group {} {
-          label {Go to middle ...}
+          label {Go to middle ...} open
           xywh {5 32 287 59} box BORDER_FRAME color 37 align 17
         } {
           Fl_Button goto_middle_line {
             label Line
-            xywh {16 58 80 26}
+            tooltip {Go to middle line} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/line.png} compress_image 1 xywh {15 38 64 48} labeltype NO_LABEL align 512
           }
           Fl_Button goto_middle_sub {
             label Sub
-            xywh {106 58 80 26}
+            tooltip {Go to middle subtitle} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/subtitles.svg} compress_image 1 xywh {106 52 80 36} labeltype NO_LABEL align 512
           }
           Fl_Button goto_middle_time {
             label Time
-            xywh {196 58 80 26}
+            tooltip {Go to middle time} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/time.svg} compress_image 1 xywh {216 38 64 48} labeltype NO_LABEL align 514
           }
         }
         Fl_Group {} {
@@ -94,19 +94,19 @@ Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} c
         }
         Fl_Button goto_start {
           label Start
-          tooltip {Goto start of file} image {../assets/svg_icons/goto-start.svg} compress_image 1 xywh {293 38 64 26} labeltype NO_LABEL align 512
+          tooltip {Goto start of file} image {../assets/svg_icons/goto-start.svg} compress_image 1 xywh {293 33 40 50} labeltype NO_LABEL align 513
         }
         Fl_Button goto_end {
           label End
-          tooltip {Goto end of file} image {../assets/svg_icons/goto-end.svg} compress_image 1 xywh {313 67 64 26} labeltype NO_LABEL align 512
+          tooltip {Goto end of file} image {../assets/svg_icons/goto-end.svg} compress_image 1 xywh {337 40 40 50} labeltype NO_LABEL align 514
         }
         Fl_Button del_first_sub {
           label {Del first sub}
-          tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/delete start subtitle.svg} compress_image 1 xywh {293 100 74 26} labeltype NO_LABEL align 512
+          tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/delete start subtitle.svg} compress_image 1 xywh {293 88 40 50} labeltype NO_LABEL align 512
         }
         Fl_Button del_last_sub {
           label {Del last sub}
-          tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/delete end subtitle.svg} compress_image 1 xywh {303 129 74 26} labeltype NO_LABEL align 512
+          tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/delete end subtitle.svg} compress_image 1 xywh {337 108 40 50} labeltype NO_LABEL align 512
         }
       }
       Fl_Group {} {
@@ -221,7 +221,7 @@ It turns red if there are pending modification.
 Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 351 314 22} labeltype NO_LABEL resizable
       }
     }
-    Fl_Text_Editor file_content {
+    Fl_Text_Editor file_content {selected
       xywh {4 377 376 271} labeltype NO_LABEL resizable
     }
   }
