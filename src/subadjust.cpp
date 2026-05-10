@@ -330,13 +330,6 @@ The configuration file is located there : ")EOF") +
     gui_display(file_read_ok);
     main_window->show();
 
-    Fl_Menu_Item menutable[] = {{"button", FL_F + 4, 0, 0, FL_MENU_TOGGLE}, {0}};
-
-    Fl_Menu_Button mb(0, 0, 100, 40, "&popup");
-    mb.type(Fl_Menu_Button::POPUP3);
-    mb.menu(menutable);
-    // mb.callback(test_cb);
-
     // Pref
     app_prefs->callback(pref_dialog);
 

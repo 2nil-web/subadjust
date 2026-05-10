@@ -21,23 +21,23 @@ Function {make_window()} {open
     } {
       Fl_Menu_Button file_menu {
         label File selected
-        tooltip {File operations (Open, Save, Reload)} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/folder - floppy.svg} compress_image 1 xywh {3 1 76 28} align 512
+        tooltip {File operations (Open, Save, Reload)} image {../assets/svg_icons/folder - floppy.svg} compress_image 1 xywh {3 1 76 28} align 512
       } {
         MenuItem file_open {
           label {Open ...}
-          image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/folder.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x4006f divider
+          image {../assets/svg_icons/folder.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x4006f divider
         }
         MenuItem file_save {
           label Save
-          image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/floppy.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x40073
+          image {../assets/svg_icons/floppy.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x40073
         }
         MenuItem file_save_as {
           label {Save As ...}
-          image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/save as.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x50073 divider
+          image {../assets/svg_icons/save as.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x50073 divider
         }
         MenuItem file_reload {
           label Reload
-          image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/reload.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x50072
+          image {../assets/svg_icons/reload.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x50072
         }
       }
       Fl_Button app_prefs {
@@ -94,19 +94,19 @@ Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} c
         }
         Fl_Button goto_start {
           label Start
-          tooltip {Goto start of file} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/goto-start.svg} compress_image 1 xywh {293 38 64 26} labeltype NO_LABEL align 512
+          tooltip {Goto start of file} image {../assets/svg_icons/goto-start.svg} compress_image 1 xywh {293 38 64 26} labeltype NO_LABEL align 512
         }
         Fl_Button goto_end {
           label End
-          tooltip {Goto end of file} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/goto-end.svg} compress_image 1 xywh {313 67 64 26} labeltype NO_LABEL align 512
+          tooltip {Goto end of file} image {../assets/svg_icons/goto-end.svg} compress_image 1 xywh {313 67 64 26} labeltype NO_LABEL align 512
         }
         Fl_Button del_first_sub {
           label {Del first sub}
-          tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/delete start subtitle.svg} compress_image 1 xywh {293 100 74 26} labeltype NO_LABEL align 512
+          tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/delete start subtitle.svg} compress_image 1 xywh {293 100 74 26} labeltype NO_LABEL align 512
         }
         Fl_Button del_last_sub {
           label {Del last sub}
-          tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/delete end subtitle.svg} compress_image 1 xywh {303 129 74 26} labeltype NO_LABEL align 512
+          tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/delete end subtitle.svg} compress_image 1 xywh {303 129 74 26} labeltype NO_LABEL align 512
         }
       }
       Fl_Group {} {
@@ -237,7 +237,7 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
         xywh {60 5 170 22} down_box BORDER_BOX
       } {}
       Fl_Button config_view {
-        tooltip {Edit the configuration file..} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/modify - settings.svg} compress_image 1 xywh {274 2 66 24} labeltype NO_LABEL align 512
+        tooltip {Edit the configuration file..} image {../assets/svg_icons/modify - settings.svg} compress_image 1 xywh {274 2 66 24} labeltype NO_LABEL align 512
       }
       Fl_Box geo_not_saved {
         label {The geometry of this instance will not be saved.}
@@ -312,7 +312,7 @@ But not for the other fields} xywh {308 182 40 160} type Hold align 1
     }
     Fl_Button config_reset {
       tooltip {Restore the subadjust configuration to its default values.
-A restart of the app is necessary for the whole change to take effect.} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/reload.svg} compress_image 1 xywh {314 351 24 24} labeltype NO_LABEL align 512
+A restart of the app is necessary for the whole change to take effect.} image {../assets/svg_icons/reload.svg} compress_image 1 xywh {314 351 24 24} labeltype NO_LABEL align 512
     }
   }
 }
