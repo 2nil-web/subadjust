@@ -279,13 +279,13 @@ The configuration file is located there : ")EOF") +
   {
     if (!ofilename.empty())
     {
-      logW(_("Silently ignoring -o/-output-file in GUI mode"));
+      logW("Silently ignoring -o/-output-file in GUI mode");
       ofilename = "";
     }
 
     if (modify_input)
     {
-      logW(_("Silently ignoring -i/-modify-input in GUI mode"));
+      logW("Silently ignoring -i/-modify-input in GUI mode");
       modify_input = false;
     }
 
@@ -316,7 +316,7 @@ The configuration file is located there : ")EOF") +
     //  } else {
     txt_buf.transcoding_warning_action = [](Fl_Text_Buffer *t) -> void {
       if (t->input_file_was_transcoded)
-        logW(_("Displayed text contains the UTF-8 transcoding of the input file which was not UTF-8 encoded. Some changes may have occurred."));
+        logW("Displayed text contains the UTF-8 transcoding of the input file which was not UTF-8 encoded. Some changes may have occurred.");
     };
   }
 
