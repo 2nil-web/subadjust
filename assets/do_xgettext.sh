@@ -23,3 +23,23 @@
 #done
 
 #  xgettext --keyword=_ --language=C++ --add-comments --sort-output -o src/locale/all.pot src/*.{cpp,h}
+
+
+# ==> S'assurer que subadjust_ui.cpp et .h soit créés
+cd src
+while read i
+do
+  fcod="UTF-8"
+  if file $i >/dev/null | grep ASCII; then
+    fcod=ASCII
+  fi
+
+  echo "$i == ${fcod}"
+  xgettext --keyword=_  --keyword=_S  --keyword=gettext --language=C++ --from-code=${fcod} --add-comments -o "locale/${i/.*}.pot" "$i"
+done < <(grep -sl -e '_(' -e '_S(' *.{h,cpp})
+
+cd locale
+cat *.pot | grep msgid | sort -u
+grep msgid fr/subadjust.po | sort -u
+Comparer dans Excel le '^cat' avec le '^grep' pour repérer dans le cat ce qui est manquant dans le grep
+Compléter fr/subadjust.po avec ce répérés comme manquant dans Excel.

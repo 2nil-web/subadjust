@@ -259,7 +259,7 @@ bool file_write(std::string filename)
   else
   {
     // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
-    fl_alert("Error while saving file '%s'", filename.c_str());
+    fl_alert(_("Error while saving file '%s'"), filename.c_str());
     return false;
   }
 }
@@ -293,7 +293,7 @@ void gui_display(bool file_read_ok, bool test_already_opened)
 
     if (test_already_opened && already_opened(current_abs_path.string()))
     {
-      if (!fl_choice("This file is already opened by another instance of this tool.\nDo you want to reopen it ?", "No", "Yes", 0L))
+      if (!fl_choice(_("This file is already opened by another instance of this tool.\nDo you want to reopen it ?"), _("No"), _("Yes"), 0L))
       {
         txt_buf.text("");
         set_file_state(false);
@@ -338,7 +338,7 @@ void gui_display(bool file_read_ok, bool test_already_opened)
   {
     // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
     if (!current_abs_path.empty())
-      fl_alert("Unable to load the file '%s'", current_abs_path.string().c_str());
+      fl_alert((_("Unable to load the file") + std::string(" '%s'")).c_str(), current_abs_path.string().c_str());
   }
 }
 
@@ -376,7 +376,7 @@ bool file_handler(bool for_read)
   fsel.options(opts);
   fsel.title(title.c_str());
   fsel.type(typ);
-  fsel.filter("Subtitle files\t*.srt");
+  fsel.filter(_("Subtitle files\t*.srt"));
   // fsel.directory("/var/tmp"); // default directory to use
 
   // Show file selector

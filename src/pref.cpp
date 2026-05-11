@@ -64,15 +64,12 @@ int pref_get_int(const std::string key, int def_val, Fl_Preferences *pref)
   return val;
 }
 
-void case_find(Fl_Widget *w, void *v)
+void case_find(Fl_Widget *, void *)
 {
-  (void)w;
-  (void)v;
-
   if (case_sensitive_find->value())
-    case_sensitive_find->label("Case");
+    case_sensitive_find->label(_("Case"));
   else
-    case_sensitive_find->label("Nocase");
+    case_sensitive_find->label(_("All"));
 }
 
 void main_window_resize(int x, int y, int w, int h)
@@ -98,38 +95,38 @@ std::string screen_info()
   std::stringstream ss;
 
   sc = Fl::screen_count();
-  ss << "Number of available screens is: " << sc << ".\n";
+  ss << _("Number of available screens is: ") << sc << ".\n";
 
   for (int i = 0; i < sc; i++)
   {
     Fl::screen_dpi(hr, vr, i);
-    ss << "\nFor screen" << i << ":\n";
-    ss << "Horizontal and vertical screen resolution in dots-per-inch are: (" << hr << ", " << vr << ").\n";
+    ss << _("\nFor screen") << i << ":\n";
+    ss << _S("Horizontal and vertical screen resolution in dots-per-inch are") + ": (" << hr << ", " << vr << ").\n";
 
     Fl::screen_work_area(x, y, w, h, i);
-    ss << "Bounding box of the work area is: (" << x << ", " << y << ", " << w << ", " << h << ").\n";
+    ss << _S("Bounding box of the work area is") + ": (" << x << ", " << y << ", " << w << ", " << h << ").\n";
 
     Fl::screen_xywh(x, y, w, h, i);
-    ss << "Screen bounding rect is: (" << x << ", " << y << ", " << w << ", " << h << ").\n";
+    ss << _S("Screen bounding rect is") + ": (" << x << ", " << y << ", " << w << ", " << h << ").\n";
   }
 
   int xm = Fl::x(), ym = Fl::y(), wm = Fl::w(), hm = Fl::h();
-  ss << "\nLeftmost x and y coordinate and width and height of the main screen work area: (" << xm << ", " << ym << ", " << wm << ", " << hm << ").\n";
+  ss << "\n" + _S("Leftmost x and y coordinate and width and height of the main screen work area") + ": (" << xm << ", " << ym << ", " << wm << ", " << hm << ").\n";
 
-  ss << "\nScreen number of the screen that contains the position (" << xm << ", " << ym << "): " << Fl::screen_num(xm, ym) << ".\n";
-  ss << "Screen number for the screen which intersects the most with the rectangle defined by (" << xm << ", " << ym << ", " << wm << ", " << hm << "): " << Fl::screen_num(xm, ym, wm, hm) << ".\n";
+  ss << "\n" + _S("Screen number of the screen that contains the position") + " (" << xm << ", " << ym << "): " << Fl::screen_num(xm, ym) << ".\n";
+  ss << _S("Screen number for the screen which intersects the most with the rectangle defined by") + " (" << xm << ", " << ym << ", " << wm << ", " << hm << "): " << Fl::screen_num(xm, ym, wm, hm) << ".\n";
 
   Fl::screen_xywh(x, y, w, h, xm, ym, wm, hm);
-  ss << "\nScreen bounding rect for the screen which intersects the most with the rectangle defined by (" << xm << ", " << ym << ", " << wm << ", " << hm << "): (" << x << ", " << y << ", " << w << ", " << h << ").\n";
+  ss << "\n" + _S("Screen bounding rect for the screen which intersects the most with the rectangle defined by") + " (" << xm << ", " << ym << ", " << wm << ", " << hm << "): (" << x << ", " << y << ", " << w << ", " << h << ").\n";
 
   Fl::screen_work_area(x, y, w, h, xm, ym);
-  ss << "\nBounding box of the work area of a screen that contains the screen position (" << xm << ", " << ym << "): (" << x << ", " << y << ", " << w << ", " << h << ").\n";
+  ss << "\n" + _S("Bounding box of the work area of a screen that contains the screen position") + " (" << xm << ", " << ym << "): (" << x << ", " << y << ", " << w << ", " << h << ").\n";
   Fl::screen_xywh(x, y, w, h, xm, ym);
-  ss << "Bounding box of the screen that contains the screen position (" << xm << ", " << ym << "): (" << x << ", " << y << ", " << w << ", " << h << ").\n";
+  ss << _S("Bounding box of the screen that contains the screen position") + " (" << xm << ", " << ym << "): (" << x << ", " << y << ", " << w << ", " << h << ").\n";
   Fl::screen_work_area(x, y, w, h);
-  ss << "Bounding box of the work area of the screen that contains the mouse pointer: (" << x << ", " << y << ", " << w << ", " << h << ").\n";
+  ss << _S("Bounding box of the work area of the screen that contains the mouse pointer") + ": (" << x << ", " << y << ", " << w << ", " << h << ").\n";
   Fl::screen_xywh(x, y, w, h);
-  ss << "Bounding box of the screen that contains the mouse pointer: (" << x << ", " << y << ", " << w << ", " << h << ").\n";
+  ss << _S("Bounding box of the screen that contains the mouse pointer") + ": (" << x << ", " << y << ", " << w << ", " << h << ").\n";
 
   return ss.str();
 }
@@ -141,39 +138,39 @@ std::string screen_info_fr()
   std::stringstream ss;
 
   sc = Fl::screen_count();
-  ss << "Nombre d'écrans disponibles;" << sc << "\n";
+  ss << _S("Number of screens available") + ";" << sc << "\n";
 
   for (int i = 0; i < sc; i++)
   {
     Fl::screen_dpi(hr, vr, i);
-    ss << "\nPour l'écran " << i + 1 << ";\n";
-    ss << "Résolution horizontale et verticale, en points par pouce;(" << hr << ", " << vr << ")\n";
+    ss << "\n" + _S("For the screen") + " " << i + 1 << ";\n";
+    ss << _S("Horizontal and vertical resolution, in dots per inch") + ";(" << hr << ", " << vr << ")\n";
 
     Fl::screen_work_area(x, y, w, h, i);
-    ss << "Boîte englobante de la zone de travail;(" << x << ", " << y << ", " << w << ", " << h << ")\n";
+    ss << _S("Encompassing box of the work area") + ";(" << x << ", " << y << ", " << w << ", " << h << ")\n";
 
     Fl::screen_xywh(x, y, w, h, i);
-    ss << "Dimensions du rectangle englobant l'écran;(" << x << ", " << y << ", " << w << ", " << h << ")\n";
+    ss << _S("Dimensions of the rectangle encompassing the screen") + ";(" << x << ", " << y << ", " << w << ", " << h << ")\n";
   }
 
   int xm = Fl::x(), ym = Fl::y(), wm = Fl::w(), hm = Fl::h();
-  ss << "\nCoordonnées x et y les plus à gauche, largeur et hauteur de la zone de travail principale;(" << xm << ", " << ym << ", " << wm << ", " << hm << ")\n";
+  ss << "\n" + _S("Leftmost x and y coordinates, width and height of the main work area") + ";(" << xm << ", " << ym << ", " << wm << ", " << hm << ")\n";
 
-  ss << "\nNuméro de l'écran contenant la position (" << xm << ", " << ym << ");" << Fl::screen_num(xm, ym) + 1 << "\n";
-  ss << "Numéro de l'écran ayant la plus grande intersection avec le rectangle défini par (" << xm << ", " << ym << ", " << wm << ", " << hm << ");" << Fl::screen_num(xm, ym, wm, hm) + 1 << "\n";
+  ss << "\n" + _S("Screen number containing the position") + " (" << xm << ", " << ym << ");" << Fl::screen_num(xm, ym) + 1 << "\n";
+  ss << _S("Number of the screen with the largest intersection with the rectangle defined by") + " (" << xm << ", " << ym << ", " << wm << ", " << hm << ");" << Fl::screen_num(xm, ym, wm, hm) + 1 << "\n";
 
   Fl::screen_xywh(x, y, w, h, xm, ym, wm, hm);
-  ss << "\nRectangle englobant l'écran ayant la plus grande intersection avec le rectangle défini par (" << xm << ", " << ym << ", " << wm << ", " << hm << ");(" << x << ", " << y << ", " << w << ", " << h << ")\n";
+  ss << "\n" + _S("Rectangle encompassing the screen having the largest intersection with the rectangle defined by") + " (" << xm << ", " << ym << ", " << wm << ", " << hm << ");(" << x << ", " << y << ", " << w << ", " << h << ")\n";
 
   Fl::screen_work_area(x, y, w, h, xm, ym);
-  ss << "\nCadre englobant la zone de travail de l'écran contenant la position (" << xm << ", " << ym << ");(" << x << ", " << y << ", " << w << ", " << h << ")\n";
+  ss << "\n" + _S("Frame encompassing the screen's work area containing the position") + " (" << xm << ", " << ym << ");(" << x << ", " << y << ", " << w << ", " << h << ")\n";
   Fl::screen_xywh(x, y, w, h, xm, ym);
-  ss << "Cadre englobant l'écran contenant la position (" << xm << ", " << ym << ");(" << x << ", " << y << ", " << w << ", " << h << ")\n";
+  ss << _S("Frame encompassing the screen containing the position") + " (" << xm << ", " << ym << ");(" << x << ", " << y << ", " << w << ", " << h << ")\n";
   Fl::screen_work_area(x, y, w, h);
 
-  ss << "\nCadre englobant la zone de travail de l'écran contenant le pointeur de la souris;(" << x << ", " << y << ", " << w << ", " << h << ")\n";
+  ss << "\n" + _S("Frame encompassing the screen's work area containing the mouse pointer") + ";(" << x << ", " << y << ", " << w << ", " << h << ")\n";
   Fl::screen_xywh(x, y, w, h);
-  ss << "Cadre englobant la zone de l'écran contenant le pointeur de la souris;(" << x << ", " << y << ", " << w << ", " << h << ")\n";
+  ss << _S("Frame encompassing the area of the screen containing the mouse pointer") + ";(" << x << ", " << y << ", " << w << ", " << h << ")\n";
 
   return ss.str();
 }
@@ -504,7 +501,7 @@ void pref_get(int x, int y, int w, int h)
   }
 
   case_sensitive_find->value(pref_get_int("case", 0));
-  // case_find();
+  case_find();
 
   std::string fv = pref_get_string("find value", R"(\{\\an8\})");
   str_find->value(fv.c_str());
@@ -755,18 +752,32 @@ void font_manage(Fl_Widget *, void *vfis)
     logD("FONT - Bad name (", ifn, ") or size (", ifs, ") selection");
 }
 
+void default_edit(std::filesystem::path p)
+{
+  std::string editor = my_getenv("EDITOR");
+  if (editor.empty())
+  {
+    editor = "vi";
+  }
+
+  std::string edit_cmd("\"" + editor + "\" " + p.string() + " &");
+  logD("edit: ", edit_cmd);
+  std::system(edit_cmd.c_str());
+}
+
 void view_config(Fl_Widget *, void *)
 {
   std::string config_file = std::filesystem::path(pref_filename()).make_preferred().string();
 #ifdef _WIN32
   std::wstring stemp = L"\"" + std::wstring(config_file.begin(), config_file.end()) + L"\"";
   if ((INT_PTR)ShellExecute(nullptr, L"edit", stemp.c_str(), nullptr, nullptr, SW_SHOWNORMAL) < 32)
+  {
     logD(std::to_string(GetLastError()));
-#else
-  std::string edit("\"" + std::filesystem::path("gvim").make_preferred().string() + "\" " + config_file + " &");
-  logD("edit: ", edit);
-  std::system(edit.c_str());
+    logD("Try with variable EDITOR, if available");
+  }
+  else
 #endif
+    default_edit(config_file);
 }
 
 void pref_dialog(Fl_Widget *, void *)
@@ -793,7 +804,7 @@ void pref_dialog(Fl_Widget *, void *)
       Fl_Native_File_Chooser ld_sel;
 
       ld_sel.options(Fl_Native_File_Chooser::Option::NEW_FOLDER | Fl_Native_File_Chooser::Option::PREVIEW);
-      ld_sel.title("Select locale folder");
+      ld_sel.title(_("Select locale folder"));
       ld_sel.type(Fl_Native_File_Chooser::Type::BROWSE_DIRECTORY);
       switch (ld_sel.show())
       {
@@ -855,7 +866,7 @@ void pref_dialog(Fl_Widget *, void *)
       theme_choice->value(2);
       OS::use_theme(theme_choice->value());
       case_sensitive_find->value(0);
-      case_sensitive_find->label("Nocase");
+      case_sensitive_find->label(_("All"));
     });
 
     unpopulated_dialog = false;

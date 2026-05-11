@@ -17,6 +17,7 @@
 #include <libintl.h>
 #include <locale.h>
 #define _(STRING) gettext(STRING)
+#define _S(STRING2) std::string(gettext(STRING2))
 
 #if defined(_WIN32)
 #include <windows.h>

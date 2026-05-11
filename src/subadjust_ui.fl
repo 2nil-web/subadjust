@@ -11,10 +11,7 @@ Function {make_window()} {open
 } {
   Fl_Window main_window {open
     xywh {2280 174 386 653} type Double box UP_BOX resizable
-    code0 {\#include <FL/Fl_Int_Input.H>}
-    code1 {\#include <FL/Fl_Float_Input.H>}
-    code2 {\#include <FL/Fl_SVG_Image.H>}
-    code3 {\#include "Fl_Time_Input.H"} size_range {384 600 0 0} visible
+    code0 {\#include "Fl_Fluid.H"} size_range {384 600 0 0} visible
   } {
     Fl_Group {} {open
       xywh {2 0 380 284}
@@ -41,8 +38,9 @@ Function {make_window()} {open
         }
       }
       Fl_Button app_prefs {
-        label {💻}
-        tooltip {Preferences/Setting (Shortcut Ctrl+p)} image {../assets/svg_icons/settings.svg} compress_image 1 xywh {262 1 48 28} shortcut 0x40070 labeltype NO_LABEL labelsize 18 align 512
+        label {💻} selected
+        tooltip {Preferences/Setting (Shortcut Ctrl+p)} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/settings.svg} compress_image 1 xywh {262 1 48 28} shortcut 0x40070 labeltype NO_LABEL labelsize 18 align 512
+        class Fl_Hover_Button
       }
       Fl_Button app_save_quit {
         label {💾/⏻}
@@ -66,15 +64,15 @@ Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} c
         } {
           Fl_Button goto_middle_line {
             label Line
-            tooltip {Go to middle line} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/line.png} compress_image 1 xywh {15 38 64 48} labeltype NO_LABEL align 512
+            tooltip {Go to middle line} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/line.png} compress_image 1 xywh {15 36 64 52} labeltype NO_LABEL align 512
           }
           Fl_Button goto_middle_sub {
             label Sub
-            tooltip {Go to middle subtitle} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/subtitles.svg} compress_image 1 xywh {106 52 80 36} labeltype NO_LABEL align 512
+            tooltip {Go to middle subtitle} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/subtitles.svg} compress_image 1 xywh {106 48 80 40} labeltype NO_LABEL align 512
           }
           Fl_Button goto_middle_time {
             label Time
-            tooltip {Go to middle time} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/time.svg} compress_image 1 xywh {216 38 64 48} labeltype NO_LABEL align 514
+            tooltip {Go to middle time} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/time.svg} compress_image 1 xywh {216 36 64 52} labeltype NO_LABEL align 514
           }
         }
         Fl_Group {} {
@@ -174,8 +172,8 @@ end offsets
       tooltip {You may apply regex pattern, with case sensitivity or not.
 All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 63} box BORDER_FRAME color 37
     } {
-      Fl_Group {} {
-        xywh {4 287 137 57}
+      Fl_Group {} {open
+        xywh {4 287 137 58}
       } {
         Fl_Button find {
           label Find
@@ -191,7 +189,7 @@ All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 63} b
         }
         Fl_Check_Button case_sensitive_find {
           label Case
-          tooltip {Run case sensitive find or not} xywh {7 320 58 22} down_box DOWN_BOX
+          tooltip {Run case sensitive find or not} xywh {7 316 56 26} down_box DOWN_BOX align 512
         }
       }
       Fl_Group {} {
@@ -221,13 +219,13 @@ It turns red if there are pending modification.
 Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 351 314 22} labeltype NO_LABEL resizable
       }
     }
-    Fl_Text_Editor file_content {selected
+    Fl_Text_Editor file_content {
       xywh {4 377 376 271} labeltype NO_LABEL resizable
     }
   }
   Fl_Window config_dialog {
     label Configuration open
-    xywh {2783 178 350 387} type Double size_range {350 400 600 0} visible
+    xywh {3265 196 350 387} type Double hide size_range {350 400 600 0}
   } {
     Fl_Group {} {open
       xywh {2 2 346 110}
@@ -278,7 +276,7 @@ directory}
 ⚠️If the change is not valid, it will not be taking into account⚠️} xywh {5 116 70 40}
       }
       Fl_Output loc_dir {
-        tooltip {Show the path where translation files might be
+        tooltip {Shows the path where translation files might be
 ⚠️Changing this value implies restarting the application⚠️
 ⚠️If the change is not valid, it will not be taking into account⚠️} xywh {82 126 260 22} labeltype NO_LABEL resizable
       }

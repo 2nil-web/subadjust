@@ -70,7 +70,7 @@ std::string my_getenv(const std::string var, bool msg_if_empty)
   char *pVal = nullptr;
   std::string sVal = "";
   if (msg_if_empty)
-    sVal = "No value found for " + var;
+    sVal = _("No value found for ") + var;
 
 #ifdef _WIN32
   DWORD vl = GetEnvironmentVariableA(var.c_str(), NULL, 0);
