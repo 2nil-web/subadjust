@@ -40,7 +40,6 @@ Function {make_window()} {open
       Fl_Button app_prefs {
         label {💻} selected
         tooltip {Preferences/Setting (Shortcut Ctrl+p)} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/settings.svg} compress_image 1 xywh {262 1 48 28} shortcut 0x40070 labeltype NO_LABEL labelsize 18 align 512
-        class Fl_Hover_Button
       }
       Fl_Button app_save_quit {
         label {💾/⏻}
