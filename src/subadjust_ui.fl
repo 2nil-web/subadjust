@@ -10,7 +10,7 @@ code_name {.cxx}
 Function {make_window()} {open
 } {
   Fl_Window main_window {open
-    xywh {2280 174 386 653} type Double box UP_BOX resizable
+    xywh {1529 174 386 653} type Double box UP_BOX resizable
     code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0} visible
   } {
     Fl_Group {} {open
@@ -38,7 +38,7 @@ Function {make_window()} {open
         }
       }
       Fl_Button app_prefs {
-        label {💻} selected
+        label {💻}
         tooltip {Preferences/Setting (Shortcut Ctrl+p)} image {../assets/svg_icons/settings.svg} compress_image 1 xywh {262 1 48 28} shortcut 0x40070 labeltype NO_LABEL labelsize 18 align 512
       }
       Fl_Button app_save_quit {
@@ -66,8 +66,8 @@ Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} c
             tooltip {Go to middle line} image {../assets/svg_icons/line.png} compress_image 1 xywh {15 36 64 52} labeltype NO_LABEL align 512
           }
           Fl_Button goto_middle_sub {
-            label Sub
-            tooltip {Go to middle subtitle} image {../assets/svg_icons/subtitles.svg} compress_image 1 xywh {106 48 80 40} labeltype NO_LABEL align 512
+            label Sub selected
+            tooltip {Go to middle subtitle} image {../assets/svg_icons/subtitles.svg} compress_image 1 xywh {106 52 80 36} labeltype NO_LABEL align 512
           }
           Fl_Button goto_middle_time {
             label Time
