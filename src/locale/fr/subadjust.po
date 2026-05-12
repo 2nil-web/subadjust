@@ -241,9 +241,6 @@ msgstr "Argument manquant à '"
 msgid "Output version information and exit."
 msgstr "Affiche les informations de version et sort."
 
-msgid "SECRET_OPTION provided for traceability when needed (debug)."
-msgstr "OPTION SECRÈTE fournie pour la traçabilité en cas de besoin (débogage)"
-
 msgid "Unknown long option '--"
 msgstr "Option longue inconnue '--"
 
