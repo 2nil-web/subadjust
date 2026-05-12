@@ -39,7 +39,7 @@ Function {make_window()} {open
       }
       Fl_Button app_prefs {
         label {💻} selected
-        tooltip {Preferences/Setting (Shortcut Ctrl+p)} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/settings.svg} compress_image 1 xywh {262 1 48 28} shortcut 0x40070 labeltype NO_LABEL labelsize 18 align 512
+        tooltip {Preferences/Setting (Shortcut Ctrl+p)} image {../assets/svg_icons/settings.svg} compress_image 1 xywh {262 1 48 28} shortcut 0x40070 labeltype NO_LABEL labelsize 18 align 512
       }
       Fl_Button app_save_quit {
         label {💾/⏻}
@@ -63,15 +63,15 @@ Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} c
         } {
           Fl_Button goto_middle_line {
             label Line
-            tooltip {Go to middle line} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/line.png} compress_image 1 xywh {15 36 64 52} labeltype NO_LABEL align 512
+            tooltip {Go to middle line} image {../assets/svg_icons/line.png} compress_image 1 xywh {15 36 64 52} labeltype NO_LABEL align 512
           }
           Fl_Button goto_middle_sub {
             label Sub
-            tooltip {Go to middle subtitle} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/subtitles.svg} compress_image 1 xywh {106 48 80 40} labeltype NO_LABEL align 512
+            tooltip {Go to middle subtitle} image {../assets/svg_icons/subtitles.svg} compress_image 1 xywh {106 48 80 40} labeltype NO_LABEL align 512
           }
           Fl_Button goto_middle_time {
             label Time
-            tooltip {Go to middle time} image {../../../../../dplal/Documents/home/00-subadjust/assets/svg_icons/time.svg} compress_image 1 xywh {216 36 64 52} labeltype NO_LABEL align 514
+            tooltip {Go to middle time} image {../assets/svg_icons/time.svg} compress_image 1 xywh {216 36 64 52} labeltype NO_LABEL align 514
           }
         }
         Fl_Group {} {

@@ -123,7 +123,8 @@ deliv : assets/${SETUP_PKG}
 
 # FLUID file rules
 ${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_ui.cpp : ${SRC_DIR}/${PREFIX}_ui.fl
-	@echo "Fluid Gen"
+	@echo "Fluid code generation"
+	@sed -i 's?image {\.\.\(.*\)/assets?image {../assets?' src/subadjust_ui.fl
 	cd ${SRC_DIR} && ${FLUID} -c -o .cpp ${PREFIX}_ui.fl
 
 ${SRC_DIR}/${PREFIX}.cpp ${SRC_DIR}/file_features.cpp ${SRC_DIR}/edit_features.cpp ${SRC_DIR}/pref.cpp : ${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_icon.h ${SRC_DIR}/${PREFIX}.ico
