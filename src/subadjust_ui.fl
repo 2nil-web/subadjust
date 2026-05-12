@@ -11,7 +11,7 @@ Function {make_window()} {open
 } {
   Fl_Window main_window {open
     xywh {2280 174 386 653} type Double box UP_BOX resizable
-    code0 {\#include "Fl_Fluid.H"} size_range {384 600 0 0} visible
+    code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0} visible
   } {
     Fl_Group {} {open
       xywh {2 0 380 284}
