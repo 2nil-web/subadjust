@@ -447,12 +447,6 @@ msgstr "Cadre englobant la zone de l'écran contenant le pointeur de la souris"
 msgid "Bounding box of the screen that contains the screen position"	
 msgstr "Cadre englobant la zone de l'écran contenant la position de la souris"
 
-msgid "Bounding box of the work area is"	
-msgstr "Cadre englobant la zone de travail"
-
-msgid "Dimensions of the rectangle encompassing the screen"	
-msgstr "Dimensions du rectangle englobant l'écran"
-
 msgid "Encompassing box of the work area"	
 msgstr "Cadre englobant la zone de travail"
 
@@ -462,17 +456,8 @@ msgstr "Erreur lors de l'enregistrement du fichier « %s »"
 msgid "For the screen"	
 msgstr "Pour l'écran"
 
-msgid "Frame encompassing the area of the screen containing the mouse pointer"	
-msgstr "Cadre englobant la zone de l'écran contenant le pointeur de la souris"
-
-msgid "Frame encompassing the screen containing the position"	
-msgstr "Cadre englobant l'écran contenant la position"
-
 msgid "Frame encompassing the screen's work area containing the mouse pointer"	
 msgstr "Cadre englobant la zone de travail de l'écran contenant le pointeur de la souris"
-
-msgid "Frame encompassing the screen's work area containing the position"	
-msgstr "Cadre englobant la zone de travail de l'écran contenant la position de la souris"
 
 msgid "Horizontal and vertical resolution, in dots per inch"	
 msgstr "Résolution horizontale et verticale, en points par pouce"
@@ -485,9 +470,6 @@ msgstr "Coordonnées x et y les plus à gauche, largeur et hauteur de la zone de
 
 msgid "No value found for "	
 msgstr "Valeur introuvable pour :"
-
-msgid "Number of available screens is: "	
-msgstr "Nombre d'écrans disponibles :"
 
 msgid "Number of screens available"	
 msgstr "Nombre d'écrans disponibles"
@@ -575,4 +557,40 @@ msgstr ""
 "Modifie la taille de police de toutes les étiquettes de l'interface graphique\n"
 "Et également pour le champ de l'éditeur de sous-titres\n"
 "Mais pas pour les autres champs"
+
+msgid "Number of available screens is: "	
+msgstr "Nombre d'écrans disponibles"
+
+msgid "For screen"	
+msgstr "Pour l'écran "
+
+msgid "Horizontal and vertical screen resolution in dots-per-inch"	
+msgstr "Résolution horizontale et verticale, en points par pouce"
+
+msgid "Bounding box of the work area is"	
+msgstr "Boîte englobante de la zone de travail"
+
+msgid "Dimensions of the rectangle encompassing the screen"	
+msgstr "Dimensions du rectangle englobant l'écran"
+
+msgid "Leftmost x and y coordinate, width and height of the main work area"	
+msgstr "Coordonnées x et y les plus à gauche, largeur et hauteur de la zone de travail principale"
+
+msgid "Number of the screen that contains the position"	
+msgstr "Numéro de l'écran contenant la position "
+
+msgid "Number for the screen which intersects the most with the rectangle defined by"	
+msgstr "Numéro de l'écran ayant la plus grande intersection avec le rectangle défini par "
+
+msgid "Rectangle encompassing the screen having the largest intersection with the rectangle defined by"	
+msgstr "Rectangle englobant l'écran ayant la plus grande intersection avec le rectangle défini par "
+
+msgid "Frame encompassing the screen containing the position"	
+msgstr "Cadre englobant l'écran contenant la position "
+
+msgid "Frame encompassing the screen's work area containing the position"	
+msgstr "Cadre englobant la zone de travail de l'écran contenant le pointeur de la souris"
+
+msgid "Frame encompassing the area of the screen containing the mouse pointer"	
+msgstr "Cadre englobant la zone de l'écran contenant le pointeur de la souris"
 

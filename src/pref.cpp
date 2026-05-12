@@ -101,32 +101,32 @@ std::string screen_info()
   {
     Fl::screen_dpi(hr, vr, i);
     ss << _("\nFor screen") << i << ":\n";
-    ss << _S("Horizontal and vertical screen resolution in dots-per-inch are") + ": (" << hr << ", " << vr << ").\n";
+    ss << _S("Horizontal and vertical screen resolution in dots-per-inch") + ": (" << hr << ", " << vr << ").\n";
 
     Fl::screen_work_area(x, y, w, h, i);
     ss << _S("Bounding box of the work area is") + ": (" << x << ", " << y << ", " << w << ", " << h << ").\n";
 
     Fl::screen_xywh(x, y, w, h, i);
-    ss << _S("Screen bounding rect is") + ": (" << x << ", " << y << ", " << w << ", " << h << ").\n";
+    ss << _S("Dimensions of the rectangle encompassing the screen") + ": (" << x << ", " << y << ", " << w << ", " << h << ").\n";
   }
 
   int xm = Fl::x(), ym = Fl::y(), wm = Fl::w(), hm = Fl::h();
-  ss << "\n" + _S("Leftmost x and y coordinate and width and height of the main screen work area") + ": (" << xm << ", " << ym << ", " << wm << ", " << hm << ").\n";
+  ss << "\n" + _S("Leftmost x and y coordinate, width and height of the main work area") + ": (" << xm << ", " << ym << ", " << wm << ", " << hm << ").\n";
 
-  ss << "\n" + _S("Screen number of the screen that contains the position") + " (" << xm << ", " << ym << "): " << Fl::screen_num(xm, ym) << ".\n";
-  ss << _S("Screen number for the screen which intersects the most with the rectangle defined by") + " (" << xm << ", " << ym << ", " << wm << ", " << hm << "): " << Fl::screen_num(xm, ym, wm, hm) << ".\n";
+  ss << "\n" + _S("Number of the screen that contains the position") + " (" << xm << ", " << ym << "): " << Fl::screen_num(xm, ym) << ".\n";
+  ss << _S("Number for the screen which intersects the most with the rectangle defined by") + " (" << xm << ", " << ym << ", " << wm << ", " << hm << "): " << Fl::screen_num(xm, ym, wm, hm) << ".\n";
 
   Fl::screen_xywh(x, y, w, h, xm, ym, wm, hm);
-  ss << "\n" + _S("Screen bounding rect for the screen which intersects the most with the rectangle defined by") + " (" << xm << ", " << ym << ", " << wm << ", " << hm << "): (" << x << ", " << y << ", " << w << ", " << h << ").\n";
+  ss << "\n" + _S("Rectangle encompassing the screen having the largest intersection with the rectangle defined by") + " (" << xm << ", " << ym << ", " << wm << ", " << hm << "): (" << x << ", " << y << ", " << w << ", " << h << ").\n";
 
   Fl::screen_work_area(x, y, w, h, xm, ym);
-  ss << "\n" + _S("Bounding box of the work area of a screen that contains the screen position") + " (" << xm << ", " << ym << "): (" << x << ", " << y << ", " << w << ", " << h << ").\n";
+  ss << "\n" + _S("Frame encompassing the screen's work area containing the position") + " (" << xm << ", " << ym << "): (" << x << ", " << y << ", " << w << ", " << h << ").\n";
   Fl::screen_xywh(x, y, w, h, xm, ym);
-  ss << _S("Bounding box of the screen that contains the screen position") + " (" << xm << ", " << ym << "): (" << x << ", " << y << ", " << w << ", " << h << ").\n";
+  ss << _S("Frame encompassing the screen containing the position") + " (" << xm << ", " << ym << "): (" << x << ", " << y << ", " << w << ", " << h << ").\n";
   Fl::screen_work_area(x, y, w, h);
-  ss << _S("Bounding box of the work area of the screen that contains the mouse pointer") + ": (" << x << ", " << y << ", " << w << ", " << h << ").\n";
+  ss << _S("Frame encompassing the screen's work area containing the position") + ": (" << x << ", " << y << ", " << w << ", " << h << ").\n";
   Fl::screen_xywh(x, y, w, h);
-  ss << _S("Bounding box of the screen that contains the mouse pointer") + ": (" << x << ", " << y << ", " << w << ", " << h << ").\n";
+  ss << _S("Frame encompassing the area of the screen containing the mouse pointer") + ": (" << x << ", " << y << ", " << w << ", " << h << ").\n";
 
   return ss.str();
 }
@@ -138,39 +138,39 @@ std::string screen_info_fr()
   std::stringstream ss;
 
   sc = Fl::screen_count();
-  ss << _S("Number of screens available") + ";" << sc << "\n";
+  ss << "Nombre d'écrans disponibles;" << sc << "\n";
 
   for (int i = 0; i < sc; i++)
   {
     Fl::screen_dpi(hr, vr, i);
-    ss << "\n" + _S("For the screen") + " " << i + 1 << ";\n";
-    ss << _S("Horizontal and vertical resolution, in dots per inch") + ";(" << hr << ", " << vr << ")\n";
+    ss << "\nPour l'écran " << i + 1 << ";\n";
+    ss << "Résolution horizontale et verticale, en points par pouce;(" << hr << ", " << vr << ")\n";
 
     Fl::screen_work_area(x, y, w, h, i);
-    ss << _S("Encompassing box of the work area") + ";(" << x << ", " << y << ", " << w << ", " << h << ")\n";
+    ss << "Boîte englobante de la zone de travail;(" << x << ", " << y << ", " << w << ", " << h << ")\n";
 
     Fl::screen_xywh(x, y, w, h, i);
-    ss << _S("Dimensions of the rectangle encompassing the screen") + ";(" << x << ", " << y << ", " << w << ", " << h << ")\n";
+    ss << "Dimensions du rectangle englobant l'écran;(" << x << ", " << y << ", " << w << ", " << h << ")\n";
   }
 
   int xm = Fl::x(), ym = Fl::y(), wm = Fl::w(), hm = Fl::h();
-  ss << "\n" + _S("Leftmost x and y coordinates, width and height of the main work area") + ";(" << xm << ", " << ym << ", " << wm << ", " << hm << ")\n";
+  ss << "\nCoordonnées x et y les plus à gauche, largeur et hauteur de la zone de travail principale;(" << xm << ", " << ym << ", " << wm << ", " << hm << ")\n";
 
-  ss << "\n" + _S("Screen number containing the position") + " (" << xm << ", " << ym << ");" << Fl::screen_num(xm, ym) + 1 << "\n";
-  ss << _S("Number of the screen with the largest intersection with the rectangle defined by") + " (" << xm << ", " << ym << ", " << wm << ", " << hm << ");" << Fl::screen_num(xm, ym, wm, hm) + 1 << "\n";
+  ss << "\nNuméro de l'écran contenant la position (" << xm << ", " << ym << ");" << Fl::screen_num(xm, ym) + 1 << "\n";
+  ss << "Numéro de l'écran ayant la plus grande intersection avec le rectangle défini par (" << xm << ", " << ym << ", " << wm << ", " << hm << ");" << Fl::screen_num(xm, ym, wm, hm) + 1 << "\n";
 
   Fl::screen_xywh(x, y, w, h, xm, ym, wm, hm);
-  ss << "\n" + _S("Rectangle encompassing the screen having the largest intersection with the rectangle defined by") + " (" << xm << ", " << ym << ", " << wm << ", " << hm << ");(" << x << ", " << y << ", " << w << ", " << h << ")\n";
+  ss << "\nRectangle englobant l'écran ayant la plus grande intersection avec le rectangle défini par (" << xm << ", " << ym << ", " << wm << ", " << hm << ");(" << x << ", " << y << ", " << w << ", " << h << ")\n";
 
   Fl::screen_work_area(x, y, w, h, xm, ym);
-  ss << "\n" + _S("Frame encompassing the screen's work area containing the position") + " (" << xm << ", " << ym << ");(" << x << ", " << y << ", " << w << ", " << h << ")\n";
+  ss << "\nCadre englobant la zone de travail de l'écran contenant la position (" << xm << ", " << ym << ");(" << x << ", " << y << ", " << w << ", " << h << ")\n";
   Fl::screen_xywh(x, y, w, h, xm, ym);
-  ss << _S("Frame encompassing the screen containing the position") + " (" << xm << ", " << ym << ");(" << x << ", " << y << ", " << w << ", " << h << ")\n";
+  ss << "Cadre englobant l'écran contenant la position (" << xm << ", " << ym << ");(" << x << ", " << y << ", " << w << ", " << h << ")\n";
   Fl::screen_work_area(x, y, w, h);
 
-  ss << "\n" + _S("Frame encompassing the screen's work area containing the mouse pointer") + ";(" << x << ", " << y << ", " << w << ", " << h << ")\n";
+  ss << "\nCadre englobant la zone de travail de l'écran contenant le pointeur de la souris;(" << x << ", " << y << ", " << w << ", " << h << ")\n";
   Fl::screen_xywh(x, y, w, h);
-  ss << _S("Frame encompassing the area of the screen containing the mouse pointer") + ";(" << x << ", " << y << ", " << w << ", " << h << ")\n";
+  ss << "Cadre englobant la zone de l'écran contenant le pointeur de la souris;(" << x << ", " << y << ", " << w << ", " << h << ")\n";
 
   return ss.str();
 }

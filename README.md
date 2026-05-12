@@ -2,6 +2,9 @@
 
 ###### ***A GUI and command line tool to modify the timeline of subtitles in .srt format***
 
+<sub>*Actually available in 3 languages : english, french and spanish.*</sub>
+<sup>*But others can easily be added thanks to gettext.*</sup>
+
 <ins>***The GUI aims to be self-explanatory, but some indications might be useful :***</ins>
 
 ![](assets/QuickDoc.svg "Quick doc")
@@ -60,20 +63,18 @@ The configuration file is located there : "C:\Users\dplal\AppData\Roaming\dplala
 If none of these are defined, the default is to send the WARN and following log messages into the file "C:\UnixTools\msys64\tmp\subadjust.log".
 ```
 
+<ins>***Thanks and copyrights:***</ins>
+
+- To [Bill Spitzak](https://github.com/spitzak) and others, of course, for the wonderful [FLTK](https://www.fltk.org) tool.
+- To [**Rangi42**](https://github.com/Rangi42), [**dannye**](https://github.com/dannye) and [Remy Oukaour](https://github.com/roukaour) for the fltk graphical theme enhancement, which I've somewhat hacked.
+
 <ins>***Technical insight:***</ins>
 
 It compiles and run under both Windows (With Visual Studio and g++) and Linux (With g++), thanks to FLTK.
 Although not tested, but should behave the same way under macOS ...
 
-<ins>***Thanks and copyrights (If necessary):***</ins>
-
-- To [Bill Spitzak](https://github.com/spitzak) and others, of course, for the wonderful [FLTK](https://www.fltk.org) tool.
-- To [**Rangi42**](https://github.com/Rangi42), [**dannye**](https://github.com/dannye) and [Remy Oukaour](https://github.com/roukaour) for the fltk graphical theme enhancement, which I've somewhat hacked.
-- To [Claude](https://claude.ai) for the help on developing the Fl_Time_Input, whose design is largely inspired by Chrome's time selector.
-
 <ins>***To do :***</ins>
 
-- *i18n and l10n partly done*
 - *Detail prerequisites for the build (make, gcc, visual studio, fltk ...)*
 - *Add feature to read and write vtt format*
 - *Fix all the bugs (No, there aren't any!!)*
