@@ -3,8 +3,7 @@
 ###### ***A GUI and command line tool to modify the timeline of subtitles in .srt format***
 
 <sub>*Actually available in 3 languages : english, french and spanish.*</sub>
-
-<sup>*But others can easily be added thanks to gettext.*</sup>
+<sub>*But others can easily be added thanks to gettext.*</sub>
 
 <ins>***The GUI aims to be self-explanatory, but some indications might be useful :***</ins>
 
