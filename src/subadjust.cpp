@@ -412,6 +412,7 @@ The configuration file is located there : ")EOF") +
 
     // Buttons find/replace and Inputs : str_find & str_replace
     find->callback(re_find);
+    case_sensitive_find->callback(case_find);
     replace_next->callback(re_replace_next);
     replace_all->callback(re_replace_all);
 
