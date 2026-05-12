@@ -1,0 +1,564 @@
+# French translations for Subadjust package.
+# Copyright (C) 2026 THE Subadjust'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Subadjust package.
+# root <root@home.dplalanne.fr>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: subadjust 1.0.0\n"
+"Report-Msgid-Bugs-To: dpl@nosite.net\n"
+"POT-Creation-Date: 2026-04-28 17:31+0200\n"
+"PO-Revision-Date: 2026-04-28 17:39+0200\n"
+"Last-Translator: root <root@home.dplalanne.fr>\n"
+"Language-Team: French <traduc@traduc.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid ""
+"\n"
+"    The special value 'console' will allows to output the log messages to "
+"the console, if possible."
+msgstr ""
+"\n"
+"El valor especial 'console' permite mostrar los mensajes de registro directamente en la consola, cuando sea posible."
+
+msgid ""
+"\n"
+"Do you want to proceed ?"
+msgstr ""
+"\n"
+"¿Desea continuar?"
+
+msgid ""
+"A tool that allows to process subtitles files.\n"
+"The batch mode allows processing at the command line or by script.\n"
+"Meanwhile the GUI mode adds a search and replace feature with regular "
+"expressions."
+msgstr ""
+"Herramienta de edición de archivos de subtítulos.\n"
+"El modo por lotes permite el procesamiento desde la línea de comandos o mediante un script.\n"
+"El modo GUI añade una función de búsqueda y reemplazo con expresiones regulares."
+
+msgid "Change the beginning time stamp to the provided argument."
+msgstr "Cambia la marca de tiempo de inicio según el argumento proporcionado."
+
+msgid "Change the duration coefficient to the provided argument."
+msgstr "Cambia el coeficiente de duración según el argumento proporcionado."
+
+msgid "Change the end time stamp to the provided argument."
+msgstr "Cambia la marca de tiempo de finalización según el argumento proporcionado."
+
+msgid "Change the start offset to the provided argument."
+msgstr "Cambia la brecha de inicio según el argumento proporcionado."
+
+msgid "Change the stop offset to the provided argument."
+msgstr "Cambia la brecha de inicio según el argumento proporcionado."
+
+msgid ""
+"Define the file where log messages will be stored.\n"
+"    Default it to store them in the following file "
+msgstr ""
+"Defina el archivo donde se almacenarán los mensajes de registro.\n"
+"    Por defecto, se almacenarán en el siguiente archivo"
+
+msgid ""
+"Displayed text contains the UTF-8 transcoding of the input file which was "
+"not UTF-8 encoded. Some changes may have occurred."
+msgstr "El texto mostrado contiene la transcodificación UTF-8 del archivo de entrada, que no estaba codificado en UTF-8. Es posible que se hayan producido algunos cambios."
+
+msgid ""
+"If none of these are defined, the default is to send the WARN and following "
+"log messages into the file \""
+msgstr ""
+"Si no se define ninguna de estas opciones, por defecto se enviará la advertencia y los siguientes mensajes de registro al archivo\""
+
+msgid ""
+"It seems that the subtitle file has been modified.\n"
+"Do you still want to quit without saving it ?"
+msgstr ""
+"Parece que el archivo de subtítulos se ha modificado.\n"
+"¿Desea salir sin guardar?"
+
+msgid ""
+"It seems that the subtitle file has been modified.\n"
+"Do you still want to reload it ?"
+msgstr ""
+"Parece que el archivo de subtítulos se ha modificado.\n"
+"¿Desea recargarlo?"
+
+#. fl_message("%s", about_msg.c_str());
+msgid "More info ..."
+msgstr "Más información..."
+
+msgid ""
+"Name of the file to read. It is the same than directly passing a file name "
+"as an argument without this option."
+msgstr ""
+"Nombre del archivo a leer. Esto equivale a pasar directamente el nombre del archivo como argumento sin esta opción."
+
+msgid ""
+"Process the input file and show it with the gui, this is the default "
+"behavior."
+msgstr ""
+"Procesar el archivo de entrada y mostrarlo en la interfaz gráfica; este es el comportamiento predeterminado."
+
+msgid "Process the input the file and print the result."
+msgstr "Procesar el archivo de entrada y mostrar el resultado."
+
+msgid "Reset the preferences to default values."
+msgstr"Restablecer las preferencias a los valores predeterminados."
+
+msgid ""
+"Set the graphic theme to use. It is a string to choose between one of :\n"
+"    classic, aero, metro, aqua, greybird, ocean, blue, olive, rose_gold, "
+"dark, brushed_metal or high_contrast."
+msgstr ""
+"Establecer el tema gráfico a utilizar. Es una cadena de texto para elegir entre las siguientes opciones:\n"
+"    classic, aero, metro, aqua, greybird, ocean, blue, olive, rose_gold, dark, brushed_metal ou high_contrast."
+
+msgid "Set the height of the subadjust window."
+msgstr "Establecer la altura de la ventana de subadjust."
+
+msgid ""
+"Set the level of the log messages to display :\n"
+"    ALL   All the messages.\n"
+"    TRACE Almost all messages, at least those finer than the INFO level.\n"
+"    INFO  Informational messages that highlight the application's progress at a coarser level.\n"
+"    DEBUG Fine-grained events, the most useful for debugging an application.\n"
+"    WARN  Potentially dangerous situations.\n"
+"    ERROR Errors that might still allow the application to continue running.\n"
+"    FATAL Very serious errors that will likely cause the application to crash.\n"
+"    OFF   Disables logging."
+msgstr ""
+"Establece el nivel de visualización de los mensajes de registro:\n"
+"    ALL: Todos los mensajes.\n"
+"    TRACE: Casi todos los mensajes, al menos los más detallados que INFO.\n"
+"    INFO: Mensajes informativos que resaltan el progreso de la aplicación a un nivel más general.\n"
+"    DEBUG: Eventos específicos, muy útiles para depurar una aplicación.\n"
+"    WARN: Situaciones potencialmente peligrosas.\n"
+"    ERROR: Errores que aún pueden permitir que la aplicación siga funcionando.\n"
+"    OFF:  Deshabilita el registro."
+
+msgid "Set the width of the subadjust window."
+msgstr "Establece el ancho de la ventana de subadjust."
+
+msgid "Set the x origin of the subadjust window."
+msgstr "Establece el origen x de la ventana de subadjust."
+
+msgid "Set the y origin of the subadjust window."
+msgstr "Establece el origen y de la ventana de subadjust."
+
+msgid "Silently ignoring -i/--modify-input in GUI mode"
+msgstr "Ignora silenciosamente el opción -i/--modify-input en modo gráfico."
+
+msgid "Silently ignoring -o/--output-file in GUI mode"
+msgstr  "Ignora silenciosamente el opción -i/--output-input en modo gráfico."
+
+msgid ""
+"These 2 previous options only have meaning in batch mode, they are ignored "
+"in GUI mode."
+msgstr ""
+"Estas dos opciones anteriores solo tienen sentido en modo por lotes; se ignoran "
+"en modo gráfico."
+
+msgid ""
+"These 5 previous options are processed after reading the file and have "
+"effect in both GUI and batch mode."
+msgstr ""
+"Estas cinco opciones anteriores se procesan después de leer el archivo y tienen efecto tanto en modo gráfico como por lotes."
+
+msgid ""
+"These 5 previous options only have effect in GUI mode. In this case, they "
+"have precedence and will update what is defined in the configuration file.\n"
+"The configuration file is located there : \""
+msgstr ""
+"Estas 5 opciones anteriores solo tienen efecto en el modo GUI. En este caso, "
+"tienen prioridad y actualizarán los valores definidos en el archivo de configuración.\n"
+"El archivo de configuración se encuentra aquí:\""
+
+msgid "Unable to open file "
+msgstr "No se pudo abrir el archivo "
+
+msgid ""
+"Write the processing result into the file whose name is passed as argument."
+msgstr ""
+"Escribir el resultado del procesamiento en el archivo cuyo nombre se pasa como argumento."
+
+msgid "Write the processing result into the same input file."
+msgstr "Escribir el resultado del procesamiento en el mismo archivo de entrada."
+
+msgid "Yes"
+msgstr "Sí"
+
+msgid ""
+"Your actual changes will be lost. Do you still want to open another file?"
+msgstr ""
+"Se perderán los cambios. ¿Aún desea abrir otro archivo?"
+
+msgid " [OPTIONS] ARGUMENT\n"
+msgstr "[OPCIONES] ARGUMENTO\n"
+
+msgid "', ignoring it."
+msgstr "', se ignora."
+
+msgid "', ignoring this command."
+msgstr "', se ignora este comando."
+
+msgid "', ignoring this option."
+msgstr "', se ignora esta opción."
+
+msgid "Available commands and their shortcut\n"
+msgstr "Comandos disponibles y sus atajos\n"
+
+msgid "Available options\n"
+msgstr "Opciones disponibles\n"
+
+msgid "Display this message and exit. This option implies -V/--version."
+msgstr "Muestra este mensaje y sale. Esta opción implica la opción -V."
+
+msgid "Missing argument to '"
+msgstr "Falta un argumento para '"
+
+msgid "Output version information and exit."
+msgstr "Muestra información de versión y sale."
+
+msgid "SECRET_OPTION provided for traceability when needed (debug)."
+msgstr "OPCIÓN SECRETA proporcionada para la trazabilidad cuando sea necesario (depuración)"
+
+msgid "Unknown long option '--"
+msgstr "Opción larga desconocida '--"
+
+msgid "Unknown short option '-"
+msgstr "Opción corta desconocida '-"
+
+msgid "Unknown command '"
+msgstr "Comando desconocido '"
+
+msgid "Usage: "
+msgstr "Uso: "
+
+msgid "Copyright © D. LALANNE - MIT License - No warranty of any kind."
+msgstr "Copyright © D. LALANNE - Licence MIT - Licencia MIT - Sin garantía de ningún tipo."
+
+msgid "File"
+msgstr "Archivo"
+
+msgid "Open ..."
+msgstr "Abrir ..."
+
+msgid "Save"
+msgstr "Guardar"
+
+msgid "Save As ..."
+msgstr "Guardar como ..."
+
+msgid "Reload"
+msgstr "Recargar"
+
+msgid "&Preferences"
+msgstr "&Preferencias"
+
+msgid "Save/Q&uit"
+msgstr "Guardar/Salir"
+
+msgid "&Quit"
+msgstr "Salir"
+
+msgid "A&bout"
+msgstr "Acerca de"
+
+msgid "Go to middle ..."
+msgstr "Ir al centro ..."
+
+msgid "Line"
+msgstr "Línea"
+
+msgid "Sub"
+msgstr "Subtítulo"
+
+msgid "Time"
+msgstr "Marca de tiempo"
+
+msgid "Start"
+msgstr "Inicio"
+
+msgid "Begin"
+msgstr "Inicio"
+
+msgid "End"
+msgstr "Fin"
+
+msgid "Go to line, sub or time value ..."
+msgstr "Ir a la línea, subtítulo o marca de tiempo ..."
+
+msgid "Del first sub"
+msgstr "Eliminar 1°"
+
+msgid "Del last sub"
+msgstr "O ultimo"
+
+msgid "Duration\nfactor"
+msgstr "Factor de\n duración"
+
+msgid "Begin and\nend offsets\n(in seconds)"
+msgstr "Desfase inicial\n y final\n(segundos)"
+
+msgid "Adjustment"
+msgstr "Ajuste"
+
+msgid "Reparse"
+msgstr "Reanalizar"
+
+msgid "Limits"
+msgstr "Límites"
+
+msgid "Find"
+msgstr "Buscar"
+
+msgid "Repl Next"
+msgstr "Reemp sigu."
+
+msgid "Repl All"
+msgstr "Reemp todo"
+
+msgid "All"
+msgstr "Todo"
+
+msgid "Case"
+msgstr "Caso"
+
+msgid "File path"
+msgstr "Ruta"
+
+msgid "Theme:"
+msgstr "Tema:"
+
+msgid "The geometry of this instance will not be saved."
+msgstr "La geometría de esta instancia no se guardará."
+
+msgid "X origin:"
+msgstr "Origen X:"
+
+msgid "Y origin:"
+msgstr "Origen Y:"
+
+msgid "Width:"
+msgstr "Ancho:"
+
+msgid "Height:"
+msgstr "Alto:"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Save your file and exit from the app.\nAvailable shortcut is 'Ctrl-X'."
+msgstr "Guarda el archivo y sal de la aplicación. El atajo disponible es « Ctrl-X »."
+
+msgid "Some useful informations about the app (Shortcut Ctrl+B)."
+msgstr "Información sobre la aplicación (Atajo Ctrl+B)."
+
+msgid "Go to text line ..."	
+msgstr "Ir a la línea de texto…"
+
+msgid "Go to subtitle number ..."
+msgstr "Ir al número de subtítulo ..."
+
+msgid "Search in the subtitle, line whose timstamp is close to ..."	
+msgstr "Buscar en el subtítulo, la línea cuya marca de tiempo se acerca de ..."
+
+msgid "You may undo/redo this action with Ctrl-Z/Ctrl-Y."	
+msgstr "Puede deshacer/rehacer esta acción con Ctrl+Z/Ctrl+Y."
+
+msgid "The start time of the sub"	
+msgstr "Hora de inicio del subtítulo"
+
+msgid "The end time of the sub"	
+msgstr "Hora de finalización del subtítulo"
+
+msgid "Begin and end offsets are in floating point seconds.\nThey are added to their corresponding time limit"
+msgstr "Los desfases de inicio y fin se expresan en segundos decimales. Se suman a su límite de tiempo correspondiente y, en consecuencia, aumentan o disminuyen la duración de los subtítulos."
+
+msgid "An offset that applies to the beginning of the sub,  in floating point seconds"	
+msgstr "Desfase aplicado al inicio del subtítulo (segundos decimales)"
+
+msgid "An offset that applies to the end of the sub,  in floating seconds"	
+msgstr "Desfase aplicado al final del subtítulo (segundos decimales)"
+
+msgid "A coefficient that allows to grow or shrink the sub duration"	
+msgstr "Coeficiente que permite aumentar o disminuir la duración del subtítulo"
+
+msgid "Will adjust the subtitles text according to the limits, offsets or duration coefficient, settings."	
+msgstr "Ajusta el texto del subtítulo según los límites, desplazamientos o el coeficiente de duración."
+
+msgid "Will forcibly parse the subtitles text and accordingly modify the settings"	
+msgstr "Análisis forzado del texto del subtítulo y modificación de la configuración en consecuencia."
+
+msgid ""
+"For more details about ECMAScript regex, see https://en.cppreference.com/w/"
+"cpp/regex/ecmascript.html"
+msgstr ""
+"Para más información sobre ECMAScript, consulte https://en.cppreference.com/w/cpp/regex/ecmascript.html"
+
+msgid ""
+"You may apply regex pattern, with case sensitivity or not.\n"
+"All your pattern will be uniquely stored for futur reuse."
+msgstr ""
+"Se puede usar expresiones regulares, con o sin distinción entre mayúsculas y minúsculas.\n"
+"Cada expresión se almacenará de forma única para reutilización futura."
+
+msgid "You may apply regex pattern.\nThey all will be uniquely stored for futur reuse.\nFor more details about ECMAScript regex, see https://en.cppreference.com/w/cpp/regex/ecmascript.html"
+msgstr "Se puede usar expresiones regulares.\nSe almacenarán de forma única para su reutilización futura. Para más información, consulte https://en.cppreference.com/w/cpp/regex/ecmascript.html."
+
+msgid "Will find the next occurrence of the find pattern, the one actually pointed by the cursor is not taken into account."	
+msgstr "Buscará la siguiente aparición del patrón; la que está bajo el cursor no se tiene en cuenta."
+
+msgid "Search and replace only the next occurence of your pattern. Can be undone."	
+msgstr "Busca y reemplaza solo la siguiente aparición del patrón. Se puede deshacer."
+
+msgid "Search and replace all occurrences of your pattern. Can be undone."	
+msgstr "Busca y reemplaza todas las coincidencias del patrón. Se puede deshacer."
+
+msgid "Run case sensitive find or not"	
+msgstr "Distingue entre mayúsculas y minúsculas o no"
+
+msgid "Show the path of the file being currently edited.\nIt turns red if there are pending modification.\nAutomatic changes may occur if the initial file format is not UTF-8."	
+msgstr "Muestra la ruta del archivo que se está editando. Se pone roja si hay modificaciones pendientes. Pueden producirse cambios automáticos si el formato de archivo original no es UTF-8."
+
+msgid "Bounding box of the screen that contains the mouse pointer"	
+msgstr "Cuadro delimitador de la pantalla que contiene el puntero del ratón"
+
+msgid "Bounding box of the screen that contains the screen position"	
+msgstr "Cuadro delimitador de la pantalla que contiene la posición en pantalla"
+
+msgid "Bounding box of the work area is"	
+msgstr "Cuadro delimitador del área de trabajo"
+
+msgid "Dimensions of the rectangle encompassing the screen"	
+msgstr "Dimensiones del rectángulo que abarca la pantalla"
+
+msgid "Encompassing box of the work area"	
+msgstr "Caja que abarca el área de trabajo"
+
+msgid "Error while saving file '%s'"	
+msgstr "Error al guardar el archivo « %s »"
+
+msgid "For the screen"	
+msgstr "Para la pantalla"
+
+msgid "Frame encompassing the area of the screen containing the mouse pointer"	
+msgstr "Marco que abarca el área de la pantalla que contiene el puntero del ratón"
+
+msgid "Frame encompassing the screen containing the position"	
+msgstr "Marco que abarca el área de la pantalla que contiene la posición"
+
+msgid "Frame encompassing the screen's work area containing the mouse pointer"	
+msgstr "Marco que abarca el área de trabajo de la pantalla que contiene el puntero del ratón"
+
+msgid "Frame encompassing the screen's work area containing the position"	
+msgstr "Marco que abarca el área de trabajo de la pantalla que contiene la posición"
+
+msgid "Horizontal and vertical resolution, in dots per inch"	
+msgstr "Résolution horizontale et verticale, en points par pouce"
+
+msgid "Horizontal and vertical screen resolution in dots-per-inch are"	
+msgstr "Resolución horizontal y vertical, en puntos por pulgada "
+
+msgid "Leftmost x and y coordinates, width and height of the main work area"	
+msgstr "Coordenadas x e y más a la izquierda, ancho y alto del área de trabajo principal"
+
+msgid "No value found for "	
+msgstr "No se encontró ningún valor para :"
+
+msgid "Number of available screens is: "	
+msgstr "Número de pantallas disponibles :"
+
+msgid "Number of screens available"	
+msgstr "Número de pantallas disponibles"
+
+msgid "Select locale folder"	
+msgstr "Seleccione la carpeta de configuración regional"
+
+msgid "Subtitle files\t*.srt"	
+msgstr "Archivos de subtítulos\t*.srt"
+
+msgid "Unable to load the file"	
+msgstr "No se pudo cargar el archivo"
+
+msgid "Coefficients"	
+msgstr "Coeficientes"
+
+msgid "Configuration"	
+msgstr "Configuración"
+
+msgid "Edit the configuration file.."	
+msgstr "Editar el archivo de configuración"
+
+msgid "File operations (Open, Save, Reload)"	
+msgstr "Operaciones de archivo (Abrir, Guardar, Recargar)"
+
+msgid "Font names"	
+msgstr "Nombres de fuente"
+
+msgid "Go to middle line"	
+msgstr "Ir a la línea central"
+
+msgid "Go to middle subtitle"	
+msgstr "Ir al subtítulo central"
+
+msgid "Go to middle time"	
+msgstr "Ir a la marca de tiempo central"
+
+msgid "Goto end of file"	
+msgstr "Ir al final del archivo"
+
+msgid "Goto start of file"	
+msgstr "Ir al inicio del archivo"
+
+msgid "Preferences/Setting (Shortcut Ctrl+p)"	
+msgstr "Preferencias/Configuración (Atajo Ctrl+P)"
+
+msgid "Sizes"	
+msgstr "Tamaños"
+
+msgid "Subtitle adjustment by ..."	
+msgstr "Ajuste de subtítulos por ..."
+
+msgid ""
+"Select the path where translation files might be\n"
+"⚠️Changing this value implies restarting the application⚠️\n"
+"⚠️If the change is not valid, it will not be taking into account⚠️"
+msgstr ""
+"Seleccione la ruta donde se ubican los archivos de traducción\n"
+"⚠️Cambiar este valor implica reiniciar la aplicación⚠️\n"
+"⚠️Si el cambio no es válido, no se tendrá en cuenta⚠️"
+
+msgid ""
+"Shows the path where translation files might be\n"
+"⚠️Changing this value implies restarting the application⚠️\n"
+"⚠️If the change is not valid, it will not be taking into account⚠️"
+msgstr ""
+"Seleccione la ruta a los archivos de traducción\n"
+"⚠️Cambiar este valor requiere reiniciar la aplicación Aplicación⚠️\n"
+"⚠️Si el cambio no es válido, no se tendrá en cuenta⚠️"
+
+msgid ""
+"Changes the font face for all the GUI labels\n"
+"And also for the subtitles editor field\n"
+"But not for the other fields"
+msgstr ""
+"Cambia la fuente de todas las etiquetas de la interfaz gráfica\n"
+"Y también del editor de subtítulos\n"
+"Pero no del resto"
+
+msgid ""
+"Changes the font size for all the GUI labels\n"
+"And also for the subtitles editor field\n"
+"But not for the other fields"
+msgstr ""
+"Cambia el tamaño de fuente de todas las etiquetas de la interfaz gráfica\n"
+"Y también del editor de subtítulos\n"
+"Pero no del resto"
+
