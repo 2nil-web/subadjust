@@ -80,9 +80,14 @@ TARGET=${TARGET_DIR}/${PREFIX}${EXEXT}
 
 .PHONY: FORCE
 
-all : ${SRC_DIR}/${PREFIX}_ui.h ${TARGET} locale/fr/LC_MESSAGES/subadjust.mo
+all : ${SRC_DIR}/${PREFIX}_ui.h ${TARGET} locale/fr/LC_MESSAGES/subadjust.mo locale/es/LC_MESSAGES/subadjust.mo
 
 locale/fr/LC_MESSAGES/subadjust.mo : src/locale/fr/subadjust.po
+	@mkdir -p $(@D)
+	msgfmt --output-file=$@ $<
+
+locale/es/LC_MESSAGES/subadjust.mo : src/locale/es/subadjust.po
+	@mkdir -p $(@D)
 	msgfmt --output-file=$@ $<
 
 gcc : ${TARGET}

@@ -167,11 +167,11 @@ msgstr "Définit l'origine en x de la fenêtre subadjust"
 msgid "Set the y origin of the subadjust window."
 msgstr "Définit l'origine en y de la fenêtre subadjust"
 
-msgid "Silently ignoring -i/-modify-input in GUI mode"
-msgstr ""
+msgid "Silently ignoring -i/--modify-input in GUI mode"
+msgstr "Ignore silencieusement l'option -i/--modify-input, en mode graphique"
 
-msgid "Silently ignoring -o/-output-file in GUI mode"
-msgstr "Ignorance silencieuse de l'option -i/-modify-input en mode GUI"
+msgid "Silently ignoring -o/--output-file in GUI mode"
+msgstr "Ignore silencieusement l'option -o/--output-file, en mode graphique"
 
 msgid ""
 "These 2 previous options only have meaning in batch mode, they are ignored "
@@ -194,13 +194,6 @@ msgstr ""
 "Ces 5 options précédentes n'ont d'effet qu'en mode GUI. Dans ce cas, elles "
 "ont priorité et mettront à jour les valeurs définies dans le fichier de configuration.\n"
 "Le fichier de configuration se trouve ici : \""
-
-msgid ""
-"To do ...\n"
-"But you may consider editing the following file:\n"
-msgstr ""
-"À faire…\n"
-"Vous pouvez toutefois envisager de modifier le fichier suivant :\n"
 
 msgid "Unable to open file "
 msgstr "Impossible d'ouvrir le fichier "
@@ -249,7 +242,7 @@ msgid "Output version information and exit."
 msgstr "Affiche les informations de version et sort."
 
 msgid "SECRET_OPTION provided for traceability when needed (debug)."
-msgstr ""
+msgstr "OPTION SECRÈTE fournie pour la traçabilité en cas de besoin (débogage)"
 
 msgid "Unknown long option '--"
 msgstr "Option longue inconnue '--"
@@ -384,13 +377,13 @@ msgid "Some useful informations about the app (Shortcut Ctrl+B)."
 msgstr "Informations sur l'application (Raccourci Ctrl+B)."
 
 msgid "Go to text line ..."	
-msgstr "Aller à la ligne de texte…"
+msgstr "Aller à la ligne de texte..."
 
-msgid "Go to subtitle number .."	
-msgstr "Aller au numéro du sous-titre…"
+msgid "Go to subtitle number ..."	
+msgstr "Aller au numéro du sous-titre ..."
 
 msgid "Search in the subtitle, line whose timstamp is close to ..."	
-msgstr "Rechercher dans le sous-titre la ligne dont l'horodatage est proche de…"
+msgstr "Rechercher dans le sous-titre la ligne dont l'horodatage est proche de..."
 
 msgid "You may undo/redo this action with Ctrl-Z/Ctrl-Y."	
 msgstr "Vous pouvez annuler/rétablir cette action avec Ctrl+Z/Ctrl+Y."
@@ -476,7 +469,7 @@ msgid "Frame encompassing the area of the screen containing the mouse pointer"
 msgstr "Cadre englobant la zone de l'écran contenant le pointeur de la souris"
 
 msgid "Frame encompassing the screen containing the position"	
-msgstr "Cadre englobant l'écran contenant la position de la souris"
+msgstr "Cadre englobant l'écran contenant la position"
 
 msgid "Frame encompassing the screen's work area containing the mouse pointer"	
 msgstr "Cadre englobant la zone de travail de l'écran contenant le pointeur de la souris"
@@ -503,7 +496,7 @@ msgid "Number of screens available"
 msgstr "Nombre d'écrans disponibles"
 
 msgid "Select locale folder"	
-msgstr "Sélectionnez le dossier de paramètres régionaux"
+msgstr "Sélectionnez le dossier de localisation"
 
 msgid "Subtitle files\t*.srt"	
 msgstr "Fichiers de sous-titres\t*.srt"
@@ -533,7 +526,7 @@ msgid "Go to middle subtitle"
 msgstr "Aller au sous-titre du milieu"
 
 msgid "Go to middle time"	
-msgstr "Aller au milieu de l'heure"
+msgstr "Aller à l'horaodatage du milieu"
 
 msgid "Goto end of file"	
 msgstr "Aller à la fin du fichier"
@@ -548,7 +541,7 @@ msgid "Sizes"
 msgstr "Tailles"
 
 msgid "Subtitle adjustment by ..."	
-msgstr "Réglage des sous-titres par…"
+msgstr "Réglage des sous-titres par..."
 
 msgid ""
 "Select the path where translation files might be\n"

@@ -10,8 +10,8 @@ code_name {.cxx}
 Function {make_window()} {open
 } {
   Fl_Window main_window {open
-    xywh {1529 174 386 653} type Double box UP_BOX resizable
-    code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0} visible
+    xywh {1526 174 386 653} type Double box UP_BOX hide resizable
+    code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0}
   } {
     Fl_Group {} {open
       xywh {2 0 380 284}
@@ -66,7 +66,7 @@ Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} c
             tooltip {Go to middle line} image {../assets/svg_icons/line.png} compress_image 1 xywh {15 36 64 52} labeltype NO_LABEL align 512
           }
           Fl_Button goto_middle_sub {
-            label Sub selected
+            label Sub
             tooltip {Go to middle subtitle} image {../assets/svg_icons/subtitles.svg} compress_image 1 xywh {106 52 80 36} labeltype NO_LABEL align 512
           }
           Fl_Button goto_middle_time {
@@ -82,7 +82,7 @@ Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} c
             tooltip {Go to text line ...} xywh {7 123 60 22} labeltype NO_LABEL when 1 maximum 10000
           }
           Fl_Spinner goto_sub {
-            tooltip {Go to subtitle number ..} xywh {69 123 58 22} labeltype NO_LABEL maximum 10000
+            tooltip {Go to subtitle number ...} xywh {69 123 58 22} labeltype NO_LABEL maximum 10000
           }
           Fl_Input time_to_go {
             tooltip {Search in the subtitle, line whose timstamp is close to ...} xywh {129 123 160 22} labeltype NO_LABEL
@@ -224,8 +224,11 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
   }
   Fl_Window config_dialog {
     label Configuration open
-    xywh {3265 196 350 387} type Double hide size_range {350 400 600 0}
+    xywh {2832 212 350 400} type Double resizable size_range {350 400 600 0} visible
   } {
+    Fl_Button config_view {
+      tooltip {Edit the configuration file..} image {../assets/svg_icons/modify - settings.svg} compress_image 1 xywh {278 2 66 24} labeltype NO_LABEL align 512
+    }
     Fl_Group {} {open
       xywh {2 2 346 110}
     } {
@@ -233,9 +236,6 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
         label {Theme:}
         xywh {60 5 170 22} down_box BORDER_BOX
       } {}
-      Fl_Button config_view {
-        tooltip {Edit the configuration file..} image {../assets/svg_icons/modify - settings.svg} compress_image 1 xywh {274 2 66 24} labeltype NO_LABEL align 512
-      }
       Fl_Box geo_not_saved {
         label {The geometry of this instance will not be saved.}
         xywh {9 30 330 22}
@@ -261,7 +261,7 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
         class Fl_Int_Input
       }
       Fl_Box {} {
-        xywh {344 5 1 106} labeltype NO_LABEL resizable
+        xywh {344 30 1 80} labeltype NO_LABEL resizable
       }
     }
     Fl_Group {} {open
@@ -284,7 +284,7 @@ directory}
       label {Font names}
       tooltip {Changes the font face for all the GUI labels
 And also for the subtitles editor field
-But not for the other fields} xywh {6 182 302 160} type Hold align 1
+But not for the other fields} xywh {6 182 302 160} type Hold align 1 resizable
     }
     Fl_Browser font_sizes {
       label Sizes
@@ -293,23 +293,23 @@ And also for the subtitles editor field
 But not for the other fields} xywh {308 182 40 160} type Hold align 1
     }
     Fl_Group {} {open
-      xywh {8 346 260 36}
+      xywh {40 346 260 36}
     } {
       Fl_Return_Button ok_config {
         label OK
-        xywh {23 350 86 26}
+        xywh {55 350 86 26}
       }
       Fl_Button cancel_config {
         label Cancel
-        xywh {167 350 86 26}
+        xywh {199 350 86 26}
       }
       Fl_Box {} {
-        xywh {258 350 1 28} labeltype NO_LABEL resizable
+        xywh {290 350 1 28} labeltype NO_LABEL resizable
       }
     }
-    Fl_Button config_reset {
+    Fl_Button config_reset {selected
       tooltip {Restore the subadjust configuration to its default values.
-A restart of the app is necessary for the whole change to take effect.} image {../assets/svg_icons/reload.svg} compress_image 1 xywh {314 351 24 24} labeltype NO_LABEL align 512
+A restart of the app is necessary for the whole change to take effect.} image {../assets/svg_icons/reload.svg} compress_image 1 xywh {322 351 24 24} labeltype NO_LABEL align 512
     }
   }
 }

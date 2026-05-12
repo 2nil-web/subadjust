@@ -279,13 +279,13 @@ The configuration file is located there : ")EOF") +
   {
     if (!ofilename.empty())
     {
-      logW("Silently ignoring -o/-output-file in GUI mode");
+      logW("Silently ignoring -o/--output-file in GUI mode");
       ofilename = "";
     }
 
     if (modify_input)
     {
-      logW("Silently ignoring -i/-modify-input in GUI mode");
+      logW("Silently ignoring -i/--modify-input in GUI mode");
       modify_input = false;
     }
 
