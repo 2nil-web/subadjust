@@ -32,7 +32,7 @@ ISO8601 := $(shell date +%Y-%m-%dT%H:%M:%SZ)
 PLATFORM="${SYS_VER} $(shell uname -m)"
 
 PREFIX=subadjust
-SRCS=${PREFIX}_ui.cpp ${PREFIX}.cpp themes.cpp utils.cpp subs.cpp Fl_Time_Input.cpp Fl_Time_Picker.cpp file_features.cpp edit_features.cpp log.cpp pref.cpp options.cpp place.cpp fonts.cpp
+SRCS=${PREFIX}_ui.cpp ${PREFIX}.cpp themes.cpp utils.cpp subs.cpp Fl_Time_Input.cpp Fl_Time_Picker.cpp file_features.cpp edit_features.cpp log.cpp pref.cpp options.cpp place.cpp fonts.cpp Fl_Hover_Button.cpp Fl_Hover_Menu_Button.cpp
 SRCS:=$(addprefix  ${SRC_DIR}/,${SRCS})
 
 ifeq ($(findstring NT-, $(UNAME)),)

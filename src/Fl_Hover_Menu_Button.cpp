@@ -1,15 +1,15 @@
 
-#include "Fl_Hover_Button.H"
+#include "Fl_Hover_Menu_Button.H"
 
-Fl_Hover_Button::Fl_Hover_Button(int x, int y, int w, int h, const char *label) : Fl_Button(x, y, w, h, label)
+Fl_Hover_Menu_Button::Fl_Hover_Menu_Button(int x, int y, int w, int h, const char *label) : Fl_Menu_Button(x, y, w, h, label)
 {
   // default_color = fl_lighter(FL_BLUE);
   when(FL_WHEN_ENTER_KEY | FL_WHEN_CHANGED | FL_WHEN_RELEASE);
 }
 
-int Fl_Hover_Button::handle(int e)
+int Fl_Hover_Menu_Button::handle(int e)
 {
-  int ret = Fl_Button::handle(e);
+  int ret = Fl_Menu_Button::handle(e);
   switch (e)
   {
   case FL_ENTER:
