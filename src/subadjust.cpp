@@ -31,7 +31,7 @@
 #include "themes.h"
 #include "utils.h"
 
-void about_msg(Fl_Widget *, void *v)
+void RESabout_msg(Fl_Widget *, void *v)
 {
   options *opt = (options *)v;
   std::string about_msg = opt->version(Fl::event_key(FL_Control_L) || Fl::event_key(FL_Control_R));
@@ -43,11 +43,38 @@ void about_msg(Fl_Widget *, void *v)
     fl_message_position(main_window->x_root(), main_window->y_root() + 60, 0);
     Fl_Font actual_font = fl_message_font_;
     Fl_Fontsize actual_size = fl_message_size_;
-    // #include <FL/names.h>
-    //     logI("actual_font: ", fl_fontnames[actual_font], ", actual_size: ", actual_size);
-    fl_message_font(FL_COURIER_BOLD, 10);
+    #include <FL/names.h>
+    std::string font_name=Fl::get_font_name(FL_COURIER_BOLD);
+    Fl_Font def_font=fl_font();
+    Fl_Fontsize def_size=fl_size();
+    logD("actual_font: ", fl_fontnames[actual_font], ", actual_size: ", actual_size, ", actual name: ", font_name, ", actual def_font: ", def_font, ", actual def_size: ", def_size);
+    fl_font(FL_COURIER_BOLD, 10);
+    fl_message_font(FL_HELVETICA_BOLD, 10);
     fl_message("%s", opt->usage().c_str());
     fl_message_font(actual_font, actual_size);
+    def_font=fl_font();
+    def_size=fl_size();
+    logD("actual def_font: ", def_font, ", actual def_size: ", def_size);
+    fl_font(def_font, def_size);
+  }
+}
+
+void about_msg(Fl_Widget *, void *v)
+{
+  options *opt = (options *)v;
+  std::string about_msg = opt->version(Fl::event_key(FL_Control_L) || Fl::event_key(FL_Control_R));
+
+  // svg.scale(18, 18); fl_message_icon_label(""); fl_message_icon()->image(svg);
+  fl_message_position(main_window->x_root(), main_window->y_root() + 60, 0);
+  if (!fl_choice("%s", _("More info ..."), _("Ok"), 0L, about_msg.c_str()))
+  {
+      Fl_Font     saved_font = fl_font();
+      Fl_Fontsize saved_size = fl_size();
+      fl_font(FL_COURIER_BOLD, 10);
+//    fl_message_position(main_window->x_root(), main_window->y_root() + 60, 0);
+      fl_message_font(FL_COURIER_BOLD, 10);
+      fl_message("%s", opt->usage().c_str());
+      fl_font(saved_font, saved_size);
   }
 }
 
