@@ -7,6 +7,9 @@
 #include <FL/Fl_Button.H>
 #include <FL/fl_draw.H>
 #include <cstdarg>
+#include <vector>
+#include <string>
+#include <algorithm>
 #include "Fl_Hover_Button.H"
 
 void my_message(const char* msg, Fl_Font font = FL_HELVETICA, Fl_Fontsize size = 14);
