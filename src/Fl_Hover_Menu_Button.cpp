@@ -9,13 +9,12 @@ Fl_Hover_Menu_Button::Fl_Hover_Menu_Button(int x, int y, int w, int h, const cha
 
 int Fl_Hover_Menu_Button::handle(int e)
 {
+  static Fl_Color col = color(), lab_col = labelcolor();
   int ret = Fl_Menu_Button::handle(e);
   switch (e)
   {
   case FL_ENTER:
-    lab_col = labelcolor();
-    col = color();
-    color(fl_rgb_color(0xFF, 0xFF, 0xEF));
+    color(FL_WHITE); // fl_rgb_color(0xFF, 0xFF, 0xEF));
     redraw();
     return 1;
   case FL_LEAVE:

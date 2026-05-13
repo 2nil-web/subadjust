@@ -17,7 +17,6 @@
 // Like Fl_Button but adding event FL_WHEN_CHANGED to have live update without having to leave focus
 class Fl_Hover_Button : public Fl_Button
 {
-Fl_Color col, lab_col;
 public:
   Fl_Hover_Button(int x, int y, int w, int h, const char *label = nullptr);
   int handle(int);

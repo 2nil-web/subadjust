@@ -9,20 +9,20 @@ Fl_Hover_Button::Fl_Hover_Button(int x, int y, int w, int h, const char *label) 
 
 int Fl_Hover_Button::handle(int e)
 {
-  int ret = Fl_Button::handle(e);
+  static Fl_Color col = color(), lab_col = labelcolor();
+
   switch (e)
   {
   case FL_ENTER:
-    lab_col = labelcolor();
-    col = color();
-    color(fl_rgb_color(0xFF, 0xFF, 0xEF));
+    color(FL_WHITE); // fl_rgb_color(0xFF, 0xFF, 0xFF));
     redraw();
     return 1;
   case FL_LEAVE:
+  case FL_SHOW:
     color(col);
     labelcolor(lab_col);
     redraw();
     return 1;
   }
-  return ret;
+  return Fl_Button::handle(e);
 }

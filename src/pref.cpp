@@ -67,9 +67,9 @@ int pref_get_int(const std::string key, int def_val, Fl_Preferences *pref)
 void case_find(Fl_Widget *, void *)
 {
   if (case_sensitive_find->value())
-    case_sensitive_find->label(_("Case"));
+    case_sensitive_find->copy_label(_("Case"));
   else
-    case_sensitive_find->label(_("All"));
+    case_sensitive_find->copy_label(_("All"));
 }
 
 void main_window_resize(int x, int y, int w, int h)
@@ -596,7 +596,7 @@ void pref_reset()
 }
 
 static std::string global_font_name = "";
-static int global_font_number = FL_HELVETICA, global_font_size = 14;
+static int global_font_number = -1, global_font_size = -1;
 void pref_set()
 {
   // On ne sauvegarde la geometrie que de la première instance
@@ -623,9 +623,12 @@ void pref_set()
   if (!l10n_dir.empty())
     window.set("locale_dir", l10n_dir.string().c_str());
 
-  window.set("font name", global_font_name.c_str());
-  window.set("font size", global_font_size);
-  window.set("font number", global_font_number);
+  if (!global_font_name.empty())
+    window.set("font name", global_font_name.c_str());
+  if (global_font_size != -1)
+    window.set("font size", global_font_size);
+  if (global_font_number != -1)
+    window.set("font number", global_font_number);
 
   juxtaposing_end();
 }
@@ -673,13 +676,12 @@ void GlobalDraw(const Fl_Label *o, int X, int Y, int W, int H, Fl_Align a)
 
 void font_redraw(std::string font_name, int font_number, int font_size)
 {
-  if (font_name.empty())
-    global_font_name = Fl::get_font_name(FL_HELVETICA, nullptr);
-  else
+  if (!font_name.empty())
   {
     global_font_name = font_name;
     //    Fl::set_font(FL_HELVETICA, global_font_name.c_str());
   }
+  //  else global_font_name = Fl::get_font_name(FL_HELVETICA, nullptr);
 
   logD("FONT rdw - name: ", font_name, ", size: ", font_size, ", number: ", font_number);
   global_font_number = font_number;

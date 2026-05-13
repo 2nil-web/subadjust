@@ -472,12 +472,16 @@ void Fl_Time_Input::draw_spin_button(int bx, int by, int bw, int bh)
 
 void Fl_Time_Input::draw_clock_button(int bx, int by, int bw, int bh)
 {
+  logD("Fl_Time_Input::draw_clock_button (", bx, ", ", by, ", ", bw, ", ", bh, ")");
   fl_draw_box(FL_BORDER_BOX, bx, by, bw, bh, FL_BACKGROUND_COLOR);
   int cx = bx + bw / 2, cy = by + bh / 2, cr = bh / 3;
+  fl_begin_loop();
   fl_color(0);
   fl_circle(cx, cy, cr);
   fl_line(cx, cy, cx, cy - cr + cr / 4 + 1);
   fl_line(cx, cy, cx + cr - cr / 4 - 3, cy);
+  fl_color(FL_BACKGROUND_COLOR);
+  fl_end_loop();
 }
 
 void Fl_Time_Input::draw()
