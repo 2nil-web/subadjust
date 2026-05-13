@@ -1,14 +1,11 @@
+set MY_HOME= %USERPROFILE%\Documents\home
 PATH %PATH%;C:\Users\dplal\Documents\home\10-runset\build\msvc\win\x64\Release
 PATH %PATH%;C:\Program Files\Vim\vim92
 set MSYSDIR=C:\UnixTools\msys64
 PATH %PATH%;%MSYSDIR%\usr\bin
 set EDITOR=gvim
 
-
-cd /D %USERPROFILE%\Documents\home\00-subadjust\src
-start .
-cd /D %USERPROFILE%\.subadjust\
-start .
+cscript %MY_HOME%\00-subadjust\assets\multitabexplorer.js
 
 runset "%EDITOR% %APPDATA%\dplalanne.fr\subadjust.prefs" 3160 160 690 530
 ::runset "%EDITOR% %USERPROFILE%\.subadjust\juxtaposing_management" 3245 732 600 160
