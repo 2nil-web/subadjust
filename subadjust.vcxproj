@@ -152,8 +152,6 @@
   <ItemGroup>
     <ClCompile Include="src/Fl_Time_Picker.cpp" />
     <ClCompile Include="src/Fl_Time_Input.cpp" />
-    <ClCompile Include="src/Fl_Hover_Button.cpp" />
-    <ClCompile Include="src/Fl_Hover_Menu_Button.cpp" />
     <ClCompile Include="src/my_ask.cpp" />
     <ClCompile Include="src/utils.cpp" />
     <ClCompile Include="src/log.cpp" />
@@ -174,8 +172,6 @@
     <ClCompile Include="src/Fl_Time_Picker.H" />
     <ClCompile Include="src/Fl_Time_Input.H" />
     <ClCompile Include="src/Fl_Hover.H" />
-    <ClCompile Include="src/Fl_Hover_Button.H" />
-    <ClCompile Include="src/Fl_Hover_Menu_Button.H" />
     <ClCompile Include="src/my_ask.h" />
     <ClCompile Include="src/utils.h" />
     <ClCompile Include="src/log.h" />

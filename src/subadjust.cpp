@@ -1,11 +1,11 @@
 
+#include <algorithm>
 #include <cstdlib>
 #include <fstream>
 #include <functional>
 #include <iostream>
 #include <regex>
 #include <string>
-#include <algorithm>
 
 #ifdef _WIN32
 // #define WIN32_LEAN_AND_MEAN
@@ -19,12 +19,12 @@
 #include <FL/platform.H>
 
 #include "Fl_Time_Input.H"
-#include "Fl_Hover_Button.H"
 #include "app_info.h"
 #include "edit_features.h"
 #include "file_features.h"
 #include "fonts.h"
 #include "log.h"
+#include "my_ask.h"
 #include "options.h"
 #include "pref.h"
 #include "subadjust_icon.h"
@@ -32,7 +32,6 @@
 #include "subs.h"
 #include "themes.h"
 #include "utils.h"
-#include "my_ask.h"
 
 void about_msg(Fl_Widget *, void *v)
 {
@@ -42,7 +41,7 @@ void about_msg(Fl_Widget *, void *v)
   // svg.scale(18, 18); fl_message_icon_label(""); fl_message_icon()->image(svg);
   my_message_position(main_window->x_root(), main_window->y_root() + 60);
   my_font(FL_HELVETICA, 14);
-  //if (!fl_choice("%s", _("More info ..."), "OK", 0L, about_text.c_str()))
+  // if (!fl_choice("%s", _("More info ..."), "OK", 0L, about_text.c_str()))
   if (my_choice(about_text.c_str(), "OK", _("More info ..."), nullptr) == 1)
   {
     my_font(FL_COURIER_BOLD, 10);
@@ -338,11 +337,15 @@ The configuration file is located there : ")EOF") +
     // file features
     // file_open->callback();
     file_open->callback(SIMPLE_CB {
+      logD("FILE OPEN1");
       // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
       if (file_is_modified && !fl_choice(_("Your actual changes will be lost. Do you still want to open another file?"), _("No"), _("Yes"), 0L))
+      {
         return;
+      }
+      logD("FILE OPEN2");
 
-      file_handler();
+      file_handler(true);
     });
 
     file_save->callback(SIMPLE_CB { srt_save(); });

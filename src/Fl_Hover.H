@@ -10,53 +10,65 @@
 #include <FL/Fl.H>
 #pragma warning(pop)
 #endif
-#include <FL/fl_draw.H>
-#include <FL/Fl_Widget.H>
 #include <FL/Fl_Button.H>
+#include <FL/Fl_Choice.H>
 #include <FL/Fl_Menu_Button.H>
-
+#include <FL/Fl_Widget.H>
+#include <FL/fl_draw.H>
 
 // Like Fl_Button but adding event FL_WHEN_CHANGED to have live update without having to leave focus
 // Classe template qui ajoute un handler personnalisable
 // à n'importe quelle classe héritière de Fl_Widget
-template<typename Base>
-class Fl_Hover : public Base {
+template <typename Base> class Fl_Hover : public Base
+{
+private:
+  bool first_show;
+
 public:
-  //void Fl_Widget::when 	( 	uchar 	i	) 	
-  //  using WhenFn = std::function<void(Fl_Hover<Base>*, uchar)>;
-  
-    // Constructeurs variadiques pour passer les args à la classe Base
-    template<typename... Args>
-    Fl_Hover(Args&&... args) : Base(std::forward<Args>(args)...)
+  // Constructeurs variadiques pour passer les args à la classe Base
+  template <typename... Args>
+  //    Fl_Hover(Args &&...args) : Base(std::forward<Args>(args)...)
+  Fl_Hover(int x, int y, int w, int h, const char *label = 0L) : Base(x, y, w, h, label)
+  {
+    first_show = true;
+  }
+
+  int handle(int ev)
+  {
+    // On gère ENTER, LEAVE et SHOW
+    static Fl_Color col = Base::color(), lab_col = Base::labelcolor();
+
+    switch (ev)
     {
-      Base::when(FL_WHEN_ENTER_KEY | FL_WHEN_CHANGED | FL_WHEN_RELEASE);
-    }
-
-    int handle(int ev) {
-      // On gère ENTER, LEAVE et SHOW
-      static Fl_Color col = Base::color(), lab_col = Base::labelcolor();
-
-      switch (ev)
+    case FL_ENTER:
+      Base::color(FL_WHITE); // fl_rgb_color(0xFF, 0xFF, 0xFF));
+      Base::redraw();
+      return 1;
+    case FL_LEAVE:
+    case FL_SHOW:
+      // Force certain attributs graphiques
+      if (first_show)
       {
-      case FL_ENTER:
-        Base::color(FL_WHITE); // fl_rgb_color(0xFF, 0xFF, 0xFF));
-        Base::redraw();
-        return 1;
-      case FL_LEAVE:
-      case FL_SHOW:
-        Base::color(col);
-        Base::labelcolor(lab_col);
-        Base::redraw();
-        return 1;
+        Base::box(FL_BORDER_BOX);
+        // Base::down_box(FL_FLAT_BOX);
+        // Base::color(FL_BACKGROUND_COLOR);
+        Base::selection_color(FL_BACKGROUND_COLOR);
+        // Base::labelcolor(FL_FOREGROUND_COLOR);
+        // Base::align(FL_ALIGN_CENTER);
+        Base::when(FL_WHEN_ENTER_KEY | FL_WHEN_RELEASE);
+        first_show = false;
       }
-
-
-      return Base::handle(ev);
+      Base::color(col);
+      Base::labelcolor(lab_col);
+      Base::redraw();
+      return 1;
     }
+
+    return Base::handle(ev);
+  }
 };
 
-//using Fl_Hover_Button = Fl_Hover<Fl_Button>;
-//using Fl_Hover_Menu_Button = Fl_Hover<Fl_Menu_Button>;
+// using Fl_Hover_Button = Fl_Hover<Fl_Button>;
+// using Fl_Hover_Menu_Button = Fl_Hover<Fl_Menu_Button>;
 
 #endif /* FL_HOVER_H */
-
