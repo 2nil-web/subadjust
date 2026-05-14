@@ -11,14 +11,13 @@
 #pragma warning(pop)
 #endif
 #include <FL/Fl_Button.H>
+#include <FL/Fl_Check_Button.H>
 #include <FL/Fl_Choice.H>
 #include <FL/Fl_Menu_Button.H>
 #include <FL/Fl_Widget.H>
 #include <FL/fl_draw.H>
 
-// Like Fl_Button but adding event FL_WHEN_CHANGED to have live update without having to leave focus
-// Classe template qui ajoute un handler personnalisable
-// à n'importe quelle classe héritière de Fl_Widget
+// Classe template qui ajoute un handler personnalisable à n'importe quelle classe héritière de Fl_Widget
 template <typename Base> class Fl_Hover : public Base
 {
 private:
@@ -50,8 +49,9 @@ public:
       if (first_show)
       {
         Base::box(FL_BORDER_BOX);
-        // Base::down_box(FL_FLAT_BOX);
-        // Base::color(FL_BACKGROUND_COLOR);
+        // Base::color(FL_RED);
+        //  Base::down_box(FL_FLAT_BOX);
+        //  Base::color(FL_BACKGROUND_COLOR);
         Base::selection_color(FL_BACKGROUND_COLOR);
         // Base::labelcolor(FL_FOREGROUND_COLOR);
         // Base::align(FL_ALIGN_CENTER);

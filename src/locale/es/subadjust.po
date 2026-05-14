@@ -321,6 +321,9 @@ msgstr "Reemp sigu."
 msgid "Repl All"
 msgstr "Reemp todo"
 
+msgid "Next"
+msgstr "Siguie."
+
 msgid "All"
 msgstr "Todo"
 

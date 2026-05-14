@@ -329,13 +329,16 @@ msgid "Limits"
 msgstr "Limites"
 
 msgid "Find"
-msgstr "Cherche"
+msgstr "Chercher"
 
 msgid "Repl Next"
-msgstr "Rempl suiv"
+msgstr "Remp suiv"
 
 msgid "Repl All"
-msgstr "Rempl tous"
+msgstr "Remp tous"
+
+msgid "Next"
+msgstr "Suiv."
 
 msgid "All"
 msgstr "Tout"
