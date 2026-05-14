@@ -40,11 +40,13 @@ void about_msg(Fl_Widget *, void *v)
   std::string about_text = opt->version(Fl::event_key(FL_Control_L) || Fl::event_key(FL_Control_R));
 
   // svg.scale(18, 18); fl_message_icon_label(""); fl_message_icon()->image(svg);
-  fl_message_position(main_window->x_root(), main_window->y_root() + 60, 0);
-  //if (!fl_choice("%s", _("More info ..."), _("Ok"), 0L, about_text.c_str()))
-  if (my_choice(FL_HELVETICA, 14, about_text.c_str(), _("Ok"), _("More info ..."), nullptr) == 1)
+  my_message_position(main_window->x_root(), main_window->y_root() + 60);
+  my_font(FL_HELVETICA, 14);
+  //if (!fl_choice("%s", _("More info ..."), "OK", 0L, about_text.c_str()))
+  if (my_choice(about_text.c_str(), "OK", _("More info ..."), nullptr) == 1)
   {
-    my_message(opt->usage().c_str(), FL_COURIER_BOLD, 10);
+    my_font(FL_COURIER_BOLD, 10);
+    my_message(opt->usage().c_str());
   }
 }
 

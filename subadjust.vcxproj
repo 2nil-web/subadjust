@@ -173,6 +173,7 @@
     <ClCompile Include="src/TimeFontMetrics.H" />
     <ClCompile Include="src/Fl_Time_Picker.H" />
     <ClCompile Include="src/Fl_Time_Input.H" />
+    <ClCompile Include="src/Fl_Hover.H" />
     <ClCompile Include="src/Fl_Hover_Button.H" />
     <ClCompile Include="src/Fl_Hover_Menu_Button.H" />
     <ClCompile Include="src/my_ask.h" />

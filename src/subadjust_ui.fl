@@ -17,9 +17,9 @@ Function {make_window()} {open
       xywh {2 0 380 284}
     } {
       Fl_Menu_Button file_menu {
-        label File selected
+        label File
         tooltip {File operations (Open, Save, Reload)} image {../assets/svg_icons/folder - floppy.svg} compress_image 1 xywh {3 1 76 28} box BORDER_BOX align 512
-        class Fl_Hover_Menu_Button
+        class {Fl_Hover<Fl_Menu_Button>}
       } {
         MenuItem file_open {
           label {Open ...}
@@ -41,23 +41,23 @@ Function {make_window()} {open
       Fl_Button app_prefs {
         label {💻}
         tooltip {Preferences/Setting (Shortcut Ctrl+p)} image {../assets/svg_icons/settings.svg} compress_image 1 xywh {262 1 48 28} box BORDER_BOX shortcut 0x40070 labeltype NO_LABEL labelsize 18 align 512
-        class Fl_Hover_Button
+        class {Fl_Hover<Fl_Button>}
       }
       Fl_Button app_save_quit {
         label {💾/⏻}
         tooltip {Save your file and exit from the app.
 Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} compress_image 1 xywh {91 1 82 28} box BORDER_BOX shortcut 0x40075 labeltype NO_LABEL labelsize 18 align 512
-        class Fl_Hover_Button
+        class {Fl_Hover<Fl_Button>}
       }
       Fl_Button app_quit {
         label {⏻}
         image {../assets/svg_icons/exit.svg} compress_image 1 xywh {192 1 48 28} box BORDER_BOX shortcut 0x40071 labeltype NO_LABEL labelsize 18 align 512
-        class Fl_Hover_Button
+        class {Fl_Hover<Fl_Button>}
       }
       Fl_Button app_about {
-        label {☰}
+        label {☰} selected
         tooltip {Some useful informations about the app (Shortcut Ctrl+B).} image {../assets/svg_icons/question.svg} compress_image 1 xywh {331 1 48 28} box BORDER_BOX shortcut 0x40062 labeltype NO_LABEL labelsize 18 align 512
-        class Fl_Hover_Button
+        class {Fl_Hover<Fl_Button>}
       }
       Fl_Group {} {open
         xywh {3 30 377 130} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
@@ -69,17 +69,17 @@ Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} c
           Fl_Button goto_middle_line {
             label Line
             tooltip {Go to middle line} image {../assets/svg_icons/line.png} compress_image 1 xywh {15 36 64 52} box BORDER_BOX labeltype NO_LABEL align 512
-            class Fl_Hover_Button
+            class {Fl_Hover<Fl_Button>}
           }
           Fl_Button goto_middle_sub {
             label Sub
             tooltip {Go to middle subtitle} image {../assets/svg_icons/subtitles.svg} compress_image 1 xywh {106 52 80 36} box BORDER_BOX labeltype NO_LABEL align 512
-            class Fl_Hover_Button
+            class {Fl_Hover<Fl_Button>}
           }
           Fl_Button goto_middle_time {
             label Time
             tooltip {Go to middle time} image {../assets/svg_icons/time.svg} compress_image 1 xywh {216 36 64 52} box BORDER_BOX labeltype NO_LABEL align 514
-            class Fl_Hover_Button
+            class {Fl_Hover<Fl_Button>}
           }
         }
         Fl_Group {} {
@@ -100,22 +100,22 @@ Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} c
         Fl_Button goto_start {
           label Start
           tooltip {Goto start of file} image {../assets/svg_icons/goto-start.svg} compress_image 1 xywh {293 33 40 50} box BORDER_BOX labeltype NO_LABEL align 513
-          class Fl_Hover_Button
+          class {Fl_Hover<Fl_Button>}
         }
         Fl_Button goto_end {
           label End
           tooltip {Goto end of file} image {../assets/svg_icons/goto-end.svg} compress_image 1 xywh {337 40 40 50} box BORDER_BOX labeltype NO_LABEL align 514
-          class Fl_Hover_Button
+          class {Fl_Hover<Fl_Button>}
         }
         Fl_Button del_first_sub {
           label {Del first sub}
           tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/delete start subtitle.svg} compress_image 1 xywh {293 88 40 50} box BORDER_BOX labeltype NO_LABEL align 512
-          class Fl_Hover_Button
+          class {Fl_Hover<Fl_Button>}
         }
         Fl_Button del_last_sub {
           label {Del last sub}
           tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/delete end subtitle.svg} compress_image 1 xywh {337 108 40 50} box BORDER_BOX labeltype NO_LABEL align 512
-          class Fl_Hover_Button
+          class {Fl_Hover<Fl_Button>}
         }
       }
       Fl_Group {} {
@@ -169,12 +169,12 @@ end offsets
         Fl_Button sub_adjust {
           label Adjustment
           tooltip {Will adjust the subtitles text according to the limits, offsets or duration coefficient, settings.} xywh {176 169 102 30} box BORDER_BOX labelfont 1 labelsize 15
-          class Fl_Hover_Button
+          class {Fl_Hover<Fl_Button>}
         }
         Fl_Button sub_reparse {
           label Reparse
           tooltip {Will forcibly parse the subtitles text and accordingly modify the settings} xywh {293 170 83 28} box BORDER_BOX labelsize 15
-          class Fl_Hover_Button
+          class {Fl_Hover<Fl_Button>}
         }
       }
       Fl_Box {} {
@@ -191,17 +191,17 @@ All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 63} b
         Fl_Button find {
           label Find
           tooltip {Will find the next occurrence of the find pattern, the one actually pointed by the cursor is not taken into account.} xywh {7 289 56 26} box BORDER_BOX
-          class Fl_Hover_Button
+          class {Fl_Hover<Fl_Button>}
         }
         Fl_Button replace_next {
           label {Repl Next}
           tooltip {Search and replace only the next occurence of your pattern. Can be undone.} xywh {67 289 72 26} box BORDER_BOX align 128
-          class Fl_Hover_Button
+          class {Fl_Hover<Fl_Button>}
         }
         Fl_Button replace_all {
           label {Repl All   }
           tooltip {Search and replace all occurrences of your pattern. Can be undone.} xywh {67 318 72 26} box BORDER_BOX
-          class Fl_Hover_Button
+          class {Fl_Hover<Fl_Button>}
         }
         Fl_Check_Button case_sensitive_find {
           label Case
@@ -245,7 +245,7 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
   } {
     Fl_Button config_view {
       tooltip {Edit the configuration file..} image {../assets/svg_icons/modify - settings.svg} compress_image 1 xywh {278 2 66 24} box BORDER_BOX labeltype NO_LABEL align 512
-      class Fl_Hover_Button
+      class {Fl_Hover<Fl_Button>}
     }
     Fl_Group {} {open
       xywh {2 2 346 110}
@@ -291,7 +291,7 @@ directory}
         tooltip {Select the path where translation files might be
 ⚠️Changing this value implies restarting the application⚠️
 ⚠️If the change is not valid, it will not be taking into account⚠️} xywh {5 116 70 40} box BORDER_BOX
-        class Fl_Hover_Button
+        class {Fl_Hover<Fl_Button>}
       }
       Fl_Output loc_dir {
         tooltip {Shows the path where translation files might be
@@ -317,12 +317,12 @@ But not for the other fields} xywh {308 182 40 160} type Hold align 1
       Fl_Return_Button ok_config {
         label OK
         xywh {55 350 86 26} box BORDER_BOX
-        class Fl_Hover_Button
+        class {Fl_Hover<Fl_Button>}
       }
       Fl_Button cancel_config {
         label Cancel
         xywh {199 350 86 26} box BORDER_BOX
-        class Fl_Hover_Button
+        class {Fl_Hover<Fl_Button>}
       }
       Fl_Box {} {
         xywh {290 350 1 28} labeltype NO_LABEL resizable
@@ -331,7 +331,7 @@ But not for the other fields} xywh {308 182 40 160} type Hold align 1
     Fl_Button config_reset {
       tooltip {Restore the subadjust configuration to its default values.
 A restart of the app is necessary for the whole change to take effect.} image {../assets/svg_icons/reload.svg} compress_image 1 xywh {322 351 24 24} box BORDER_BOX labeltype NO_LABEL align 512
-      class Fl_Hover_Button
+      class {Fl_Hover<Fl_Button>}
     }
   }
 }
