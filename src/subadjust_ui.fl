@@ -22,8 +22,8 @@ Function {make_window()} {open
       xywh {2 0 380 284}
     } {
       Fl_Menu_Button file_menu {
-        label { } open selected
-        tooltip {File operations (Open, Save, Reload)} image {../assets/svg_icons/menu-hamburger.svg} compress_image 1 xywh {3 1 48 28} align 288
+        label { ☰} open selected
+        tooltip {File operations (Open, Save, Reload)} xywh {3 1 48 28} labelsize 18 align 32
         class {Fl_Hover<Fl_Menu_Button>}
       } {
         MenuItem file_unused {
