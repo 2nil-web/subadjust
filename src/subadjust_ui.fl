@@ -21,9 +21,8 @@ Function {make_window()} {open
     Fl_Group {} {open
       xywh {2 0 380 284}
     } {
-      Fl_Menu_Button file_menu {
-        label File open
-        tooltip {File operations (Open, Save, Reload)} xywh {3 1 76 28} align 32
+      Fl_Menu_Button file_menu {open selected
+        tooltip {File operations (Open, Save, Reload)} image {../assets/svg_icons/menu-hamburger.svg} compress_image 1 xywh {3 1 48 28} align 288
         class {Fl_Hover<Fl_Menu_Button>}
       } {
         MenuItem file_unused {
@@ -48,18 +47,18 @@ Function {make_window()} {open
       }
       Fl_Button app_prefs {
         label {💻}
-        tooltip {Preferences/Setting (Shortcut Ctrl+p)} image {../assets/svg_icons/settings.svg} compress_image 1 xywh {262 1 48 28} shortcut 0x40070 labeltype NO_LABEL labelsize 18 align 512
+        tooltip {Preferences/Setting (Shortcut Ctrl+p)} image {../assets/svg_icons/settings.svg} compress_image 1 xywh {258 1 48 28} shortcut 0x40070 labeltype NO_LABEL labelsize 18 align 512
         class {Fl_Hover<Fl_Button>}
       }
       Fl_Button app_save_quit {
         label {💾/⏻}
         tooltip {Save your file and exit from the app.
-Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} compress_image 1 xywh {91 1 82 28} shortcut 0x40075 labeltype NO_LABEL labelsize 18 align 512
+Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} compress_image 1 xywh {69 1 82 28} shortcut 0x40075 labeltype NO_LABEL labelsize 18 align 512
         class {Fl_Hover<Fl_Button>}
       }
       Fl_Button app_quit {
         label {⏻}
-        image {../assets/svg_icons/exit.svg} compress_image 1 xywh {192 1 48 28} shortcut 0x40071 labeltype NO_LABEL labelsize 18 align 512
+        image {../assets/svg_icons/exit.svg} compress_image 1 xywh {184 1 48 28} shortcut 0x40071 labeltype NO_LABEL labelsize 18 align 512
         class {Fl_Hover<Fl_Button>}
       }
       Fl_Button app_about {
@@ -250,7 +249,7 @@ It turns red if there are pending modification.
 Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 351 314 22} labeltype NO_LABEL resizable
       }
     }
-    Fl_Text_Editor file_content {selected
+    Fl_Text_Editor file_content {
       xywh {4 377 376 271} selection_color 89 labeltype NO_LABEL align 517 resizable
     }
   }

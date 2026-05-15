@@ -399,6 +399,8 @@ void Fl_Time_Input::compute_rects()
   int px = r_.fx + pad;
   int si = 0;
 
+  fm_.sep_w /= 2;
+
   r_.seg_x[SEG_HOUR] = px;
   r_.seg_w[SEG_HOUR] = fm_.cw_num;
   px += fm_.cw_num + fm_.sep_w;
@@ -490,7 +492,7 @@ void Fl_Time_Input::draw()
   fl_draw_box(FL_BORDER_BOX, r_.fx, r_.fy, r_.fw, r_.fh, FL_WHITE);
 
   fl_font(fm_.font, fm_.size);
-  fl_color(FL_DARK3);
+  fl_color(fl_rgb_color(0x99, 0x44, 0x44));
 
   // Séparateur HH:MM
   fl_draw(":", r_.seg_x[SEG_HOUR] + r_.seg_w[SEG_HOUR], r_.fy, fm_.sep_w, r_.fh, FL_ALIGN_CENTER);
