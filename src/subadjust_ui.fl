@@ -23,7 +23,7 @@ Function {make_window()} {open
     } {
       Fl_Menu_Button file_menu {
         label { ☰} open selected
-        tooltip {File operations (Open, Save, Reload)} xywh {3 1 48 28} labelsize 18 align 32
+        tooltip {File operations (Open, Save, Reload)} xywh {3 1 48 28} labelsize 22 align 32
         class {Fl_Hover<Fl_Menu_Button>}
       } {
         MenuItem file_unused {
