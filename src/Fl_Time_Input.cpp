@@ -395,11 +395,12 @@ void Fl_Time_Input::compute_rects()
   r_.fw = r_.sx - x();
   r_.fh = rh;
 
-  int pad = fm_.pad;
+  int pad = fm_.pad/4;
   int px = r_.fx + pad;
   int si = 0;
 
-  fm_.sep_w /= 2;
+  fm_.sep_w /= 4;
+  fm_.dot_w /= 4;
 
   r_.seg_x[SEG_HOUR] = px;
   r_.seg_w[SEG_HOUR] = fm_.cw_num;

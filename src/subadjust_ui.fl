@@ -15,13 +15,14 @@ snap {
 Function {make_window()} {open
 } {
   Fl_Window main_window {open
-    xywh {2317 184 386 653} type Double resizable
+    xywh {601 348 386 653} type Double resizable
     code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0} visible
   } {
     Fl_Group {} {open
       xywh {2 0 380 284}
     } {
-      Fl_Menu_Button file_menu {open selected
+      Fl_Menu_Button file_menu {
+        label { } open selected
         tooltip {File operations (Open, Save, Reload)} image {../assets/svg_icons/menu-hamburger.svg} compress_image 1 xywh {3 1 48 28} align 288
         class {Fl_Hover<Fl_Menu_Button>}
       } {
@@ -67,61 +68,61 @@ Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} c
         class {Fl_Hover<Fl_Button>}
       }
       Fl_Group {} {open
-        xywh {3 30 377 130} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
+        xywh {3 30 378 130} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
       } {
         Fl_Group {} {
           label {Go to middle ...} open
-          xywh {5 32 287 59} box BORDER_FRAME color 37 align 17
+          xywh {5 32 266 59} box BORDER_FRAME color 37 align 17
         } {
           Fl_Button goto_middle_line {
             label Line
-            tooltip {Go to middle line} image {../assets/svg_icons/line.png} compress_image 1 xywh {15 36 64 52} labeltype NO_LABEL align 512
+            tooltip {Go to middle line} image {../assets/svg_icons/line.png} compress_image 1 xywh {9 36 64 52} labeltype NO_LABEL align 512
             class {Fl_Hover<Fl_Button>}
           }
           Fl_Button goto_middle_sub {
             label Sub
-            tooltip {Go to middle subtitle} image {../assets/svg_icons/subtitles.svg} compress_image 1 xywh {106 52 80 36} labeltype NO_LABEL align 512
+            tooltip {Go to middle subtitle} image {../assets/svg_icons/subtitles.svg} compress_image 1 xywh {98 52 80 36} labeltype NO_LABEL align 512
             class {Fl_Hover<Fl_Button>}
           }
           Fl_Button goto_middle_time {
             label Time
-            tooltip {Go to middle time} image {../assets/svg_icons/time.svg} compress_image 1 xywh {216 36 64 52} labeltype NO_LABEL align 514
+            tooltip {Go to middle time} image {../assets/svg_icons/time.svg} compress_image 1 xywh {200 36 64 52} labeltype NO_LABEL align 514
             class {Fl_Hover<Fl_Button>}
           }
         }
         Fl_Group {} {
           label {Go to line, sub or time value ...} open
-          xywh {5 95 287 57} box BORDER_FRAME color 37 align -207
+          xywh {5 95 266 57} box BORDER_FRAME color 37 align -207
         } {
           Fl_Spinner goto_line {
-            tooltip {Go to text line ...} xywh {7 123 60 22} labeltype NO_LABEL when 1 maximum 10000
+            tooltip {Go to text line ...} xywh {7 123 60 21} labeltype NO_LABEL when 1 maximum 10000
           }
           Fl_Spinner goto_sub {
-            tooltip {Go to subtitle number ...} xywh {69 123 58 22} labeltype NO_LABEL maximum 10000
+            tooltip {Go to subtitle number ...} xywh {69 123 58 21} labeltype NO_LABEL maximum 10000
           }
           Fl_Input time_to_go {
-            tooltip {Search in the subtitle, line whose timstamp is close to ...} xywh {129 123 160 22} labeltype NO_LABEL
+            tooltip {Search in the subtitle, line whose timstamp is close to ...} xywh {129 123 138 21} labeltype NO_LABEL
             class Fl_Time_Input
           }
         }
         Fl_Button goto_start {
           label Start
-          tooltip {Goto start of file} image {../assets/svg_icons/goto-start.svg} compress_image 1 xywh {293 33 40 50} labeltype NO_LABEL align 513
+          tooltip {Goto start of file} image {../assets/svg_icons/goto-start.svg} compress_image 1 xywh {273 33 52 54} labeltype NO_LABEL align 513
           class {Fl_Hover<Fl_Button>}
         }
         Fl_Button goto_end {
           label End
-          tooltip {Goto end of file} image {../assets/svg_icons/goto-end.svg} compress_image 1 xywh {337 40 40 50} labeltype NO_LABEL align 514
+          tooltip {Goto end of file} image {../assets/svg_icons/goto-end.svg} compress_image 1 xywh {327 40 52 54} labeltype NO_LABEL align 514
           class {Fl_Hover<Fl_Button>}
         }
         Fl_Button del_first_sub {
           label {Del first sub}
-          tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/delete start subtitle.svg} compress_image 1 xywh {293 88 40 50} labeltype NO_LABEL align 512
+          tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/delete start subtitle.svg} compress_image 1 xywh {273 90 52 54} labeltype NO_LABEL align 512
           class {Fl_Hover<Fl_Button>}
         }
         Fl_Button del_last_sub {
           label {Del last sub}
-          tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/delete end subtitle.svg} compress_image 1 xywh {337 108 40 50} labeltype NO_LABEL align 512
+          tooltip {You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/delete end subtitle.svg} compress_image 1 xywh {327 106 52 54} labeltype NO_LABEL align 512
           class {Fl_Hover<Fl_Button>}
         }
       }
@@ -135,19 +136,19 @@ Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} c
         } {
           Fl_Input time_start {
             label {    }
-            tooltip {Modify the start time of the subtitle file} xywh {216 225 160 22} labeltype NO_LABEL align 516 when 1
+            tooltip {Modify the start time of the subtitle file} xywh {234 225 138 22} labeltype NO_LABEL align 516 when 1
             class Fl_Time_Input
           }
           Fl_Input time_end {
             label { }
-            tooltip {Modify the end time of the subtitle file} xywh {216 250 160 22} labeltype NO_LABEL align 260 when 1
+            tooltip {Modify the end time of the subtitle file} xywh {234 250 138 22} labeltype NO_LABEL align 260 when 1
             class Fl_Time_Input
           }
           Fl_Box {} {
-            tooltip {Modify the start time of the subtitle file} image {../assets/svg_icons/limit begin.svg} compress_image 1 xywh {174 223 42 24} labelsize 10 align 516
+            tooltip {Modify the start time of the subtitle file} image {../assets/svg_icons/limit begin.svg} compress_image 1 xywh {178 222 50 24} labelsize 10 align 516
           }
           Fl_Box {} {
-            tooltip {Modify the end time of the subtitle file} image {../assets/svg_icons/limit end.svg} compress_image 1 xywh {174 249 42 24} labelsize 10 align 520
+            tooltip {Modify the end time of the subtitle file} image {../assets/svg_icons/limit end.svg} compress_image 1 xywh {178 250 50 24} labelsize 10 align 520
           }
         }
         Fl_Group {} {
