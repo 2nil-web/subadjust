@@ -2,14 +2,14 @@
 <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
 
 <svg
-   width="48"
-   height="48"
-   viewBox="0 0 61.44 61.44"
+   width="64"
+   height="52"
+   viewBox="0 0 81.92 66.56"
    class="icon"
    version="1.1"
    id="svg52"
    sodipodi:docname="time.svg"
-   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -26,8 +26,8 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="11.313708"
-     inkscape:cx="12.153398"
-     inkscape:cy="17.810252"
+     inkscape:cx="12.109204"
+     inkscape:cy="17.810253"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
@@ -36,7 +36,7 @@
      inkscape:current-layer="svg52" />
   <g
      id="g52"
-     transform="matrix(0.06110894,0,0,0.06110893,-0.56780788,-0.58500515)">
+     transform="matrix(0.07970732,0,0,0.06482512,0.14981508,0.15433127)">
     <path
        d="m 993.763,493.538 v 35 c 0,13.331 -6.04,26.664 -18.135,37.137 -140.15,121.422 -280.35,242.795 -420.49,364.219 -11.814,10.237 -25.813,15.501 -42.454,15.501 v -35 c 16.643,0 30.64,-5.264 42.454,-15.501 140.141,-121.424 280.336,-242.802 420.49,-364.217 12.095,-10.475 18.135,-23.803 18.135,-37.139 z"
        fill="#4e86b8"

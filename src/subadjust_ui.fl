@@ -170,7 +170,7 @@ They are added to their corresponding time limit} xywh {4 167 167 110} box BORDE
           }
           Fl_Box {} {
             label {Duration
-factor} selected
+factor}
             tooltip {A coefficient that allows to grow or shrink the sub duration} image {../assets/svg_icons/duration factor.svg} compress_image 1 xywh {4 183 74 36} box BORDER_FRAME color 220 labeltype NO_LABEL align 514
           }
           Fl_Box {} {
@@ -250,7 +250,7 @@ It turns red if there are pending modification.
 Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 351 314 22} labeltype NO_LABEL resizable
       }
     }
-    Fl_Text_Editor file_content {
+    Fl_Text_Editor file_content {selected
       xywh {4 377 376 271} selection_color 89 labeltype NO_LABEL align 517 resizable
     }
   }
