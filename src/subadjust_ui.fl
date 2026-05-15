@@ -7,10 +7,15 @@ i18n_gnu_function gettext
 i18n_gnu_static_function gettext_noop
 header_name {.h}
 code_name {.cxx}
+snap {
+  ver 1
+  current_suite FLTK
+  current_preset 2
+}
 Function {make_window()} {open
 } {
   Fl_Window main_window {open
-    xywh {2357 172 386 653} type Double resizable
+    xywh {2317 184 386 653} type Double resizable
     code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0} visible
   } {
     Fl_Group {} {open
@@ -130,18 +135,24 @@ Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} c
           xywh {173 205 205 76} box BORDER_FRAME color 37 labelfont 3 align -207
         } {
           Fl_Input time_start {
-            label Begin
-            tooltip {The start time of the sub} xywh {216 225 160 22} when 1
+            label {    }
+            tooltip {Modify the start time of the subtitle file} xywh {216 225 160 22} labeltype NO_LABEL align 516 when 1
             class Fl_Time_Input
           }
           Fl_Input time_end {
-            label End
-            tooltip {The end time of the sub} xywh {216 250 160 22} when 1
+            label { }
+            tooltip {Modify the end time of the subtitle file} xywh {216 250 160 22} labeltype NO_LABEL align 260 when 1
             class Fl_Time_Input
+          }
+          Fl_Box {} {
+            tooltip {Modify the start time of the subtitle file} image {../assets/svg_icons/limit begin.svg} compress_image 1 xywh {174 223 42 24} labelsize 10 align 516
+          }
+          Fl_Box {} {
+            tooltip {Modify the end time of the subtitle file} image {../assets/svg_icons/limit end.svg} compress_image 1 xywh {174 249 42 24} labelsize 10 align 520
           }
         }
         Fl_Group {} {
-          label Coefficients
+          label Coefficients open
           tooltip {Begin and end offsets are in floating point seconds.
 They are added to their corresponding time limit} xywh {4 167 167 110} box BORDER_FRAME color 37 labelfont 3 align -207
         } {
@@ -159,14 +170,14 @@ They are added to their corresponding time limit} xywh {4 167 167 110} box BORDE
           }
           Fl_Box {} {
             label {Duration
-factor}
-            xywh {4 183 74 34}
+factor} selected
+            tooltip {A coefficient that allows to grow or shrink the sub duration} image {../assets/svg_icons/duration factor.svg} compress_image 1 xywh {4 183 74 36} box BORDER_FRAME color 220 labeltype NO_LABEL align 514
           }
           Fl_Box {} {
             label {Begin and
 end offsets
 (in seconds)}
-            xywh {5 220 78 54}
+            image {../assets/svg_icons/begin & end offset.svg} compress_image 1 xywh {4 220 82 56} box BORDER_FRAME color 228 labeltype NO_LABEL align 512
           }
         }
         Fl_Button sub_adjust {
@@ -192,7 +203,7 @@ All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 63} b
         xywh {4 287 148 60}
       } {
         Fl_Button find {
-          label { } selected
+          label { }
           tooltip {Will find the next occurrence of the find pattern, the one actually pointed by the cursor is not taken into account.} image {../assets/svg_icons/find.svg} compress_image 1 xywh {9 289 57 32} align 512
           class {Fl_Hover<Fl_Button>}
         }
@@ -203,7 +214,7 @@ All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 63} b
         }
         Fl_Button replace_all {
           label All
-          tooltip {Search and replace all occurrences of your pattern. Can be undone.} image {../assets/svg_icons/replace.svg} compress_image 1 xywh {112 289 40 42} align 514
+          tooltip {Search and replace all occurrences of your pattern. Can be undone.} image {../assets/svg_icons/replace all.svg} compress_image 1 xywh {112 289 40 42} align 514
           class {Fl_Hover<Fl_Button>}
         }
         Fl_Check_Button case_sensitive_find {
@@ -240,7 +251,7 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
       }
     }
     Fl_Text_Editor file_content {
-      xywh {4 377 376 271} selection_color 89 labeltype NO_LABEL resizable
+      xywh {4 377 376 271} selection_color 89 labeltype NO_LABEL align 517 resizable
     }
   }
   Fl_Window config_dialog {

@@ -49,12 +49,8 @@ public:
       if (first_show)
       {
         Base::box(FL_BORDER_BOX);
-        // Base::color(FL_RED);
-        //  Base::down_box(FL_FLAT_BOX);
-        //  Base::color(FL_BACKGROUND_COLOR);
+        Base::color(FL_BACKGROUND_COLOR);
         Base::selection_color(FL_BACKGROUND_COLOR);
-        // Base::labelcolor(FL_FOREGROUND_COLOR);
-        // Base::align(FL_ALIGN_CENTER);
         Base::when(FL_WHEN_ENTER_KEY | FL_WHEN_RELEASE);
         first_show = false;
       }
