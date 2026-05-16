@@ -369,8 +369,11 @@ msgstr "Ir al número de subtítulo ..."
 msgid "Search in the subtitle, line whose timstamp is close to ..."	
 msgstr "Buscar en el subtítulo, la línea cuya marca de tiempo se acerca de ..."
 
-msgid "You may undo/redo this action with Ctrl-Z/Ctrl-Y."	
-msgstr "Puede deshacer/rehacer esta acción con Ctrl+Z/Ctrl+Y."
+msgid "Delete the first subtitle and reparse\nYou may undo/redo this action with Ctrl-Z/Ctrl-Y."	
+msgstr "Elimine el primero subtítulo y vuelva a analizar.\nPuede deshacer/rehacer esta acción con Ctrl+Z/Ctrl+Y."
+
+msgid "Delete the last subtitle and reparse\nYou may undo/redo this action with Ctrl-Z/Ctrl-Y."	
+msgstr "Elimine el último subtítulo y vuelva a analizar.\nPuede deshacer/rehacer esta acción con Ctrl+Z/Ctrl+Y."
 
 msgid "The start time of the sub"	
 msgstr "Hora de inicio del subtítulo"
@@ -594,4 +597,9 @@ msgstr "Pegar"
 msgid "Select all"
 msgstr "Seleccionar todo"
 
+msgid "Modify the start time of the subtitle file"
+msgstr "Cambia la hora de inicio del archivo de subtítulos."
+
+msgid "Modify the end time of the subtitle file"
+msgstr "Cambiar la hora de finalización del archivo de subtítulos"
 

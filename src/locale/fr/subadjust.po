@@ -103,9 +103,6 @@ msgstr ""
 msgid "No"
 msgstr "Non"
 
-msgid "Ok"
-msgstr "Ok"
-
 msgid ""
 "Process the input file and show it with the gui, this is the default "
 "behavior."
@@ -379,14 +376,17 @@ msgstr "Informations sur l'application (Raccourci Ctrl+B)."
 msgid "Go to text line ..."	
 msgstr "Aller à la ligne de texte..."
 
-msgid "Go to subtitle number ..."	
+msgid "Go to subtitle number ..."
 msgstr "Aller au numéro du sous-titre ..."
 
 msgid "Search in the subtitle, line whose timstamp is close to ..."	
 msgstr "Rechercher dans le sous-titre la ligne dont l'horodatage est proche de..."
 
-msgid "You may undo/redo this action with Ctrl-Z/Ctrl-Y."	
-msgstr "Vous pouvez annuler/rétablir cette action avec Ctrl+Z/Ctrl+Y."
+msgid "Delete the first subtitle and reparse\nYou may undo/redo this action with Ctrl-Z/Ctrl-Y."	
+msgstr "Supprime le 1er sous-titre et réanalyse\nVous pouvez annuler/rétablir cette action avec Ctrl+Z/Ctrl+Y."
+
+msgid "Delete the last subtitle and reparse\nYou may undo/redo this action with Ctrl-Z/Ctrl-Y."	
+msgstr "Supprime le dernier sous-titre et réanalyse\nVous pouvez annuler/rétablir cette action avec Ctrl+Z/Ctrl+Y."
 
 msgid "The start time of the sub"	
 msgstr "Heure de début du sous-titre"
@@ -608,4 +608,10 @@ msgstr "Coller"
 
 msgid "Select all"
 msgstr "Tout sélectionner"
+
+msgid "Modify the start time of the subtitle file"
+msgstr "Modifier l'heure de début du fichier de sous-titres"
+
+msgid "Modify the end time of the subtitle file"
+msgstr "Modifier l'heure de fin du fichier de sous-titres"
 
