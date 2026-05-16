@@ -126,8 +126,9 @@ deliv : assets/${SETUP_PKG}
 	@echo "Delivering it to github."
 	@./assets/github_release.sh $<
 
+
 # FLUID file rules
-${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_ui.cpp : ${SRC_DIR}/${PREFIX}_ui.fl
+${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_ui.cpp : assets/svg_icons/*.svg ${SRC_DIR}/Fl_Hover.H ${SRC_DIR}/Fl_I18n.H ${SRC_DIR}/Fl_Time_Input.H ${SRC_DIR}/${PREFIX}_ui.fl
 	@echo "Fluid code generation"
 	@sed -i 's?image {\.\.\(.*\)/assets?image {../assets?' src/subadjust_ui.fl
 	cd ${SRC_DIR} && ${FLUID} -c -o .cpp ${PREFIX}_ui.fl

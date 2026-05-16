@@ -1,6 +1,7 @@
 // Fl_Time_Input.cpp
 #include "Fl_Time_Input.H"
 #include <FL/Fl.H>
+#include <FL/Fl_Menu_Button.H>
 #include <FL/fl_draw.H>
 #include <cctype>
 #include <cstdio>
@@ -320,6 +321,18 @@ void Fl_Time_Input::copy_value()
   Fl::copy(buf, (int)strlen(buf), 1);
 }
 
+void Fl_Time_Input::cut_value()
+{
+  copy_value();
+  h_ = use24_ ? 0 : 12;
+  m_ = 0;
+  s_ = 0;
+  ms_ = 0;
+  pm_ = false;
+  redraw();
+  fire_callback();
+}
+
 void Fl_Time_Input::paste_value()
 {
   Fl::paste(*this, 1);
@@ -395,7 +408,7 @@ void Fl_Time_Input::compute_rects()
   r_.fw = r_.sx - x();
   r_.fh = rh;
 
-  int pad = fm_.pad/4;
+  int pad = fm_.pad / 4;
   int px = r_.fx + pad;
   int si = 0;
 
@@ -451,7 +464,8 @@ void Fl_Time_Input::draw_segment(const char *txt, int sx, int sy, int sw, int sh
 {
   if (active)
   {
-    fl_color(0x0078d4ff);
+    // fl_color(0x0078d4ff);
+    fl_color(0x00d478ff);
     fl_rectf(sx, sy + 1, sw, sh - 2);
     fl_color(FL_WHITE);
   }
@@ -641,6 +655,31 @@ void Fl_Time_Input::flush_digit()
 // Picker
 // ----------------------------------------------------------------
 
+void Fl_Time_Input::show_context_menu()
+{
+  // Construction du menu a la volee via Fl_Menu_Button en mode popup.
+  // Le menu est alloue sur la pile : pas d'enfant permanent du groupe,
+  // ce qui preserverait fit() et resize().
+  Fl_Menu_Button menu(Fl::event_x_root(), Fl::event_y_root(), 0, 0);
+  menu.type(Fl_Menu_Button::POPUP3);
+
+  menu.add(_("Cut"), 0, nullptr, (void *)1);
+  menu.add(_("Copy"), 0, nullptr, (void *)2);
+  menu.add(_("Paste"), 0, nullptr, (void *)3);
+
+  const Fl_Menu_Item *picked = menu.popup();
+  if (!picked)
+    return;
+
+  void *ud = picked->user_data();
+  if (ud == (void *)1)
+    cut_value();
+  else if (ud == (void *)2)
+    copy_value();
+  else if (ud == (void *)3)
+    paste_value();
+}
+
 void Fl_Time_Input::open_picker()
 {
   measure_font();
@@ -721,6 +760,13 @@ int Fl_Time_Input::handle(int ev)
   case FL_PUSH: {
     take_focus();
     int mx = Fl::event_x(), my = Fl::event_y();
+
+    // Clic droit : menu contextuel Couper/Copier/Coller.
+    if (Fl::event_button() == FL_RIGHT_MOUSE)
+    {
+      show_context_menu();
+      return 1;
+    }
 
     if (mx >= r_.cx && mx <= r_.cx + r_.cw && my >= r_.cy && my <= r_.cy + r_.ch)
     {
@@ -838,6 +884,11 @@ int Fl_Time_Input::handle(int ev)
     }
 
     // Copier/coller : Fl::event_state(FL_CTRL) est le test fiable.
+    if (Fl::event_state(FL_CTRL) && (key == 'x' || key == 'X'))
+    {
+      cut_value();
+      return 1;
+    }
     if (Fl::event_state(FL_CTRL) && (key == 'c' || key == 'C'))
     {
       copy_value();

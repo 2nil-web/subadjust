@@ -83,6 +83,8 @@ public:
   // Toujours en 24h quelle que soit la config.
   int hour24() const;
 
+  // Couper la valeur courante dans le presse-papier (format HH:MM:SS[.mmm]).
+  void cut_value();
   // Copie la valeur courante dans le presse-papier (format HH:MM:SS[.mmm]).
   void copy_value();
   // Tente de coller depuis le presse-papier.
@@ -141,6 +143,7 @@ private:
   void increment(int delta);
   void commit_digit(int digit);
   void flush_digit();
+  void show_context_menu();
   void open_picker();
   void fire_callback();
   void clamp_values();

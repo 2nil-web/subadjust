@@ -13,13 +13,26 @@
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Check_Button.H>
 #include <FL/Fl_Choice.H>
+#include <FL/Fl_Light_Button.H>
 #include <FL/Fl_Menu_Button.H>
+#include <FL/Fl_Radio_Button.H>
+#include <FL/Fl_Radio_Light_Button.H>
+#include <FL/Fl_Radio_Round_Button.H>
+#include <FL/Fl_Repeat_Button.H>
+#include <FL/Fl_Return_Button.H>
+#include <FL/Fl_Round_Button.H>
+#include <FL/Fl_Shortcut_Button.H>
+#include <FL/Fl_Toggle_Button.H>
+#include <FL/Fl_Toggle_Light_Button.H>
+#include <FL/Fl_Toggle_Round_Button.H>
 #include <FL/Fl_Widget.H>
 #include <FL/fl_draw.H>
 
 // Classe template qui ajoute un handler personnalisable à n'importe quelle classe héritière de Fl_Widget
 template <typename Base> class Fl_Hover : public Base
 {
+  // static_assert(std::is_base_of<Fl_Button, Base>::value, "Base must derive from Fl_Button");
+  // static_assert(std::is_base_of_v<Fl_Button, Base>, "Base must derive from Fl_Button");
 private:
   bool first_show;
 
@@ -64,7 +77,21 @@ public:
   }
 };
 
-// using Fl_Hover_Button = Fl_Hover<Fl_Button>;
-// using Fl_Hover_Menu_Button = Fl_Hover<Fl_Menu_Button>;
+// --- Alias pratiques pour les types courants ---
+using Fl_Button_Hover = Fl_Hover<Fl_Button>;
+using Fl_Check_Button_Hover = Fl_Hover<Fl_Check_Button>;
+using Fl_Choice_Hover = Fl_Hover<Fl_Choice>;
+using Fl_Light_Button_Hover = Fl_Hover<Fl_Light_Button>;
+using Fl_Menu_Button_Hover = Fl_Hover<Fl_Menu_Button>;
+using Fl_Radio_Button_Hover = Fl_Hover<Fl_Radio_Button>;
+using Fl_Radio_Light_Button_Hover = Fl_Hover<Fl_Radio_Light_Button>;
+using Fl_Radio_Round_Button_Hover = Fl_Hover<Fl_Radio_Round_Button>;
+using Fl_Repeat_Button_Hover = Fl_Hover<Fl_Repeat_Button>;
+using Fl_Return_Button_Hover = Fl_Hover<Fl_Return_Button>;
+using Fl_Round_Button_Hover = Fl_Hover<Fl_Round_Button>;
+using Fl_Shortcut_Button_Hover = Fl_Hover<Fl_Shortcut_Button>;
+using Fl_Toggle_Button_Hover = Fl_Hover<Fl_Toggle_Button>;
+using Fl_Toggle_Light_Button_Hover = Fl_Hover<Fl_Toggle_Light_Button>;
+using Fl_Toggle_Round_Button_Hover = Fl_Hover<Fl_Toggle_Round_Button>;
 
 #endif /* FL_HOVER_H */

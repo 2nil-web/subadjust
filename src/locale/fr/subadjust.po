@@ -597,3 +597,15 @@ msgstr "Cadre englobant la zone de travail de l'écran contenant le pointeur de 
 msgid "Frame encompassing the area of the screen containing the mouse pointer"	
 msgstr "Cadre englobant la zone de l'écran contenant le pointeur de la souris"
 
+msgid "Cut"
+msgstr "Couper"
+
+msgid "Copy"
+msgstr "Copier"
+
+msgid "Paste"
+msgstr "Coller"
+
+msgid "Select all"
+msgstr "Tout sélectionner"
+

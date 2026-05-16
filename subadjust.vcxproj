@@ -173,6 +173,7 @@
     <ClCompile Include="src/Fl_Time_Input.H" />
     <ClCompile Include="src/my_ask.h" />
     <ClCompile Include="src/Fl_Hover.H" />
+    <ClCompile Include="src/Fl_I18n.H" />
     <ClCompile Include="src/utils.h" />
     <ClCompile Include="src/log.h" />
     <ClCompile Include="src/options.h" />
