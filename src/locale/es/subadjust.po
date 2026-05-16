@@ -582,3 +582,16 @@ msgstr "Marco delimitador del área de trabajo de la pantalla que contiene el pu
 msgid "Frame encompassing the area of the screen containing the mouse pointer"	
 msgstr "Marco delimitador del área de la pantalla que contiene el puntero del ratón"
 
+msgid "Cut"
+msgstr "Cortar"
+
+msgid "Copy"
+msgstr "Copiar"
+
+msgid "Paste"
+msgstr "Pegar"
+
+msgid "Select all"
+msgstr "Seleccionar todo"
+
+

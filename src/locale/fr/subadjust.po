@@ -508,7 +508,7 @@ msgid "Go to middle subtitle"
 msgstr "Aller au sous-titre du milieu"
 
 msgid "Go to middle time"	
-msgstr "Aller à l'horaodatage du milieu"
+msgstr "Aller à l'horodatage du milieu"
 
 msgid "Goto end of file"	
 msgstr "Aller à la fin du fichier"
