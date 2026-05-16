@@ -79,21 +79,21 @@ protected:
 
     // Couper : sélection non vide ET modifiable ET copie autorisée
     if (has_selection && !is_readonly && can_copy)
-      items.push_back({_("Cut"), 0, cut_cb, target});
+      items.push_back({_("Cut"), 0, cut_cb, target, {}, {}, {}, {}, {}});
 
     // Copier : sélection non vide ET copie autorisée
     if (has_selection && can_copy)
-      items.push_back({_("Copy"), 0, copy_cb, target});
+      items.push_back({_("Copy"), 0, copy_cb, target, {}, {}, {}, {}, {}});
 
     // Coller : presse-papier non vide ET modifiable
     if (has_clipboard && !is_readonly)
-      items.push_back({_("Paste"), 0, paste_cb, target});
+      items.push_back({_("Paste"), 0, paste_cb, target, {}, {}, {}, {}, {}});
 
     // Tout sélectionner : toujours présent
-    items.push_back({_("Select all"), 0, select_all_cb, target});
+    items.push_back({_("Select all"), 0, select_all_cb, target, {}, {}, {}, {}, {}});
 
     // Sentinel obligatoire pour Fl_Menu_Item::popup()
-    items.push_back({0});
+    items.push_back({{}, {}, {}, {}, {}, {}, {}, {}, {}});
 
     // N'afficher le menu que s'il y a au moins un item utile
     // (autre que "Select all" et le sentinel)
