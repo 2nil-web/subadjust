@@ -1,12 +1,21 @@
 # SubAdjust
 
-###### ***A GUI and command line tool to modify the timeline of subtitles in .srt format***
+###### ***A graphical and command line tool to modify the timeline of subtitles in .srt format***
 
 <sup>*Actually available in 3 languages : english, french and spanish. But others could easily be added thanks to gettext.*</sup>
 
-<ins>***The GUI aims to be self-explanatory, but some indications might be useful :***</ins>
+###### ***You can download a binary version of this tool in the "[Release]([Releases · 2nil-web/subadjust · GitHub](https://github.com/2nil-web/subadjust/releases))" link.***
+
+***It is available for Windows and Linux***
+<sup>Although compiled under Ubuntu, the Linux version should work on any decent and recent distro.</sup>
+
+<ins>***The Graphical User Interface aims to be self-explanatory***</ins>
+
+***But some indications might be useful***
 
 ![](assets/QuickDoc.svg "Quick doc")
+
+*<sup>Many tooltips will guide you during the use of this GUI.</sup>*
 
 <ins>***There is also an inline help :***</ins>
 
@@ -75,5 +84,4 @@ Although not tested, but should behave the same way under macOS ...
 <ins>***To do :***</ins>
 
 - *Detail prerequisites for the build (make, gcc, visual studio, fltk ...)*
-- *Add feature to read and write vtt format*
-- *Fix all the bugs (No, there aren't any!!)*
+- *Add feature to read and write vtt format (although tolls like ffmpeg do the job)*
