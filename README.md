@@ -3,6 +3,7 @@
 ### ***A graphical and command line tool to modify the timeline of subtitles in .srt format***
 
 <sup>*Actually available in 3 languages : english, french and spanish. But others could easily be added thanks to gettext.*</sup>
+
 ### ***You can download a binary version of this tool in the "[Release](https://github.com/2nil-web/subadjust/releases)" link.***
 
 ***It is available for Windows and Linux***
@@ -85,4 +86,4 @@ Although not tested, but should behave the same way under macOS ...
 <ins>***To do :***</ins>
 
 - *Detail prerequisites for the build (make, gcc, visual studio, fltk ...)*
-- *Add feature to read and write vtt format (although tolls like ffmpeg do the job)*
+- *Add feature to read and write vtt format (although tools like ffmpeg do the job)*
