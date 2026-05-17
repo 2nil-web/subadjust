@@ -4,7 +4,7 @@
 
 <sup>*Actually available in 3 languages : english, french and spanish. But others could easily be added thanks to gettext.*</sup>
 
-###### ***You can download a binary version of this tool in the "[Release]([Releases · 2nil-web/subadjust · GitHub](https://github.com/2nil-web/subadjust/releases))" link.***
+###### ***You can download a binary version of this tool in the "[Release](https://github.com/2nil-web/subadjust/releases)" link.***
 
 ***It is available for Windows and Linux***
 <sup>Although compiled under Ubuntu, the Linux version should work on any decent and recent distro.</sup>
