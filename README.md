@@ -7,6 +7,7 @@
 ###### ***You can download a binary version of this tool in the "[Release](https://github.com/2nil-web/subadjust/releases)" link.***
 
 ***It is available for Windows and Linux***
+
 <sup>Although compiled under Ubuntu, the Linux version should work on any decent and recent distro.</sup>
 
 <ins>***The Graphical User Interface aims to be self-explanatory***</ins>
