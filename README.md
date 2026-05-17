@@ -10,7 +10,7 @@
 
 <sup>Although compiled under Ubuntu, the Linux version should work on any decent and recent distro.</sup>
 
-<ins>***The Graphical User Interface aims to be self-explanatory***</ins>
+###***The Graphical User Interface aims to be self-explanatory***
 
 ***But some indications might be useful***
 
