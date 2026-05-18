@@ -28,6 +28,10 @@ Setting fltk for Linux (Ubuntu-24.04) :
   - libjpeg, libjpeg-dev
   - apt install libglu*
   - pkg-config
+  - libxinerama-dev libXfixes-dev
+  - libdbus-cpp-dev
+  - libxcursor-dev libxkbcommon-dev
+  - libdecor-0-dev
 * Prepare :
  -   As I don't like the "release" word in the tag version, I am not using the following command to get the current version :
  > git describe --exact-match --tags 2>/dev/null && VERS=$(git describe --exact-match --tags) || VERS=""
