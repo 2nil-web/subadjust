@@ -19,6 +19,10 @@ Setting fltk for Linux (Ubuntu-24.04) :
   - cmake
   - imgemagick (not sure but necessary for subadjust)
   - inkscape (same remark)
+  - pandoc (same)
+  - librsvg2-bin (for subadjust delivery)
+  - apt install texworks texlive-latex-recommended -y (same)
+  - librsvg2-dev
   - libx11-dev
   - libgl1-mesa-dev
   - libjpeg, libjpeg-dev
