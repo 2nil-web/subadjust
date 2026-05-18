@@ -2,9 +2,9 @@
 <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
 
 <svg
-   width="38"
-   height="40"
-   viewBox="0 0 1.52 1.6"
+   width="48"
+   height="42"
+   viewBox="0 0 1.92 1.68"
    enable-background="new 0 0 32 32"
    version="1.1"
    xml:space="preserve"
@@ -15,13 +15,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"><defs
-   id="defs2">
-
-
-
-
-
-</defs><sodipodi:namedview
+   id="defs2" /><sodipodi:namedview
    id="namedview2"
    pagecolor="#ffffff"
    bordercolor="#000000"
@@ -31,11 +25,11 @@
    inkscape:pagecheckerboard="0"
    inkscape:deskcolor="#d1d1d1"
    inkscape:zoom="8.0699997"
-   inkscape:cx="-4.8327139"
-   inkscape:cy="11.833953"
+   inkscape:cx="18.835193"
+   inkscape:cy="11.710038"
    inkscape:window-width="1920"
    inkscape:window-height="1009"
-   inkscape:window-x="1912"
+   inkscape:window-x="-8"
    inkscape:window-y="-8"
    inkscape:window-maximized="1"
    inkscape:current-layer="svg2"
@@ -143,7 +137,7 @@
 
 <g
    id="g1"
-   transform="matrix(1.4973543,0,0,1.4973543,-0.01862416,0.08012066)"><path
+   transform="matrix(1.8937268,0,0,1.8937268,-0.02473784,-0.05012161)"><path
      d="M 0.96295703,0.79058116 0.66766737,0.59685333 C 0.68386106,0.54536196 0.68676166,0.48763414 0.67590962,0.43579146 0.63913327,0.26010237 0.46890747,0.14842397 0.29377006,0.18508485 0.20703402,0.20023464 0.13387777,0.25162437 0.08851349,0.32124731 0.04314921,0.39087025 0.0255769,0.4787264 0.04366363,0.56513087 c 0.03677635,0.17568909 0.20700216,0.28736749 0.38213956,0.25070661 0.054551,-0.011419 0.10321643,-0.0366377 0.1465992,-0.072776 l 0.29528966,0.19372784 c 0.020844,0.0136749 0.0427504,0.0181084 0.0657192,0.0133004 0.0229688,-0.004808 0.0412579,-0.0176554 0.0548672,-0.0385423 v 0 c 0.0136092,-0.0208869 0.0180022,-0.0428509 0.0131792,-0.0658921 -0.004823,-0.0230412 -0.017657,-0.0413992 -0.0385007,-0.0550742 z"
      fill="#3f51b5"
      id="path1"

@@ -328,20 +328,23 @@ msgstr "Limites"
 msgid "Find"
 msgstr "Chercher"
 
-msgid "Repl Next"
-msgstr "Remp suiv"
+msgid "Find\nNext"
+msgstr "Checher\nSuivant"
 
-msgid "Repl All"
-msgstr "Remp tous"
+msgid "Replace"
+msgstr "Remplacer"
 
 msgid "Next"
-msgstr "Suiv."
+msgstr "Suivant"
 
 msgid "All"
 msgstr "Tout"
 
-msgid "Case"
-msgstr "Casse"
+msgid "Case sensitive search"
+msgstr "Recherche sensible à la casse"
+
+msgid "Case unsensitive search"
+msgstr "Recherche insensible à la casse"
 
 msgid "File path"
 msgstr "Chemin"

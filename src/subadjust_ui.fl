@@ -15,7 +15,7 @@ snap {
 Function {make_window()} {open
 } {
   Fl_Window main_window {open
-    xywh {2332 182 386 653} type Double resizable
+    xywh {2332 182 384 653} type Double resizable
     code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0} visible
   } {
     Fl_Group {} {open
@@ -124,7 +124,7 @@ You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/de
           class Fl_Button_Hover
         }
         Fl_Button del_last_sub {
-          label {Del last sub} selected
+          label {Del last sub}
           tooltip {Delete the last subtitle and reparse
 You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/delete end subtitle.svg} compress_image 1 xywh {327 106 52 54} labeltype NO_LABEL align 512
           class Fl_Button_Hover
@@ -140,19 +140,19 @@ You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/de
         } {
           Fl_Input time_start {
             label {    }
-            tooltip {Modify the start time of the subtitle file} xywh {234 225 138 22} labeltype NO_LABEL align 516 when 1
+            tooltip {Modify the start time of the subtitle file} xywh {236 225 138 22} labeltype NO_LABEL align 516 when 1
             class Fl_Time_Input
           }
           Fl_Input time_end {
             label { }
-            tooltip {Modify the end time of the subtitle file} xywh {234 250 138 22} labeltype NO_LABEL align 260 when 1
+            tooltip {Modify the end time of the subtitle file} xywh {236 250 138 22} labeltype NO_LABEL align 260 when 1
             class Fl_Time_Input
           }
-          Fl_Box {} {
-            tooltip {Modify the start time of the subtitle file} image {../assets/svg_icons/limit begin.svg} compress_image 1 xywh {178 222 50 24} labelsize 10 align 516
+          Fl_Box {} {selected
+            tooltip {Modify the start time of the subtitle file} image {../assets/svg_icons/limit begin.svg} compress_image 1 xywh {175 218 60 29} box BORDER_FRAME color 221 labelsize 10 align 516
           }
           Fl_Box {} {
-            tooltip {Modify the end time of the subtitle file} image {../assets/svg_icons/limit end.svg} compress_image 1 xywh {178 250 50 24} labelsize 10 align 520
+            tooltip {Modify the end time of the subtitle file} image {../assets/svg_icons/limit end.svg} compress_image 1 xywh {175 247 60 29} box BORDER_FRAME color 221 labelsize 10 align 520
           }
         }
         Fl_Group {} {
@@ -201,64 +201,84 @@ end offsets
     }
     Fl_Group {} {open
       tooltip {You may apply regex pattern, with case sensitivity or not.
-All your pattern will be uniquely stored for futur reuse.} xywh {4 285 376 63} box BORDER_FRAME color 37
+All your pattern will be uniquely stored for futur reuse.} xywh {2 285 384 80} box BORDER_FRAME color 37
     } {
       Fl_Group {} {open
-        xywh {4 287 148 60}
+        xywh {3 285 151 80}
       } {
         Fl_Button find {
           label { }
-          tooltip {Will find the next occurrence of the find pattern, the one actually pointed by the cursor is not taken into account.} image {../assets/svg_icons/find.svg} compress_image 1 xywh {9 289 57 32} align 512
+          tooltip {Will find the next occurrence of the find pattern, the one actually pointed by the cursor is not taken into account.} image {../assets/svg_icons/find.svg} compress_image 1 xywh {5 289 48 42} align 512
           class Fl_Button_Hover
+        }
+        Fl_Box {} {
+          label Replace
+          xywh {54 332 100 15} box BORDER_FRAME color 192 labelsize 10
+        }
+        Fl_Box {} {
+          label Next
+          xywh {54 347 50 15} box BORDER_FRAME color 192 labelsize 10
+        }
+        Fl_Box {} {
+          label All
+          xywh {104 347 50 15} box BORDER_FRAME color 192 labelsize 10
+        }
+        Fl_Box {} {
+          label {Find
+Next}
+          xywh {5 332 48 30} box BORDER_FRAME color 192 labelsize 10
         }
         Fl_Button replace_next {
           label Next
-          tooltip {Search and replace only the next occurence of your pattern. Can be undone.} image {../assets/svg_icons/replace.svg} compress_image 1 xywh {68 289 40 42} align 514
+          tooltip {Search and replace only the next occurence of your pattern. Can be undone.} image {../assets/svg_icons/replace.svg} compress_image 1 xywh {55 289 48 42} labeltype NO_LABEL align 514
           class Fl_Button_Hover
         }
         Fl_Button replace_all {
           label All
-          tooltip {Search and replace all occurrences of your pattern. Can be undone.} image {../assets/svg_icons/replace all.svg} compress_image 1 xywh {112 289 40 42} align 514
+          tooltip {Search and replace all occurrences of your pattern. Can be undone.} image {../assets/svg_icons/replace all.svg} compress_image 1 xywh {105 289 48 42} labeltype NO_LABEL align 514
           class Fl_Button_Hover
-        }
-        Fl_Check_Button case_sensitive_find {
-          label Case
-          tooltip {Run case sensitive find or not} xywh {6 322 61 24} down_box DOWN_BOX align 32
-          class Fl_Check_Button_Hover compact 1
         }
       }
       Fl_Group {} {open
-        xywh {152 285 228 59} resizable
+        xywh {154 285 232 80} resizable
       } {
         Fl_Input_Choice str_find {
-          tooltip {For more details about ECMAScript regex, see https://en.cppreference.com/w/cpp/regex/ecmascript.html} xywh {154 289 225 22} labeltype NO_LABEL
+          tooltip {For more details about ECMAScript regex, see https://en.cppreference.com/w/cpp/regex/ecmascript.html} xywh {155 289 229 22} labeltype NO_LABEL
           class Fl_Input_Choice_L10n
         } {}
         Fl_Input_Choice str_replace {
-          xywh {154 318 225 22} labeltype NO_LABEL
+          xywh {155 318 229 22} labeltype NO_LABEL
           class Fl_Input_Choice_L10n
         } {}
+        Fl_Check_Button case_sensitive_find {
+          label {Case sensitive search}
+          tooltip {Run case sensitive find or not} xywh {155 341 224 22} down_box DOWN_BOX align 32
+          class Fl_Check_Button_Hover compact 1
+        }
+        Fl_Box {} {
+          xywh {380 342 2 20} labeltype NO_LABEL labelsize 10 resizable
+        }
       }
     }
     Fl_Group {} {open
-      xywh {1 348 378 26}
+      xywh {1 365 378 26}
     } {
       Fl_Box file_path_label {
         label {File path}
         tooltip {Show the path of the file being currently edited.
 It turns red if there are pending modification.
-Automatic changes may occur if the initial file format is not UTF-8.} xywh {2 349 60 22}
+Automatic changes may occur if the initial file format is not UTF-8.} xywh {2 369 60 22}
       }
       Fl_Output file_path {
         label {File path}
         tooltip {Show the path of the file being currently edited.
 It turns red if there are pending modification.
-Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 351 314 22} labeltype NO_LABEL resizable
+Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 367 314 22} labeltype NO_LABEL resizable
         class Fl_Output_L10n
       }
     }
     Fl_Text_Editor file_content {
-      xywh {4 377 376 271} selection_color 89 labeltype NO_LABEL align 517 resizable
+      xywh {4 391 376 259} selection_color 89 labeltype NO_LABEL align 517 resizable
       class Fl_Text_Editor_L10n
     }
   }

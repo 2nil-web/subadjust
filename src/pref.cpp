@@ -67,9 +67,9 @@ int pref_get_int(const std::string key, int def_val, Fl_Preferences *pref)
 void case_find(Fl_Widget *, void *)
 {
   if (case_sensitive_find->value())
-    case_sensitive_find->copy_label(_("Case"));
+    case_sensitive_find->copy_label(_("Case sensitive search"));
   else
-    case_sensitive_find->copy_label(_("All"));
+    case_sensitive_find->copy_label(_("Case unsensitive search"));
 }
 
 void main_window_resize(int x, int y, int w, int h)
@@ -500,7 +500,7 @@ void pref_get(int x, int y, int w, int h)
     OS::use_theme(stheme.c_str());
   }
 
-  case_sensitive_find->value(pref_get_int("case", 0));
+  case_sensitive_find->value(pref_get_int("Case sensitive search", 0));
   case_find();
 
   std::string fv = pref_get_string("find value", R"(\{\\an8\})");
@@ -868,7 +868,7 @@ void pref_dialog(Fl_Widget *, void *)
       theme_choice->value(2);
       OS::use_theme(theme_choice->value());
       case_sensitive_find->value(0);
-      case_sensitive_find->label(_("All"));
+      case_sensitive_find->label(_("Case sensitive search"));
     });
 
     unpopulated_dialog = false;
