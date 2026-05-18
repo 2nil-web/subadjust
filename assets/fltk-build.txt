@@ -4,16 +4,26 @@ In any case a fresh fltk build is necessary do what follow :
 Clone fltk git repo: 
  > git clone https://github.com/fltk/fltk.git
  > cd fltk
+ > git tag #  to see which tag crrepond to the latest fltk version (release-1.4.5 as of 2023/05)
 
 if needed switch to latest 1.4 version :
- > git checkout release-1.4.X # (1.4.5 as of 2026/05)
+ > git checkout release-1.4.X
 or stay on master : 
  > git checkout -
 
 Setting fltk for Linux (Ubuntu-24.04) :
 ---------------------------------------
 * Prerequisites for Linux (ToDo) :
- - ...
+  - gcc/g++
+  - make
+  - cmake
+  - imgemagick (not sure but necessary for subadjust)
+  - inkscape (same remark)
+  - libx11-dev
+  - libgl1-mesa-dev
+  - libjpeg, libjpeg-dev
+  - apt install libglu*
+  - pkg-config
 * Prepare :
  -   As I don't like the "release" word in the tag version, I am not using the following command to get the current version :
  > git describe --exact-match --tags 2>/dev/null && VERS=$(git describe --exact-match --tags) || VERS=""
