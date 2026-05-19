@@ -4,7 +4,7 @@
 
 <sup>*Actually available in 3 languages : english, french and spanish. But others could easily be added thanks to gettext.*</sup>
 
-<sup>*Available for Windows and Linux.*</sup>
+<sup>*Available for Windows and Linux. Should also run under macOS.*</sup>
 
 ##### ***You can download a binary version of this tool in the "[Release](https://github.com/2nil-web/subadjust/releases)" link.***
 
