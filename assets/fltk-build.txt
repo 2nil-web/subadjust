@@ -13,7 +13,7 @@ or stay on master :
 
 Setting fltk for Linux (Ubuntu-24.04) :
 ---------------------------------------
-* Prerequisites for Linux (ToDo) :
+* Prerequisites for Linux build (To confirm/Consolidate) :
   - gcc/g++
   - make
   - cmake
@@ -22,6 +22,7 @@ Setting fltk for Linux (Ubuntu-24.04) :
   - pandoc (same)
   - librsvg2-bin (for subadjust delivery)
   - apt install texworks texlive-latex-recommended -y (same)
+  - waylandpp-dev
   - librsvg2-dev
   - libx11-dev
   - libgl1-mesa-dev
@@ -33,9 +34,9 @@ Setting fltk for Linux (Ubuntu-24.04) :
   - libxcursor-dev libxkbcommon-dev
   - libdecor-0-dev
 * Prepare :
- -   As I don't like the "release" word in the tag version, I am not using the following command to get the current version :
+ -  To get the fltk "semantic versioning conformant" version corresponding to the current tag, if possible, then do the following :
  > git describe --exact-match --tags 2>/dev/null && VERS=$(git describe --exact-match --tags) || VERS=""
- -   I prefere this one :
+ - Or more shortly (as of may 2026) :
  > export VERS=1.4.5 # (or export VERS=latest)
  - If not already done, install X11-dev and Mesa3D : 
  > apt install libx11-dev; apt install libgl1-mesa-dev
