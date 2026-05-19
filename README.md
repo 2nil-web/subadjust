@@ -9,6 +9,7 @@
 ##### ***You can download a binary version of this tool in the "[Release](https://github.com/2nil-web/subadjust/releases)" link.***
 
 After the download, just unzip and run it with .srt files.
+
 <sup>Although compiled under Ubuntu, the Linux version should work on any decent and recent distro.</sup>
 
 ### ***The Graphical User Interface aims to be self-explanatory***
