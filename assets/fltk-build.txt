@@ -17,12 +17,13 @@ Setting fltk for Linux (Ubuntu-24.04) :
   - gcc/g++
   - make
   - cmake
-  - imgemagick (not sure but necessary for subadjust)
-  - inkscape (same remark)
+  - ImageMagick (not sure but necessary for subadjust)
+  - Inkscape (same remark)
   - pandoc (same)
   - librsvg2-bin (for subadjust delivery)
   - apt install texworks texlive-latex-recommended -y (same)
   - waylandpp-dev
+  - aptinstall libwayland-bin libwayland-client0 libwayland-cursor0 libwayland-dev libwayland-egl1 libwayland-server0 wayland-protocols
   - librsvg2-dev
   - libx11-dev
   - libgl1-mesa-dev
@@ -34,7 +35,7 @@ Setting fltk for Linux (Ubuntu-24.04) :
   - libxcursor-dev libxkbcommon-dev
   - libdecor-0-dev
 * Prepare :
- -  To get the fltk "semantic versioning conformant" version corresponding to the current tag, if possible, then do the following :
+ -  To get the fltk "semantic conformant version" corresponding to the current tag, if possible, then do the following :
  > git describe --exact-match --tags 2>/dev/null && VERS=$(git describe --exact-match --tags) || VERS=""
  - Or more shortly (as of may 2026) :
  > export VERS=1.4.5 # (or export VERS=latest)
@@ -49,8 +50,7 @@ Setting fltk for Linux (Ubuntu-24.04) :
 
 Setting fltk for Windows 11 and msvc 2026 (using dev prompt for VS 18) :
 ------------------------------------------------------------------------
-* Prerequisites for Windows (ToDo) :
- - ...
+* Prerequisites for Windows, see the prerequisite to subadjust in README.md
 * Prepare :
  > set VERS=1.4.5
 :: or > set VERS=latest

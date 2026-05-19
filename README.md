@@ -1,12 +1,12 @@
 # SubAdjust
 
-### ***A graphical and command line tool to modify the timeline of subtitles in .srt format***
+##### ***A graphical and command line tool to modify the timeline of subtitles files in .srt format***
 
 <sup>*Actually available in 3 languages : english, french and spanish. But others could easily be added thanks to gettext.*</sup>
+<sup>*Available for Windows and Linux.*</sup>
+<sup>*Should also run under macOS.*</sup>
 
-### ***You can download a binary version of this tool in the "[Release](https://github.com/2nil-web/subadjust/releases)" link.***
-
-***It is available for Windows and Linux***
+##### ***You can download a binary version of this tool in the "[Release](https://github.com/2nil-web/subadjust/releases)" link.***
 
 After the download, just unzip and run it with .srt files.
 <sup>Although compiled under Ubuntu, the Linux version should work on any decent and recent distro.</sup>
@@ -73,17 +73,33 @@ The configuration file is located there : "C:\Users\dplal\AppData\Roaming\dplala
 If none of these are defined, the default is to send the WARN and following log messages into the file "C:\UnixTools\msys64\tmp\subadjust.log".
 ```
 
-<ins>***Thanks and copyrights:***</ins>
+### ***Thanks and copyrights:***
 
 - To [Bill Spitzak](https://github.com/spitzak) and others, of course, for the wonderful [FLTK](https://www.fltk.org) tool.
 - To [**Rangi42**](https://github.com/Rangi42), [**dannye**](https://github.com/dannye) and [Remy Oukaour](https://github.com/roukaour) for the fltk graphical theme enhancement, which I've somewhat hacked.
 
-<ins>***Technical insight:***</ins>
+### ***Technical insight:***
 
 It compiles and run under both Windows (With Visual Studio and g++) and Linux (With g++), thanks to FLTK.
 Although not tested, but should behave the same way under macOS ...
 
-<ins>***To do :***</ins>
+###### Prerequisites to the build:
 
-- *Detail prerequisites for the build (make, gcc, visual studio, fltk ...)*
-- *Add feature to read and write vtt format (although tools like ffmpeg do the job)*
+- A posix environment:
+   [Linux](https://www.kernel.org/) of course.
+   And for [Windows]([http://windows.microsoft.com), preferably [msys2](https://www.msys2.org) but [cygwin](https://www.cygwin.com/) should also work.
+- [FLTK](https://www.fltk.org/)
+- [g++](https://gcc.gnu.org)  (For Windows and linux)
+- [ImageMagick](https://imagemagick.org)
+- [Inkscape](https://inkscape.org)
+- [libjpeg](https://www.ijg.org)
+- [librsvg2](https://gitlab.gnome.org/GNOME/librsvg)
+- [make](https://www.gnu.org/s/make)
+- [pandoc](https://pandoc.org/)
+- [gettext](https://www.gnu.org/s/gettext)
+- [libiconv](https://www.gnu.org/software/libiconv)
+- [Visual C++](https://docs.microsoft.com/fr-fr/cpp/) should be enough if you only want to compile under Windows, as .slnx/.vcxproj files are provided.
+
+###### To do:
+
+- *Add a feature to read and write vtt format (although tools like ffmpeg do the job)*
