@@ -15,8 +15,8 @@ snap {
 Function {make_window()} {open
 } {
   Fl_Window main_window {
-    xywh {2332 182 384 653} type Double resizable
-    code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0} visible
+    xywh {2332 182 384 653} type Double hide resizable
+    code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0}
   } {
     Fl_Group {} {open
       xywh {2 0 380 284}
@@ -284,7 +284,7 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
   }
   Fl_Window config_dialog {
     label Configuration open
-    xywh {2746 178 350 384} type Double resizable non_modal size_range {350 384 600 0} visible
+    xywh {2746 178 350 384} type Double hide resizable non_modal size_range {350 384 600 0}
   } {
     Fl_Button config_view {
       tooltip {Edit the configuration file..} image {../assets/svg_icons/modify - settings.svg} compress_image 1 xywh {278 2 66 24} labeltype NO_LABEL align 512
@@ -345,14 +345,14 @@ directory}
       }
     }
     Fl_Browser font_names {
-      label {Font names} selected
+      label {Font names}
       tooltip {Changes the font face for all the GUI labels
 And also for the subtitles editor field
 But not for the other fields} xywh {6 182 302 160} type Hold align 1 resizable
       class Fl_Browser_Key
     }
     Fl_Browser font_sizes {
-      label Sizes
+      label Sizes selected
       tooltip {Changes the font size for all the GUI labels
 And also for the subtitles editor field
 But not for the other fields} xywh {308 182 40 160} type Hold align 1

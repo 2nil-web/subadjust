@@ -4,8 +4,8 @@
 #include <FL/Fl_Int_Input.H>
 #include <FL/Fl_SVG_Image.H>
 
+#include "Fl_Browser_Keyboard.H"
 #include "Fl_Hover.H"
 #include "Fl_I18n.H"
-#include "Fl_Browser_Keyboard.H"
 #include "Fl_Time_Input.H"
 #endif /* FL_FLUID_H */
