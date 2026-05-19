@@ -329,7 +329,7 @@ msgid "Find"
 msgstr "Chercher"
 
 msgid "Find\nNext"
-msgstr "Checher\nSuivant"
+msgstr "Trouver\nSuivant"
 
 msgid "Replace"
 msgstr "Remplacer"
