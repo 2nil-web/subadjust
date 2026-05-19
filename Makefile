@@ -128,10 +128,13 @@ deliv : assets/${SETUP_PKG}
 
 
 # FLUID file rules
-${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_ui.cpp : assets/svg_icons/*.svg ${SRC_DIR}/Fl_Hover.H ${SRC_DIR}/Fl_I18n.H ${SRC_DIR}/Fl_Time_Input.H ${SRC_DIR}/${PREFIX}_ui.fl
+FL_FLUID_DEP=$(shell sed -n 's?^#include "\(.*\)"?src/\1?p' ${SRC_DIR}/Fl_Fluid.h | tr '\n' ' ')
+#${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_ui.cpp : assets/svg_icons/*.svg ${SRC_DIR}/Fl_Hover.H ${SRC_DIR}/Fl_I18n.H ${SRC_DIR}/Fl_I18n.H ${SRC_DIR}/Fl_Time_Input.H ${SRC_DIR}/${PREFIX}_ui.fl
+${SRC_DIR}/${PREFIX}_ui.cpp : assets/svg_icons/*.svg ${SRC_DIR}/Fl_Fluid.h ${FL_FLUID_DEP} ${SRC_DIR}/${PREFIX}_ui.fl
 	@echo "Fluid code generation"
 	@sed -i 's?image {\.\.\(.*\)/assets?image {../assets?' src/subadjust_ui.fl
 	cd ${SRC_DIR} && ${FLUID} -c -o .cpp ${PREFIX}_ui.fl
+
 
 ${SRC_DIR}/${PREFIX}.cpp ${SRC_DIR}/file_features.cpp ${SRC_DIR}/edit_features.cpp ${SRC_DIR}/pref.cpp : ${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_icon.h ${SRC_DIR}/${PREFIX}.ico
 
@@ -146,8 +149,10 @@ OBJS=$(SRCS:.cpp=.obj)
 OBJS:=$(subst ${SRC_DIR}/,${TARGET_DIR}/,${OBJS})
 MSVC_SLN=${PREFIX}.slnx
 ${TARGET} : ${SRC_DIR}/app_info_check.txt ${SRC_DIR}/app_info.h ${SRCS}
+	@echo "Building with Visual Studio"
 	@${MSBUILD} ${MSVC_SLN} -p:Configuration=Release
-	@echo "${TARGET} OK"
+	@echo "Build of ${TARGET} with Visual Studio is OK"
+	@echo "${SRCS}"
 else
 OBJS=$(SRCS:.cpp=.o)
 #OBJS:=$(addprefix  ${TARGET_DIR}/,${OBJS})
@@ -168,6 +173,8 @@ endif
 LINK     = $(CXX)
 ${TARGET} : ${OBJS}
 	$(LINK.cc) ${OBJS} $(LOADLIBES) $(LDLIBS) -o $@
+	@echo "Build of ${TARGET} with G++ is OK"
+	@echo "${SRCS}"
 endif
 
 ${TARGET_DIR}/${PREFIX}.d ${TARGET_DIR}/options.d : ${SRC_DIR}/app_info.h
@@ -213,7 +220,7 @@ clean :
 	 rm -f $(OBJS) $(SRCS:.cpp=.d) ${SRC_DIR}/${PREFIX}_ui.h ${SRC_DIR}/${PREFIX}_ui.cpp ${SRC_DIR}/*_icon.h ${SRC_DIR}/app_info_check.txt ${SRC_DIR}/app_info.h ${SRC_DIR}/app_info.json *~
 
 ifneq ($(MAKECMDGOALS),clean)
-# Implicit rule for building dep file from .c
+# Implicit rule for building dep file from .cpp
 ${TARGET_DIR}/%.d: ${SRC_DIR}/%.cpp
 	@echo Checking header dependencies from $<
 	@mkdir -p ${TARGET_DIR}
