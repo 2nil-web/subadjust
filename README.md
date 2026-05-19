@@ -104,3 +104,4 @@ Although not tested, but should behave the same way under macOS ...
 ###### To do:
 
 - *Add a feature to read and write vtt format (although tools like ffmpeg do the job)*
+- *Release with a setup and/or package*
