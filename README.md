@@ -102,5 +102,6 @@ Although not tested, but should behave the same way under macOS ...
 - [Visual C++](https://docs.microsoft.com/fr-fr/cpp/) should be enough if you only want to compile under Windows, as .slnx/.vcxproj files are provided.
 
 ###### To do:
+
 - *Add a feature to read and write vtt format (although tools like ffmpeg do the job)*
 - *Release with a setup and/or package*
