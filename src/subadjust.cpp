@@ -351,16 +351,17 @@ The configuration file is located there : ")EOF") +
     file_save->callback(SIMPLE_CB { srt_save(); });
     file_save_as->callback(SIMPLE_CB { file_handler(false); });
     file_reload->callback(SIMPLE_CB {
-      std::filesystem::path abs_path("");
-      if (file_path->value() != nullptr)
-        abs_path = std::filesystem::absolute(file_path->value());
-
-      // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
-      if (!abs_path.empty() && (!file_is_modified || fl_choice(_("It seems that the subtitle file has been modified.\nDo you still want to reload it ?"), _("No"), _("Yes"), 0L)))
+      std::string s = file_path->value();
+      if (!s.empty())
       {
-        gui_display(file_read(abs_path), false);
+        std::filesystem::path abs_path = std::filesystem::absolute(s);
+        // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
+        if (!abs_path.empty() && (!file_is_modified || fl_choice(_("It seems that the subtitle file has been modified.\nDo you still want to reload it ?"), _("No"), _("Yes"), 0L)))
+        {
+          gui_display(file_read(abs_path), false);
+        }
+        // sub_adjust->deactivate();
       }
-      // sub_adjust->deactivate();
     });
 
     app_save_quit->callback(SIMPLE_CB {

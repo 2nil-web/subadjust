@@ -356,13 +356,11 @@ void cui_display(bool file_read_ok, std::ostream &ofs)
 
 bool file_handler(bool for_read)
 {
-  logD("file_handler1");
   Fl_Native_File_Chooser fsel;
   int opts = Fl_Native_File_Chooser::Option::PREVIEW;
   int typ;
   std::string title;
 
-  logD("file_handler2");
   if (for_read)
   {
     typ = Fl_Native_File_Chooser::Type::BROWSE_FILE;
@@ -375,14 +373,12 @@ bool file_handler(bool for_read)
     title = "Define file to save";
   }
 
-  logD("file_handler3");
   fsel.options(opts);
   fsel.title(title.c_str());
   fsel.type(typ);
   fsel.filter(_("Subtitle files\t*.srt"));
   // fsel.directory("/var/tmp"); // default directory to use
 
-  logD("file_handler4");
   // Show file selector
   switch (fsel.show())
   {
@@ -409,7 +405,6 @@ bool file_handler(bool for_read)
     return true; // FILE CHOSEN
   }
 
-  logD("file_handler5");
   return false;
 }
 
