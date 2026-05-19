@@ -2,15 +2,15 @@
 
 ##### ***A graphical and command line tool to modify the timeline of subtitles files in .srt format***
 
-<small>*Actually available in 3 languages : english, french and spanish. But others could easily be added thanks to gettext.*</small>
+<sup><sub>*Actually available in 3 languages : english, french and spanish. But others could easily be added thanks to gettext.*</sub></sup>
 
-<small>*Available for Windows and Linux. Should also run under macOS.*</small>
+<sup><sub>*Available for Windows and Linux. Should also run under macOS.*</sub></sup>
 
 ##### ***You can download a binary version of this tool in the "[Release](https://github.com/2nil-web/subadjust/releases)" link.***
 
 After the download, just unzip and run it with .srt files.
 
-<small>Although compiled under Ubuntu, the Linux version should work on any decent and recent distro.</small>
+<sup><sub>Although compiled under Ubuntu, the Linux version should work on any decent and recent distro.</sub></sup>
 
 ### ***The Graphical User Interface aims to be self-explanatory***
 
