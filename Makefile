@@ -103,6 +103,9 @@ font_gui${EXEXT} : assets/font_gui.cpp
 font_list${EXEXT} : assets/font_list.cpp
 	${GXX_COMPILE} assets/font_list.cpp ${GXX_LINK_OPT} -o font_list${EXEXT}
 
+gen_subs${EXEXT} : assets/gen_subs.cpp
+	${GXX_COMPILE} assets/gen_subs.cpp ${GXX_LINK_OPT} -o gen_subs${EXEXT}
+
 
 SETUP_PKG=${PREFIX}-${VERSION}-${SYS_VER}.zip
 
@@ -179,7 +182,7 @@ endif
 
 ${TARGET_DIR}/${PREFIX}.d ${TARGET_DIR}/options.d : ${SRC_DIR}/app_info.h
 
-ALL_SRCS=$(wildcard ${SRC_DIR}/*.cpp) $(wildcard ${SRC_DIR}/*.h) $(wildcard ${SRC_DIR}/*.H)
+ALL_SRCS=$(wildcard ${SRC_DIR}/*.cpp) $(wildcard assets/*.cpp) $(wildcard ${SRC_DIR}/*.h) $(wildcard ${SRC_DIR}/*.H)
 format :
 	@echo "Formatting with clang, the following files: ${ALL_SRCS}"
 	@clang-format -style="{ BasedOnStyle: Microsoft, ColumnLimit: 256, IndentWidth: 2, TabWidth: 2, UseTab: Never }" --sort-includes -i ${ALL_SRCS}

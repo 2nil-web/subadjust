@@ -25,7 +25,7 @@ struct sfont_info
   std::vector<int> sizes;
 };
 
-void get_fonts_info(std::vector<sfont_info> &fis, bool only_normal=false, bool only_any_size=false)
+void get_fonts_info(std::vector<sfont_info> &fis, bool only_normal = false, bool only_any_size = false)
 {
   int k = Fl::set_fonts();
 
@@ -81,10 +81,12 @@ int main()
   {
     std::cout << fi.number << "; " << fi.name << "; " << fi.attr << "; " << fi.sattr << "; ";
 
-    if (fi.any_size) std::cout << "Any size";
+    if (fi.any_size)
+      std::cout << "Any size";
     else if (fi.sizes.size() > 0)
     {
-      for (auto size : fi.sizes) std::cout << size << ", ";
+      for (auto size : fi.sizes)
+        std::cout << size << ", ";
     }
 
     std::cout << std::endl;

@@ -391,7 +391,6 @@ void sync(Fl_Widget *, void *)
 {
   if (!file_handler(eHandlingType::SYNC) || csub.sync_with.empty())
   {
-    logD("SYNC: !file_handler(eHandlingType::SYNC) || csub.sync_with.empty()");
     return;
   }
 
@@ -404,7 +403,6 @@ void sync(Fl_Widget *, void *)
   txt_buf2.transcoding_warning_action = nullptr;
   if (txt_buf2.loadfile(csub.sync_with.string().c_str()) != 0)
   {
-    logD("SYNC: ", my_strerror(errno));
     fl_alert(_("Unable to load file [%s] to sync with. Error message is: %s"), csub.sync_with.string().c_str(), my_strerror(errno));
     return;
   }
@@ -413,12 +411,9 @@ void sync(Fl_Widget *, void *)
   {
     if (!srt_save())
     {
-      logD("SYNC: !srt_save()");
       return;
     }
   }
-
-  logD("SYNC: ready");
 
   csub.sync(txt_buf.text(), txt_buf2.text());
   int ns = (int)csub.vec().size();

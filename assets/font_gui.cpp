@@ -172,7 +172,7 @@ void create_font_display()
 void create_font_selector()
 {
   font_sel_win = new Fl_Double_Window(550, 200);
-  //font_sel_win->clear_border();
+  // font_sel_win->clear_border();
   Fl_Group *fontgroup = new Fl_Group(0, 0, 550, 185);
   fontgroup->box(FL_FLAT_BOX);
   fontobj = new Fl_Hold_Browser(10, 5, 390, 170);
@@ -235,22 +235,22 @@ void create_font_selector()
       }
     }
     std::cout << std::endl;
-  }/*
-  fontobj->value(1);
-  font_cb(fontobj, 0);*/
+  } /*
+   fontobj->value(1);
+   font_cb(fontobj, 0);*/
 }
 
 int main(int argc, char **argv)
-{/*
-  Fl::scheme(NULL);
-  Fl::args_to_utf8(argc, argv);
-  Fl::args(argc, argv);
-  Fl::get_system_colors();*/
+{ /*
+   Fl::scheme(NULL);
+   Fl::args_to_utf8(argc, argv);
+   Fl::args(argc, argv);
+   Fl::get_system_colors();*/
 
   create_font_display();
   create_font_selector();
 
-  form->show(argc,argv);
+  form->show(argc, argv);
   font_sel_win->show(argc, argv);
   return Fl::run();
 }

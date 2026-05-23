@@ -198,6 +198,7 @@ void cSub::sync(const std::string s1, const std::string s2)
   std::vector<sSub> sub_vec2 = to_vec(s2);
 
   // A FAIRE : aligner la time line de sub_vec avec celle de sub_vec2
+  logD("SYNC: début alignement time line");
 }
 
 void cSub::sync(const char *s1, const char *s2)
