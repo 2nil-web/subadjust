@@ -354,23 +354,30 @@ void cui_display(bool file_read_ok, std::ostream &ofs)
   }
 }
 
-bool file_handler(bool for_read)
+bool file_handler(eHandlingType ht)
 {
   Fl_Native_File_Chooser fsel;
   int opts = Fl_Native_File_Chooser::Option::PREVIEW;
   int typ;
   std::string title;
 
-  if (for_read)
+  switch (ht)
   {
-    typ = Fl_Native_File_Chooser::Type::BROWSE_FILE;
-    title = "Pick file to load";
-  }
-  else
-  {
+  case eHandlingType::WRITE:
     opts |= Fl_Native_File_Chooser::Option::SAVEAS_CONFIRM | Fl_Native_File_Chooser::Option::NEW_FOLDER | Fl_Native_File_Chooser::Option::PREVIEW;
     typ = Fl_Native_File_Chooser::Type::BROWSE_SAVE_FILE;
-    title = "Define file to save";
+    title = _("Define file to save");
+    break;
+  case eHandlingType::SYNC:
+    typ = Fl_Native_File_Chooser::Type::BROWSE_FILE;
+    title = _("Pick a file to use for synchronization");
+    break;
+
+  case eHandlingType::READ:
+  default:
+    typ = Fl_Native_File_Chooser::Type::BROWSE_FILE;
+    title = _("Pick a file to load");
+    break;
   }
 
   fsel.options(opts);
@@ -391,16 +398,24 @@ bool file_handler(bool for_read)
     break; // CANCEL
   default:
     logT("PICKED: %s\n", fsel.filename());
-    if (for_read)
+    switch (ht)
     {
+    case eHandlingType::READ:
       if (!current_abs_path.empty())
         remove_opened(current_abs_path);
+      file_path->value(std::filesystem::absolute(fsel.filename()).string().c_str());
       gui_display(file_read(fsel.filename()));
-    }
-    else
-      file_write(fsel.filename());
+      break;
 
-    file_path->value(std::filesystem::absolute(fsel.filename()).string().c_str());
+    case eHandlingType::WRITE:
+      file_write(fsel.filename());
+      file_path->value(std::filesystem::absolute(fsel.filename()).string().c_str());
+      break;
+
+    case eHandlingType::SYNC:
+      csub.sync_with = fsel.filename();
+      break;
+    }
 
     return true; // FILE CHOSEN
   }
@@ -411,9 +426,9 @@ bool file_handler(bool for_read)
 bool srt_save()
 {
   if (file_path->value() == nullptr)
-    return file_handler(false);
+    return file_handler(eHandlingType::WRITE);
   std::string filename = file_path->value();
   if (filename.empty())
-    return file_handler(false);
+    return file_handler(eHandlingType::WRITE);
   return file_write(filename);
 }

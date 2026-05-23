@@ -345,11 +345,11 @@ The configuration file is located there : ")EOF") +
       }
       logD("FILE OPEN2");
 
-      file_handler(true);
+      file_handler(eHandlingType::READ);
     });
 
     file_save->callback(SIMPLE_CB { srt_save(); });
-    file_save_as->callback(SIMPLE_CB { file_handler(false); });
+    file_save_as->callback(SIMPLE_CB { file_handler(eHandlingType::WRITE); });
     file_reload->callback(SIMPLE_CB {
       std::string s = file_path->value();
       if (!s.empty())
@@ -421,6 +421,7 @@ The configuration file is located there : ")EOF") +
 
     sub_adjust->callback(subadjust);
     sub_reparse->callback(reparse);
+    sub_sync->callback(sync);
 
     to_line(1);
     std::string font_name = pref_get_string("font name", "");

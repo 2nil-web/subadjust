@@ -198,6 +198,21 @@ msgid ""
 msgstr ""
 "Se perderán los cambios. ¿Aún desea abrir otro archivo?"
 
+msgid "Do you want to save the file before syncing it ?"
+msgstr "¿Desea guardar el archivo antes de sincronizarlo?"
+
+msgid "Pick a file to use for synchronization"
+msgstr "Seleccione un archivo para usar en la sincronización."
+
+msgid "Pick a file to load"
+msgstr "Seleccione un archivo para cargar"
+
+msgid "Define file to save"
+msgstr "Define el archivo que se va a guardar"
+
+msgid "Unable to load file [%s] to sync with, error message is: "
+msgstr ""
+
 msgid " [OPTIONS] ARGUMENT\n"
 msgstr "[OPCIONES] ARGUMENTO\n"
 
@@ -209,6 +224,9 @@ msgstr "', se ignora este comando."
 
 msgid "', ignoring this option."
 msgstr "', se ignora esta opción."
+
+msgid "Unable to load file [%s] to sync with. Error message is: %s"
+msgstr "No se pudo cargar el archivo [%s] para la sincronización. Mensaje de error: %s"
 
 msgid "Available commands and their shortcut\n"
 msgstr "Comandos disponibles y sus atajos\n"
@@ -308,6 +326,9 @@ msgstr "Ajuste"
 
 msgid "Reparse"
 msgstr "Reanalizar"
+
+msgid "Sync"
+msgstr "Synchro"
 
 msgid "Limits"
 msgstr "Límites"

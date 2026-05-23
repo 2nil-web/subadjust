@@ -211,6 +211,21 @@ msgid ""
 msgstr ""
 "Vos modifications seront perdues. Voulez-vous tout de même ouvrir un autre fichier ?"
 
+msgid "Do you want to save the file before syncing it ?"
+msgstr "Voulez-vous enregistrer le fichier avant de le synchroniser ?"
+
+msgid "Pick a file to use for synchronization"
+msgstr "Choisissez un fichier à utiliser pour la synchronisation"
+
+msgid "Pick a file to load"
+msgstr "Sélectionnez un fichier à charger"
+
+msgid "Define file to save"
+msgstr "Définir le fichier à enregistrer"
+
+msgid "Unable to load file [%s] to sync with. Error message is: %s"
+msgstr "Impossible de charger le fichier [%s] pour la synchronisation. Message d'erreur : %s"
+
 msgid " [OPTIONS] ARGUMENT\n"
 msgstr ""
 
@@ -321,6 +336,9 @@ msgstr "Ajustement"
 
 msgid "Reparse"
 msgstr "Réanalyse"
+
+msgid "Sync"
+msgstr "Synchro"
 
 msgid "Limits"
 msgstr "Limites"

@@ -23,7 +23,7 @@ Setting fltk for Linux (Ubuntu-24.04) :
   - librsvg2-bin (for subadjust delivery)
   - apt install texworks texlive-latex-recommended -y (same)
   - waylandpp-dev
-  - aptinstall libwayland-bin libwayland-client0 libwayland-cursor0 libwayland-dev libwayland-egl1 libwayland-server0 wayland-protocols
+  - apt install libwayland-bin libwayland-client0 libwayland-cursor0 libwayland-dev libwayland-egl1 libwayland-server0 wayland-protocols
   - librsvg2-dev
   - libx11-dev
   - libgl1-mesa-dev
@@ -61,6 +61,6 @@ Setting fltk for Windows 11 and msvc 2026 (using dev prompt for VS 18) :
  > cmake --build build%VERS% --config Debug --target INSTALL
  > cmake --build build%VERS% --config Release --target INSTALL
 * Install :
- > cmake --install build%VERS%
+ > sudo cmake --install build%VERS%
 
 Setting for Windows can also be done done with MSys2 (Or Cygwin although I'm not using it anymore)

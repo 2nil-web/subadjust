@@ -1,4 +1,5 @@
 
+#include <cstring>
 #include <functional>
 #include <iostream>
 #include <regex>
@@ -383,6 +384,48 @@ void reparse(Fl_Widget *, void *)
   txt_buf.replace(0, (int)csub.str().size(), csub.c_str());
 
   csub.parse(txt_buf.text());
+  reset_param();
+}
+
+void sync(Fl_Widget *, void *)
+{
+  if (!file_handler(eHandlingType::SYNC) || csub.sync_with.empty())
+  {
+    logD("SYNC: !file_handler(eHandlingType::SYNC) || csub.sync_with.empty()");
+    return;
+  }
+
+  // Convert sync_with path to absolute, if necessary
+  if (!csub.sync_with.is_absolute())
+    csub.sync_with = std::filesystem::absolute(csub.sync_with);
+
+  // Load file use to sync as Fl_Text_Buffer
+  Fl_Text_Buffer txt_buf2;
+  txt_buf2.transcoding_warning_action = nullptr;
+  if (txt_buf2.loadfile(csub.sync_with.string().c_str()) != 0)
+  {
+    logD("SYNC: ", my_strerror(errno));
+    fl_alert(_("Unable to load file [%s] to sync with. Error message is: %s"), csub.sync_with.string().c_str(), my_strerror(errno));
+    return;
+  }
+
+  if (file_is_modified && fl_choice(_("Do you want to save the file before syncing it ?"), _("No"), _("Yes"), 0L))
+  {
+    if (!srt_save())
+    {
+      logD("SYNC: !srt_save()");
+      return;
+    }
+  }
+
+  logD("SYNC: ready");
+
+  csub.sync(txt_buf.text(), txt_buf2.text());
+  int ns = (int)csub.vec().size();
+  if (goto_sub->maximum() > (int)ns)
+    goto_sub->maximum((int)ns);
+  txt_buf.replace(0, (int)csub.str().size(), csub.c_str());
+
   reset_param();
 }
 

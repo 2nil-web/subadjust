@@ -31,6 +31,7 @@ void re_replace_next(Fl_Widget *, void *);
 void re_replace_all(Fl_Widget *, void *);
 void reset_param();
 void reparse(Fl_Widget *w = nullptr, void *v = nullptr);
+void sync(Fl_Widget *w = nullptr, void *v = nullptr);
 void delete_first_sub(Fl_Widget *, void *);
 void delete_last_sub(Fl_Widget *, void *);
 #endif /* EDIT_FEATURES_H */

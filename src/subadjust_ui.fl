@@ -14,7 +14,7 @@ snap {
 }
 Function {make_window()} {open
 } {
-  Fl_Window main_window {
+  Fl_Window main_window {open
     xywh {2332 182 384 653} type Double resizable
     code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0} visible
   } {
@@ -136,62 +136,67 @@ You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/de
       } {
         Fl_Group {} {
           label Limits open
-          xywh {173 205 205 76} box BORDER_FRAME color 37 labelfont 3 align -207
+          xywh {150 205 222 76} box BORDER_FRAME color 37 labelfont 3 align -207
         } {
           Fl_Input time_start {
             label {    }
-            tooltip {Modify the start time of the subtitle file} xywh {236 225 138 22} labeltype NO_LABEL align 516 when 1
+            tooltip {Modify the start time of the subtitle file} xywh {225 225 138 22} labeltype NO_LABEL align 516 when 1
             class Fl_Time_Input
           }
           Fl_Input time_end {
             label { }
-            tooltip {Modify the end time of the subtitle file} xywh {236 250 138 22} labeltype NO_LABEL align 260 when 1
+            tooltip {Modify the end time of the subtitle file} xywh {225 250 138 22} labeltype NO_LABEL align 260 when 1
             class Fl_Time_Input
           }
           Fl_Box {} {
-            tooltip {Modify the start time of the subtitle file} image {../assets/svg_icons/limit begin.svg} compress_image 1 xywh {175 218 60 29} box BORDER_FRAME color 221 labelsize 10 align 516
+            tooltip {Modify the start time of the subtitle file} image {../assets/svg_icons/limit begin.svg} compress_image 1 xywh {152 218 68 29} box BORDER_FRAME color 221 labelsize 10 align 516
           }
           Fl_Box {} {
-            tooltip {Modify the end time of the subtitle file} image {../assets/svg_icons/limit end.svg} compress_image 1 xywh {175 247 60 29} box BORDER_FRAME color 221 labelsize 10 align 520
+            tooltip {Modify the end time of the subtitle file} image {../assets/svg_icons/limit end.svg} compress_image 1 xywh {152 247 68 29} box BORDER_FRAME color 221 labelsize 10 align 520
           }
         }
         Fl_Group {} {
           label Coefficients open
           tooltip {Begin and end offsets are in floating point seconds.
-They are added to their corresponding time limit} xywh {4 167 167 110} box BORDER_FRAME color 37 labelfont 3 align -207
+They are added to their corresponding time limit} xywh {4 167 141 110} box BORDER_FRAME color 37 labelfont 3 align -207
         } {
           Fl_Input offset_start {
-            tooltip {An offset that applies to the beginning of the sub,  in floating point seconds} xywh {88 221 79 22} labeltype NO_LABEL when 5
+            tooltip {An offset that applies to the beginning of the sub,  in floating point seconds} xywh {80 221 63 22} labeltype NO_LABEL when 5
             class Fl_Float_Input_L10n
           }
           Fl_Input offset_stop {
-            tooltip {An offset that applies to the end of the sub,  in floating seconds} xywh {88 250 79 22} labeltype NO_LABEL when 5
+            tooltip {An offset that applies to the end of the sub,  in floating seconds} xywh {80 250 63 22} labeltype NO_LABEL when 5
             class Fl_Float_Input_L10n
           }
           Fl_Input dur_coeff {
-            tooltip {A coefficient that allows to grow or shrink the sub duration} xywh {79 189 88 22} labeltype NO_LABEL when 5
+            tooltip {A coefficient that allows to grow or shrink the sub duration} xywh {71 189 72 22} labeltype NO_LABEL when 5
             class Fl_Float_Input_L10n
           }
           Fl_Box {} {
             label {Duration
 factor}
-            tooltip {A coefficient that allows to grow or shrink the sub duration} image {../assets/svg_icons/duration factor.svg} compress_image 1 xywh {4 183 74 36} box BORDER_FRAME color 220 labeltype NO_LABEL align 514
+            tooltip {A coefficient that allows to grow or shrink the sub duration} image {../assets/svg_icons/duration factor.svg} compress_image 1 xywh {4 183 66 36} box BORDER_FRAME color 220 labeltype NO_LABEL align 514
           }
           Fl_Box {} {
             label {Begin and
 end offsets
 (in seconds)}
-            image {../assets/svg_icons/begin & end offset.svg} compress_image 1 xywh {4 220 82 56} box BORDER_FRAME color 228 labeltype NO_LABEL align 512
+            image {../assets/svg_icons/begin & end offset.svg} compress_image 1 xywh {4 220 74 52} box BORDER_FRAME color 228 labeltype NO_LABEL align 512
           }
         }
         Fl_Button sub_adjust {
           label Adjustment
-          tooltip {Will adjust the subtitles text according to the limits, offsets or duration coefficient, settings.} xywh {176 169 102 30} labelfont 1 labelsize 15
+          tooltip {Will adjust the subtitles text according to the limits, offsets or duration coefficient, settings.} xywh {147 170 90 28} labelfont 1 labelsize 15
           class Fl_Button_Hover
         }
         Fl_Button sub_reparse {
           label Reparse
-          tooltip {Will forcibly parse the subtitles text and accordingly modify the settings} xywh {293 170 83 28} labelsize 15
+          tooltip {Will forcibly parse the subtitles text and accordingly modify the settings} xywh {238 170 75 28} labelsize 15
+          class Fl_Button_Hover
+        }
+        Fl_Button sub_sync {
+          label Sync
+          tooltip {Will forcibly parse the subtitles text and accordingly modify the settings} xywh {314 170 63 28} labelsize 15
           class Fl_Button_Hover
         }
       }
@@ -277,7 +282,7 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
         class Fl_Output_L10n
       }
     }
-    Fl_Text_Editor file_content {
+    Fl_Text_Editor file_content {selected
       xywh {4 391 376 259} selection_color 89 labeltype NO_LABEL align 517 resizable
       class Fl_Text_Editor_L10n
     }
@@ -290,7 +295,7 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
       tooltip {Edit the configuration file..} image {../assets/svg_icons/modify - settings.svg} compress_image 1 xywh {278 2 66 24} labeltype NO_LABEL align 512
       class Fl_Button_Hover
     }
-    Fl_Group {} {open selected
+    Fl_Group {} {open
       xywh {2 2 346 110}
     } {
       Fl_Choice theme_choice {

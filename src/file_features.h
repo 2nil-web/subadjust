@@ -8,6 +8,13 @@
 #include "subs.h"
 #include "utils.h"
 
+enum eHandlingType
+{
+  WRITE = 0,
+  READ = 1,
+  SYNC = 2
+};
+
 extern Fl_Text_Buffer txt_buf;
 extern bool file_is_modified;
 extern cSub csub;
@@ -24,7 +31,7 @@ void pre_process(int, int, int, int, int);
 void gui_display(bool, bool test_already_opened = true);
 void cui_display(bool, std::ostream &);
 
-bool file_handler(bool for_read = true);
+bool file_handler(eHandlingType ht = eHandlingType::WRITE);
 bool srt_save();
 void remove_opened(std::filesystem::path);
 void remove_opened(bool all = false);

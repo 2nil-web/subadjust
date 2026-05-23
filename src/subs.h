@@ -21,8 +21,8 @@ class cSub
 private:
   static const std::regex re_index;
   static const std::regex re_times;
-  std::vector<sSub> to_vec();
-  std::string to_str(bool dot);
+  std::vector<sSub> to_vec(const std::string);
+  std::string to_str(const std::vector<sSub>, bool dot);
   size_t linecount(const std::string);
   std::string sub_str;
   size_t nlines;
@@ -35,10 +35,15 @@ public:
   const char *c_str();
   std::vector<sSub> vec();
   std::string err_msg;
+  std::filesystem::path sync_with;
 
   // Parse parameter and store resulting vector and string
   void parse(const std::string);
   void parse(const char *);
+
+  void sync(const std::string s1, const std::string s2);
+  void sync(const char *s1, const char *s2);
+
   // Compute the sub parameters
   void factors(const int begin_stamp, const int end_stamp, int &offset_start, int &offset_stop, double &coeff);
   // Adjust the sub according to the passed parameters

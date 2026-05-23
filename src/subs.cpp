@@ -25,9 +25,9 @@ std::vector<sSub> cSub::vec()
   return sub_vec;
 }
 
-std::vector<sSub> cSub::to_vec()
+std::vector<sSub> cSub::to_vec(const std::string _sub_str)
 {
-  if (sub_str.empty())
+  if (_sub_str.empty())
     return {};
 
   std::vector<sSub> _vec;
@@ -35,10 +35,10 @@ std::vector<sSub> cSub::to_vec()
   sSub one_sub = {};
 
   std::string _str;
-  if (sub_str.back() == '\n')
-    _str = sub_str;
+  if (_sub_str.back() == '\n')
+    _str = _sub_str;
   else
-    _str = sub_str + '\n';
+    _str = _sub_str + '\n';
   auto vsub = split(_str, '\n');
   bool has_started_sub = false;
   std::string ssub;
@@ -95,17 +95,17 @@ const std::regex cSub::re_index("(\\d+)");
 // const std::regex cSub::re_times("(\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d)[^\\S\\n]+-->[^\\S\\n]+(\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d)");
 const std::regex cSub::re_times("(.*:.*:.*..*)[^\\S\\n]+-->[^\\S\\n]+(.*:.*:.*..*)");
 
-std::string cSub::to_str(bool dot)
+std::string cSub::to_str(const std::vector<sSub> vec, bool dot)
 {
-  if (sub_vec.empty())
+  if (vec.empty())
     return "";
 
   std::stringstream ss;
-  for (size_t i = 0; i < sub_vec.size(); i++)
+  for (size_t i = 0; i < vec.size(); i++)
   {
     ss << i + 1 << std::endl;
-    ss << ms_to_str(sub_vec[i].appearance, dot) << " --> " << ms_to_str(sub_vec[i].disappearance, dot) << std::endl;
-    ss << sub_vec[i].text << std::endl;
+    ss << ms_to_str(vec[i].appearance, dot) << " --> " << ms_to_str(vec[i].disappearance, dot) << std::endl;
+    ss << vec[i].text << std::endl;
   }
 
   return trim(ss.str());
@@ -179,9 +179,8 @@ size_t cSub::linecount(const std::string s)
 
 void cSub::parse(const std::string s)
 {
-  sub_str = s;
-  sub_vec = to_vec();
-  sub_str = to_str(dot);
+  sub_vec = to_vec(s);
+  sub_str = to_str(sub_vec, dot);
   nlines = linecount(sub_str);
 }
 
@@ -191,6 +190,20 @@ void cSub::parse(const char *s)
     parse("");
   else
     parse(std::string(s));
+}
+
+void cSub::sync(const std::string s1, const std::string s2)
+{
+  parse(s1);
+  std::vector<sSub> sub_vec2 = to_vec(s2);
+
+  // A FAIRE : aligner la time line de sub_vec avec celle de sub_vec2
+}
+
+void cSub::sync(const char *s1, const char *s2)
+{
+  if (s1 && s2)
+    sync(std::string(s1), std::string(s2));
 }
 
 bool cSub::diff(const std::string before_parse)
@@ -296,7 +309,7 @@ bool cSub::adjust(const int time_start, const int time_end, const double _offset
       sub_vec = new_sub_vec;
       new_time_end++;
     } while (new_sub_vec.back().appearance < time_end);
-    sub_str = to_str(dot);
+    sub_str = to_str(sub_vec, dot);
     return true;
   }
   else
