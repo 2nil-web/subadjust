@@ -1,6 +1,12 @@
 
+#include <climits>
+#include <cstddef>
+#include <cstdlib>
+#include <iomanip>
 #include <iostream>
+#include <limits>
 #include <sstream>
+#include <type_traits>
 
 #include "log.h"
 #include "subs.h"
@@ -39,6 +45,7 @@ std::vector<sSub> cSub::to_vec(const std::string _sub_str)
     _str = _sub_str;
   else
     _str = _sub_str + '\n';
+
   auto vsub = split(_str, '\n');
   bool has_started_sub = false;
   std::string ssub;
@@ -111,6 +118,34 @@ std::string cSub::to_str(const std::vector<sSub> vec, bool dot)
   return trim(ss.str());
 }
 
+std::string cSub::to_csv_apart(const std::vector<sSub> vec, bool dot)
+{
+  if (vec.empty())
+    return "";
+
+  const std::string sep = ";", delim = "\"", sd = sep + delim, ds = delim + sep;
+
+  std::stringstream ss;
+  ss << "index" << sep << "start time" << sep << "end time" << sep << "text" << std::endl;
+
+  for (size_t i = 0; i < vec.size(); i++)
+  {
+    ss << i + 1 << sd << ms_to_str(vec[i].appearance, dot) << ds << delim << ms_to_str(vec[i].disappearance, dot) << ds;
+    std::string s = vec[i].text;
+    s = trim(s);
+    s = replace_string(s, delim, delim + delim);
+    //    s=replace_string(s, "\'", "\\\'");
+    ss << delim << s << delim << std::endl;
+  }
+
+  return ss.str();
+}
+
+std::string cSub::to_csv()
+{
+  return to_csv_apart(sub_vec, dot);
+}
+
 int cSub::line_by_timestamp(int to_find, sSub &ssub)
 {
   auto vsub = split(sub_str, '\n');
@@ -177,11 +212,17 @@ size_t cSub::linecount(const std::string s)
   return nl;
 }
 
+void cSub::parse_apart(std::string &s, std::vector<sSub> &v, size_t &nl)
+{
+  v = to_vec(s);
+  s = to_str(v, dot);
+  nl = linecount(s);
+}
+
 void cSub::parse(const std::string s)
 {
-  sub_vec = to_vec(s);
-  sub_str = to_str(sub_vec, dot);
-  nlines = linecount(sub_str);
+  sub_str = s;
+  parse_apart(sub_str, sub_vec, nlines);
 }
 
 void cSub::parse(const char *s)
@@ -192,25 +233,106 @@ void cSub::parse(const char *s)
     parse(std::string(s));
 }
 
-// Return true if sync modifies the current subtitles, else false
-bool cSub::sync(const std::string s1, const std::string s2)
+// Find and return the closest appearance and disappearance to app and dis in v
+void cSub::find_closest_times(int &app, int &dis, const std::vector<sSub> v)
 {
-  parse(s1);
-  std::vector<sSub> sub_vec2 = to_vec(s2);
+  constexpr unsigned int max_uint{
+#ifdef _MSVC_LANG
+      UINT_MAX
+#else
+      std::numeric_limits<unsigned int>::max()
+#endif
+  };
 
-  // A FAIRE : aligner la time line de sub_vec avec celle de sub_vec2
-  logD("SYNC: début alignement time line");
+  int _app = app, _dis = dis;
+  unsigned int diff_app = max_uint, diff_dis = max_uint;
 
-  std::string sub_str2 = to_str(sub_vec2, dot);
-
-  if (sub_str != sub_str2)
+  for (auto s : v)
   {
-    sub_str = sub_str2;
-    sub_vec = sub_vec2;
-    return true;
+    unsigned int curr_diff_app = std::abs(app - s.appearance);
+
+    if (diff_app > curr_diff_app)
+    {
+      diff_app = curr_diff_app;
+      _app = s.appearance;
+    }
+
+    unsigned int curr_diff_dis = std::abs(dis - s.disappearance);
+
+    if (diff_dis > curr_diff_dis)
+    {
+      diff_dis = curr_diff_dis;
+      _dis = s.disappearance;
+    }
   }
 
-  return false;
+  app = _app;
+  dis = _dis;
+}
+
+// Return true if sync modifies the subtitles contained within s1 with the one contained within s2, else false
+bool cSub::sync(const std::string _s1, const std::string _s2)
+{
+  if (_s1 == _s2)
+    return false;
+
+  std::vector<sSub> v1;
+  std::string s1 = _s1;
+  size_t nl1;
+
+  parse_apart(s1, v1, nl1);
+
+  // Nothing has changed with the parsing
+  if (s1 == _s1)
+    return false;
+
+  std::vector<sSub> v2;
+  std::string s2 = _s2;
+  size_t nl2;
+  parse_apart(s2, v2, nl2);
+
+  adjust_apart(s1, v1, v2[0].appearance, v2.back().disappearance);
+
+  // Nothing has changed with the adjusting
+  if (s1 == _s1)
+    return false;
+
+  if (my_getenv("NO_ALIGN").empty())
+  {
+    // Aligne la time line de v1 avec celle de v2
+    logD("SYNC: début de l'alignement de la time line v1 sur celle de v2");
+
+    for (size_t i = 1; i < v1.size() - 1; i++)
+    {
+      int app = v1[i].appearance, dis = v1[i].disappearance;
+      logD("Avant find_closest_times[", i, "]: ", ms_to_str(app), "(", app, ")==>", ms_to_str(dis), "(", dis, ")");
+      find_closest_times(app, dis, v2);
+
+      // Pour éviter d'avoir les même time line sur plusieurs sub consécutifs
+      while (app <= v1[i - 1].disappearance || app >= v1[i + 1].appearance)
+        app = (v1[i - 1].disappearance + app + v1[i + 1].appearance) / 3;
+      while (dis <= app || dis >= v1[i + 1].appearance)
+        dis = (app + dis + v1[i + 1].appearance) / 3;
+
+      logD("Après find_closest_times[", i, "]: ", ms_to_str(app), "(", app, ")==>", ms_to_str(dis), "(", dis, ")");
+
+      v1[i].appearance = app;
+      v1[i].disappearance = dis;
+    }
+    logD("SYNC:   fin de l'alignement de la time line v1 sur celle de v2");
+  }
+
+  s1 = to_str(v1, dot);
+  // Nothing has changed with the syncing
+  if (s1 == _s1)
+    return false;
+
+  // Something has changed with the syncing
+  sub_vec = v1;
+  sub_str = to_str(sub_vec, dot);
+  nlines = linecount(sub_str);
+
+  return true;
 }
 
 bool cSub::sync(const char *s1, const char *s2)
@@ -251,11 +373,14 @@ void cSub::factors(const int begin_stamp, const int end_stamp, int &offset_start
 }
 
 // begin_stamp and end_stamp in milliseconds. _offset_start and _offset_stop in floating point seconds. coeff being just a floating point number
-bool cSub::adjust(const int time_start, const int time_end, const double _offset_start, const double _offset_stop, const double coeff)
+bool cSub::adjust_apart(std::string &_str, std::vector<sSub> &_vec, const int time_start, const int time_end, const double _offset_start, const double _offset_stop, const double coeff)
 {
+  logD("adjust_apart: start");
+
   if (coeff <= 0)
   {
     err_msg = "Duration factor cannot be less or equal to zero";
+    logE("adjust_apart1: false", err_msg);
     return false;
   }
 
@@ -266,6 +391,7 @@ bool cSub::adjust(const int time_start, const int time_end, const double _offset
   if (new_time_start > 356400000)
   {
     err_msg = "Begin limit would result in being greater than 99 hours";
+    logE("adjust_apart2: false", err_msg);
     return false;
   }
 
@@ -277,10 +403,10 @@ bool cSub::adjust(const int time_start, const int time_end, const double _offset
     offset_start -= new_time_start;
     new_time_start = 0;
     err_msg = "Found a negative start time that has been reset to zero";
-    logW(err_msg);
+    logW("adjust_apart1: false", err_msg);
   }
 
-  if (sub_vec.size() > 0)
+  if (_vec.size() > 0)
   {
     double new_time_end = time_end;
 
@@ -291,49 +417,58 @@ bool cSub::adjust(const int time_start, const int time_end, const double _offset
       double new_duration = coeff * ((offset_stop + new_time_end) - new_time_start);
       new_sub_vec.clear();
 
-      double old_duration = sub_vec.back().appearance - sub_vec[0].appearance;
+      double old_duration = _vec.back().appearance - _vec[0].appearance;
       double new_coeff = new_duration / old_duration;
-      double new_disappearance = new_time_start + new_coeff * (sub_vec[0].disappearance - sub_vec[0].appearance);
+      double new_disappearance = new_time_start + new_coeff * (_vec[0].disappearance - _vec[0].appearance);
 
-      new_sub_vec.push_back({1, (int)std::trunc(new_time_start), (int)std::trunc(new_disappearance), sub_vec[0].text});
+      new_sub_vec.push_back({1, (int)std::trunc(new_time_start), (int)std::trunc(new_disappearance), _vec[0].text});
 
-      if (sub_vec.size() > 1)
+      if (_vec.size() > 1)
       {
         double new_appearance;
         int j = 1;
 
-        for (size_t i = 1; i < sub_vec.size(); i++)
+        for (size_t i = 1; i < _vec.size(); i++)
         {
-          new_appearance = (double)new_sub_vec.back().appearance + new_coeff * (sub_vec[i].appearance - sub_vec[i - 1].appearance);
-          new_disappearance = new_appearance + new_coeff * (sub_vec[i].disappearance - sub_vec[i].appearance);
+          new_appearance = (double)new_sub_vec.back().appearance + new_coeff * (_vec[i].appearance - _vec[i - 1].appearance);
+          new_disappearance = new_appearance + new_coeff * (_vec[i].disappearance - _vec[i].appearance);
 
           // Does not accept any timestamp greater than 99 hours
           if (new_appearance > 356400000 || new_disappearance > 356400000)
           {
             err_msg = "Cannot accept subtitle processing that would results having one of its timestamp greater than 99 hours";
-            logE(err_msg);
+            logE("adjust_apart3: false", err_msg);
             return false;
           }
 
-          if (!trim(sub_vec[i].text).empty())
-            new_sub_vec.push_back({j++, (int)std::trunc(new_appearance), (int)std::trunc(new_disappearance), sub_vec[i].text});
+          if (!trim(_vec[i].text).empty())
+            new_sub_vec.push_back({j++, (int)std::trunc(new_appearance), (int)std::trunc(new_disappearance), _vec[i].text});
         }
       }
 
-      sub_vec.clear();
-      sub_vec = new_sub_vec;
+      _vec.clear();
+      _vec = new_sub_vec;
       new_time_end++;
     } while (new_sub_vec.back().appearance < time_end);
-    sub_str = to_str(sub_vec, dot);
+    _str = to_str(_vec, dot);
+
+    logD("adjust_apart5: true");
     return true;
   }
   else
   {
     err_msg = "subtitle text is empty";
-    logW(err_msg);
+    logW("adjust_apart2: ", err_msg);
   }
 
+  logW("adjust_apart3: false", err_msg);
   return false;
+}
+
+bool cSub::adjust(const int time_start, const int time_end, const double offset_start, const double offset_stop, const double coeff)
+{
+  logD("adjust:");
+  return adjust_apart(sub_str, sub_vec, time_start, time_end, offset_start, offset_stop, coeff);
 }
 
 cSub::cSub(const std::string s, bool _dot)

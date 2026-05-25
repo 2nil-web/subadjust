@@ -41,6 +41,10 @@ Function {make_window()} {open
           label {Save As ...}
           image {../assets/svg_icons/save as.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x50073 divider
         }
+        MenuItem file_to_csv {
+          label {Export to CSV ...} selected
+          image {../assets/svg_icons/save as.svg} compress_image 1 xywh {10 10 100 20} shortcut 0x50073 divider
+        }
         MenuItem file_reload {
           label Reload
           image {../assets/svg_icons/reload.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x50072
@@ -282,7 +286,7 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
         class Fl_Output_L10n
       }
     }
-    Fl_Text_Editor file_content {selected
+    Fl_Text_Editor file_content {
       xywh {4 391 376 259} selection_color 89 labeltype NO_LABEL align 517 resizable
       class Fl_Text_Editor_L10n
     }

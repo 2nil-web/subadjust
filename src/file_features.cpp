@@ -203,8 +203,11 @@ bool file_read(std::string filename)
 std::filesystem::path current_abs_path;
 bool file_read(std::filesystem::path abs_path)
 {
+  logD("file_read start", abs_path);
+
   if (abs_path.empty())
   {
+    logD("file_read false1");
     return false;
   }
 
@@ -213,7 +216,8 @@ bool file_read(std::filesystem::path abs_path)
 
   if (txt_buf.loadfile(abs_path.string().c_str()) == 0)
   {
-    bool diff = csub.diff(txt_buf.text());
+    // logD("file_read: [", txt_buf.text(), "]");
+    bool diff = false; // csub.diff(txt_buf.text());
 
     if (txt_buf.input_file_was_transcoded || diff)
     {
@@ -234,9 +238,11 @@ bool file_read(std::filesystem::path abs_path)
     }
 
     current_abs_path = abs_path;
+    // logD("file_read true: [", txt_buf.text(), "]");
     return true;
   }
 
+  logD("file_read false2");
   return false;
 }
 

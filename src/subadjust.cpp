@@ -67,7 +67,7 @@ void subadjust(Fl_Widget *, void *)
   csub.parse(txt_buf.text());
 
   double offs_start = get_reset_val(offset_start, 0);
-  double offs_stop = get_reset_val(offset_start, 0);
+  double offs_stop = get_reset_val(offset_stop, 0);
   double dur_k = get_reset_val(dur_coeff, 1);
 
   if (csub.adjust(beg_ts, end_ts, offs_start, offs_stop, dur_k))
@@ -350,6 +350,18 @@ The configuration file is located there : ")EOF") +
 
     file_save->callback(SIMPLE_CB { srt_save(); });
     file_save_as->callback(SIMPLE_CB { file_handler(eHandlingType::WRITE); });
+    file_to_csv->callback(SIMPLE_CB {
+      std::filesystem::path path{file_path->value()};
+      if (path.has_extension())
+        path.replace_extension("csv");
+      else
+        path += ".csv";
+
+      csub.parse(txt_buf.text());
+      Fl_Text_Buffer tb;
+      tb.text(("\357\273\277" + csub.to_csv()).c_str());
+      tb.savefile(path.string().c_str());
+    });
     file_reload->callback(SIMPLE_CB {
       std::string s = file_path->value();
       if (!s.empty())

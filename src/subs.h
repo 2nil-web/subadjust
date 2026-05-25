@@ -21,9 +21,15 @@ class cSub
 private:
   static const std::regex re_index;
   static const std::regex re_times;
+
   std::vector<sSub> to_vec(const std::string);
   std::string to_str(const std::vector<sSub>, bool dot);
   size_t linecount(const std::string);
+  void parse_apart(std::string &, std::vector<sSub> &, size_t &);
+  bool adjust_apart(std::string &, std::vector<sSub> &, const int, const int, const double offs_start = 0, const double offs_stop = 0, const double dur_k = 1);
+  std::string to_csv_apart(const std::vector<sSub> vec, bool dot);
+  void find_closest_times(int &, int &, std::vector<sSub>);
+
   std::string sub_str;
   size_t nlines;
   std::vector<sSub> sub_vec;
@@ -47,7 +53,9 @@ public:
   // Compute the sub parameters
   void factors(const int begin_stamp, const int end_stamp, int &offset_start, int &offset_stop, double &coeff);
   // Adjust the sub according to the passed parameters
-  bool adjust(const int, const int, const double, const double, const double);
+  bool adjust(const int, const int, const double offs_start = 0, const double offs_stop = 0, const double dur_k = 1);
+
+  std::string to_csv();
 
   // Return true if parse result string is different from parameter
   bool diff(const std::string);
