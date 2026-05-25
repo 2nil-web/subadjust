@@ -415,13 +415,16 @@ void sync(Fl_Widget *, void *)
     }
   }
 
-  csub.sync(txt_buf.text(), txt_buf2.text());
-  int ns = (int)csub.vec().size();
-  if (goto_sub->maximum() > (int)ns)
-    goto_sub->maximum((int)ns);
-  txt_buf.replace(0, (int)csub.str().size(), csub.c_str());
+  if (csub.sync(txt_buf.text(), txt_buf2.text()))
+  {
+    int ns = (int)csub.vec().size();
+    if (goto_sub->maximum() > (int)ns)
+      goto_sub->maximum((int)ns);
+    txt_buf.replace(0, (int)csub.str().size(), csub.c_str());
+    // file_content->redraw();
 
-  reset_param();
+    reset_param();
+  }
 }
 
 void delete_sub(int nsub)

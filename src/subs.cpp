@@ -192,19 +192,33 @@ void cSub::parse(const char *s)
     parse(std::string(s));
 }
 
-void cSub::sync(const std::string s1, const std::string s2)
+// Return true if sync modifies the current subtitles, else false
+bool cSub::sync(const std::string s1, const std::string s2)
 {
   parse(s1);
   std::vector<sSub> sub_vec2 = to_vec(s2);
 
   // A FAIRE : aligner la time line de sub_vec avec celle de sub_vec2
   logD("SYNC: début alignement time line");
+
+  std::string sub_str2 = to_str(sub_vec2, dot);
+
+  if (sub_str != sub_str2)
+  {
+    sub_str = sub_str2;
+    sub_vec = sub_vec2;
+    return true;
+  }
+
+  return false;
 }
 
-void cSub::sync(const char *s1, const char *s2)
+bool cSub::sync(const char *s1, const char *s2)
 {
   if (s1 && s2)
-    sync(std::string(s1), std::string(s2));
+    return sync(std::string(s1), std::string(s2));
+
+  return false;
 }
 
 bool cSub::diff(const std::string before_parse)

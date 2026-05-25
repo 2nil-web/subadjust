@@ -41,8 +41,8 @@ public:
   void parse(const std::string);
   void parse(const char *);
 
-  void sync(const std::string s1, const std::string s2);
-  void sync(const char *s1, const char *s2);
+  bool sync(const std::string s1, const std::string s2);
+  bool sync(const char *s1, const char *s2);
 
   // Compute the sub parameters
   void factors(const int begin_stamp, const int end_stamp, int &offset_start, int &offset_stop, double &coeff);
