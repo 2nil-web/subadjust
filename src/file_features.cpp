@@ -203,11 +203,11 @@ bool file_read(std::string filename)
 std::filesystem::path current_abs_path;
 bool file_read(std::filesystem::path abs_path)
 {
-  logD("file_read start", abs_path);
+  logD("file_read1 start", abs_path);
 
   if (abs_path.empty())
   {
-    logD("file_read false1");
+    logD("file_read false");
     return false;
   }
 
@@ -216,6 +216,7 @@ bool file_read(std::filesystem::path abs_path)
 
   if (txt_buf.loadfile(abs_path.string().c_str()) == 0)
   {
+    logD("file_read: [", abs_path, "]");
     // logD("file_read: [", txt_buf.text(), "]");
     bool diff = false; // csub.diff(txt_buf.text());
 
@@ -238,11 +239,12 @@ bool file_read(std::filesystem::path abs_path)
     }
 
     current_abs_path = abs_path;
+    logD("file_read true: [", abs_path, "]");
     // logD("file_read true: [", txt_buf.text(), "]");
     return true;
   }
 
-  logD("file_read false2");
+  logD("file_read false");
   return false;
 }
 
@@ -291,8 +293,10 @@ void pre_process(int pp_time_start, int pp_time_stop, int pp_offs_start, int pp_
 
 void gui_display(bool file_read_ok, bool test_already_opened)
 {
+  logD("GUI avt file_read_ok");
   if (file_read_ok)
   {
+    logD("GUI in file_read_ok");
     offset_start->value(0);
     offset_stop->value(0);
     dur_coeff->value(1);
@@ -326,22 +330,26 @@ void gui_display(bool file_read_ok, bool test_already_opened)
     if (main_window->label())
       old_t = std::string("old title: ") + main_window->label() + ", ";
     std::string title = myopt.Progname + " - " + current_abs_path.stem().string();
-    logD("TITLE: ", old_t, title);
+    logD("GUI TITLE: ", old_t, title);
     main_window->copy_label(title.c_str());
+
+    csub.parse(txt_buf.text());
 
     file_content->scroll(1, 0);
     to_line(1);
     file_content->show_cursor(1);
+    logD("GUI SIZE: ", csub.vec().size());
     if (csub.vec().size() > 0)
     {
-      logD("csub.size(): ", csub.line_number(), ", csub.str().size(): ", csub.str().size(), ", csub.vec().size(): ", csub.vec().size());
-      logD("csub.vec()[0].appearance: ", ms_to_str(csub.vec()[0].appearance), ", csub.vec().back().appearance: ", ms_to_str(csub.vec().back().appearance));
+      logD("GUI csub.size(): ", csub.line_number(), ", csub.str().size(): ", csub.str().size(), ", csub.vec().size(): ", csub.vec().size());
+      logD("GUI csub.vec()[0].appearance: ", ms_to_str(csub.vec()[0].appearance), ", csub.vec().back().appearance: ", ms_to_str(csub.vec().back().appearance));
       time_start->set_time_ms(csub.vec()[0].appearance);
       time_end->set_time_ms(csub.vec().back().appearance);
     }
   }
   else
   {
+    logD("GUI out file_read_ok");
     // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
     if (!current_abs_path.empty())
       fl_alert((_("Unable to load the file") + std::string(" '%s'")).c_str(), current_abs_path.string().c_str());

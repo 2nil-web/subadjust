@@ -350,6 +350,7 @@ The configuration file is located there : ")EOF") +
 
     file_save->callback(SIMPLE_CB { srt_save(); });
     file_save_as->callback(SIMPLE_CB { file_handler(eHandlingType::WRITE); });
+
     file_to_csv->callback(SIMPLE_CB {
       std::filesystem::path path{file_path->value()};
       if (path.has_extension())
@@ -362,6 +363,7 @@ The configuration file is located there : ")EOF") +
       tb.text(("\357\273\277" + csub.to_csv()).c_str());
       tb.savefile(path.string().c_str());
     });
+
     file_reload->callback(SIMPLE_CB {
       std::string s = file_path->value();
       if (!s.empty())
