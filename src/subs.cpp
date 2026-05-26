@@ -282,25 +282,17 @@ bool cSub::sync(const std::string _s1, const std::string _s2)
 
   parse_apart(s1, v1, nl1);
 
-  // Nothing has changed with the parsing
-  if (s1 == _s1)
-    return false;
-
   std::vector<sSub> v2;
   std::string s2 = _s2;
   size_t nl2;
   parse_apart(s2, v2, nl2);
 
-  adjust_apart(s1, v1, v2[0].appearance, v2.back().disappearance);
-
-  // Nothing has changed with the adjusting
-  if (s1 == _s1)
-    return false;
+  adjust_apart(s1, v1, v2[0].appearance, v2.back().appearance);
 
   if (my_getenv("NO_ALIGN").empty())
   {
     // Aligne la time line de v1 avec celle de v2
-    logD("SYNC: début de l'alignement de la time line v1 sur celle de v2");
+    logD("CSUB SYNC: début de l'alignement de la time line v1 sur celle de v2");
 
     for (size_t i = 1; i < v1.size() - 1; i++)
     {
@@ -309,17 +301,20 @@ bool cSub::sync(const std::string _s1, const std::string _s2)
       find_closest_times(app, dis, v2);
 
       // Pour éviter d'avoir les même time line sur plusieurs sub consécutifs
-      while (app <= v1[i - 1].disappearance || app >= v1[i + 1].appearance)
+      do
         app = (v1[i - 1].disappearance + app + v1[i + 1].appearance) / 3;
-      while (dis <= app || dis >= v1[i + 1].appearance)
+      while (app <= v1[i - 1].disappearance || app >= v1[i + 1].appearance);
+
+      do
         dis = (app + dis + v1[i + 1].appearance) / 3;
+      while (dis <= app || dis >= v1[i + 1].appearance);
 
       logD("Après find_closest_times[", i, "]: ", ms_to_str(app), "(", app, ")==>", ms_to_str(dis), "(", dis, ")");
 
       v1[i].appearance = app;
       v1[i].disappearance = dis;
     }
-    logD("SYNC:   fin de l'alignement de la time line v1 sur celle de v2");
+    logD("CSUB SYNC:   fin de l'alignement de la time line v1 sur celle de v2");
   }
 
   s1 = to_str(v1, dot);
@@ -327,6 +322,7 @@ bool cSub::sync(const std::string _s1, const std::string _s2)
   if (s1 == _s1)
     return false;
 
+  logD("CSUB SYNC");
   // Something has changed with the syncing
   sub_vec = v1;
   sub_str = to_str(sub_vec, dot);
