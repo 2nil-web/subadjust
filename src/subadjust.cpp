@@ -348,22 +348,8 @@ The configuration file is located there : ")EOF") +
       file_handler(eHandlingType::READ);
     });
 
-    file_save->callback(SIMPLE_CB { srt_save(); });
+    file_save->callback(SIMPLE_CB { native_save(); });
     file_save_as->callback(SIMPLE_CB { file_handler(eHandlingType::WRITE); });
-
-    file_to_csv->callback(SIMPLE_CB {
-      std::filesystem::path path{file_path->value()};
-      if (path.has_extension())
-        path.replace_extension("csv");
-      else
-        path += ".csv";
-
-      csub.parse(txt_buf.text());
-      Fl_Text_Buffer tb;
-      tb.text(("\357\273\277" + csub.to_csv()).c_str());
-      tb.savefile(path.string().c_str());
-    });
-
     file_reload->callback(SIMPLE_CB {
       std::string s = file_path->value();
       if (!s.empty())
@@ -379,7 +365,7 @@ The configuration file is located there : ")EOF") +
     });
 
     app_save_quit->callback(SIMPLE_CB {
-      if (srt_save())
+      if (native_save())
         std::exit(0);
     });
     app_quit->callback(quit_cb);

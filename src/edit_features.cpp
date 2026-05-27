@@ -409,7 +409,7 @@ void sync(Fl_Widget *, void *)
 
   if (file_is_modified && fl_choice(_("Do you want to save the file before syncing it ?"), _("No"), _("Yes"), 0L))
   {
-    if (!srt_save())
+    if (!native_save())
     {
       return;
     }

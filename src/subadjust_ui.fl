@@ -15,14 +15,14 @@ snap {
 Function {make_window()} {open
 } {
   Fl_Window main_window {open
-    xywh {2332 182 384 653} type Double resizable
-    code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0} visible
+    xywh {2332 182 384 653} type Double hide resizable
+    code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0}
   } {
     Fl_Group {} {open
       xywh {2 0 380 284}
     } {
       Fl_Menu_Button file_menu {
-        label { ☰} open
+        label { ☰} open selected
         tooltip {File operations (Open, Save, Reload)} xywh {3 1 48 28} labelsize 22 align 32
         class Fl_Menu_Button_Hover
       } {
@@ -40,10 +40,6 @@ Function {make_window()} {open
         MenuItem file_save_as {
           label {Save As ...}
           image {../assets/svg_icons/save as.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x50073 divider
-        }
-        MenuItem file_to_csv {
-          label {Export to CSV ...} selected
-          image {../assets/svg_icons/save as.svg} compress_image 1 xywh {10 10 100 20} shortcut 0x50073 divider
         }
         MenuItem file_reload {
           label Reload
@@ -293,7 +289,7 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
   }
   Fl_Window config_dialog {
     label Configuration open
-    xywh {2746 178 350 384} type Double resizable non_modal size_range {350 384 600 0} visible
+    xywh {2746 178 350 384} type Double hide resizable non_modal size_range {350 384 600 0}
   } {
     Fl_Button config_view {
       tooltip {Edit the configuration file..} image {../assets/svg_icons/modify - settings.svg} compress_image 1 xywh {278 2 66 24} labeltype NO_LABEL align 512
