@@ -1,9 +1,11 @@
 
 #include <algorithm>
 #include <filesystem>
+#include <fstream>
 #include <functional>
 #include <iostream>
 #include <regex>
+#include <sstream>
 #include <string>
 
 #include <FL/Fl.H>
@@ -43,9 +45,9 @@ void set_file_state(bool modified)
 
   if (modified)
   {
-    //logD("Modified put in red");
-    //    if (file_path->labelcolor() != FL_RED)
-    //    {
+    // logD("Modified put in red");
+    //     if (file_path->labelcolor() != FL_RED)
+    //     {
     file_path_label->labelcolor(FL_RED);
     ((Fl_Input_ *)file_path)->textcolor(FL_RED);
     file_path_label->redraw();
@@ -56,9 +58,9 @@ void set_file_state(bool modified)
   }
   else
   {
-    //logD("Not modified put in black");
-    //    if (file_path->labelcolor() != FL_BLACK)
-    //    {
+    // logD("Not modified put in black");
+    //     if (file_path->labelcolor() != FL_BLACK)
+    //     {
     file_path_label->labelcolor(FL_BLACK);
     ((Fl_Input_ *)file_path)->textcolor(FL_BLACK);
     file_path_label->redraw_label();
@@ -94,7 +96,7 @@ const std::filesystem::path already_opened_list(admin_file("already_opened"));
 void remove_opened(std::filesystem::path abs_path)
 {
   //  std::string abs_path(file_path->value());
-  //logD("remove_opened, to remove file: [", abs_path, ']');
+  // logD("remove_opened, to remove file: [", abs_path, ']');
   std::string line;
   std::vector<std::string> all_files;
   bool to_update = false;
@@ -117,11 +119,11 @@ void remove_opened(std::filesystem::path abs_path)
 
   if (to_update)
   {
-    //logD("from: " + already_opened_list.string() + ", all_files.size(): ", all_files.size());
+    // logD("from: " + already_opened_list.string() + ", all_files.size(): ", all_files.size());
     std::ofstream ofs(already_opened_list, std::ios::trunc);
     for (std::string file : all_files)
     {
-      //logD("Update already_opened: ", file);
+      // logD("Update already_opened: ", file);
       ofs << file << std::endl;
     }
     ofs.close();
@@ -151,13 +153,13 @@ bool already_opened(std::string filename)
     return false;
 
   std::string abs_path = std::filesystem::absolute(filename).string();
-  //logD("In already_opened, already_opened_list: [", already_opened_list, "], abs_path: [", abs_path, ']');
+  // logD("In already_opened, already_opened_list: [", already_opened_list, "], abs_path: [", abs_path, ']');
 
   // Simplest case
   if (!std::filesystem::exists(already_opened_list) || std::filesystem::file_size(already_opened_list) == 0)
   {
     std::ofstream ofs(already_opened_list);
-    //logD("Not already opened, Simply adding abs_path: ", abs_path);
+    // logD("Not already opened, Simply adding abs_path: ", abs_path);
     ofs << abs_path << std::endl;
     ofs.close();
     return false;
@@ -173,13 +175,13 @@ bool already_opened(std::string filename)
     if (line == abs_path)
     {
       ifs.close();
-      //logD("Already opened - line: ", line, ", abs_path: ", abs_path);
+      // logD("Already opened - line: ", line, ", abs_path: ", abs_path);
       return true;
     }
   }
   ifs.close();
 
-  //logD("Not already opened, adding abs_path: ", abs_path);
+  // logD("Not already opened, adding abs_path: ", abs_path);
   std::ofstream ofs(already_opened_list, std::ios::app);
   ofs << abs_path << std::endl;
   ofs.close();
@@ -203,11 +205,11 @@ bool file_read(std::string filename)
 std::filesystem::path current_abs_path;
 bool file_read(std::filesystem::path abs_path)
 {
-  //logD("file_read1 start", abs_path);
+  // logD("file_read1 start", abs_path);
 
   if (abs_path.empty())
   {
-    //logD("file_read false");
+    // logD("file_read false");
     return false;
   }
 
@@ -215,6 +217,8 @@ bool file_read(std::filesystem::path abs_path)
     abs_path = std::filesystem::absolute(abs_path);
 
   Fl_Text_Buffer txt_tmp;
+  txt_tmp.transcoding_warning_action = nullptr;
+
   if (txt_tmp.loadfile(abs_path.string().c_str()) == 0)
   {
     cSub csub_tmp;
@@ -234,7 +238,7 @@ bool file_read(std::filesystem::path abs_path)
     }
 
     current_abs_path = abs_path;
-    //logD("file_read true: [", abs_path, "]");
+    // logD("file_read true: [", abs_path, "]");
     return true;
   }
 
@@ -245,24 +249,28 @@ bool file_write(std::filesystem::path filename)
 {
   csub.parse(txt_buf.text());
   txt_buf.text(csub.c_str());
-  int errn=0;
+  int errn = 0;
 
   if (filename.extension() == ".srt")
     errn = txt_buf.savefile(filename.string().c_str());
-  else if (filename.extension() == ".vtt")
+  else
   {
-    Fl_Text_Buffer txt_vtt;
-    txt_vtt.text(csub.to_vtt().c_str());
-    errn = txt_vtt.savefile(filename.string().c_str());
-  }
-  else if (filename.extension() == ".csv")
-  {
-    Fl_Text_Buffer txt_csv;
-    txt_csv.text(csub.to_csv().c_str());
-    errn = txt_csv.savefile(filename.string().c_str());
+    Fl_Text_Buffer txt_tmp;
+    if (filename.extension() == ".vtt")
+      txt_tmp.text(csub.to_vtt().c_str());
+    else
+    {
+      std::string sep = ",";
+      if (filename.extension() == ".tsv")
+        sep = "\t";
+      if (filename.extension() == ".ssv")
+        sep = ";";
+      txt_tmp.text(csub.to_sv(sep).c_str());
+    }
+    errn = txt_tmp.savefile(filename.string().c_str());
   }
 
-  //logD("file_write err?:", errn);
+  // logD("file_write err?:", errn);
   if (errn == 0)
   {
     reset_param();
@@ -285,7 +293,7 @@ void pre_process(int pp_time_start, int pp_time_stop, int pp_offs_start, int pp_
     pp_time_stop = csub.vec().back().appearance;
   if (pp_dur_k == 0)
     pp_dur_k = 1;
-  //logD("pp_time_start: ", pp_time_start, ", pp_time_stop: ", pp_time_stop, ", pp_offs_start: ", pp_offs_start, ", pp_offs_stop: ", pp_offs_stop, ", pp_dur_k: ", pp_dur_k);
+  // logD("pp_time_start: ", pp_time_start, ", pp_time_stop: ", pp_time_stop, ", pp_offs_start: ", pp_offs_start, ", pp_offs_stop: ", pp_offs_stop, ", pp_dur_k: ", pp_dur_k);
 
   if (csub.adjust(pp_time_start, pp_time_stop, pp_offs_start, pp_offs_stop, pp_dur_k))
   {
@@ -333,28 +341,28 @@ void gui_display(bool file_read_ok, bool test_already_opened)
     if (main_window->label())
       old_t = std::string("old title: ") + main_window->label() + ", ";
     std::string title = myopt.Progname + " - " + current_abs_path.stem().string();
-    //logD("GUI TITLE: ", old_t, title);
+    // logD("GUI TITLE: ", old_t, title);
     main_window->copy_label(title.c_str());
 
     csub.parse(txt_buf.text());
-    //logD("aft call csub.parse - csub.str().size(): ", csub.str().size(), ", csub.vec().size(): ", csub.vec().size());
+    // logD("aft call csub.parse - csub.str().size(): ", csub.str().size(), ", csub.vec().size(): ", csub.vec().size());
 
     file_content->scroll(1, 0);
     to_line(1);
     file_content->show_cursor(1);
-    //logD("gui_display SIZE: ", csub.vec().size());
+    // logD("gui_display SIZE: ", csub.vec().size());
     if (csub.vec().size() > 0)
     {
-      //logD("gui_display csub.size(): ", csub.line_number(), ", csub.str().size(): ", csub.str().size(), ", csub.vec().size(): ", csub.vec().size());
-      //logD("gui_display csub.vec()[0].appearance: ", ms_to_str(csub.vec()[0].appearance), ", csub.vec().back().appearance: ", ms_to_str(csub.vec().back().appearance));
+      // logD("gui_display csub.size(): ", csub.line_number(), ", csub.str().size(): ", csub.str().size(), ", csub.vec().size(): ", csub.vec().size());
+      // logD("gui_display csub.vec()[0].appearance: ", ms_to_str(csub.vec()[0].appearance), ", csub.vec().back().appearance: ", ms_to_str(csub.vec().back().appearance));
       time_start->set_time_ms(csub.vec()[0].appearance);
       time_end->set_time_ms(csub.vec().back().appearance);
     }
   }
   else
   {
-    //logD("gui_display out file_read_ok");
-    // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
+    // logD("gui_display out file_read_ok");
+    //  fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
     if (!current_abs_path.empty())
       fl_alert((_("Unable to load the file") + std::string(" '%s'")).c_str(), current_abs_path.string().c_str());
   }
@@ -381,8 +389,9 @@ bool file_handler(eHandlingType ht)
 
   std::filesystem::path path = {};
   if (file_path->value() != nullptr)
-      path = std::filesystem::absolute(file_path->value());
-  if (!path.empty() && path.has_extension()) path.replace_extension("");
+    path = std::filesystem::absolute(file_path->value());
+  if (!path.empty() && path.has_extension())
+    path.replace_extension("");
 
   switch (ht)
   {
@@ -392,7 +401,7 @@ bool file_handler(eHandlingType ht)
     title = _("Define file to save");
     if (!path.empty())
       fsel.preset_file(path.string().c_str());
-    fsel.filter(_("Write to file\t*.srt\n*.vtt\n*.csv"));
+    fsel.filter(_("Subrip \t*.srt\nWeb Video Text Tracks *.vtt\nComma separated Value Spreadsheet *.csv\nTabulation separated Value Spreadsheet *.tsv\nSemicolon separated Value Spreadsheet *.ssv"));
     break;
   case eHandlingType::SYNC:
     typ = Fl_Native_File_Chooser::Type::BROWSE_FILE;
@@ -435,14 +444,20 @@ bool file_handler(eHandlingType ht)
       switch (fsel.filter_value())
       {
       case 1:
-        path+=".vtt";
+        path += ".vtt";
         break;
       case 2:
-        path+=".csv";
+        path += ".csv";
+        break;
+      case 3:
+        path += ".tsv";
+        break;
+      case 4:
+        path += ".ssv";
         break;
       case 0:
       default:
-        path+=".srt";
+        path += ".srt";
         break;
       }
     }

@@ -185,7 +185,7 @@ std::string Fl_Time_Input::get_time_str()
   if (!use24_)
     s += std::string(" ") + (pm_ ? "PM" : "AM");
 
-  //logD("get_time_str: ", s);
+  // logD("get_time_str: ", s);
   return s;
 }
 
@@ -367,7 +367,7 @@ void Fl_Time_Input::preferred_size(int &pw, int &ph) const
   pw += spin_w + clock_w;
 
   ph = m.ch;
-  //logD("pref sz - pw: ", pw, ", ph: ", ph);
+  // logD("pref sz - pw: ", pw, ", ph: ", ph);
 }
 
 void Fl_Time_Input::fit()
@@ -489,7 +489,7 @@ void Fl_Time_Input::draw_spin_button(int bx, int by, int bw, int bh)
 
 void Fl_Time_Input::draw_clock_button(int bx, int by, int bw, int bh)
 {
-  //logD("Fl_Time_Input::draw_clock_button (", bx, ", ", by, ", ", bw, ", ", bh, ")");
+  // logD("Fl_Time_Input::draw_clock_button (", bx, ", ", by, ", ", bw, ", ", bh, ")");
   fl_draw_box(FL_BORDER_BOX, bx, by, bw, bh, FL_BACKGROUND_COLOR);
   int cx = bx + bw / 2, cy = by + bh / 2, cr = bh / 3;
   fl_color(0);

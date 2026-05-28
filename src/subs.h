@@ -28,7 +28,7 @@ private:
   void parse_apart(std::string &, std::vector<sSub> &, size_t &);
   std::string to_vtt_apart(const std::vector<sSub> vec);
   bool adjust_apart(std::string &, std::vector<sSub> &, const int, const int, const double offs_start = 0, const double offs_stop = 0, const double dur_k = 1);
-  std::string to_csv_apart(const std::vector<sSub> vec, bool dot);
+  std::string to_sv_apart(const std::vector<sSub> vec, bool dot, const std::string sep, const std::string delim, bool with_bom = true);
   void find_closest_times(int &, int &, std::vector<sSub>);
 
   std::string sub_str;
@@ -62,7 +62,7 @@ public:
   bool adjust(const int, const int, const double offs_start = 0, const double offs_stop = 0, const double dur_k = 1);
 
   std::string to_vtt();
-  std::string to_csv();
+  std::string to_sv(const std::string sep = ",", const std::string delim = "\"");
 
   // Return true if parse result string is different from parameter
   bool diff(const std::string);

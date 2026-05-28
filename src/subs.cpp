@@ -79,20 +79,20 @@ std::vector<sSub> cSub::to_vec(const std::string _sub_str)
   {
     std::string s = ssub;
     trim(s);
-    //logD("look vtt: ", s);
+    // logD("look vtt: ", s);
     if (!s.empty() && s != "WEBVTT")
       break;
     if (s == "WEBVTT")
       isvtt = true;
     vsub.erase(vsub.begin());
   }
-/*
-  if (isvtt)
-    logD("After look vtt: ISVTT");
-  else
-    logD("After look vtt: ISNOVTT");
-  logD("After look vtt - vsub[0]: ", vsub[0]);
-*/
+  /*
+    if (isvtt)
+      logD("After look vtt: ISVTT");
+    else
+      logD("After look vtt: ISNOVTT");
+    logD("After look vtt - vsub[0]: ", vsub[0]);
+  */
   bool has_started_sub = false;
   std::string ssub;
 
@@ -106,7 +106,7 @@ std::vector<sSub> cSub::to_vec(const std::string _sub_str)
     {
       if (has_started_sub)
       {
-        //logD("ssub empty pushing back: ", one_sub.index, "\n", one_sub.appearance, ">>>", one_sub.disappearance, "\n", one_sub.text);
+        // logD("ssub empty pushing back: ", one_sub.index, "\n", one_sub.appearance, ">>>", one_sub.disappearance, "\n", one_sub.text);
         _vec.push_back(one_sub);
       }
       one_sub = {};
@@ -116,11 +116,11 @@ std::vector<sSub> cSub::to_vec(const std::string _sub_str)
     {
       if (isvtt)
       {
-        //logD("isvtt - ssub: ", ssub);
+        // logD("isvtt - ssub: ", ssub);
 
         if (parse_1sub(ssub, sub_match, re_times, one_sub))
         {
-          //logD("isvtt - ssub: ", ssub);
+          // logD("isvtt - ssub: ", ssub);
           one_sub.index = ns++;
           has_started_sub = true;
         }
@@ -147,7 +147,7 @@ std::vector<sSub> cSub::to_vec(const std::string _sub_str)
     }
   }
 
-  //logD("end to_vec: ");
+  // logD("end to_vec: ");
   return _vec;
 }
 
@@ -182,7 +182,9 @@ std::string cSub::to_vtt_apart(const std::vector<sSub> vec)
   for (auto ev : vec)
   {
     ss << ms_to_str(ev.appearance, true) << " --> " << ms_to_str(ev.disappearance, true) << std::endl;
-    ss << ev.text << std::endl << std::endl;
+    std::string s = ev.text;
+    trim(s);
+    ss << s << std::endl;
   }
 
   return ss.str();
@@ -193,19 +195,29 @@ std::string cSub::to_vtt()
   return to_vtt_apart(sub_vec);
 }
 
-std::string cSub::to_csv_apart(const std::vector<sSub> vec, bool dot)
+std::string cSub::to_sv_apart(const std::vector<sSub> vec, bool dot, const std::string sep, const std::string delim, bool with_bom)
 {
   if (vec.empty())
     return "";
 
-  const std::string sep = ";", delim = "\"", sd = sep + delim, ds = delim + sep;
+  const std::string sd = sep + delim, ds = delim + sep;
 
   std::stringstream ss;
+  if (with_bom)
+    ss << "\357\273\277";
   ss << "index" << sep << "start time" << sep << "end time" << sep << "text" << std::endl;
 
   for (size_t i = 0; i < vec.size(); i++)
   {
-    ss << i + 1 << sd << ms_to_str(vec[i].appearance, dot) << ds << delim << ms_to_str(vec[i].disappearance, dot) << ds;
+    ss << i + 1 << sd;
+    if (sep == ";")
+    {
+      ss << vec[i].appearance << ds << delim << vec[i].disappearance << ds;
+    }
+    else
+    {
+      ss << ms_to_str(vec[i].appearance, dot) << ds << delim << ms_to_str(vec[i].disappearance, dot) << ds;
+    }
     std::string s = vec[i].text;
     s = trim(s);
     s = replace_string(s, delim, delim + delim);
@@ -216,9 +228,9 @@ std::string cSub::to_csv_apart(const std::vector<sSub> vec, bool dot)
   return ss.str();
 }
 
-std::string cSub::to_csv()
+std::string cSub::to_sv(std::string sep, std::string delim)
 {
-  return to_csv_apart(sub_vec, dot);
+  return to_sv_apart(sub_vec, dot, sep, delim);
 }
 
 int cSub::line_by_timestamp(int to_find, sSub &ssub)
@@ -298,7 +310,7 @@ void cSub::parse(const std::string s)
 {
   sub_str = s;
   parse_apart(sub_str, sub_vec, nlines);
-  //logD("aft call parse_apart");
+  // logD("aft call parse_apart");
 }
 
 void cSub::parse(const char *s)
@@ -368,12 +380,12 @@ bool cSub::sync(const std::string _s1, const std::string _s2)
   if (my_getenv("NO_ALIGN").empty())
   {
     // Aligne la time line de v1 avec celle de v2
-    //logD("CSUB SYNC: début de l'alignement de la time line v1 sur celle de v2");
+    // logD("CSUB SYNC: début de l'alignement de la time line v1 sur celle de v2");
 
     for (size_t i = 1; i < v1.size() - 1; i++)
     {
       int app = v1[i].appearance, dis = v1[i].disappearance;
-      //logD("Avant find_closest_times[", i, "]: ", ms_to_str(app), "(", app, ")==>", ms_to_str(dis), "(", dis, ")");
+      // logD("Avant find_closest_times[", i, "]: ", ms_to_str(app), "(", app, ")==>", ms_to_str(dis), "(", dis, ")");
       find_closest_times(app, dis, v2);
 
       // Pour éviter d'avoir les même time line sur plusieurs sub consécutifs
@@ -385,12 +397,12 @@ bool cSub::sync(const std::string _s1, const std::string _s2)
         dis = (app + dis + v1[i + 1].appearance) / 3;
       while (dis <= app || dis >= v1[i + 1].appearance);
 
-      //logD("Après find_closest_times[", i, "]: ", ms_to_str(app), "(", app, ")==>", ms_to_str(dis), "(", dis, ")");
+      // logD("Après find_closest_times[", i, "]: ", ms_to_str(app), "(", app, ")==>", ms_to_str(dis), "(", dis, ")");
 
       v1[i].appearance = app;
       v1[i].disappearance = dis;
     }
-    //logD("CSUB SYNC:   fin de l'alignement de la time line v1 sur celle de v2");
+    // logD("CSUB SYNC:   fin de l'alignement de la time line v1 sur celle de v2");
   }
 
   s1 = to_str(v1, dot);
@@ -398,8 +410,8 @@ bool cSub::sync(const std::string _s1, const std::string _s2)
   if (s1 == _s1)
     return false;
 
-  //logD("CSUB SYNC");
-  // Something has changed with the syncing
+  // logD("CSUB SYNC");
+  //  Something has changed with the syncing
   sub_vec = v1;
   sub_str = to_str(sub_vec, dot);
   nlines = linecount(sub_str);
@@ -447,7 +459,7 @@ void cSub::factors(const int begin_stamp, const int end_stamp, int &offset_start
 // begin_stamp and end_stamp in milliseconds. _offset_start and _offset_stop in floating point seconds. coeff being just a floating point number
 bool cSub::adjust_apart(std::string &_str, std::vector<sSub> &_vec, const int time_start, const int time_end, const double _offset_start, const double _offset_stop, const double coeff)
 {
-  //logD("adjust_apart: start");
+  // logD("adjust_apart: start");
 
   if (coeff <= 0)
   {
@@ -524,7 +536,7 @@ bool cSub::adjust_apart(std::string &_str, std::vector<sSub> &_vec, const int ti
     } while (new_sub_vec.back().appearance < time_end);
     _str = to_str(_vec, dot);
 
-    //logD("adjust_apart5: true");
+    // logD("adjust_apart5: true");
     return true;
   }
   else
@@ -539,7 +551,7 @@ bool cSub::adjust_apart(std::string &_str, std::vector<sSub> &_vec, const int ti
 
 bool cSub::adjust(const int time_start, const int time_end, const double offset_start, const double offset_stop, const double coeff)
 {
-  //logD("adjust:");
+  // logD("adjust:");
   return adjust_apart(sub_str, sub_vec, time_start, time_end, offset_start, offset_stop, coeff);
 }
 
