@@ -358,9 +358,10 @@ void cSub::find_closest_times(int &app, int &dis, const std::vector<sSub> v)
   dis = _dis;
 }
 
-// Return true if sync modifies the subtitles contained within s1 with the one contained within s2, else false
+// Return true if sync was able to aligns the subtitles contained within s1 with those contained within s2, else false
 bool cSub::sync(const std::string _s1, const std::string _s2)
 {
+  // They are strictly equals, so nothing changes
   if (_s1 == _s2)
     return false;
 
@@ -375,34 +376,47 @@ bool cSub::sync(const std::string _s1, const std::string _s2)
   size_t nl2;
   parse_apart(s2, v2, nl2);
 
+  // Firstly, linearly adjust v1 to v2
   adjust_apart(s1, v1, v2[0].appearance, v2.back().appearance);
 
-  if (my_getenv("NO_ALIGN").empty())
+  // Then align each of the timestamp of v1 to their closest inferior and closest superior or equal counterpart in v2
+  // Pour chaque timestamp appearance et disappearance (v1[i1].app et v1[i1].dis, sauf le 1er et le dernier) du fichier à synchroniser, dans le fichier de référence prend :
+  //  Le timestamp immédiatement inférieur et celui immédiatement supérieur ou égal
+  //  Et calcul leur moyenne (inf+v1[i1]+sup)/3 qu'elle applique à v1[i1]
+  for (size_t i1 = 1; i1 < v1.size() - 1; i1++)
   {
-    // Aligne la time line de v1 avec celle de v2
-    // logD("CSUB SYNC: début de l'alignement de la time line v1 sur celle de v2");
+    int new_app = -1, new_dis = -1;
 
-    for (size_t i = 1; i < v1.size() - 1; i++)
+    for (size_t i2 = 1; i2 < v2.size(); i2++)
     {
-      int app = v1[i].appearance, dis = v1[i].disappearance;
-      // logD("Avant find_closest_times[", i, "]: ", ms_to_str(app), "(", app, ")==>", ms_to_str(dis), "(", dis, ")");
-      find_closest_times(app, dis, v2);
+      if (v1[i1].appearance > v2[i2 - 1].appearance && v1[i1].appearance <= v2[i2].appearance)
+      {
+        new_app = (v2[i2 - 1].appearance + v1[i1].appearance + v2[i2].appearance) / 3;
+        // Avoid to have various subtitles with interweave appearance timestamp
+        if (new_app <= v1[i1 - 1].appearance)
+          new_app = (v2[i2 - 1].appearance + v1[i1 - 1].appearance + v1[i1].appearance + v2[i2].appearance) / 4;
+      }
 
-      // Pour éviter d'avoir les même time line sur plusieurs sub consécutifs
-      do
-        app = (v1[i - 1].disappearance + app + v1[i + 1].appearance) / 3;
-      while (app <= v1[i - 1].disappearance || app >= v1[i + 1].appearance);
+      if (v1[i1].disappearance > v2[i2 - 1].disappearance && v1[i1].disappearance <= v2[i2].disappearance)
+      {
+        new_dis = (v2[i2 - 1].disappearance + v1[i1].disappearance + v2[i2].disappearance) / 3;
+        // Avoid to have various subtitles with interweave DISappearance timestamp
+        if (new_dis <= v1[i1 - 1].disappearance)
+          new_dis = (v2[i2 - 1].disappearance + v1[i1 - 1].disappearance + v1[i1].disappearance + v2[i2].disappearance) / 4;
+      }
 
-      do
-        dis = (app + dis + v1[i + 1].appearance) / 3;
-      while (dis <= app || dis >= v1[i + 1].appearance);
-
-      // logD("Après find_closest_times[", i, "]: ", ms_to_str(app), "(", app, ")==>", ms_to_str(dis), "(", dis, ")");
-
-      v1[i].appearance = app;
-      v1[i].disappearance = dis;
+      if (new_app != -1 && new_dis != -1)
+        break;
     }
-    // logD("CSUB SYNC:   fin de l'alignement de la time line v1 sur celle de v2");
+
+    // Avoid to have various subtitles with interweave timestamp
+    if (new_dis < v1[i1 - 1].disappearance)
+      new_dis = v1[i1 - 1].disappearance;
+    if (new_app > new_dis)
+      new_app = (v1[i1 - 1].disappearance + new_dis) / 2;
+
+    v1[i1].appearance = new_app;
+    v1[i1].disappearance = new_dis;
   }
 
   s1 = to_str(v1, dot);
