@@ -504,8 +504,8 @@ msgstr "Sélectionnez le dossier de localisation"
 msgid "Subtitle files\t*.srt"	
 msgstr "Fichiers de sous-titres\t*.srt"
 
-msgid "Unable to load the file"	
-msgstr "Impossible de charger le fichier"
+msgid "Unable to load the file "	
+msgstr "Impossible de charger le fichier "
 
 msgid "Coefficients"	
 msgstr "Coefficients"

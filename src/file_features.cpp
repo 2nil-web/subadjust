@@ -218,6 +218,7 @@ bool file_read(std::filesystem::path abs_path)
 
   Fl_Text_Buffer txt_tmp;
   txt_tmp.transcoding_warning_action = nullptr;
+  current_abs_path = abs_path;
 
   if (txt_tmp.loadfile(abs_path.string().c_str()) == 0)
   {
@@ -237,7 +238,6 @@ bool file_read(std::filesystem::path abs_path)
       has_to_set_file_state(false);
     }
 
-    current_abs_path = abs_path;
     // logD("file_read true: [", abs_path, "]");
     return true;
   }
@@ -304,6 +304,43 @@ void pre_process(int pp_time_start, int pp_time_stop, int pp_offs_start, int pp_
     has_to_set_file_state(false);
 }
 
+
+void do_blink_title(void* _msg)
+{
+  static std::string res_mw="", msg="";
+  static int bnts_loop=0;
+
+  if (bnts_loop == 0) {
+    if (_msg) msg=std::string((char*)_msg);
+    else msg="Default title blinking message";
+    if (main_window->label()) res_mw=main_window->label();
+  }
+
+  if (bnts_loop < 5)
+  {
+    if (bnts_loop % 2) main_window->copy_label("");
+    else main_window->copy_label(msg.c_str());
+    Fl::repeat_timeout(0.6, do_blink_title);
+  }
+  else
+  {
+    main_window->copy_label(res_mw.c_str());
+    bnts_loop=-1;
+    Fl::remove_timeout(do_blink_title);
+  }
+
+  logD("blink_title: ", bnts_loop, ", ", main_window->label());
+  main_window->redraw();
+  bnts_loop++;
+}
+
+void blink_title(std::string _msg)
+{
+  static std::string msg;
+  msg = _msg.c_str();
+  Fl::add_timeout(0.6, do_blink_title, (void*)msg.c_str());  
+}
+
 void gui_display(bool file_read_ok, bool test_already_opened)
 {
   if (file_read_ok)
@@ -363,8 +400,14 @@ void gui_display(bool file_read_ok, bool test_already_opened)
   {
     // logD("gui_display out file_read_ok");
     //  fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
-    if (!current_abs_path.empty())
-      fl_alert((_("Unable to load the file") + std::string(" '%s'")).c_str(), current_abs_path.string().c_str());
+    if (!current_abs_path.empty()) {
+      file_path->value(std::filesystem::absolute(current_abs_path).string().c_str());
+      file_path->insert_position((int)current_abs_path.string().size());
+      std::string title = myopt.Progname + " - " + current_abs_path.stem().string();
+      main_window->copy_label(title.c_str());
+      blink_title(std::string(_("Unable to load the file ")) + "'" + current_abs_path.filename().string() + "'");
+      //fl_alert((_("Unable to load the file") + std::string(" '%s'")).c_str(), current_abs_path.string().c_str());
+    }
   }
 }
 
@@ -386,12 +429,19 @@ bool file_handler(eHandlingType ht)
   int opts = Fl_Native_File_Chooser::Option::PREVIEW;
   int typ;
   std::string title;
-
   std::filesystem::path path = {};
+
   if (file_path->value() != nullptr)
-    path = std::filesystem::absolute(file_path->value());
-  if (!path.empty() && path.has_extension())
-    path.replace_extension("");
+  {
+    path = file_path->value();
+
+    if (!path.empty())
+    {
+      path = std::filesystem::absolute(file_path->value());
+      if (path.has_extension())
+        path.replace_extension("");
+    }
+  }
 
   switch (ht)
   {
@@ -462,7 +512,6 @@ bool file_handler(eHandlingType ht)
       }
     }
 
-    logD("file_handler dest path: ", path);
     switch (ht)
     {
     case eHandlingType::READ:
@@ -491,8 +540,15 @@ bool file_handler(eHandlingType ht)
   return false;
 }
 
-bool native_save()
+
+bool save()
 {
+  if (txt_buf.length() == 0)
+  {
+    blink_title(_("<<<NOTHING TO SAVE>>>"));
+    return false;
+  }
+
   if (file_path->value() == nullptr)
     return file_handler(eHandlingType::WRITE);
   std::string filename = file_path->value();

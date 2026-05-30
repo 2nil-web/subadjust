@@ -32,7 +32,7 @@ void gui_display(bool, bool test_already_opened = true);
 void cui_display(bool, std::ostream &);
 
 bool file_handler(eHandlingType ht = eHandlingType::WRITE);
-bool native_save();
+bool save();
 void remove_opened(std::filesystem::path);
 void remove_opened(bool all = false);
 

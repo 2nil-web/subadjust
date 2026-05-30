@@ -148,7 +148,7 @@ int main(int argc, char **argv)
 {
   setup_i18n(std::filesystem::path(argv[0]).parent_path());
 
-  std::string file = "", ofilename = "";
+  std::string ifile = "", ofilename = "";
   int x = -1, y = -1, w = -1, h = -1;
   bool modify_input = false;
   bool run_pre_proc = false;
@@ -158,7 +158,7 @@ int main(int argc, char **argv)
             {
                 option_info(""),
                 option_info(
-                    'f', "file", [&](s_opt_params &p) -> void { file = p.val; }, _("Name of the file to read. It is the same than directly passing a file name as an argument without this option."), required),
+                    'f', "input file", [&](s_opt_params &p) -> void { ifile = p.val; }, _("Name of the file to read. It is the same than directly passing a file name as an argument without this option."), required),
 
                 option_info(
                     'g', "gui-mode", [&](s_opt_params &) -> void { gui_mode = true; }, _("Process the input file and show it with the gui, this is the default behavior.")),
@@ -269,8 +269,8 @@ The configuration file is located there : ")EOF") +
   // Text objects (file path and content)
   if (myopt.args.size() > 0)
   {
-    logD("args");
-    file = myopt.args[0];
+    ifile = myopt.args[0];
+    logD("args, file: ", ifile);
   }
 
   if (gui_mode)
@@ -318,7 +318,7 @@ The configuration file is located there : ")EOF") +
     };
   }
 
-  bool file_read_ok = file_read(file);
+  bool file_read_ok = file_read(ifile);
 
   if (run_pre_proc && file_read_ok && csub.vec().size() > 0)
     pre_process(pp_time_start, pp_time_stop, pp_offs_start, pp_offs_stop, pp_dur_k);
@@ -348,7 +348,7 @@ The configuration file is located there : ")EOF") +
       file_handler(eHandlingType::READ);
     });
 
-    file_save->callback(SIMPLE_CB { native_save(); });
+    file_save->callback(SIMPLE_CB { save(); });
     file_save_as->callback(SIMPLE_CB { file_handler(eHandlingType::WRITE); });
     file_reload->callback(SIMPLE_CB {
       std::string s = file_path->value();
@@ -365,7 +365,7 @@ The configuration file is located there : ")EOF") +
     });
 
     app_save_quit->callback(SIMPLE_CB {
-      if (native_save())
+      if (save())
         std::exit(0);
     });
     app_quit->callback(quit_cb);
@@ -436,7 +436,7 @@ The configuration file is located there : ")EOF") +
   else
   {
     if (modify_input)
-      ofilename = file;
+      ofilename = ifile;
 
     if (ofilename.empty())
       cui_display(file_read_ok, std::cout);
@@ -448,8 +448,10 @@ The configuration file is located there : ")EOF") +
         cui_display(file_read_ok, ofs);
         ofs.close();
       }
-      else
+      else {
+        logW(_("Unable to open file "), ofilename);
         std::cerr << _("Unable to open file ") << ofilename << std::endl;
+      }
     }
   }
 }

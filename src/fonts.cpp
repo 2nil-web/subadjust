@@ -43,12 +43,12 @@ Fl_Font ensure_only_one_call_to_set_fonts()
 
   if (not_called)
   {
-    logD("FONT - ensure_only_one_call_to_set_fonts. This line should appears only once");
+    //logD("FONT - ensure_only_one_call_to_set_fonts. This line should appears only once");
     num_fonts = Fl::set_fonts();
     not_called = false;
   }
 
-  logD("FONT - ensure_only_one_call_to_set_fonts, call number ", ncall++, ", there are ", num_fonts, " fonts available");
+  //logD("FONT - ensure_only_one_call_to_set_fonts, call number ", ncall++, ", there are ", num_fonts, " fonts available");
 
   return num_fonts;
 }

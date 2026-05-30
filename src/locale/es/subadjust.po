@@ -495,8 +495,8 @@ msgstr "Seleccione la carpeta de configuración regional"
 msgid "Subtitle files\t*.srt"	
 msgstr "Archivos de subtítulos\t*.srt"
 
-msgid "Unable to load the file"	
-msgstr "No se pudo cargar el archivo"
+msgid "Unable to load the file "	
+msgstr "No se pudo cargar el archivo "
 
 msgid "Coefficients"	
 msgstr "Coeficientes"
