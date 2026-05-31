@@ -290,11 +290,12 @@ bool file_write(std::filesystem::path filename)
     fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
     fl_alert(
 #ifdef _WIN32
-    _("Error while saving file '%ls'")
+        _("Error while saving file '%ls'")
 #else
-    _("Error while saving file '%s'")
+        _("Error while saving file '%s'")
 #endif
-    , filename.c_str());
+            ,
+        filename.c_str());
     return false;
   }
 }

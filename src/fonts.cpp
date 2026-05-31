@@ -47,7 +47,6 @@ Fl_Font ensure_only_one_call_to_set_fonts()
     not_called = false;
   }
 
-  
   // static size_t ncall = 0; logD("FONT - ensure_only_one_call_to_set_fonts, call number ", ncall++, ", there are ", num_fonts, " fonts available");
 
   return num_fonts;
