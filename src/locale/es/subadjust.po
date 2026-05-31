@@ -468,6 +468,9 @@ msgstr "Caja que abarca el área de trabajo"
 msgid "Error while saving file '%s'"	
 msgstr "Error al guardar el archivo « %s »"
 
+msgid "Error while saving file '%ls'"	
+msgstr "Error al guardar el archivo « %ls »"
+
 msgid "For the screen"	
 msgstr "Para la pantalla"
 

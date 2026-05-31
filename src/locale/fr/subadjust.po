@@ -477,6 +477,9 @@ msgstr "Cadre englobant la zone de travail"
 msgid "Error while saving file '%s'"	
 msgstr "Erreur lors de l'enregistrement du fichier « %s »"
 
+msgid "Error while saving file '%ls'"	
+msgstr "Erreur lors de l'enregistrement du fichier « %ls »"
+
 msgid "For the screen"	
 msgstr "Pour l'écran"
 
