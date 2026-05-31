@@ -14,15 +14,15 @@ snap {
 }
 Function {make_window()} {open
 } {
-  Fl_Window main_window {open
-    xywh {2332 182 384 653} type Double hide resizable
-    code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0}
+  Fl_Window main_window {
+    xywh {2332 182 384 653} type Double resizable
+    code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0} visible
   } {
     Fl_Group {} {open
       xywh {2 0 380 284}
     } {
       Fl_Menu_Button file_menu {
-        label { ☰} open selected
+        label { ☰} open
         tooltip {File operations (Open, Save, Reload)} xywh {3 1 48 28} labelsize 22 align 32
         class Fl_Menu_Button_Hover
       } {
@@ -40,6 +40,10 @@ Function {make_window()} {open
         MenuItem file_save_as {
           label {Save As ...}
           image {../assets/svg_icons/save as.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x50073 divider
+        }
+        MenuItem file_export {
+          label {Export ...}
+          image {../assets/svg_icons/export.svg} compress_image 1 xywh {10 10 100 20} shortcut 0x50073 divider
         }
         MenuItem file_reload {
           label Reload
@@ -289,7 +293,7 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
   }
   Fl_Window config_dialog {
     label Configuration open
-    xywh {2746 178 350 384} type Double hide resizable non_modal size_range {350 384 600 0}
+    xywh {2723 181 350 384} type Double resizable non_modal size_range {350 384 600 0} visible
   } {
     Fl_Button config_view {
       tooltip {Edit the configuration file..} image {../assets/svg_icons/modify - settings.svg} compress_image 1 xywh {278 2 66 24} labeltype NO_LABEL align 512
@@ -382,6 +386,73 @@ But not for the other fields} xywh {308 182 40 160} type Hold align 1
     Fl_Button config_reset {
       tooltip {Restore the subadjust configuration to its default values.
 A restart of the app is necessary for the whole change to take effect.} image {../assets/svg_icons/reload.svg} compress_image 1 xywh {322 351 24 24} labeltype NO_LABEL align 512
+      class Fl_Button_Hover
+    }
+  }
+  Fl_Window export_dialog {
+    label {Export parameters} open
+    xywh {3086 181 314 227} type Double modal visible
+  } {
+    Fl_Group {} {open
+      xywh {9 17 128 142} box BORDER_FRAME color 33 labelsize 10
+    } {
+      Fl_Check_Button tabulation {
+        label Tabulation
+        xywh {12 42 90 18} down_box DOWN_BOX
+        class Fl_Check_Button_Hover
+      }
+      Fl_Check_Button semicolon {
+        label Semicolon
+        xywh {12 64 90 18} down_box DOWN_BOX
+        class Fl_Check_Button_Hover
+      }
+      Fl_Check_Button comma {
+        label Comma
+        xywh {12 86 90 18} down_box DOWN_BOX
+        class Fl_Check_Button_Hover
+      }
+      Fl_Check_Button space {
+        label Space
+        xywh {12 108 90 18} down_box DOWN_BOX
+        class Fl_Check_Button_Hover
+      }
+      Fl_Check_Button other_sep {
+        label {Other:}
+        xywh {12 130 74 18} down_box DOWN_BOX
+        class Fl_Check_Button_Hover
+      }
+      Fl_Input other_sep_val {selected
+        xywh {86 129 40 22} labeltype NO_LABEL
+        class Fl_Input_L10n
+      }
+    }
+    Fl_Box {} {
+      label Separator
+      xywh {20 4 92 28} box FLAT_BOX
+    }
+    Fl_Group {} {open
+      xywh {163 17 143 86} box BORDER_FRAME color 33 labelsize 10
+    } {
+      Fl_Browser text_delimiters {
+        xywh {170 42 120 54} type Hold labeltype NO_LABEL labelsize 10
+        code0 {text_delimiters->add("\\"");}
+        code1 {text_delimiters->add("'");}
+        code2 {text_delimiters->add(_("None"));}
+        class Fl_Browser_Key
+      }
+    }
+    Fl_Box {} {
+      label {Text delimiter}
+      xywh {174 4 92 28} box FLAT_BOX
+    }
+    Fl_Return_Button ok_export {
+      label OK
+      xywh {48 184 86 26}
+      class Fl_Button_Hover
+    }
+    Fl_Button cancel_export {
+      label Cancel
+      xywh {192 184 86 26}
       class Fl_Button_Hover
     }
   }

@@ -228,9 +228,9 @@ bool is_valid_regex(std::regex &re)
   }
   catch (const std::regex_error &e)
   {
-    // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
     std::string msg = e.what();
     replace_string_in_place(msg, ":", ":\n");
+    fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
     fl_alert("%s", msg.c_str());
     return false;
   }
@@ -403,15 +403,20 @@ void sync(Fl_Widget *, void *)
   txt_buf2.transcoding_warning_action = nullptr;
   if (txt_buf2.loadfile(csub.sync_with.string().c_str()) != 0)
   {
+    fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
     fl_alert(_("Unable to load file [%s] to sync with. Error message is: %s"), csub.sync_with.string().c_str(), my_strerror(errno));
     return;
   }
 
-  if (file_is_modified && fl_choice(_("Do you want to save the file before syncing it ?"), _("No"), _("Yes"), 0L))
+  if (file_is_modified)
   {
-    if (!save())
+    fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
+    if (fl_choice(_("Do you want to save the file before syncing it ?"), _("No"), _("Yes"), 0L))
     {
-      return;
+      if (!save())
+      {
+        return;
+      }
     }
   }
 

@@ -226,7 +226,7 @@ void get_my_work_area(int &w, int &h, bool all_screens = true)
     int sc = Fl::screen_num(main_window->x_root(), main_window->y_root()), x, y;
     Fl::screen_work_area(x, y, w, h, sc);
   }
-  //logD("get_work_area: (", w, ", ", h, ")");
+  // logD("get_work_area: (", w, ", ", h, ")");
 }
 
 void correct_geometry(int &x, int &y, int &w, int &h)
@@ -234,8 +234,8 @@ void correct_geometry(int &x, int &y, int &w, int &h)
   int wmax, hmax;
   screens_work_area(wmax, hmax);
 
-  //logD("Correc - wmax: ", wmax, ", hmax: ", hmax);
-  //logD("Correc avant - x: ", x, ", y: ", y, ", w: ", w, ", h: ", h);
+  // logD("Correc - wmax: ", wmax, ", hmax: ", hmax);
+  // logD("Correc avant - x: ", x, ", y: ", y, ", w: ", w, ", h: ", h);
 
   if (w < MIN_W || w > wmax)
   {
@@ -279,7 +279,7 @@ void correct_geometry(int &x, int &y, int &w, int &h)
     y = hmax - h;
   }
 
-  //logD("Correc apres - x: ", x, ", y: ", y, ", w: ", w, ", h: ", h);
+  // logD("Correc apres - x: ", x, ", y: ", y, ", w: ", w, ", h: ", h);
 }
 
 // $USERPROFILE/.subadjust_admin/juxtaposing_management || $HOME/.subadjust_admin/juxtaposing_management
@@ -311,8 +311,8 @@ void juxtaposing_manage(const int x, const int y, const int w, const int h, bool
 {
   int new_x = x;
 
-  //logD("juxtaposing_manage ", placement_file.number(), " - new_x: ", new_x);
-  // Recompute x origin for app instances after the first one
+  // logD("juxtaposing_manage ", placement_file.number(), " - new_x: ", new_x);
+  //  Recompute x origin for app instances after the first one
   if (placement_file.number() > 0 && !force_ruling)
   {
     int work_width, work_height;
@@ -322,7 +322,7 @@ void juxtaposing_manage(const int x, const int y, const int w, const int h, bool
   }
 
   main_window_resize(new_x, y, w, h);
-  //logD("juxtaposing_manage ", placement_file.number(), " - (", new_x, ", ", y, ", ", w, ", ", h, ")");
+  // logD("juxtaposing_manage ", placement_file.number(), " - (", new_x, ", ", y, ", ", w, ", ", h, ")");
   fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
 }
 
@@ -330,8 +330,8 @@ void chg_coord(Fl_Int_Input *w, int new_val)
 {
   if (Fl::focus() != w && w->changed() == 0)
   {
-    //logD("juxtaposing_update - changing cfg x, y, w, h");
-    // w->when(0);
+    // logD("juxtaposing_update - changing cfg x, y, w, h");
+    //  w->when(0);
     w->value(new_val);
     w->redraw();
     // w->when(FL_WHEN_CHANGED | FL_WHEN_RELEASE);
@@ -351,14 +351,14 @@ int juxtaposing_update(int)
 
   if (config_dialog->shown())
   {
-    //logD("juxtaposing_update - config_dialog shown");
+    // logD("juxtaposing_update - config_dialog shown");
     chg_coord(mw_x, new_x);
     chg_coord(mw_y, new_y);
     chg_coord(mw_w, new_w);
     chg_coord(mw_h, new_h);
   }
-  //logD("juxtaposing_update ", placement_file.number(), "     - (", x, ", ", y, ", ", w, ", ", h, ")");
-  //logD("juxtaposing_update ", placement_file.number(), " NEW - (", new_x, ", ", new_y, ", ", new_w, ", ", new_h, ")");
+  // logD("juxtaposing_update ", placement_file.number(), "     - (", x, ", ", y, ", ", w, ", ", h, ")");
+  // logD("juxtaposing_update ", placement_file.number(), " NEW - (", new_x, ", ", new_y, ", ", new_w, ", ", new_h, ")");
 
   if (placement_file.number() == 0)
   {
@@ -388,7 +388,7 @@ int juxtaposing_update(int)
 
     // Force la mise à jour des données de préférence
     window.flush();
-    //logD("juxtaposing_update ", placement_file.number(), " FSH - (", x, ", ", y, ", ", w, ", ", h, ")");
+    // logD("juxtaposing_update ", placement_file.number(), " FSH - (", x, ", ", y, ", ", w, ", ", h, ")");
   }
 
   return 0;
@@ -396,7 +396,7 @@ int juxtaposing_update(int)
 
 void juxtaposing_end()
 {
-  //logD("juxtaposing_end - placement_file.number: ", placement_file.number());
+  // logD("juxtaposing_end - placement_file.number: ", placement_file.number());
   placement_file.leave();
 
   if (placement_file.is_empty())
@@ -428,7 +428,7 @@ std::filesystem::path find_locale_dir(std::filesystem::path prog_path, bool anti
   if (anticipate_dir)
   {
     std::filesystem::path my_l10n_dir = pref_get_string("locale_dir", "");
-    //logD("anticipate l10n_dir: ", my_l10n_dir);
+    // logD("anticipate l10n_dir: ", my_l10n_dir);
     /*if (ensure_useful_l10n_dir(my_l10n_dir))*/ vp.insert(vp.begin(), my_l10n_dir);
   }
   /*
@@ -444,12 +444,12 @@ std::filesystem::path find_locale_dir(std::filesystem::path prog_path, bool anti
   {
     if (ensure_useful_l10n_dir(p))
     {
-      //logD("Found useful l10n_dir: ", p);
+      // logD("Found useful l10n_dir: ", p);
       return p;
     }
   }
 
-  //logD("No l10n_dir found");
+  // logD("No l10n_dir found");
   return "";
 }
 
@@ -465,7 +465,7 @@ void setup_i18n(std::filesystem::path prog_path, bool anticipate_dir)
 #endif
 
   std::filesystem::path my_l10n_dir = find_locale_dir(prog_path, anticipate_dir);
-  //logD("my_l10n_dir: ", my_l10n_dir);
+  // logD("my_l10n_dir: ", my_l10n_dir);
   bindtextdomain("subadjust", my_l10n_dir.string().c_str());
   bind_textdomain_codeset("subadjust", "UTF-8");
   textdomain("subadjust");
@@ -643,9 +643,9 @@ void mw_resize(Fl_Widget *, void *)
   int x = std::stoi(mw_x->value()), y = std::stoi(mw_y->value()), w = std::stoi(mw_w->value()), h = std::stoi(mw_h->value());
   if (x >= 0 && y >= 0 && x + w <= work_w && y + h <= work_h)
   {
-    //logD("mw_resize: (", x, ", ", y, ", ", w, ", ", h, ")");
+    // logD("mw_resize: (", x, ", ", y, ", ", w, ", ", h, ")");
     main_window_resize(x, y, w, h);
-    //logD("main_window_resize(x, y, w, h): (", x, ", ", y, ", ", w, ", ", h, ")");
+    // logD("main_window_resize(x, y, w, h): (", x, ", ", y, ", ", w, ", ", h, ")");
   }
 }
 
@@ -653,7 +653,7 @@ void unconfig(Fl_Widget *, void *)
 {
   OS::use_theme(old_theme);
   main_window_resize(old_x, old_y, old_w, old_h);
-  //logD("main_window_resize(old_x, old_y, old_w, h): (", old_x, ", ", old_y, ", ", old_w, ", ", old_h, ")");
+  // logD("main_window_resize(old_x, old_y, old_w, h): (", old_x, ", ", old_y, ", ", old_w, ", ", old_h, ")");
   font_redraw(old_font_name, old_font_number, old_font_size);
 
   if (ensure_useful_l10n_dir(old_l10n_dir) && l10n_dir != old_l10n_dir)
@@ -682,7 +682,7 @@ void font_redraw(std::string font_name, int font_number, int font_size)
   }
   //  else global_font_name = Fl::get_font_name(FL_HELVETICA, nullptr);
 
-  //logD("FONT rdw - name: ", font_name, ", size: ", font_size, ", number: ", font_number);
+  // logD("FONT rdw - name: ", font_name, ", size: ", font_size, ", number: ", font_number);
   global_font_number = font_number;
   global_font_size = font_size;
   Fl::set_labeltype(FL_NORMAL_LABEL, GlobalDraw, nullptr);
@@ -712,7 +712,7 @@ void font_manage(Fl_Widget *, void *vfis)
   if (ifn > 0 && ifn < (int)fis.size())
   {
     ifn--;
-    //logD("FONT mng - name: ", fis[ifn].name, ", size: ", last_sel_sz, ", number: ", ifn, "/", fis.size());
+    // logD("FONT mng - name: ", fis[ifn].name, ", size: ", last_sel_sz, ", number: ", ifn, "/", fis.size());
 
     font_sizes->clear();
     if (fis[ifn].any_size)
@@ -738,7 +738,7 @@ void font_manage(Fl_Widget *, void *vfis)
         {
           font_sizes->select(i, true);
           actual_sel_sz = n;
-          //logD("FONT SIZE NOT ANY: (", n, ")");
+          // logD("FONT SIZE NOT ANY: (", n, ")");
         }
         i++;
       }
@@ -749,7 +749,7 @@ void font_manage(Fl_Widget *, void *vfis)
 
     font_redraw(fis[ifn].name, fis[ifn].number, last_sel_sz);
   }
-  //else logD("FONT - Bad name (", ifn, ") or size (", ifs, ") selection");
+  // else logD("FONT - Bad name (", ifn, ") or size (", ifs, ") selection");
 }
 
 void default_edit(std::filesystem::path p)
@@ -761,7 +761,7 @@ void default_edit(std::filesystem::path p)
   }
 
   std::string edit_cmd("\"" + editor + "\" " + p.string() + " &");
-  //logD("edit: ", edit_cmd);
+  // logD("edit: ", edit_cmd);
   std::system(edit_cmd.c_str());
 }
 
@@ -809,7 +809,7 @@ void pref_dialog(Fl_Widget *, void *)
       switch (ld_sel.show())
       {
       case -1:
-        // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
+        fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
         fl_alert("%s", ld_sel.errmsg());
         break; // ERROR
       case 1:

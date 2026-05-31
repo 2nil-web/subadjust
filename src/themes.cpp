@@ -85,7 +85,7 @@ constexpr bool OS::is_dark_theme(int t)
 
 static bool use_font(Fl_Font font, const char *system_name)
 {
-  //logD("FONT - before call to ensure_only_one_call_to_set_fonts from use_font in themes.cpp");
+  // logD("FONT - before call to ensure_only_one_call_to_set_fonts from use_font in themes.cpp");
   int num_fonts = ensure_only_one_call_to_set_fonts();
   for (Fl_Font f = 0; f < num_fonts; f++)
   {
@@ -3737,7 +3737,7 @@ std::vector<std::function<void()>> OS::theme_funcs = {use_classic_theme, use_aer
 
 bool OS::use_theme(int theme)
 {
-  //logD("themes: ", themes_string(), " - str: ", themeStrVec[theme], " ==> ", theme);
+  // logD("themes: ", themes_string(), " - str: ", themeStrVec[theme], " ==> ", theme);
 
   use_native_fonts();
   if (theme >= (int)Theme::CLASSIC && theme <= (int)Theme::HIGH_CONTRAST)

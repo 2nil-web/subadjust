@@ -248,6 +248,14 @@ bool file_read(std::filesystem::path abs_path)
 bool file_write(std::filesystem::path filename)
 {
   csub.parse(txt_buf.text());
+
+  if (csub.vec().size() == 0)
+  {
+    fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
+    fl_alert(_("File does not seem to be of subrip format\nAborting the save..."));
+    return false;
+  }
+
   txt_buf.text(csub.c_str());
   int errn = 0;
 
@@ -279,7 +287,7 @@ bool file_write(std::filesystem::path filename)
   }
   else
   {
-    // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
+    fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
     fl_alert(_("Error while saving file '%ls'"), filename.c_str());
     return false;
   }
@@ -304,32 +312,37 @@ void pre_process(int pp_time_start, int pp_time_stop, int pp_offs_start, int pp_
     has_to_set_file_state(false);
 }
 
-
-void do_blink_title(void* _msg)
+void do_blink_title(void *_msg)
 {
-  static std::string res_mw="", msg="";
-  static int bnts_loop=0;
+  static std::string res_mw = "", msg = "";
+  static int bnts_loop = 0;
 
-  if (bnts_loop == 0) {
-    if (_msg) msg=std::string((char*)_msg);
-    else msg="Default title blinking message";
-    if (main_window->label()) res_mw=main_window->label();
+  if (bnts_loop == 0)
+  {
+    if (_msg)
+      msg = std::string((char *)_msg);
+    else
+      msg = "Default title blinking message";
+    if (main_window->label())
+      res_mw = main_window->label();
   }
 
   if (bnts_loop < 5)
   {
-    if (bnts_loop % 2) main_window->copy_label("");
-    else main_window->copy_label(msg.c_str());
+    if (bnts_loop % 2)
+      main_window->copy_label("");
+    else
+      main_window->copy_label(msg.c_str());
     Fl::repeat_timeout(0.6, do_blink_title);
   }
   else
   {
+    logD("blink_title: ", main_window->label());
     main_window->copy_label(res_mw.c_str());
-    bnts_loop=-1;
+    bnts_loop = -1;
     Fl::remove_timeout(do_blink_title);
   }
 
-  logD("blink_title: ", bnts_loop, ", ", main_window->label());
   main_window->redraw();
   bnts_loop++;
 }
@@ -338,7 +351,7 @@ void blink_title(std::string _msg)
 {
   static std::string msg;
   msg = _msg.c_str();
-  Fl::add_timeout(0.6, do_blink_title, (void*)msg.c_str());  
+  Fl::add_timeout(0.6, do_blink_title, (void *)msg.c_str());
 }
 
 void gui_display(bool file_read_ok, bool test_already_opened)
@@ -351,6 +364,7 @@ void gui_display(bool file_read_ok, bool test_already_opened)
 
     if (test_already_opened && already_opened(current_abs_path.string()))
     {
+      fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
       if (!fl_choice(_("This file is already opened by another instance of this tool.\nDo you want to reopen it ?"), _("No"), _("Yes"), 0L))
       {
         txt_buf.text("");
@@ -399,14 +413,15 @@ void gui_display(bool file_read_ok, bool test_already_opened)
   else
   {
     // logD("gui_display out file_read_ok");
-    //  fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
-    if (!current_abs_path.empty()) {
+    if (!current_abs_path.empty())
+    {
       file_path->value(std::filesystem::absolute(current_abs_path).string().c_str());
       file_path->insert_position((int)current_abs_path.string().size());
       std::string title = myopt.Progname + " - " + current_abs_path.stem().string();
       main_window->copy_label(title.c_str());
       blink_title(std::string(_("Unable to load the file ")) + "'" + current_abs_path.filename().string() + "'");
-      //fl_alert((_("Unable to load the file") + std::string(" '%s'")).c_str(), current_abs_path.string().c_str());
+      // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
+      // fl_alert((_("Unable to load the file") + std::string(" '%s'")).c_str(), current_abs_path.string().c_str());
     }
   }
 }
@@ -480,7 +495,7 @@ bool file_handler(eHandlingType ht)
   switch (fsel.show())
   {
   case -1:
-    // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
+    fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
     fl_alert("%s", fsel.errmsg());
     break; // ERROR
   case 1:
@@ -539,7 +554,6 @@ bool file_handler(eHandlingType ht)
 
   return false;
 }
-
 
 bool save()
 {

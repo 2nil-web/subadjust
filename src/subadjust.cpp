@@ -21,6 +21,7 @@
 #include "Fl_Time_Input.H"
 #include "app_info.h"
 #include "edit_features.h"
+#include "export.h"
 #include "file_features.h"
 #include "fonts.h"
 #include "log.h"
@@ -78,7 +79,10 @@ void subadjust(Fl_Widget *, void *)
     file_content->redraw();
     set_file_state(true);
     if (csub.err_msg != "")
+    {
+      fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
       fl_message("%s", csub.err_msg.c_str());
+    }
   }
   else
     fl_alert("%s", csub.err_msg.c_str());
@@ -338,7 +342,7 @@ The configuration file is located there : ")EOF") +
     // file_open->callback();
     file_open->callback(SIMPLE_CB {
       logD("FILE OPEN1");
-      // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
+      fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
       if (file_is_modified && !fl_choice(_("Your actual changes will be lost. Do you still want to open another file?"), _("No"), _("Yes"), 0L))
       {
         return;
@@ -350,12 +354,14 @@ The configuration file is located there : ")EOF") +
 
     file_save->callback(SIMPLE_CB { save(); });
     file_save_as->callback(SIMPLE_CB { file_handler(eHandlingType::WRITE); });
+    file_export->callback(export_run);
+
     file_reload->callback(SIMPLE_CB {
       std::string s = file_path->value();
       if (!s.empty())
       {
         std::filesystem::path abs_path = std::filesystem::absolute(s);
-        // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
+        fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
         if (!abs_path.empty() && (!file_is_modified || fl_choice(_("It seems that the subtitle file has been modified.\nDo you still want to reload it ?"), _("No"), _("Yes"), 0L)))
         {
           gui_display(file_read(abs_path), false);
@@ -448,7 +454,8 @@ The configuration file is located there : ")EOF") +
         cui_display(file_read_ok, ofs);
         ofs.close();
       }
-      else {
+      else
+      {
         logW(_("Unable to open file "), ofilename);
         std::cerr << _("Unable to open file ") << ofilename << std::endl;
       }

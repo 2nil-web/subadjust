@@ -158,6 +158,7 @@
     <ClCompile Include="src/options.cpp" />
     <ClCompile Include="src/place.cpp" />
     <ClCompile Include="src/pref.cpp" />
+    <ClCompile Include="src/export.cpp" />
     <ClCompile Include="src/subs.cpp" />
     <ClCompile Include="src/themes.cpp" />
     <ClCompile Include="src/fonts.cpp" />
@@ -180,6 +181,7 @@
     <ClCompile Include="src/options.h" />
     <ClCompile Include="src/place.h" />
     <ClCompile Include="src/pref.h" />
+    <ClCompile Include="src/export.h" />
     <ClCompile Include="src/subs.h" />
     <ClCompile Include="src/themes.h" />
     <ClCompile Include="src/fonts.h" />

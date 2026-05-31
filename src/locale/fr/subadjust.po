@@ -636,3 +636,10 @@ msgstr "Modifier l'heure de début du fichier de sous-titres"
 msgid "Modify the end time of the subtitle file"
 msgstr "Modifier l'heure de fin du fichier de sous-titres"
 
+msgid ""
+"File does not seem to be of subrip format!\n"
+"Aborting the save..."
+msgstr ""
+"Le fichier ne semble pas être au format subrip !\n"
+"Annulation de la Sauvegarde ..."
+
