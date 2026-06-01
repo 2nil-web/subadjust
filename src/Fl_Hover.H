@@ -66,7 +66,9 @@ public:
         Base::selection_color(FL_BACKGROUND_COLOR);
         Base::when(FL_WHEN_ENTER_KEY | FL_WHEN_RELEASE);
         first_show = false;
-      } else Base::color(col);
+      }
+      else
+        Base::color(col);
       Base::labelcolor(lab_col);
       Base::redraw();
       return 1;
