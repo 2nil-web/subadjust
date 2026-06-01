@@ -15,7 +15,7 @@ snap {
 Function {make_window()} {open
 } {
   Fl_Window main_window {open
-    xywh {2332 182 384 653} type Double resizable
+    xywh {1531 182 384 653} type Double resizable
     code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0} visible
   } {
     Fl_Group {} {open
@@ -390,8 +390,8 @@ A restart of the app is necessary for the whole change to take effect.} image {.
     }
   }
   Fl_Window export_dialog {
-    label {Export parameters} open
-    xywh {3086 181 309 262} type Double non_modal visible
+    label {Export parameters} open selected
+    xywh {1122 240 309 262} type Double non_modal visible
   } {
     Fl_Group {} {open
       xywh {9 16 128 108} box BORDER_FRAME color 33 labelsize 10
@@ -407,7 +407,7 @@ A restart of the app is necessary for the whole change to take effect.} image {.
         class Fl_Check_Button_Hover
       }
       Fl_Check_Button comma {
-        label Comma selected
+        label Comma
         xywh {12 31 90 18} down_box DOWN_BOX
         class Fl_Check_Button_Hover
       }
@@ -426,10 +426,10 @@ A restart of the app is necessary for the whole change to take effect.} image {.
       xywh {20 4 76 22} box FLAT_BOX
     }
     Fl_Group {} {open
-      xywh {144 16 159 78} box BORDER_FRAME color 33 labelsize 10
+      xywh {144 16 159 86} box BORDER_FRAME color 33 labelsize 10
     } {
       Fl_Browser text_delimiters {
-        xywh {151 33 144 53} type Hold labeltype NO_LABEL labelsize 10
+        xywh {151 33 144 65} type Hold labeltype NO_LABEL labelsize 10
         code0 {text_delimiters->add("\\"");}
         code1 {text_delimiters->add("'");}
         code2 {text_delimiters->add(_("None"));}
