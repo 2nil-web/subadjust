@@ -14,7 +14,7 @@ snap {
 }
 Function {make_window()} {open
 } {
-  Fl_Window main_window {
+  Fl_Window main_window {open
     xywh {2332 182 384 653} type Double resizable
     code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0} visible
   } {
@@ -42,7 +42,7 @@ Function {make_window()} {open
           image {../assets/svg_icons/save as.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x50073 divider
         }
         MenuItem file_export {
-          label {Export ...}
+          label {Export to csv...}
           image {../assets/svg_icons/export.svg} compress_image 1 xywh {10 10 100 20} shortcut 0x50073 divider
         }
         MenuItem file_reload {
@@ -85,7 +85,7 @@ Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} c
           }
           Fl_Button goto_middle_sub {
             label Sub
-            tooltip {Go to middle subtitle} image {../assets/svg_icons/subtitles.svg} compress_image 1 xywh {98 52 80 36} labeltype NO_LABEL align 512
+            tooltip {Go to middle subtitle} image {../assets/svg_icons/subtitles.svg} compress_image 1 xywh {98 52 80 36} box THIN_UP_FRAME down_box THIN_DOWN_FRAME labeltype NO_LABEL align 512
             class Fl_Button_Hover
           }
           Fl_Button goto_middle_time {
@@ -208,7 +208,7 @@ end offsets
         xywh {382 0 0 161} labeltype NO_LABEL align 8 hide resizable
       }
     }
-    Fl_Group {} {open
+    Fl_Group {} {
       tooltip {You may apply regex pattern, with case sensitivity or not.
 All your pattern will be uniquely stored for futur reuse.} xywh {2 285 384 80} box BORDER_FRAME color 37
     } {
@@ -293,13 +293,13 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
   }
   Fl_Window config_dialog {
     label Configuration open
-    xywh {2723 181 350 384} type Double resizable non_modal size_range {350 384 600 0} visible
+    xywh {2723 181 350 384} type Double hide resizable non_modal size_range {350 384 600 0}
   } {
     Fl_Button config_view {
       tooltip {Edit the configuration file..} image {../assets/svg_icons/modify - settings.svg} compress_image 1 xywh {278 2 66 24} labeltype NO_LABEL align 512
       class Fl_Button_Hover
     }
-    Fl_Group {} {open
+    Fl_Group {} {
       xywh {2 2 346 110}
     } {
       Fl_Choice theme_choice {
@@ -335,7 +335,7 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
         xywh {344 30 1 80} labeltype NO_LABEL resizable
       }
     }
-    Fl_Group {} {open
+    Fl_Group {} {
       xywh {2 112 346 44}
     } {
       Fl_Button loc_dir_sel {
@@ -366,7 +366,7 @@ But not for the other fields} xywh {6 182 302 160} type Hold align 1 resizable
 And also for the subtitles editor field
 But not for the other fields} xywh {308 182 40 160} type Hold align 1
     }
-    Fl_Group {} {open
+    Fl_Group {} {
       xywh {40 346 260 36}
     } {
       Fl_Return_Button ok_config {
@@ -391,50 +391,45 @@ A restart of the app is necessary for the whole change to take effect.} image {.
   }
   Fl_Window export_dialog {
     label {Export parameters} open
-    xywh {3086 181 314 227} type Double modal visible
+    xywh {3086 181 309 262} type Double non_modal visible
   } {
     Fl_Group {} {open
-      xywh {9 17 128 142} box BORDER_FRAME color 33 labelsize 10
+      xywh {9 16 128 108} box BORDER_FRAME color 33 labelsize 10
     } {
       Fl_Check_Button tabulation {
         label Tabulation
-        xywh {12 42 90 18} down_box DOWN_BOX
+        xywh {12 75 90 18} down_box DOWN_BOX selection_color 49
         class Fl_Check_Button_Hover
       }
       Fl_Check_Button semicolon {
         label Semicolon
-        xywh {12 64 90 18} down_box DOWN_BOX
+        xywh {12 53 90 18} down_box DOWN_BOX
         class Fl_Check_Button_Hover
       }
       Fl_Check_Button comma {
-        label Comma
-        xywh {12 86 90 18} down_box DOWN_BOX
-        class Fl_Check_Button_Hover
-      }
-      Fl_Check_Button space {
-        label Space
-        xywh {12 108 90 18} down_box DOWN_BOX
+        label Comma selected
+        xywh {12 31 90 18} down_box DOWN_BOX
         class Fl_Check_Button_Hover
       }
       Fl_Check_Button other_sep {
         label {Other:}
-        xywh {12 130 74 18} down_box DOWN_BOX
+        xywh {12 97 66 18} down_box DOWN_BOX
         class Fl_Check_Button_Hover
       }
-      Fl_Input other_sep_val {selected
-        xywh {86 129 40 22} labeltype NO_LABEL
+      Fl_Input other_sep_val {
+        xywh {80 96 48 22} labeltype NO_LABEL
         class Fl_Input_L10n
       }
     }
     Fl_Box {} {
       label Separator
-      xywh {20 4 92 28} box FLAT_BOX
+      xywh {20 4 76 22} box FLAT_BOX
     }
     Fl_Group {} {open
-      xywh {163 17 143 86} box BORDER_FRAME color 33 labelsize 10
+      xywh {144 16 159 78} box BORDER_FRAME color 33 labelsize 10
     } {
       Fl_Browser text_delimiters {
-        xywh {170 42 120 54} type Hold labeltype NO_LABEL labelsize 10
+        xywh {151 33 144 53} type Hold labeltype NO_LABEL labelsize 10
         code0 {text_delimiters->add("\\"");}
         code1 {text_delimiters->add("'");}
         code2 {text_delimiters->add(_("None"));}
@@ -443,17 +438,40 @@ A restart of the app is necessary for the whole change to take effect.} image {.
     }
     Fl_Box {} {
       label {Text delimiter}
-      xywh {174 4 92 28} box FLAT_BOX
+      xywh {161 4 90 22} box FLAT_BOX
     }
     Fl_Return_Button ok_export {
       label OK
-      xywh {48 184 86 26}
+      xywh {40 225 86 26}
       class Fl_Button_Hover
     }
     Fl_Button cancel_export {
       label Cancel
-      xywh {192 184 86 26}
+      xywh {184 225 86 26}
       class Fl_Button_Hover
+    }
+    Fl_Group {} {open
+      xywh {9 142 294 72} box BORDER_FRAME color 33 labelsize 10
+    } {
+      Fl_Input_Choice field_sel {open
+        xywh {15 156 148 24} labeltype NO_LABEL
+        code0 {field_sel->add("Subtitle number");}
+        code1 {field_sel->add("Start time (H:M:S.S)"); field_sel->add("End time(H:M:S.S)");}
+        code2 {field_sel->add("Start time (SEC)"); field_sel->add("End time (SEC)");}
+        code3 {field_sel->add("Subtitle text");}
+        class Fl_Input_Choice_L10n
+      } {}
+      Fl_Button {} {
+        label {Add field}
+        xywh {172 156 76 22}
+      }
+      Fl_Input {} {
+        xywh {15 186 280 22} labeltype NO_LABEL
+      }
+    }
+    Fl_Box {} {
+      label {Fields selection}
+      xywh {20 128 100 22} box FLAT_BOX
     }
   }
 }

@@ -47,13 +47,13 @@ public:
 
   int handle(int ev)
   {
-    // On gère ENTER, LEAVE et SHOW
     static Fl_Color col = Base::color(), lab_col = Base::labelcolor();
 
+    // On gère ENTER, LEAVE et SHOW
     switch (ev)
     {
     case FL_ENTER:
-      Base::color(FL_WHITE); // fl_rgb_color(0xFF, 0xFF, 0xFF));
+      Base::color(FL_WHITE);
       Base::redraw();
       return 1;
     case FL_LEAVE:
@@ -66,8 +66,7 @@ public:
         Base::selection_color(FL_BACKGROUND_COLOR);
         Base::when(FL_WHEN_ENTER_KEY | FL_WHEN_RELEASE);
         first_show = false;
-      }
-      Base::color(col);
+      } else Base::color(col);
       Base::labelcolor(lab_col);
       Base::redraw();
       return 1;
