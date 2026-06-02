@@ -9,8 +9,10 @@
 #ifdef _MSVC_LANG
 #pragma warning(pop)
 #endif
-#include "pref.h" // For SIMPLE_CB
+#include "file_features.h" // For csub
+#include "pref.h"          // For SIMPLE_CB
 #include "subadjust_ui.h"
+#include "subs.h"
 
 void export_run(Fl_Widget *, void *);
 

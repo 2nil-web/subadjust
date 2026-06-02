@@ -109,6 +109,12 @@ void quit_cb(Fl_Widget *, void *)
       delete config_dialog;
     }
 
+    if (export_dialog->shown())
+    {
+      export_dialog->hide();
+      delete export_dialog;
+    }
+
     pref_set();
     delete main_window;
   }

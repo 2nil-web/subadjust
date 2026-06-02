@@ -437,8 +437,7 @@ std::string pad(unsigned int d, size_t np)
   return s;
 }
 
-// Convert a int in millisecond into a string of the format HH:MM:SS[.|,]SSS to
-std::string ms_to_str(int millisec, bool dot)
+std::string ms_to_str(int millisec, char dec_sep)
 {
   bool neg = false;
   if (millisec < 0)
@@ -458,16 +457,27 @@ std::string ms_to_str(int millisec, bool dot)
   int hr = mn / 60;  // hr à garder
   keep_mn = mn % 60; // mn à garder
 
-  std::string str = pad(hr) + ':' + pad(keep_mn) + ':' + pad(keep_sec);
-  if (dot)
-    str += '.';
-  else
-    str += ',';
-  str += pad(keep_ms, 3);
+  std::string str = pad(hr) + ':' + pad(keep_mn) + ':' + pad(keep_sec) + dec_sep + pad(keep_ms, 3);
 
   if (neg)
     str = "-" + str;
   return str;
+}
+
+// Convert a int in millisecond into a string of the format HH:MM:SS[.|,|?]SSS to
+std::string ms_to_str(int millisec, bool dot)
+{
+  char dec_sep;
+  if (dot)
+    dec_sep = '.';
+  else
+    dec_sep = ',';
+  return ms_to_str(millisec, dec_sep);
+}
+
+std::string ms_to_str(int millisec)
+{
+  return ms_to_str(millisec, true);
 }
 
 // Replace a portion of the string str, starting at pos, by substring subs not growing str

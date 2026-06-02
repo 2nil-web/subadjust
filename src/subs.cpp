@@ -155,7 +155,7 @@ const std::regex cSub::re_index("(\\d+)");
 // const std::regex cSub::re_times("(\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d)[^\\S\\n]+-->[^\\S\\n]+(\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d)");
 const std::regex cSub::re_times("(.*:.*:.*..*)[^\\S\\n]+-->[^\\S\\n]+(.*:.*:.*..*)");
 
-std::string cSub::to_str(const std::vector<sSub> vec, bool dot)
+std::string cSub::to_str(const std::vector<sSub> vec, char dec_sep)
 {
   if (vec.empty())
     return "";
@@ -164,7 +164,7 @@ std::string cSub::to_str(const std::vector<sSub> vec, bool dot)
   for (size_t i = 0; i < vec.size(); i++)
   {
     ss << i + 1 << std::endl;
-    ss << ms_to_str(vec[i].appearance, dot) << " --> " << ms_to_str(vec[i].disappearance, dot) << std::endl;
+    ss << ms_to_str(vec[i].appearance, dec_sep) << " --> " << ms_to_str(vec[i].disappearance, dec_sep) << std::endl;
     ss << vec[i].text << std::endl;
   }
 
@@ -195,42 +195,120 @@ std::string cSub::to_vtt()
   return to_vtt_apart(sub_vec);
 }
 
-std::string cSub::to_sv_apart(const std::vector<sSub> vec, bool dot, const std::string sep, const std::string delim, bool with_bom)
+std::string cSub::to_sv_apart(const std::vector<sSub> vec, const std::string sep, const std::string delim, char dec_sep, bool with_bom, std::vector<bool> fsel)
 {
   if (vec.empty())
     return "";
 
-  const std::string sd = sep + delim, ds = delim + sep;
-
   std::stringstream ss;
   if (with_bom)
     ss << "\357\273\277";
-  ss << "index" << sep << "start time" << sep << "end time" << sep << "text" << std::endl;
 
-  for (size_t i = 0; i < vec.size(); i++)
+  size_t i, i2;
+
+  if (fsel.empty())
+    fsel = {true, true, true, true, true, true};
+
+  bool not_start_header = false;
+  for (size_t i2 = 0; i2 < fsel.size(); i2++)
   {
-    ss << i + 1 << sd;
-    if (sep == ";")
+    if (fsel[i2])
     {
-      ss << vec[i].appearance << ds << delim << vec[i].disappearance << ds;
+      if (not_start_header)
+      {
+        ss << sep;
+      }
+      else
+      {
+        not_start_header = true;
+      }
+
+      switch (i2)
+      {
+      case 1: // Subtitle start in HH:MM:SS[.|,]SSS format
+        ss << delim << "Subtitle start" << delim;
+        break;
+      case 2: // Subtitle end in HH:MM:SS[.|,]SSS format
+        ss << delim << "Subtitle end" << delim;
+        break;
+      case 3: // Subtitle start in millisecond
+        ss << delim << "Subtitle start (msec)" << delim;
+        break;
+      case 4: // Subtitle end in millisecond
+        ss << delim << "Subtitle end (msec)" << delim;
+        break;
+
+      case 5: // Subtitle text
+      {
+        ss << "Text";
+      }
+      break;
+
+      default:
+      case 0: // Subtitle number
+        ss << "Index";
+        break;
+      }
     }
-    else
+  }
+
+  for (i = 0; i < vec.size(); i++)
+  {
+    logD("to_sv_apart: ", i, sep, vec[i].appearance, sep, vec[i].appearance, sep, vec[i].text);
+    ss << std::endl;
+    bool not_start_line = false;
+    for (i2 = 0; i2 < fsel.size(); i2++)
     {
-      ss << ms_to_str(vec[i].appearance, dot) << ds << delim << ms_to_str(vec[i].disappearance, dot) << ds;
+      if (fsel[i2])
+      {
+        if (not_start_line)
+        {
+          ss << sep;
+        }
+        else
+        {
+          not_start_line = true;
+        }
+
+        switch (i2)
+        {
+        case 1: // Subtitle start in HH:MM:SS[.|,]SSS format
+          ss << ms_to_str(vec[i].appearance, dec_sep);
+          break;
+        case 2: // Subtitle end in HH:MM:SS[.|,]SSS format
+          ss << ms_to_str(vec[i].disappearance, dec_sep);
+          break;
+        case 3: // Subtitle start in millisecond
+          ss << vec[i].appearance;
+          break;
+        case 4: // Subtitle end in millisecond
+          ss << vec[i].disappearance;
+          break;
+
+        case 5: // Subtitle text
+        {
+          std::string s = vec[i].text;
+          s = trim(s);
+          s = replace_string(s, delim, delim + delim);
+          ss << delim << s << delim;
+        }
+        break;
+
+        default:
+        case 0: // Subtitle number
+          ss << i;
+          break;
+        }
+      }
     }
-    std::string s = vec[i].text;
-    s = trim(s);
-    s = replace_string(s, delim, delim + delim);
-    //    s=replace_string(s, "\'", "\\\'");
-    ss << delim << s << delim << std::endl;
   }
 
   return ss.str();
 }
 
-std::string cSub::to_sv(std::string sep, std::string delim)
+std::string cSub::to_sv(std::string sep, std::string delim, char dec_sep, bool with_bom, std::vector<bool> fsel)
 {
-  return to_sv_apart(sub_vec, dot, sep, delim);
+  return to_sv_apart(sub_vec, sep, delim, dec_sep, with_bom, fsel);
 }
 
 int cSub::line_by_timestamp(int to_find, sSub &ssub)
@@ -302,7 +380,7 @@ size_t cSub::linecount(const std::string s)
 void cSub::parse_apart(std::string &s, std::vector<sSub> &v, size_t &nl)
 {
   v = to_vec(s);
-  s = to_str(v, dot);
+  s = to_str(v, dec_sep);
   nl = linecount(s);
 }
 
@@ -419,7 +497,7 @@ bool cSub::sync(const std::string _s1, const std::string _s2)
     v1[i1].disappearance = new_dis;
   }
 
-  s1 = to_str(v1, dot);
+  s1 = to_str(v1, dec_sep);
   // Nothing has changed with the syncing
   if (s1 == _s1)
     return false;
@@ -427,7 +505,7 @@ bool cSub::sync(const std::string _s1, const std::string _s2)
   // logD("CSUB SYNC");
   //  Something has changed with the syncing
   sub_vec = v1;
-  sub_str = to_str(sub_vec, dot);
+  sub_str = to_str(sub_vec, dec_sep);
   nlines = linecount(sub_str);
 
   return true;
@@ -548,7 +626,7 @@ bool cSub::adjust_apart(std::string &_str, std::vector<sSub> &_vec, const int ti
       _vec = new_sub_vec;
       new_time_end++;
     } while (new_sub_vec.back().appearance < time_end);
-    _str = to_str(_vec, dot);
+    _str = to_str(_vec, dec_sep);
 
     // logD("adjust_apart5: true");
     return true;
@@ -569,9 +647,9 @@ bool cSub::adjust(const int time_start, const int time_end, const double offset_
   return adjust_apart(sub_str, sub_vec, time_start, time_end, offset_start, offset_stop, coeff);
 }
 
-cSub::cSub(const std::string s, bool _dot)
+cSub::cSub(const std::string s, char _dec_sep)
 {
-  dot = _dot;
+  dec_sep = _dec_sep;
   err_msg = "";
   parse(s);
 }
