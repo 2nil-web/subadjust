@@ -254,7 +254,7 @@ std::string cSub::to_sv_apart(const std::vector<sSub> vec, const std::string sep
 
   for (i = 0; i < vec.size(); i++)
   {
-    logD("to_sv_apart: ", i, sep, vec[i].appearance, sep, vec[i].appearance, sep, vec[i].text);
+    // logD("to_sv_apart: ", i, sep, vec[i].appearance, sep, vec[i].appearance, sep, vec[i].text);
     ss << std::endl;
     bool not_start_line = false;
     for (i2 = 0; i2 < fsel.size(); i2++)

@@ -6,6 +6,7 @@
 #pragma warning(push, 0)
 #endif
 #include <FL/Fl.H>
+#include <FL/fl_ask.H>
 #ifdef _MSVC_LANG
 #pragma warning(pop)
 #endif

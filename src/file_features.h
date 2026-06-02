@@ -35,5 +35,6 @@ bool file_handler(eHandlingType ht = eHandlingType::WRITE);
 bool save();
 void remove_opened(std::filesystem::path);
 void remove_opened(bool all = false);
+void blink_title(std::string);
 
 #endif /* FILE_FEATURES_H */

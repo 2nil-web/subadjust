@@ -390,11 +390,11 @@ A restart of the app is necessary for the whole change to take effect.} image {.
     }
   }
   Fl_Window export_dialog {
-    label {Export parameters} open selected
+    label {Export parameters} open
     xywh {2316 40 309 286} type Double non_modal visible
   } {
-    Fl_Group {} {open
-      xywh {9 16 128 108} box BORDER_FRAME color 33 labelsize 10
+    Fl_Group {} {open selected
+      tooltip {Define the fields separator string} xywh {9 16 131 108} box BORDER_FRAME color 33 labelsize 10
     } {
       Fl_Check_Button export_tabulation {
         label Tabulation
@@ -417,7 +417,7 @@ A restart of the app is necessary for the whole change to take effect.} image {.
         class Fl_Check_Button_Hover
       }
       Fl_Input export_other_sep_val {
-        xywh {80 96 48 22} labeltype NO_LABEL
+        xywh {86 96 48 20} labeltype NO_LABEL
         class Fl_Input_L10n
       }
     }
@@ -429,7 +429,7 @@ A restart of the app is necessary for the whole change to take effect.} image {.
       xywh {144 16 159 86} box BORDER_FRAME color 33 labelsize 10
     } {
       Fl_Browser export_delims {
-        xywh {151 33 144 65} type Hold labeltype NO_LABEL labelsize 10
+        tooltip {Select the text delimiter if necessary} xywh {151 33 144 65} type Hold labeltype NO_LABEL labelsize 10
         code0 {export_delims->add("\\"");}
         code1 {export_delims->add("'");}
         code2 {export_delims->add(_("None"));}
@@ -479,10 +479,14 @@ A restart of the app is necessary for the whole change to take effect.} image {.
     }
     Fl_Check_Button export_force_dec_sep {
       label {Force decimal separator to:}
-      tooltip {Forces to starts the decimal part of float numbers with point if true else locale} xywh {12 127 219 16} down_box DOWN_BOX
+      tooltip {If checked then the separator for the decimal part of numbers
+will be the one indicated in the input field on the right
+else the default one is used.} xywh {12 127 219 16} down_box DOWN_BOX
     }
     Fl_Input export_dec_sep_val {
-      xywh {236 127 48 22} labeltype NO_LABEL
+      tooltip {If the checkmark on the left is checked then the separator for the decimal part of numbers
+will be the one indicated here
+else the default one is used.} xywh {236 127 48 22} labeltype NO_LABEL
       class Fl_Input_L10n
     }
   }
