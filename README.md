@@ -4,13 +4,13 @@
 
 <sup>*Actually available in 3 languages : english, french and spanish. But others could easily be added thanks to gettext.*</sup>
 
-<sup>*Available for Windows and Linux. Should also run under macOS.*</sup>
+<sup>*Available for Windows and Linux. Should also be possible to build and deliver for macOS.*</sup>
 
 ##### ***You can download a binary version of this tool in the "[Release](https://github.com/2nil-web/subadjust/releases)" link.***
 
 After the download, just unzip and run it with .srt files.
 
-<sup>Although compiled under Ubuntu, the Linux version should work on any decent and recent distro.</sup>
+<sup>Compiled for various Linux distro.</sup>
 
 ### ***The Graphical User Interface aims to be self-explanatory***
 
@@ -105,4 +105,4 @@ Although not tested, but should behave the same way under macOS ...
 
 ###### To do:
 
-- *Release with a setup and/or package*
+- *Release with a setup and/or package, actually it is only a zip file.*
