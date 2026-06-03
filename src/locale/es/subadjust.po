@@ -700,3 +700,6 @@ msgstr "Si está marcada, se utilizará la indicada en el campo de entrada de la
 msgid "If the checkmark on the left is checked then the separator will be the one indicated here\nElse the dot.\nIt may neither be a digit nor a letter."
 msgstr "Si se marca la casilla de la izquierda, el separador será el que se indica aquí. De lo contrario, será el punto. No puede ser ni un dígito ni una letra."
 
+msgid "If this field is empty, then all the suggested fields will be exported."
+msgstr "Si este campo está vacío, se exportarán todos los campos sugeridos."
+

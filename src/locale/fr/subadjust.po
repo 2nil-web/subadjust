@@ -706,13 +706,12 @@ msgstr "Sélectionnez le délimiteur de texte si nécessaire."
 msgid "Adding a BOM is necessary if you want to read the generated CSV file with MS-Excel"
 msgstr "L'ajout de l'indicateur d'ordre des octets (BOM) est nécessaire si vous souhaitez lire le fichier CSV généré avec MS-Excel."
 
-msgid ""
-"If checked then the one indicated in the input field on the right will be used.\nElse the dot."
-msgstr ""
-"Si cette option est cochée, ce sera celui indiqué dans le champ de droite.\nSinon, ce sera le point."
+msgid "If checked then the one indicated in the input field on the right will be used.\nElse the dot."
+msgstr "Si cette option est cochée, ce sera celui indiqué dans le champ de droite.\nSinon, ce sera le point."
 
-msgid ""
-"If the checkmark on the left is checked then the separator will be the one indicated here\nElse the dot.\nIt may neither be a digit nor a letter."
-msgstr ""
-"Si la case de gauche est cochée, le séparateur sera celui indiqué ici.\nSinon, ce sera le point.\nNe peut être ni un chiffre ni une lettre."
+msgid "If the checkmark on the left is checked then the separator will be the one indicated here\nElse the dot.\nIt may neither be a digit nor a letter."
+msgstr "Si la case de gauche est cochée, le séparateur sera celui indiqué ici.\nSinon, ce sera le point.\nNe peut être ni un chiffre ni une lettre."
+
+msgid "If this field is empty, then all the suggested fields will be exported."
+msgstr "Si ce champ est vide alors tous les champs proposés seront exportés."
 

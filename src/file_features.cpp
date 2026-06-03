@@ -473,7 +473,8 @@ bool file_handler(eHandlingType ht)
     title = _("Define file to save");
     if (!path.empty())
       fsel.preset_file(path.string().c_str());
-    fsel.filter(_("Subrip \t*.srt\nWeb Video Text Tracks *.vtt\nComma separated Value Spreadsheet *.csv\nTabulation separated Value Spreadsheet *.tsv\nSemicolon separated Value Spreadsheet *.ssv"));
+    fsel.filter(_("Subrip \t*.srt\nWeb Video Text Tracks *.vtt"));
+    // fsel.filter(_("Subrip \t*.srt\nWeb Video Text Tracks *.vtt\nComma separated Value Spreadsheet *.csv\nTabulation separated Value Spreadsheet *.tsv\nSemicolon separated Value Spreadsheet *.ssv"));
     break;
   case eHandlingType::SYNC:
     typ = Fl_Native_File_Chooser::Type::BROWSE_FILE;
