@@ -184,6 +184,7 @@ ${TARGET} : ${OBJS}
 endif
 
 ${TARGET_DIR}/${PREFIX}.d ${TARGET_DIR}/options.d : ${SRC_DIR}/app_info.h
+	@echo "OK header dependency for $@"
 
 ALL_SRCS=$(wildcard ${SRC_DIR}/*.cpp) $(wildcard assets/*.cpp) $(wildcard ${SRC_DIR}/*.h) $(wildcard ${SRC_DIR}/*.H)
 format :
