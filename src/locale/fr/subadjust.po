@@ -313,6 +313,12 @@ msgstr "Début"
 msgid "Begin"
 msgstr "Début"
 
+msgid "Start (msec)"
+msgstr "Début (msec)"
+
+msgid "End (msec)"
+msgstr "Fin (msec)"
+
 msgid "End"
 msgstr "Fin"
 
@@ -501,6 +507,9 @@ msgstr "Valeur introuvable pour :"
 msgid "Number of screens available"	
 msgstr "Nombre d'écrans disponibles"
 
+msgid "Locale\ndirectory"	
+msgstr "Dossier des\nparamètres\nrégionaux"
+
 msgid "Select locale folder"	
 msgstr "Sélectionnez le dossier de localisation"
 
@@ -509,12 +518,6 @@ msgstr "Fichiers de sous-titres\t*.srt"
 
 msgid "Unable to load the file "	
 msgstr "Impossible de charger le fichier "
-
-msgid "Coefficients"	
-msgstr "Coefficients"
-
-msgid "Configuration"	
-msgstr "Configuration"
 
 msgid "Edit the configuration file.."	
 msgstr "Modifier le fichier de configuration"
@@ -555,7 +558,7 @@ msgid ""
 "⚠️If the change is not valid, it will not be taking into account⚠️"
 msgstr ""
 "Sélectionnez le chemin d'accès aux fichiers de traduction\n"
-"⚠️La modification de cette valeur nécessite le redémarrage de l'application⚠️\n"
+"⚠️Modifier cette valeur nécessite le redémarrage de l'application⚠️\n"
 "⚠️Si la modification n'est pas valide, elle ne sera pas prise en compte⚠️"
 
 msgid ""
@@ -645,4 +648,71 @@ msgid ""
 msgstr ""
 "Le fichier ne semble pas être au format subrip !\n"
 "Annulation de la Sauvegarde ..."
+
+msgid "Export parameters"
+msgstr "Configuration de l'export"
+
+msgid "Field separator"
+msgstr "Séparateur de champ"
+
+msgid "Semicolon"
+msgstr "Point-Virgule"
+
+msgid "Comma"
+msgstr "Virgule"
+
+msgid "Other:"
+msgstr "Autre:"
+
+msgid "Text\ndelimiter"
+msgstr "Délimiteur\nde texte"
+
+msgid "None"
+msgstr "Aucun"
+
+msgid "Text"
+msgstr "Texte"
+
+msgid "Add BOM"
+msgstr "Ajout BOM"
+
+msgid "Decimal separator:"
+msgstr "Séparateur décimal:"
+
+msgid "Fields selection"
+msgstr "Sélection des champs"
+
+msgid "Add"
+msgstr "Ajout"
+
+msgid "Export"
+msgstr "Exporter"
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "Subtitle number|Start time (HH:MM:SS.SSS)|End time(HH:MM:SS.SSS)|Start time (MSec)|End time (MSec)|Subtitle text"
+msgstr "Numéro du sous-titre|Heure de début (HH:MM:SS.SSS)|Heure de fin (HH:MM:SS.SSS)|Heure de début (MSec)|Heure de fin (MSec)|Texte du sous-titre"
+
+msgid "Define the fields separator string"
+msgstr "Définir la chaîne de séparation des champs"
+
+msgid "The field separator may neither be a digit nor a letter."
+msgstr "Le séparateur de champs ne peut être ni un chiffre ni une lettre."
+
+msgid "Select the text delimiter if necessary"
+msgstr "Sélectionnez le délimiteur de texte si nécessaire."
+
+msgid "Adding a BOM is necessary if you want to read the generated CSV file with MS-Excel"
+msgstr "L'ajout de l'indicateur d'ordre des octets (BOM) est nécessaire si vous souhaitez lire le fichier CSV généré avec MS-Excel."
+
+msgid ""
+"If checked then the one indicated in the input field on the right will be used.\nElse the dot."
+msgstr ""
+"Si cette option est cochée, ce sera celui indiqué dans le champ de droite.\nSinon, ce sera le point."
+
+msgid ""
+"If the checkmark on the left is checked then the separator will be the one indicated here\nElse the dot.\nIt may neither be a digit nor a letter."
+msgstr ""
+"Si la case de gauche est cochée, le séparateur sera celui indiqué ici.\nSinon, ce sera le point.\nNe peut être ni un chiffre ni une lettre."
 

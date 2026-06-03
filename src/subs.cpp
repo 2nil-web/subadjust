@@ -195,7 +195,7 @@ std::string cSub::to_vtt()
   return to_vtt_apart(sub_vec);
 }
 
-std::string cSub::to_sv_apart(const std::vector<sSub> vec, const std::string sep, const std::string delim, char dec_sep, bool with_bom, std::vector<bool> fsel)
+std::string cSub::to_sv_apart(const std::vector<sSub> vec, const std::string sep, const std::string delim, char dec_sep, bool with_bom, std::vector<int> fsel)
 {
   if (vec.empty())
     return "";
@@ -207,48 +207,45 @@ std::string cSub::to_sv_apart(const std::vector<sSub> vec, const std::string sep
   size_t i, i2;
 
   if (fsel.empty())
-    fsel = {true, true, true, true, true, true};
+    fsel = {1, 2, 3, 4, 5, 6};
 
   bool not_start_header = false;
   for (size_t i2 = 0; i2 < fsel.size(); i2++)
   {
-    if (fsel[i2])
+    if (not_start_header)
     {
-      if (not_start_header)
-      {
-        ss << sep;
-      }
-      else
-      {
-        not_start_header = true;
-      }
+      ss << sep;
+    }
+    else
+    {
+      not_start_header = true;
+    }
 
-      switch (i2)
-      {
-      case 1: // Subtitle start in HH:MM:SS[.|,]SSS format
-        ss << delim << "Subtitle start" << delim;
-        break;
-      case 2: // Subtitle end in HH:MM:SS[.|,]SSS format
-        ss << delim << "Subtitle end" << delim;
-        break;
-      case 3: // Subtitle start in millisecond
-        ss << delim << "Subtitle start (msec)" << delim;
-        break;
-      case 4: // Subtitle end in millisecond
-        ss << delim << "Subtitle end (msec)" << delim;
-        break;
-
-      case 5: // Subtitle text
-      {
-        ss << "Text";
-      }
+    switch (fsel[i2])
+    {
+    case 2: // Subtitle start in HH:MM:SS[.|,]SSS format
+      ss << delim << _("Start") << delim;
+      break;
+    case 3: // Subtitle end in HH:MM:SS[.|,]SSS format
+      ss << delim << _("End") << delim;
+      break;
+    case 4: // Subtitle start in millisecond
+      ss << delim << _("Start (msec)") << delim;
+      break;
+    case 5: // Subtitle end in millisecond
+      ss << delim << _("End (msec)") << delim;
       break;
 
-      default:
-      case 0: // Subtitle number
-        ss << "Index";
-        break;
-      }
+    case 6: // Subtitle text
+    {
+      ss << _("Text");
+    }
+    break;
+
+    default:
+    case 1: // Subtitle number
+      ss << _("Index");
+      break;
     }
   }
 
@@ -259,46 +256,43 @@ std::string cSub::to_sv_apart(const std::vector<sSub> vec, const std::string sep
     bool not_start_line = false;
     for (i2 = 0; i2 < fsel.size(); i2++)
     {
-      if (fsel[i2])
+      if (not_start_line)
       {
-        if (not_start_line)
-        {
-          ss << sep;
-        }
-        else
-        {
-          not_start_line = true;
-        }
+        ss << sep;
+      }
+      else
+      {
+        not_start_line = true;
+      }
 
-        switch (i2)
-        {
-        case 1: // Subtitle start in HH:MM:SS[.|,]SSS format
-          ss << ms_to_str(vec[i].appearance, dec_sep);
-          break;
-        case 2: // Subtitle end in HH:MM:SS[.|,]SSS format
-          ss << ms_to_str(vec[i].disappearance, dec_sep);
-          break;
-        case 3: // Subtitle start in millisecond
-          ss << vec[i].appearance;
-          break;
-        case 4: // Subtitle end in millisecond
-          ss << vec[i].disappearance;
-          break;
-
-        case 5: // Subtitle text
-        {
-          std::string s = vec[i].text;
-          s = trim(s);
-          s = replace_string(s, delim, delim + delim);
-          ss << delim << s << delim;
-        }
+      switch (fsel[i2])
+      {
+      case 2: // Subtitle start in HH:MM:SS[.|,]SSS format
+        ss << ms_to_str(vec[i].appearance, dec_sep);
+        break;
+      case 3: // Subtitle end in HH:MM:SS[.|,]SSS format
+        ss << ms_to_str(vec[i].disappearance, dec_sep);
+        break;
+      case 4: // Subtitle start in millisecond
+        ss << vec[i].appearance;
+        break;
+      case 5: // Subtitle end in millisecond
+        ss << vec[i].disappearance;
         break;
 
-        default:
-        case 0: // Subtitle number
-          ss << i;
-          break;
-        }
+      case 6: // Subtitle text
+      {
+        std::string s = vec[i].text;
+        s = trim(s);
+        s = replace_string(s, delim, delim + delim);
+        ss << delim << s << delim;
+      }
+      break;
+
+      default:
+      case 1: // Subtitle number
+        ss << i;
+        break;
       }
     }
   }
@@ -306,8 +300,16 @@ std::string cSub::to_sv_apart(const std::vector<sSub> vec, const std::string sep
   return ss.str();
 }
 
-std::string cSub::to_sv(std::string sep, std::string delim, char dec_sep, bool with_bom, std::vector<bool> fsel)
+std::string cSub::to_sv(std::string sep, std::string delim, char dec_sep, bool with_bom, std::vector<int> fsel)
 {
+  if (fsel.empty())
+    logD("to_sv - fsel empty");
+  else
+    for (auto idx : fsel)
+    {
+      logD("to_sv - resulting index: ", idx);
+    }
+
   return to_sv_apart(sub_vec, sep, delim, dec_sep, with_bom, fsel);
 }
 

@@ -14,15 +14,15 @@ snap {
 }
 Function {make_window()} {open
 } {
-  Fl_Window main_window {
-    xywh {1528 182 384 653} type Double resizable
+  Fl_Window main_window {open
+    xywh {2722 242 384 653} type Double resizable
     code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0} visible
   } {
     Fl_Group {} {open
       xywh {2 0 380 284}
     } {
       Fl_Menu_Button file_menu {
-        label { ☰} open
+        label { ☰}
         tooltip {File operations (Open, Save, Reload)} xywh {3 1 48 28} labelsize 22 align 32
         class Fl_Menu_Button_Hover
       } {
@@ -71,7 +71,7 @@ Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} c
         tooltip {Some useful informations about the app (Shortcut Ctrl+B).} image {../assets/svg_icons/question.svg} compress_image 1 xywh {331 1 48 28} shortcut 0x40062 labeltype NO_LABEL labelsize 18 align 512
         class Fl_Button_Hover
       }
-      Fl_Group {} {open
+      Fl_Group {} {
         xywh {3 30 378 130} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
       } {
         Fl_Group {} {
@@ -135,7 +135,7 @@ You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/de
         }
       }
       Fl_Group {} {
-        label {Subtitle adjustment by ...} open
+        label {Subtitle adjustment by ...}
         xywh {2 165 378 116} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
       } {
         Fl_Group {} {
@@ -210,10 +210,10 @@ end offsets
     }
     Fl_Group {} {open
       tooltip {You may apply regex pattern, with case sensitivity or not.
-All your pattern will be uniquely stored for futur reuse.} xywh {2 285 384 80} box BORDER_FRAME color 37
+All your pattern will be uniquely stored for futur reuse.} xywh {2 285 384 86} box BORDER_FRAME color 37
     } {
       Fl_Group {} {open
-        xywh {3 285 151 80}
+        xywh {3 285 151 86}
       } {
         Fl_Button find {
           label { }
@@ -222,20 +222,20 @@ All your pattern will be uniquely stored for futur reuse.} xywh {2 285 384 80} b
         }
         Fl_Box {} {
           label Replace
-          xywh {54 332 100 15} box BORDER_FRAME color 192 labelsize 10
+          xywh {53 332 101 18} box BORDER_FRAME color 192 labelsize 10
         }
         Fl_Box {} {
           label Next
-          xywh {54 347 50 15} box BORDER_FRAME color 192 labelsize 10
+          xywh {53 350 53 20} box BORDER_FRAME color 192 labelsize 10
         }
         Fl_Box {} {
           label All
-          xywh {104 347 50 15} box BORDER_FRAME color 192 labelsize 10
+          xywh {106 350 48 20} box BORDER_FRAME color 192 labelsize 10
         }
         Fl_Box {} {
           label {Find
 Next}
-          xywh {5 332 48 30} box BORDER_FRAME color 192 labelsize 10
+          xywh {4 332 48 38} box BORDER_FRAME color 192 labelsize 10
         }
         Fl_Button replace_next {
           label Next
@@ -249,19 +249,19 @@ Next}
         }
       }
       Fl_Group {} {open
-        xywh {154 285 232 80} resizable
+        xywh {154 285 232 86} resizable
       } {
         Fl_Input_Choice str_find {
           tooltip {For more details about ECMAScript regex, see https://en.cppreference.com/w/cpp/regex/ecmascript.html} xywh {155 289 229 22} labeltype NO_LABEL
           class Fl_Input_Choice_L10n
         } {}
         Fl_Input_Choice str_replace {
-          xywh {155 318 229 22} labeltype NO_LABEL
+          xywh {155 320 229 22} labeltype NO_LABEL
           class Fl_Input_Choice_L10n
         } {}
         Fl_Check_Button case_sensitive_find {
           label {Case sensitive search}
-          tooltip {Run case sensitive find or not} xywh {155 341 224 22} down_box DOWN_BOX align 32
+          tooltip {Run case sensitive find or not} xywh {155 349 224 22} down_box DOWN_BOX align 32
           class Fl_Check_Button_Hover compact 1
         }
         Fl_Box {} {
@@ -270,29 +270,29 @@ Next}
       }
     }
     Fl_Group {} {open
-      xywh {1 365 378 26}
+      xywh {1 375 378 26}
     } {
       Fl_Box file_path_label {
         label {File path}
         tooltip {Show the path of the file being currently edited.
 It turns red if there are pending modification.
-Automatic changes may occur if the initial file format is not UTF-8.} xywh {2 369 60 22}
+Automatic changes may occur if the initial file format is not UTF-8.} xywh {2 379 60 22}
       }
       Fl_Output file_path {
         label {File path}
         tooltip {Show the path of the file being currently edited.
 It turns red if there are pending modification.
-Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 367 314 22} labeltype NO_LABEL resizable
+Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 377 314 22} labeltype NO_LABEL resizable
         class Fl_Output_L10n
       }
     }
-    Fl_Text_Editor file_content {
-      xywh {4 391 376 259} selection_color 89 labeltype NO_LABEL align 517 resizable
+    Fl_Text_Editor file_content {selected
+      xywh {4 403 376 247} selection_color 89 labeltype NO_LABEL align 517 resizable
       class Fl_Text_Editor_L10n
     }
   }
   Fl_Window config_dialog {
-    label Configuration open
+    label Configuration
     xywh {3260 239 350 384} type Double resizable non_modal size_range {350 384 600 0} visible
   } {
     Fl_Button config_view {
@@ -336,20 +336,20 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
       }
     }
     Fl_Group {} {
-      xywh {2 112 346 44}
+      xywh {2 112 346 56}
     } {
       Fl_Button loc_dir_sel {
         label {Locale
 directory}
         tooltip {Select the path where translation files might be
 ⚠️Changing this value implies restarting the application⚠️
-⚠️If the change is not valid, it will not be taking into account⚠️} xywh {5 116 70 40}
+⚠️If the change is not valid, it will not be taking into account⚠️} xywh {5 116 84 52}
         class Fl_Button_Hover
       }
       Fl_Output loc_dir {
         tooltip {Shows the path where translation files might be
 ⚠️Changing this value implies restarting the application⚠️
-⚠️If the change is not valid, it will not be taking into account⚠️} xywh {82 126 260 22} labeltype NO_LABEL resizable
+⚠️If the change is not valid, it will not be taking into account⚠️} xywh {92 126 252 22} labeltype NO_LABEL resizable
         class Fl_Output_L10n
       }
     }
@@ -390,46 +390,46 @@ A restart of the app is necessary for the whole change to take effect.} image {.
     }
   }
   Fl_Window export_dialog {
-    label {Export parameters} open
-    xywh {2316 40 309 286} type Double non_modal visible
+    label {Export parameters}
+    xywh {2316 40 310 288} type Double non_modal visible
   } {
-    Fl_Group {} {open selected
-      tooltip {Define the fields separator string} xywh {9 16 131 108} box BORDER_FRAME color 33 labelsize 10
+    Fl_Group {} {open
+      tooltip {Define the fields separator string} xywh {6 16 157 110} box BORDER_FRAME color 33 labelsize 10
     } {
-      Fl_Check_Button export_tabulation {
+      Fl_Round_Button export_tabulation {
         label Tabulation
-        xywh {12 75 90 18} down_box DOWN_BOX selection_color 49
-        class Fl_Check_Button_Hover
+        xywh {11 75 110 18} down_box ROUND_DOWN_BOX selection_color 49
+        class Fl_Round_Button_Hover
       }
-      Fl_Check_Button export_semicolon {
+      Fl_Round_Button export_semicolon {
         label Semicolon
-        xywh {12 31 90 18} down_box DOWN_BOX
-        class Fl_Check_Button_Hover
+        xywh {11 31 110 18} down_box ROUND_DOWN_BOX
+        class Fl_Round_Button_Hover
       }
-      Fl_Check_Button export_comma {
+      Fl_Round_Button export_comma {
         label Comma
-        xywh {12 53 90 18} down_box DOWN_BOX
-        class Fl_Check_Button_Hover
+        xywh {11 53 110 18} down_box ROUND_DOWN_BOX
+        class Fl_Round_Button_Hover
       }
-      Fl_Check_Button export_other_sep {
+      Fl_Round_Button export_other_sep {
         label {Other:}
-        xywh {12 97 66 18} down_box DOWN_BOX
-        class Fl_Check_Button_Hover
+        tooltip {The field separator may neither be a digit nor a letter.} xywh {11 97 110 20} down_box ROUND_DOWN_BOX
+        class Fl_Round_Button_Hover
       }
       Fl_Input export_other_sep_val {
-        xywh {86 96 48 20} labeltype NO_LABEL
+        tooltip {The field separator may neither be a digit nor a letter.} xywh {127 98 30 19} labeltype NO_LABEL
         class Fl_Input_L10n
       }
     }
     Fl_Box {} {
-      label Separator
-      xywh {20 4 76 22} box FLAT_BOX
+      label {Field separator}
+      xywh {13 4 138 22} box FLAT_BOX
     }
     Fl_Group {} {open
-      xywh {144 16 159 86} box BORDER_FRAME color 33 labelsize 10
+      xywh {173 16 130 94} box BORDER_FRAME color 33 labelsize 10
     } {
       Fl_Browser export_delims {
-        tooltip {Select the text delimiter if necessary} xywh {151 33 144 65} type Hold labeltype NO_LABEL labelsize 10
+        tooltip {Select the text delimiter if necessary} xywh {179 43 116 61} type Hold labeltype NO_LABEL labelsize 10
         code0 {export_delims->add("\\"");}
         code1 {export_delims->add("'");}
         code2 {export_delims->add(_("None"));}
@@ -437,56 +437,53 @@ A restart of the app is necessary for the whole change to take effect.} image {.
       }
     }
     Fl_Box {} {
-      label {Text delimiter}
-      xywh {161 4 90 22} box FLAT_BOX
+      label {Text
+delimiter}
+      xywh {179 3 90 32} box FLAT_BOX
     }
     Fl_Return_Button save_export {
       label Export
-      xywh {40 242 86 26}
+      xywh {33 257 86 26}
       class Fl_Button_Hover
     }
     Fl_Button close_export {
       label Close
-      xywh {184 242 86 26}
+      xywh {177 257 86 26}
       class Fl_Button_Hover
     }
     Fl_Group {} {open
-      xywh {9 159 294 72} box BORDER_FRAME color 33 labelsize 10
+      xywh {6 174 299 72} box BORDER_FRAME color 33 labelsize 10
     } {
       Fl_Choice export_field_sel {open
-        xywh {15 173 148 24} down_box BORDER_BOX labeltype NO_LABEL
-        code0 {export_field_sel->add("Subtitle number");}
-        code1 {export_field_sel->add("Start time (H:M:S.S)|End time(H:M:S.S)");}
-        code2 {export_field_sel->add("Start time (SEC)|End time (SEC)");}
-        code3 {export_field_sel->add("Subtitle text");}
+        xywh {12 188 196 24} down_box BORDER_BOX labeltype NO_LABEL
         class Fl_Choice_Hover
       } {}
       Fl_Button export_field_add {
-        label {Add field}
-        xywh {172 173 76 22}
+        label Add
+        xywh {217 188 76 22}
       }
       Fl_Input export_template {
-        xywh {15 203 280 22} labeltype NO_LABEL
+        xywh {12 218 284 20} labeltype NO_LABEL
       }
     }
     Fl_Box {} {
       label {Fields selection}
-      xywh {20 145 100 22} box FLAT_BOX
+      xywh {13 160 149 22} box FLAT_BOX
     }
     Fl_Check_Button export_bom {
       label {Add BOM}
-      tooltip {Adding a BOM is necessary if you want to read the generated CSV file with MS-Excel} xywh {144 105 158 16} down_box DOWN_BOX
+      tooltip {Adding a BOM is necessary if you want to read the generated CSV file with MS-Excel} xywh {174 115 110 16} down_box DOWN_BOX
     }
     Fl_Check_Button export_force_dec_sep {
-      label {Force decimal separator to:}
-      tooltip {If checked then the separator for the decimal part of numbers
-will be the one indicated in the input field on the right
-else the default one is used.} xywh {12 127 219 16} down_box DOWN_BOX
+      label {Decimal separator:}
+      tooltip {If checked then the one indicated in the input field on the right will be used.
+Else the dot.} xywh {12 137 149 20} down_box DOWN_BOX
+      class Fl_Check_Button_Hover
     }
     Fl_Input export_dec_sep_val {
-      tooltip {If the checkmark on the left is checked then the separator for the decimal part of numbers
-will be the one indicated here
-else the default one is used.} xywh {236 127 48 22} labeltype NO_LABEL
+      tooltip {If the checkmark on the left is checked then the separator will be the one indicated here
+Else the dot.
+It may neither be a digit nor a letter.} xywh {168 137 30 21} labeltype NO_LABEL
       class Fl_Input_L10n
     }
   }
