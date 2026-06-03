@@ -8,8 +8,11 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Button.H>
+#include <FL/Fl_SVG_Image.H>
 #include <FL/Fl_Window.H>
 #include <FL/fl_draw.H>
+
+extern Fl_SVG_Image *app_icon;
 
 #include "Fl_Hover.H"
 #include "options.h"

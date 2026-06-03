@@ -38,17 +38,24 @@ Fl_SVG_Image *app_icon;
 
 void about_msg(Fl_Widget *, void *v)
 {
-  options *opt = (options *)v;
-  std::string about_text = opt->version(Fl::event_key(FL_Control_L) || Fl::event_key(FL_Control_R));
+  static bool once = true;
 
-  // svg.scale(18, 18); fl_message_icon_label(""); fl_message_icon()->image(svg);
-  my_message_position(main_window->x_root(), main_window->y_root() + 60);
-  my_font(FL_HELVETICA, 14);
-  // if (!fl_choice("%s", _("More info ..."), "OK", 0L, about_text.c_str()))
-  if (my_choice(about_text.c_str(), "OK", _("More info ..."), nullptr) == 1)
+  if (once)
   {
-    my_font(FL_COURIER_BOLD, 10);
-    my_message(opt->usage().c_str());
+    once = false;
+    options *opt = (options *)v;
+    std::string about_text = opt->version(Fl::event_key(FL_Control_L) || Fl::event_key(FL_Control_R));
+
+    // svg.scale(18, 18); fl_message_icon_label(""); fl_message_icon()->image(svg);
+    my_message_position(main_window->x_root(), main_window->y_root() + 60);
+    my_font(FL_HELVETICA, 14);
+    // if (!fl_choice("%s", _("More info ..."), "OK", 0L, about_text.c_str()))
+    if (my_choice(about_text.c_str(), "OK", _("More info ..."), nullptr) == 1)
+    {
+      my_font(FL_COURIER_BOLD, 10);
+      my_message(opt->usage().c_str());
+    }
+    once = true;
   }
 }
 
@@ -304,6 +311,7 @@ The configuration file is located there : ")EOF") +
     fl_message_title_default("SubAdjust");
     app_icon = new Fl_SVG_Image(nullptr, subadjust_svg_data);
     main_window->icon(app_icon);
+
     //  main_window->wait_for_expose();
     Fl::scrollbar_size(14);
 

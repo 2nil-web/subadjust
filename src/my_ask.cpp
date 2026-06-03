@@ -108,10 +108,12 @@ static int my_dialog(const char *msg, const std::vector<std::string> &labels = {
   // --- Fenêtre ---
   extern options myopt; // Pour récupérer Progname
   Fl_Window *win = new Fl_Window(win_w, win_h, myopt.Progname.c_str());
+  // extern Fl_SVG_Image *app_icon; // Defined and populated in subadjust.cpp
+  win->icon(app_icon);
+
   if (my_x > -1 && my_y > -1)
     win->resize(my_x, my_y, win_w, win_h);
   cbd.win = win;
-  win->set_modal();
 
   // --- Boîte de message ---
   MyBox *box = new MyBox(MARGIN, box_y, text_w, text_h, msg);
@@ -154,8 +156,10 @@ static int my_dialog(const char *msg, const std::vector<std::string> &labels = {
       },
       &cbd);
 
+  win->set_non_modal();
   win->end();
   win->show();
+  win->take_focus();
 
   while (win->shown())
     Fl::wait();
