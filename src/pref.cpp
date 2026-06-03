@@ -786,6 +786,9 @@ void pref_dialog(Fl_Widget *, void *)
 
   if (unpopulated_dialog)
   {
+    extern Fl_SVG_Image *app_icon; // Defined and populated in subadjust.cpp
+    config_dialog->icon(app_icon);
+
     theme_choice->add("CLASSIC|AERO|METRO|AQUA|GREYBIRD|OCEAN|BLUE|OLIVE|ROSE_GOLD|DARK|BRUSHED_METAL|HIGH_CONTRAST");
     theme_choice->callback(SIMPLE_CB { OS::use_theme(theme_choice->value()); });
 

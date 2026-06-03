@@ -34,6 +34,8 @@
 #include "themes.h"
 #include "utils.h"
 
+Fl_SVG_Image *app_icon;
+
 void about_msg(Fl_Widget *, void *v)
 {
   options *opt = (options *)v;
@@ -300,8 +302,8 @@ The configuration file is located there : ")EOF") +
     // Main window
     make_window();
     fl_message_title_default("SubAdjust");
-    Fl_SVG_Image *svg = new Fl_SVG_Image(nullptr, subadjust_svg_data);
-    main_window->icon(svg);
+    app_icon = new Fl_SVG_Image(nullptr, subadjust_svg_data);
+    main_window->icon(app_icon);
     //  main_window->wait_for_expose();
     Fl::scrollbar_size(14);
 

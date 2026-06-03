@@ -14,7 +14,7 @@ snap {
 }
 Function {make_window()} {open
 } {
-  Fl_Window main_window {open
+  Fl_Window main_window {
     xywh {2722 242 384 653} type Double resizable
     code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0} visible
   } {
@@ -286,13 +286,13 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
         class Fl_Output_L10n
       }
     }
-    Fl_Text_Editor file_content {selected
+    Fl_Text_Editor file_content {
       xywh {4 403 376 247} selection_color 89 labeltype NO_LABEL align 517 resizable
       class Fl_Text_Editor_L10n
     }
   }
   Fl_Window config_dialog {
-    label Configuration
+    label Configuration selected
     xywh {3260 239 350 384} type Double resizable non_modal size_range {350 384 600 0} visible
   } {
     Fl_Button config_view {
@@ -390,11 +390,11 @@ A restart of the app is necessary for the whole change to take effect.} image {.
     }
   }
   Fl_Window export_dialog {
-    label {Export parameters}
+    label {Export parameters} open
     xywh {2316 40 310 288} type Double non_modal visible
   } {
     Fl_Group {} {open
-      tooltip {Define the fields separator string} xywh {6 16 157 110} box BORDER_FRAME color 33 labelsize 10
+      tooltip {Define the fields separator} xywh {6 16 157 110} box BORDER_FRAME color 33 labelsize 10
     } {
       Fl_Round_Button export_tabulation {
         label Tabulation
@@ -437,9 +437,8 @@ A restart of the app is necessary for the whole change to take effect.} image {.
       }
     }
     Fl_Box {} {
-      label {Text
-delimiter}
-      xywh {179 3 90 32} box FLAT_BOX
+      label {Text delimiter}
+      xywh {179 4 119 22} box FLAT_BOX
     }
     Fl_Return_Button save_export {
       label Export

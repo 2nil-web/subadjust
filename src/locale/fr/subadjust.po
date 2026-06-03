@@ -694,8 +694,8 @@ msgstr "Fermer"
 msgid "Subtitle number|Start time (HH:MM:SS.SSS)|End time(HH:MM:SS.SSS)|Start time (MSec)|End time (MSec)|Subtitle text"
 msgstr "Numéro du sous-titre|Heure de début (HH:MM:SS.SSS)|Heure de fin (HH:MM:SS.SSS)|Heure de début (MSec)|Heure de fin (MSec)|Texte du sous-titre"
 
-msgid "Define the fields separator string"
-msgstr "Définir la chaîne de séparation des champs"
+msgid "Define the fields separator"
+msgstr "Définir le séparateur des champs"
 
 msgid "The field separator may neither be a digit nor a letter."
 msgstr "Le séparateur de champs ne peut être ni un chiffre ni une lettre."

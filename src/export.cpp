@@ -181,6 +181,9 @@ void export_run(Fl_Widget *, void *)
 
   if (export_first_show)
   {
+    extern Fl_SVG_Image *app_icon; // Defined and populated in subadjust.cpp
+    export_dialog->icon(app_icon);
+
     export_semicolon->value(1);
     export_delims->select(1, true);
     export_bom->value(1);

@@ -337,13 +337,13 @@ msgid "Find"
 msgstr "Buscar"
 
 msgid "Find\nNext"
-msgstr "Buscar\nSiguiente"
+msgstr "Buscar\nSiguie."
 
 msgid "Replace"
 msgstr "Reemplazar"
 
 msgid "Next"
-msgstr "Siguiente"
+msgstr "Siguie."
 
 msgid "All"
 msgstr "Todo"
@@ -636,4 +636,67 @@ msgid ""
 msgstr ""
 "El archivo no parece estar en formato subrip!\n"
 "Copia cancelanda..."
+
+msgid "Export parameters"
+msgstr "Configuración de exportación"
+
+msgid "Field separator"
+msgstr "Separador de campos"
+
+msgid "Semicolon"
+msgstr "Punto y coma"
+
+msgid "Comma"
+msgstr "Coma"
+
+msgid "Other:"
+msgstr "Otro:"
+
+msgid "Text\ndelimiter"
+msgstr "Delimitador\nde texto"
+
+msgid "None"
+msgstr "Ninguno"
+
+msgid "Text"
+msgstr "Texto"
+
+msgid "Add BOM"
+msgstr "Añadir BOM"
+
+msgid "Decimal separator:"
+msgstr "Separador decimal:"
+
+msgid "Fields selection"
+msgstr "Selección de campos"
+
+msgid "Add"
+msgstr "Añadir"
+
+msgid "Export"
+msgstr "Exportar"
+
+msgid "Close"
+msgstr "Cerrar"
+
+msgid "Subtitle number|Start time (HH:MM:SS.SSS)|End time(HH:MM:SS.SSS)|Start time (MSec)|End time (MSec)|Subtitle text"
+msgstr "Número de subtítulo | Hora de inicio (HH:MM:SS.SSS) | Hora de finalización (HH:MM:SS.SSS) | Hora de inicio (ms) | Hora de finalización (ms) | Texto del subtítulo"
+
+msgid "Define the fields separator"
+msgstr "Establecer separador de campos"
+
+msgid "The field separator may neither be a digit nor a letter."
+msgstr "El separador de campos no puede ser un número ni una letra."
+
+msgid "Select the text delimiter if necessary"
+msgstr "Seleccione el delimitador de texto si es necesario."
+
+msgid "Adding a BOM is necessary if you want to read the generated CSV file with MS-Excel"
+msgstr "Es necesario añadir la marca de orden de bytes (BOM) para leer el archivo CSV generado con MS-Excel."
+
+msgid "If checked then the one indicated in the input field on the right will be used.\nElse the dot."
+msgstr "Si está marcada, se utilizará la indicada en el campo de entrada de la derecha. De lo contrario, se utilizará el punto."
+
+msgid "If the checkmark on the left is checked then the separator will be the one indicated here\nElse the dot.\nIt may neither be a digit nor a letter."
+msgstr "Si se marca la casilla de la izquierda, el separador será el que se indica aquí. De lo contrario, será el punto. No puede ser ni un dígito ni una letra."
 
