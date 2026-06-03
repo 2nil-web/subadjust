@@ -82,6 +82,8 @@ If none of these are defined, the default is to send the WARN and following log 
 ### ***Technical insight:***
 
 It compiles and run under both Windows (With Visual Studio and g++) and Linux (With g++), thanks to FLTK.
+
+There is a "help" option in the Makefile that roughly explain the build and delivery workflow.
 Although not tested, but should behave the same way under macOS ...
 
 ###### Prerequisites to the build:
@@ -103,5 +105,4 @@ Although not tested, but should behave the same way under macOS ...
 
 ###### To do:
 
-- *Add a feature to read and write vtt format (although tools like ffmpeg do the job)*
 - *Release with a setup and/or package*
