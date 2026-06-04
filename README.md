@@ -1,6 +1,6 @@
 # SubAdjust
 
-##### ***A graphical and command line tool to modify the timeline of subtitles files in SubRip (.srt) or WEBVTT (.vtt) format***
+##### ***A graphical and command line tool to modify the timeline of subtitles files in SubRip (.srt) and WEBVTT (.vtt) format***
 
 <sup>*Actually available in 3 languages : english, french and spanish. But others can easily be added.*</sup>
 
