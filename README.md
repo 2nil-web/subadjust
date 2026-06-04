@@ -10,7 +10,7 @@ Also allows to export to CSV format.
 
 ##### ***You can download a binary version of this tool in the "[Release](https://github.com/2nil-web/subadjust/releases)" link.***
 
-<sup>*Available to five Linux ![Linux](assets/Tux.svg "Linux") distros (Arch ![Arch](assets/Arch.svg "Arch"), Debian ![Debian](assets/Debian.svg "Fedora"), Fedora ![Fedora](assets/Fedora.svg "Fedora"), OpenSUSE ![OpenSUSE](assets/OpenSUSE.svg "OpenSUSE"), Ubuntu ![Ubuntu](assets/Ubuntu.svg "Ubuntu")) and ![Windows](assets/Windows.svg "Windows").*</sup>
+<sup>*Available to five Linux ![Linux](assets/Tux.svg "Linux") distros (Arch ![Arch](assets/Arch.svg "Arch"), Debian ![Debian](assets/Debian.svg "Fedora"), Fedora ![Fedora](assets/Fedora.svg "Fedora"), OpenSUSE ![OpenSUSE](assets/OpenSUSE.svg "OpenSUSE"), Ubuntu ![Ubuntu](assets/Ubuntu.svg "Ubuntu")) and Windows ![Windows](assets/Windows.svg "Windows").*</sup>
 <sup>*It should also be possible to build and deliver it for macOS ![macOS](assets/MacOS.svg "MacOS").*</sup>
 
 After the download, just unzip and run it with .srt files.
