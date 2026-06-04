@@ -5,9 +5,9 @@
    i:viewOrigin="262 450"
    i:rulerOrigin="0 0"
    i:pageBounds="0 792 612 0"
-   width="12.842049"
-   height="16"
-   viewBox="0 0 12.842049 16"
+   width="19.263"
+   height="24"
+   viewBox="0 0 19.263 24"
    overflow="visible"
    enable-background="new 0 0 87.041 108.445"
    xml:space="preserve"
@@ -65,7 +65,7 @@
    i:layer="yes"
    i:dimmedPercent="50"
    i:rgbTrio="#4F008000FFFF"
-   transform="matrix(0.14753479,0,0,0.14753479,-0.06999511,0)">
+   transform="matrix(0.22130218,0,0,0.22130218,-0.06393814,0)">
 		<g
    id="g12">
 			<path
