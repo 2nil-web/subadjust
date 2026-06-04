@@ -21,6 +21,9 @@ ifeq ($(OS),Linux)
 ifeq ($(OS_ID),arch)
 SYS_VER=Arch_Linux_$(shell sed -n 's/^VERSION_ID=//p' /etc/os-release)
 else
+ifeq ($(OS_ID),opensuse-tumbleweed)
+SYS_VER=openSUSE_Tumbleweed_$(shell sed -n 's/^VERSION_ID=//p' /etc/os-release)
+else
 SYS_VER=$(shell lsb_release -irs | sed 'N;s/\n/_/' | sed 's/ /_/g')
 endif
 endif
