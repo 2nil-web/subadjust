@@ -88,7 +88,8 @@ If none of these are defined, the default is to send the WARN and following log 
 It compiles and run under both Windows (With Visual Studio and g++) and Linux (With g++), thanks to FLTK.
 
 There is a "help" option in the Makefile that roughly explain the build and delivery workflow.
-Although not tested, but should behave the same way under macOS ...
+
+Although untested, this process should work identically under macOS, provided the necessary prerequisites are met.
 
 ###### Prerequisites to the build:
 
