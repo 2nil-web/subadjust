@@ -230,7 +230,6 @@ int main(int argc, char **argv)
                       gui_mode = false;
                     },
                     _("Process the input file in batch mode and write the result into the file whose name is passed in argument.\n    Based on the ouptut file extension, may write it to SubRip, WEBVTT or even CSV format."), required),
-                option_info(""),
                 option_info(
                     'i', "modify-input", [&](s_opt_params &) -> void { modify_input = true; }, _("Write the processing result into the same input file. Only has a meaning in batch mode, ignored in GUI mode.")),
 

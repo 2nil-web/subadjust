@@ -27,55 +27,54 @@ After the download, just unzip and run it with .srt files.
 
 ```
 Subadjust version 1.1.1
-Copyright © D. LALANNE - Licence MIT - Sans garantie d'aucune sorte.
-Outil d'édition des fichiers de sous-titres.
-Le mode batch permet le traitement en ligne de commande ou par script.
-Le mode GUI ajoute une fonction de recherche et de remplacement avec des expressions régulières.
+Copyright © D. LALANNE - MIT License - No warranty of any kind.
+A tool that allows to process subtitles files.
+The batch mode allows processing at the command line or by script.
+Meanwhile the GUI mode adds a search and replace feature with regular expressions.
 
-Utilisation: subadjust [OPTIONS] ARGUMENT
-Options disponibles
- -V, --version             Affiche les informations de version et sort.
- -H, --help                Affiche ce message et sort. Cette option implique l'option -V.
+Usage: subadjust [OPTIONS] ARGUMENT
+Available options
+ -V, --version             Output version information and exit.
+ -H, --help                Display this message and exit. This option implies -V/--version.
 
- -f, --input file ARG      Nom du fichier à lire. Identique à un passage direct du nom de fichier  en argument sans cette option.
- -g, --gui-mode            Traiter le fichier d'entrée et l'afficher dans l'interface graphique. C'est le comportement par défaut.
- -c, --batch-mode          Traiter le fichier d'entrée et afficher le résultat.
+ -f, --input file ARG      Name of the file to read. It is the same than directly passing a file name as an argument without this option.
+ -g, --gui-mode            Process the input file and show it with the gui, this is the default behavior.
+ -c, --batch-mode          Process the input the file and print the result.
 
- -b, --begin-time ARG      Modifie l'horodatage de début selon l'argument fourni.
- -e, --end-time ARG        Modifie l'horodatage de fin selon l'argument fourni.
- -k, --duration-coeff ARG  Modifie le coefficient de durée selon l'argument fourni.
- -a, --start-offset ARG    Modifie le décalage de début selon l'argument fourni.
- -s, --stop-offset ARG     Modifie le décalage de fin selon l'argument fourni.
-Ces cinq options précédentes sont traitées après la lecture du fichier et ont un effet à la fois en mode GUI et en mode batch.
+ -b, --begin-time ARG      Change the beginning time stamp to the provided argument.
+ -e, --end-time ARG        Change the end time stamp to the provided argument.
+ -k, --duration-coeff ARG  Change the duration coefficient to the provided argument.
+ -a, --start-offset ARG    Change the start offset to the provided argument.
+ -s, --stop-offset ARG     Change the stop offset to the provided argument.
+These 5 previous options are processed after reading the file and have effect in both GUI and batch mode.
 
- -o, --output-file ARG     Traite le fichier d'entrée en mode batch et l'écrit dans le fichier dont le nom est passé en argument.
-    Selon l'extension du fichier de sortie, il peut être écrit au format SubRip, WEBVTT ou même CSV.
+ -o, --output-file ARG     Process the input file in batch mode and write the result into the file whose name is passed in argument.
+    Based on the ouptut file extension, may write it to SubRip, WEBVTT or even CSV format.
+ -i, --modify-input        Write the processing result into the same input file. Only has a meaning in batch mode, ignored in GUI mode.
 
- -i, --modify-input        Écrit le résultat du traitement dans le même fichier d'entrée. N'a de sens qu'en mode batch, est silencieusement ignoré en mode GUI.
+ -r, --reset-pref          Reset the preferences to default values.
+ -x, --xpos ARG            Set the x origin of the subadjust window.
+ -y, --ypos ARG            Set the y origin of the subadjust window.
+ -w, --width ARG           Set the width of the subadjust window.
+ -h, --height ARG          Set the height of the subadjust window.
+ -t, --theme ARG           Set the graphic theme to use. It is a string to choose between one of :
+    classic, aero, metro, aqua, greybird, ocean, blue, olive, rose_gold, dark, brushed_metal or high_contrast.
+These 5 previous options only have effect in GUI mode. In this case, they have precedence and will update what is defined in the configuration file.
+The configuration file is located there : "C:\Users\dplal\AppData\Roaming\dplalanne.fr\subadjust.prefs".
 
- -r, --reset-pref          Réinitialiser les préférences aux valeurs par défaut.
- -x, --xpos ARG            Définit l'origine en x de la fenêtre subadjust
- -y, --ypos ARG            Définit l'origine en y de la fenêtre subadjust
- -w, --width ARG           Définit la largeur de la fenêtre subadjust.
- -h, --height ARG          Définir la hauteur de la fenêtre subadjust.
- -t, --theme ARG           Définir le thème graphique à utiliser. Il s'agit d'une chaîne de caractères permettant de choisir parmi les options suivantes :
- classic, aero, metro, aqua, greybird, ocean, blue, olive, rose_gold, dark, brushed_metal ou high_contrast.
-Ces 5 options précédentes n'ont d'effet qu'en mode GUI. Dans ce cas, elles ont priorité et mettront à jour les valeurs définies dans le fichier de configuration.
-Le fichier de configuration se trouve ici : "C:\Users\dplal\AppData\Roaming\dplalanne.fr\subadjust.prefs".
-
- -l, --log-level ARG       Définir le niveau d'affichage des messages de journalisation :
-    ALL   Tous les messages.
-    TRACE Presque tous les messages. au moins ceux de niveau plus fin que INFO.
-    INFO  Messages d'information qui mettent en évidence la progression de l'application  à un niveau plus grossier.
-    DEBUG Événements précis, les plus utiles pour le débogage d'une application.
-    WARN  Situations potentiellement dangereuses.
-    ERROR Erreurs qui peuvent encore permettre à l'application de continuer à fonctionner.
-    FATAL Erreurs très graves qui entraîneront probablement le 'plantage' de l'application.
-    OFF   Désactive la journalisation.
- -m, --log-file ARG        Définissez le fichier où les messages de journalisation seront stockés.
-    Par défaut, ils seront stockés dans le fichier suivant C:\UnixTools\msys64\tmp\subadjust.log
-    La valeur spéciale 'console' permet d'afficher les messages de journalisation directement dans la console, quand c'est possible.
-Si aucune de ces options n'est définie, le comportement par défaut consiste à envoyer l'avertissement et les messages de journalisation suivants dans le fichier "subadjust.log".
+ -l, --log-level ARG       Set the level of the log messages to display :
+    ALL   All the messages.
+    TRACE Almost all messages, at least those finer than the INFO level.
+    INFO  Informational messages that highlight the application's progress at a coarser level.
+    DEBUG Fine-grained events, the most useful for debugging an application.
+    WARN  Potentially dangerous situations.
+    ERROR Errors that might still allow the application to continue running.
+    FATAL Very serious errors that will likely cause the application to crash.
+    OFF   Disables logging.
+ -m, --log-file ARG        Define the file where log messages will be stored.
+    Default it to store them in the following file C:\UnixTools\msys64\tmp\subadjust.log
+    The special value 'console' will allows to output the log messages to the console, if possible.
+If none of these are defined, the default is to send the WARN and following log messages into the file "C:\UnixTools\msys64\tmp\subadjust.log".
 ```
 
 ### ***Thanks and copyrights:***
