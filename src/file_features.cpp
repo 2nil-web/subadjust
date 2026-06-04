@@ -25,6 +25,8 @@
 
 extern options myopt; // Pour récupérer progname
 
+bool cui_file_write = false;
+
 Fl_Text_Buffer txt_buf;
 bool file_is_modified = false;
 cSub csub;
@@ -278,6 +280,9 @@ bool file_write(std::filesystem::path filename)
     errn = txt_tmp.savefile(filename.string().c_str());
   }
 
+  if (cui_file_write)
+    return true;
+
   // logD("file_write err?:", errn);
   if (errn == 0)
   {
@@ -430,6 +435,19 @@ void gui_display(bool file_read_ok, bool test_already_opened)
       // fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
       // fl_alert((_("Unable to load the file") + std::string(" '%s'")).c_str(), current_abs_path.string().c_str());
     }
+  }
+}
+
+void cui_display(bool file_read_ok, std::filesystem::path opath)
+{
+  if (file_read_ok)
+  {
+    cui_file_write = true;
+    file_write(opath);
+  }
+  else
+  {
+    std::cerr << "Unable to load the file " << current_abs_path << std::endl;
   }
 }
 

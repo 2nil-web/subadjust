@@ -30,6 +30,7 @@ bool file_write(std::filesystem::path filename);
 void pre_process(int, int, int, int, int);
 void gui_display(bool, bool test_already_opened = true);
 void cui_display(bool, std::ostream &);
+void cui_display(bool, std::filesystem::path);
 
 bool file_handler(eHandlingType ht = eHandlingType::WRITE);
 bool save();

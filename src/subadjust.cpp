@@ -167,7 +167,7 @@ int main(int argc, char **argv)
 {
   setup_i18n(std::filesystem::path(argv[0]).parent_path());
 
-  std::string ifile = "", ofilename = "";
+  std::filesystem::path ifile = "", ofilename = "";
   int x = -1, y = -1, w = -1, h = -1;
   bool modify_input = false;
   bool run_pre_proc = false;
@@ -224,7 +224,15 @@ int main(int argc, char **argv)
 
                 option_info(""),
                 option_info(
-                    'o', "output-file", [&](s_opt_params &p) -> void { ofilename = p.val; }, _("Write the processing result into the file whose name is passed as argument."), required),
+                    'o', "output-file",
+                    [&](s_opt_params &p) -> void {
+                      ofilename = p.val;
+                      gui_mode = false;
+                    },
+                    _(R"EOF("Process the input the file in batch mode and write the result into the file whose name is passed in argument.
+    Based on the ouptut file extension, may write it to SubRip, WEBVTT or even CSV format.")EOF"),
+                    required),
+                option_info(_("")),
                 option_info(
                     'i', "modify-input", [&](s_opt_params &) -> void { modify_input = true; }, _("Write the processing result into the same input file.")),
                 option_info(_("These 2 previous options only have meaning in batch mode, they are ignored in GUI mode.")),
@@ -464,6 +472,7 @@ The configuration file is located there : ")EOF") +
       cui_display(file_read_ok, std::cout);
     else
     {
+#ifdef TOTO
       std::ofstream ofs(ofilename);
       if (ofs)
       {
@@ -475,6 +484,9 @@ The configuration file is located there : ")EOF") +
         logW(_("Unable to open file "), ofilename);
         std::cerr << _("Unable to open file ") << ofilename << std::endl;
       }
+#else
+      cui_display(file_read_ok, ofilename);
+#endif
     }
   }
 }

@@ -1,16 +1,19 @@
 # SubAdjust
 
-##### ***A graphical and command line tool to modify the timeline of subtitles files in .srt format***
+##### ***A graphical and command line tool to modify the timeline of subtitles files in SubRip (.srt) or WEBVTT (.vtt) format***
 
-<sup>*Actually available in 3 languages : english, french and spanish. But others could easily be added thanks to gettext.*</sup>
+<sup>*Actually available in 3 languages : english, french and spanish. But others can easily be added.*</sup>
 
-<sup>*Available for Windows and Linux. Should also be possible to build and deliver for macOS.*</sup>
+Can be used as a file converter between SubRip and WEBVTT format.
+
+Also allows to export to CSV format.
 
 ##### ***You can download a binary version of this tool in the "[Release](https://github.com/2nil-web/subadjust/releases)" link.***
 
-After the download, just unzip and run it with .srt files.
+<sup>*Available to four Linux ![Linux](assets/Tux.svg "Linux") distro (Arch ![Arch](assets/Arch.svg "Arch"), Debian ![Debian](assets/Debian.svg "Fedora"), Fedora ![Fedora](assets/Fedora.svg "Fedora"), Ubuntu ![Ubuntu](assets/Ubuntu.svg "Ubuntu")) and ![Windows](assets/Windows.svg "Windows").*</sup>
+<sup>*It should also be possible to build and deliver it for macOS ![macOS](assets/MacOS.svg "MacOS").*</sup>
 
-<sup>Compiled for various Linux distro.</sup>
+After the download, just unzip and run it with .srt files.
 
 ### ***The Graphical User Interface aims to be self-explanatory***
 
@@ -23,7 +26,7 @@ After the download, just unzip and run it with .srt files.
 <ins>***There is also an inline help :***</ins>
 
 ```
-Subadjust version 1.0.0
+Subadjust version 1.1.1
 Copyright © D. LALANNE - MIT License - No warranty of any kind.
 A tool that allows to process subtitles files.
 The batch mode allows processing at the command line or by script.
@@ -34,7 +37,7 @@ Available options
  -V, --version             Output version information and exit.
  -H, --help                Display this message and exit. This option implies -V/--version.
 
- -f, --file ARG            Name of the file to read. It is the same than directly passing a file name as an argument without this option.
+ -f, --input file ARG      Name of the file to read. It is the same than directly passing a file name as an argument without this option.
  -g, --gui-mode            Process the input file and show it with the gui, this is the default behavior.
  -c, --batch-mode          Process the input the file and print the result.
 
@@ -45,7 +48,8 @@ Available options
  -s, --stop-offset ARG     Change the stop offset to the provided argument.
 These 5 previous options are processed after reading the file and have effect in both GUI and batch mode.
 
- -o, --output-file ARG     Write the processing result into the file whose name is passed as argument.
+ -o, --output-file ARG     "Process the input the file in batch mode and write the result into the file whose name is passed in argument.
+    Based on the ouptut file extension, may write it to SubRip, WEBVTT or even CSV format."
  -i, --modify-input        Write the processing result into the same input file.
 These 2 previous options only have meaning in batch mode, they are ignored in GUI mode.
 
