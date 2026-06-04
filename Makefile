@@ -273,7 +273,7 @@ UC = $(shell echo '$1' | tr '[:lower:]' '[:upper:]')
 define svg2h
 	${ECHO} -ne '#ifndef $3\n#define $3\nconst char* $1_svg_data=R"SVG(' >$4; \
 	cat $2 >>$4; \
-	${ECHO} -ne ")SVG\";\n#endif /* $3 */" >> $4
+	${ECHO} -ne ")SVG\";\n#endif /* $3 */\n\n" >> $4
 endef
 
 ${SRC_DIR}/%_icon.h : ${SRC_DIR}/%.svg
