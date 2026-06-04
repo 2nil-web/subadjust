@@ -164,11 +164,11 @@ msgstr "Définit l'origine en x de la fenêtre subadjust"
 msgid "Set the y origin of the subadjust window."
 msgstr "Définit l'origine en y de la fenêtre subadjust"
 
-msgid "Silently ignoring -i/--modify-input in GUI mode"
-msgstr "Ignore silencieusement l'option -i/--modify-input, en mode graphique"
+msgid "Write the processing result into the same input file. Only has a meaning in batch mode, ignored in GUI mode."
+msgstr "Écrit le résultat du traitement dans le même fichier d'entrée. N'a de sens qu'en mode batch, est silencieusement ignoré en mode GUI."
 
-msgid "Silently ignoring -o/--output-file in GUI mode"
-msgstr "Ignore silencieusement l'option -o/--output-file, en mode graphique"
+msgid "Process the input file in batch mode and write the result into the file whose name is passed in argument.\n    Based on the ouptut file extension, may write it to SubRip, WEBVTT or even CSV format."
+msgstr "Traite le fichier d'entrée en mode batch et l'écrit dans le fichier dont le nom est passé en argument.\n    Selon l'extension du fichier de sortie, il peut être écrit au format SubRip, WEBVTT ou même CSV."
 
 msgid ""
 "These 2 previous options only have meaning in batch mode, they are ignored "

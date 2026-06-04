@@ -229,13 +229,10 @@ int main(int argc, char **argv)
                       ofilename = p.val;
                       gui_mode = false;
                     },
-                    _(R"EOF("Process the input the file in batch mode and write the result into the file whose name is passed in argument.
-    Based on the ouptut file extension, may write it to SubRip, WEBVTT or even CSV format.")EOF"),
-                    required),
-                option_info(_("")),
+                    _("Process the input file in batch mode and write the result into the file whose name is passed in argument.\n    Based on the ouptut file extension, may write it to SubRip, WEBVTT or even CSV format."), required),
+                option_info(""),
                 option_info(
-                    'i', "modify-input", [&](s_opt_params &) -> void { modify_input = true; }, _("Write the processing result into the same input file.")),
-                option_info(_("These 2 previous options only have meaning in batch mode, they are ignored in GUI mode.")),
+                    'i', "modify-input", [&](s_opt_params &) -> void { modify_input = true; }, _("Write the processing result into the same input file. Only has a meaning in batch mode, ignored in GUI mode.")),
 
                 option_info(""),
                 option_info(
