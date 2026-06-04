@@ -397,6 +397,9 @@ msgstr "Annuler"
 msgid "Save your file and exit from the app.\nAvailable shortcut is 'Ctrl-X'."
 msgstr "Enregistre le fichier et quitte l'application.\nRaccourci disponible « Ctrl-X »."
 
+msgid "Exit after ensuring that your file should be saved.\nAvailable shortcut is 'Ctrl-Q'."
+msgstr "Quitte après s'être assuré que le fichier doit être enregistré.\nRaccourci disponible « Ctrl-Q »."
+
 msgid "Some useful informations about the app (Shortcut Ctrl+B)."
 msgstr "Informations sur l'application (Raccourci Ctrl+B)."
 

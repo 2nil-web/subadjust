@@ -38,7 +38,7 @@ Function {make_window()} {open
           image {../assets/svg_icons/floppy.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x40073
         }
         MenuItem file_save_as {
-          label {Save As ...} selected
+          label {Save As ...}
           image {../assets/svg_icons/save as.svg} compress_image 1 xywh {0 0 100 20} shortcut 0x50073 divider
         }
         MenuItem file_export {
@@ -62,8 +62,9 @@ Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} c
         class Fl_Button_Hover
       }
       Fl_Button app_quit {
-        label {⏻}
-        image {../assets/svg_icons/exit.svg} compress_image 1 xywh {184 1 48 28} shortcut 0x40071 labeltype NO_LABEL labelsize 18 align 512
+        label {⏻} selected
+        tooltip {Exit after ensuring that your file should be saved.
+Available shortcut is 'Ctrl-Q'.} image {../assets/svg_icons/exit.svg} compress_image 1 xywh {184 1 48 28} shortcut 0x40071 labeltype NO_LABEL labelsize 18 align 512
         class Fl_Button_Hover
       }
       Fl_Button app_about {
