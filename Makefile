@@ -27,6 +27,7 @@ else
 SYS_VER=$(shell lsb_release -irs | sed 'N;s/\n/_/' | sed 's/ /_/g')
 endif
 endif
+endif
 
 VERSION=$(shell git describe --abbrev=0 --tags 2>/dev/null || echo 'Unknown')
 DECORATION=
