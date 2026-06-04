@@ -201,7 +201,7 @@ ${SRC_DIR}/app_info.h : ${SRC_DIR}/app_info_check.txt
 # Génération du app_info.json intégré dans le paquetage
 ${SRC_DIR}/app_info.json : ${SRC_DIR}/app_info_check.txt
 	@${ECHO} -e "Building json file $@"
-	@${ECHO} -e -e '{ "name":"${PREFIX}", "version":"${VERSION}", "decoration":"${DECORATION}", "commit":"${COMMIT}","created_at":"${ISO8601}, "platform":"${PLATFORM}" }' >$@
+	@${ECHO} -e '{ "name":"${PREFIX}", "version":"${VERSION}", "decoration":"${DECORATION}", "commit":"${COMMIT}","created_at":"${ISO8601}, "platform":"${PLATFORM}" }' >$@
 	dos2unix $@
 
 # Pour regénérer silencieusement app_info.h et app_info.json dès qu'un des champs app_info ou decoration ou commit, est modifié.
