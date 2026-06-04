@@ -153,8 +153,9 @@ std::vector<sSub> cSub::to_vec(const std::string _sub_str)
 
 const std::regex cSub::re_index("(\\d+)");
 // const std::regex cSub::re_times("(\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d)[^\\S\\n]+-->[^\\S\\n]+(\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d)");
-const std::regex cSub::re_times("(.*:.*:.*..*)[^\\S\\n]+-->[^\\S\\n]+(.*:.*:.*..*)");
-
+// const std::regex cSub::re_times("(.*:.*:.*..*)[^\\S\\n]+-->[^\\S\\n]+(.*:.*:.*..*)");
+// regex permettant la détection indifférenciée des horodatages SRT et WDEBVTT
+const std::regex cSub::re_times("((?:\\d{2}:)??\\d{2}:\\d{2}[,.]\\d{3})[^\\S\\n]+-->[^\\S\\n]+((?:\\d{2}:)??\\d{2}:\\d{2}[,.]\\d{3})");
 std::string cSub::to_str(const std::vector<sSub> vec, char dec_sep)
 {
   if (vec.empty())
@@ -327,7 +328,7 @@ int cSub::line_by_timestamp(int to_find, sSub &ssub)
   {
     str_sub = vsub[i];
 
-    if (!str_sub.empty() && std::regex_match(str_sub, sub_match, re_times) && sub_match.size() >= 2)
+    if (!str_sub.empty() && (std::regex_match(str_sub, sub_match, re_times)) && sub_match.size() >= 2)
     {
       appearance = str_to_ms(sub_match[1]);
       disappearance = str_to_ms(sub_match[2]);
