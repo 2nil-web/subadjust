@@ -372,8 +372,11 @@ msgstr "Alto:"
 msgid "Cancel"
 msgstr "Cancelar"
 
-msgid "Save your file and exit from the app.\nAvailable shortcut is 'Ctrl-X'."
-msgstr "Guarda el archivo y sal de la aplicación. El atajo disponible es « Ctrl-X »."
+msgid "Exit after ensuring that your file should be saved.\nAvailable shortcut is 'Ctrl+Q'."
+msgstr "Salga después de asegurarse de que el archivo se debe guardar. Atajo de teclado disponible: « Ctrl+Q »."
+
+msgid "Save your file and exit from the app.\nAvailable shortcut is 'Ctrl+X'."
+msgstr "Guarda el archivo y sal de la aplicación. El atajo disponible es « Ctrl+X »."
 
 msgid "Some useful informations about the app (Shortcut Ctrl+B)."
 msgstr "Información sobre la aplicación (Atajo Ctrl+B)."
@@ -387,10 +390,10 @@ msgstr "Ir al número de subtítulo ..."
 msgid "Search in the subtitle, line whose timstamp is close to ..."	
 msgstr "Buscar en el subtítulo, la línea cuya marca de tiempo se acerca de ..."
 
-msgid "Delete the first subtitle and reparse\nYou may undo/redo this action with Ctrl-Z/Ctrl-Y."	
+msgid "Delete the first subtitle and reparse\nYou may undo/redo this action with Ctrl+Z/Ctrl+Y."	
 msgstr "Elimine el primero subtítulo y vuelva a analizar.\nPuede deshacer/rehacer esta acción con Ctrl+Z/Ctrl+Y."
 
-msgid "Delete the last subtitle and reparse\nYou may undo/redo this action with Ctrl-Z/Ctrl-Y."	
+msgid "Delete the last subtitle and reparse\nYou may undo/redo this action with Ctrl+Z/Ctrl+Y."	
 msgstr "Elimine el último subtítulo y vuelva a analizar.\nPuede deshacer/rehacer esta acción con Ctrl+Z/Ctrl+Y."
 
 msgid "The start time of the sub"	
@@ -505,25 +508,25 @@ msgid "Edit the configuration file.."
 msgstr "Editar el archivo de configuración"
 
 msgid "File operations (Open, Save, Reload)"	
-msgstr "Operaciones de archivo (Abrir, Guardar, Recargar)"
+msgstr "Operaciones de archivo (Abrir, Guardar, Exportar, Recargar)"
 
 msgid "Font names"	
 msgstr "Nombres de fuente"
 
-msgid "Go to middle line"	
-msgstr "Ir a la línea central"
+msgid "Go to middle line - Ctrl+D"	
+msgstr "Ir a la línea central - Ctrl+D"
 
-msgid "Go to middle subtitle"	
-msgstr "Ir al subtítulo central"
+msgid "Go to middle subtitle - Ctrl+F"	
+msgstr "Ir al subtítulo central - Ctrl+F"
 
-msgid "Go to middle time"	
-msgstr "Ir a la marca de tiempo central"
+msgid "Go to middle time - Ctrl+G"
+msgstr "Ir a la marca de tiempo central - Ctrl+G"
 
-msgid "Goto end of file"	
-msgstr "Ir al final del archivo"
+msgid "Goto end of file - Ctrl+H"	
+msgstr "Ir al final del archivo - Ctrl+H"
 
-msgid "Goto start of file"	
-msgstr "Ir al inicio del archivo"
+msgid "Goto start of file - Ctrl+J"	
+msgstr "Ir al inicio del archivo - Ctrl+J"
 
 msgid "Preferences/Setting (Shortcut Ctrl+p)"	
 msgstr "Preferencias/Configuración (Atajo Ctrl+P)"

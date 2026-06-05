@@ -394,11 +394,11 @@ msgstr "Hauteur:"
 msgid "Cancel"
 msgstr "Annuler"
 
-msgid "Save your file and exit from the app.\nAvailable shortcut is 'Ctrl-X'."
-msgstr "Enregistre le fichier et quitte l'application.\nRaccourci disponible « Ctrl-X »."
+msgid "Save your file and exit from the app.\nAvailable shortcut is 'Ctrl+X'."
+msgstr "Enregistre le fichier et quitte l'application.\nRaccourci disponible « Ctrl+X »."
 
-msgid "Exit after ensuring that your file should be saved.\nAvailable shortcut is 'Ctrl-Q'."
-msgstr "Quitte après s'être assuré que le fichier doit être enregistré.\nRaccourci disponible « Ctrl-Q »."
+msgid "Exit after ensuring that your file should be saved.\nAvailable shortcut is 'Ctrl+Q'."
+msgstr "Quitte après s'être assuré que le fichier doit être enregistré.\nRaccourci disponible « Ctrl+Q »."
 
 msgid "Some useful informations about the app (Shortcut Ctrl+B)."
 msgstr "Informations sur l'application (Raccourci Ctrl+B)."
@@ -412,10 +412,10 @@ msgstr "Aller au numéro du sous-titre ..."
 msgid "Search in the subtitle, line whose timstamp is close to ..."	
 msgstr "Rechercher dans les sous-titres celui dont l'horodatage est le plus proche"
 
-msgid "Delete the first subtitle and reparse\nYou may undo/redo this action with Ctrl-Z/Ctrl-Y."	
+msgid "Delete the first subtitle and reparse\nYou may undo/redo this action with Ctrl+Z/Ctrl+Y."	
 msgstr "Supprime le 1er sous-titre et réanalyse\nVous pouvez annuler/rétablir cette action avec Ctrl+Z/Ctrl+Y."
 
-msgid "Delete the last subtitle and reparse\nYou may undo/redo this action with Ctrl-Z/Ctrl-Y."	
+msgid "Delete the last subtitle and reparse\nYou may undo/redo this action with Ctrl+Z/Ctrl+Y."	
 msgstr "Supprime le dernier sous-titre et réanalyse\nVous pouvez annuler/rétablir cette action avec Ctrl+Z/Ctrl+Y."
 
 msgid "The start time of the sub"	
@@ -526,27 +526,27 @@ msgid "Edit the configuration file.."
 msgstr "Modifier le fichier de configuration"
 
 msgid "File operations (Open, Save, Reload)"	
-msgstr "Opérations sur les fichiers (Ouvrir, Enregistrer, Recharger)"
+msgstr "Opérations sur les fichiers (Ouvrir, Enregistrer, Exporter, Recharger)"
 
 msgid "Font names"	
 msgstr "Noms des polices"
 
-msgid "Go to middle line"	
-msgstr "Aller à la ligne du milieu"
+msgid "Go to middle line - Ctrl+D"	
+msgstr "Aller à la ligne du milieu - Ctrl+D"
 
-msgid "Go to middle subtitle"	
-msgstr "Aller au sous-titre du milieu"
+msgid "Go to middle subtitle - Ctrl+F"	
+msgstr "Aller au sous-titre du milieu - Ctrl+F"
 
-msgid "Go to middle time"	
-msgstr "Aller à l'horodatage du milieu"
+msgid "Go to middle time - Ctrl+G"
+msgstr "Aller à l'horodatage du milieu - Ctrl+G"
 
-msgid "Goto end of file"	
-msgstr "Aller à la fin du fichier"
+msgid "Goto end of file - Ctrl+H"	
+msgstr "Aller à la fin du fichier - Ctrl+H"
 
-msgid "Goto start of file"	
-msgstr "Aller au début du fichier"
+msgid "Goto start of file - Ctrl+J"
+msgstr "Aller au début du fichier - Ctrl+J"
 
-msgid "Preferences/Setting (Shortcut Ctrl+p)"	
+msgid "Preferences/Setting (Shortcut Ctrl+P)"	
 msgstr "Préférences/Paramètres (Raccourci : Ctrl+P)"
 
 msgid "Sizes"	

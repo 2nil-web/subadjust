@@ -15,7 +15,7 @@ snap {
 Function {make_window()} {open
 } {
   Fl_Window main_window {open
-    xywh {2722 242 384 653} type Double resizable
+    xywh {2635 174 384 653} type Double resizable
     code0 {\#include "Fl_Fluid.h"} size_range {384 600 0 0} visible
   } {
     Fl_Group {} {open
@@ -58,13 +58,13 @@ Function {make_window()} {open
       Fl_Button app_save_quit {
         label {💾/⏻}
         tooltip {Save your file and exit from the app.
-Available shortcut is 'Ctrl-X'.} image {../assets/svg_icons/floppy - exit.svg} compress_image 1 xywh {69 1 82 28} shortcut 0x40075 labeltype NO_LABEL labelsize 18 align 512
+Available shortcut is 'Ctrl+X'.} image {../assets/svg_icons/floppy - exit.svg} compress_image 1 xywh {69 1 82 28} shortcut 0x40075 labeltype NO_LABEL labelsize 18 align 512
         class Fl_Button_Hover
       }
       Fl_Button app_quit {
-        label {⏻} selected
+        label {⏻}
         tooltip {Exit after ensuring that your file should be saved.
-Available shortcut is 'Ctrl-Q'.} image {../assets/svg_icons/exit.svg} compress_image 1 xywh {184 1 48 28} shortcut 0x40071 labeltype NO_LABEL labelsize 18 align 512
+Available shortcut is 'Ctrl+Q'.} image {../assets/svg_icons/exit.svg} compress_image 1 xywh {184 1 48 28} shortcut 0x40071 labeltype NO_LABEL labelsize 18 align 512
         class Fl_Button_Hover
       }
       Fl_Button app_about {
@@ -72,7 +72,7 @@ Available shortcut is 'Ctrl-Q'.} image {../assets/svg_icons/exit.svg} compress_i
         tooltip {Some useful informations about the app (Shortcut Ctrl+B).} image {../assets/svg_icons/question.svg} compress_image 1 xywh {331 1 48 28} shortcut 0x40062 labeltype NO_LABEL labelsize 18 align 512
         class Fl_Button_Hover
       }
-      Fl_Group {} {
+      Fl_Group {} {open
         xywh {3 30 378 130} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
       } {
         Fl_Group {} {
@@ -81,17 +81,17 @@ Available shortcut is 'Ctrl-Q'.} image {../assets/svg_icons/exit.svg} compress_i
         } {
           Fl_Button goto_middle_line {
             label Line
-            tooltip {Go to middle line} image {../assets/svg_icons/line.png} compress_image 1 xywh {9 36 64 52} labeltype NO_LABEL align 512
+            tooltip {Go to middle line - Ctrl+D} image {../assets/svg_icons/line.png} compress_image 1 xywh {9 36 64 52} shortcut 0x40064 labeltype NO_LABEL align 512
             class Fl_Button_Hover
           }
           Fl_Button goto_middle_sub {
             label Sub
-            tooltip {Go to middle subtitle} image {../assets/svg_icons/subtitles.svg} compress_image 1 xywh {98 52 80 36} box THIN_UP_FRAME down_box THIN_DOWN_FRAME labeltype NO_LABEL align 512
+            tooltip {Go to middle subtitle - Ctrl+F} image {../assets/svg_icons/subtitles.svg} compress_image 1 xywh {98 52 80 36} box THIN_UP_FRAME down_box THIN_DOWN_FRAME shortcut 0x40066 labeltype NO_LABEL align 512
             class Fl_Button_Hover
           }
           Fl_Button goto_middle_time {
             label Time
-            tooltip {Go to middle time} image {../assets/svg_icons/time.svg} compress_image 1 xywh {200 36 64 52} labeltype NO_LABEL align 514
+            tooltip {Go to middle time - Ctrl+G} image {../assets/svg_icons/time.svg} compress_image 1 xywh {200 36 64 52} shortcut 0x40067 labeltype NO_LABEL align 514
             class Fl_Button_Hover
           }
         }
@@ -114,24 +114,24 @@ Available shortcut is 'Ctrl-Q'.} image {../assets/svg_icons/exit.svg} compress_i
         }
         Fl_Button goto_start {
           label Start
-          tooltip {Goto start of file} image {../assets/svg_icons/goto-start.svg} compress_image 1 xywh {273 33 52 54} labeltype NO_LABEL align 513
+          tooltip {Goto start of file - Ctrl+H} image {../assets/svg_icons/goto-start.svg} compress_image 1 xywh {273 33 52 54} shortcut 0x40068 labeltype NO_LABEL align 513
           class Fl_Button_Hover
         }
         Fl_Button goto_end {
-          label End
-          tooltip {Goto end of file} image {../assets/svg_icons/goto-end.svg} compress_image 1 xywh {327 40 52 54} labeltype NO_LABEL align 514
+          label End selected
+          tooltip {Goto end of file - Ctrl+J} image {../assets/svg_icons/goto-end.svg} compress_image 1 xywh {327 40 52 54} shortcut 0x4006a labeltype NO_LABEL align 514
           class Fl_Button_Hover
         }
         Fl_Button del_first_sub {
           label {Del first sub}
           tooltip {Delete the first subtitle and reparse
-You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/delete start subtitle.svg} compress_image 1 xywh {273 90 52 54} labeltype NO_LABEL align 512
+You may undo/redo this action with Ctrl+Z/Ctrl+Y.} image {../assets/svg_icons/delete start subtitle.svg} compress_image 1 xywh {273 90 52 54} labeltype NO_LABEL align 512
           class Fl_Button_Hover
         }
         Fl_Button del_last_sub {
           label {Del last sub}
           tooltip {Delete the last subtitle and reparse
-You may undo/redo this action with Ctrl-Z/Ctrl-Y.} image {../assets/svg_icons/delete end subtitle.svg} compress_image 1 xywh {327 106 52 54} labeltype NO_LABEL align 512
+You may undo/redo this action with Ctrl+Z/Ctrl+Y.} image {../assets/svg_icons/delete end subtitle.svg} compress_image 1 xywh {327 106 52 54} labeltype NO_LABEL align 512
           class Fl_Button_Hover
         }
       }
@@ -294,7 +294,7 @@ Automatic changes may occur if the initial file format is not UTF-8.} xywh {64 3
   }
   Fl_Window config_dialog {
     label Configuration
-    xywh {3260 239 350 384} type Double resizable non_modal size_range {350 384 600 0} visible
+    xywh {3025 173 350 384} type Double resizable non_modal size_range {350 384 600 0} visible
   } {
     Fl_Button config_view {
       tooltip {Edit the configuration file..} image {../assets/svg_icons/modify - settings.svg} compress_image 1 xywh {278 2 66 24} labeltype NO_LABEL align 512
