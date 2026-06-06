@@ -69,6 +69,7 @@ function gh_curr_rel () {
   gh_rel_endp="${gh_api_endp}/repos/${gh_user}/${repo_name}/releases"
 
   # is there already a github release for the current tag ?
+#  echo "CURL1"
   exists_rel=$(curl -sH "Authorization: Bearer ${gh_tok}" ${gh_rel_endp} | jq -r '.[]|.name,.id' | sed 'N;s/\n/;/' | grep ${rel_name})
 
   #echo "exists_rel: $exists_rel"
@@ -78,18 +79,22 @@ function gh_curr_rel () {
   then
     #echo "The release ${rel_name} does not exist yet, creating it."
     rel_post="{\"tag_name\":\"${tag_name}\",\"target_commitish\":\"master\",\"name\":\"${rel_name}\",\"body\":\"Description of the release\",\"draft\":false,\"prerelease\":false,\"generate_release_notes\":false}"
+#    echo "CURL2"
     curl -s -X POST -H "Authorization: Bearer ${gh_tok}" ${gh_rel_endp} -d "${rel_post}" >/dev/null
     sleep 2
   fi
 
+#  echo "CURL3"
   RELEASE_ID=$(curl -sH "Authorization: Bearer ${gh_tok}" ${gh_rel_endp} | jq -r '.[]|.name,.id' | sed 'N;s/\n/;/' | sed -n "s/${rel_name};//p") >/dev/null
 
   # Get a specific release upload_url
+#  echo "CURL4"
   gh_upl_url=$(curl -sH "Authorization: Bearer ${gh_tok}" ${gh_rel_endp} | jq -r '.[]|.name,.upload_url' | sed 'N;s/\n/;/;s/{?name,label}//' | sed -n "s/${rel_name};//p")
 
   #echo "RELEASE_ID: $RELEASE_ID"
   #echo "Upload url: $gh_upl_url"
 
+#  echo "CURL5: ${gh_upl_url}?name=${asset_name} --data-binary @${asset_path}"
   post_res=$(curl -s -X POST -H "Authorization: Bearer ${gh_tok}" -H "Content-Type: application/octet-stream" ${gh_upl_url}?name=${asset_name} --data-binary "@${asset_path}")
 
   if grep 'errors.*code' <<<${post_res} >/dev/null
@@ -103,14 +108,17 @@ function gh_curr_rel () {
   if [ "$upl_res" = "already_exists" ]
   then
     echo "Updating an already existing github release asset."
+#  echo "CURL6"
     ASSET_ID=$(curl -sH "Authorization: Bearer ${gh_tok}" ${gh_rel_endp}/${RELEASE_ID}/assets | jq -r '.[]|.name,.id' | sed 'N;s/\n/;/' | sed -n "s/${asset_name};//p") >/dev/null
     asset_post="{\"name\":\"$asset_name\",\"label\":\"$asset_name\"}"
 
     #echo "asset_post: $asset_post"
     #echo "ASSET_ID  : $ASSET_ID"
 
+#  echo "CURL7"
     curl -sX "DELETE" -H "Authorization: Bearer ${gh_tok}" ${gh_rel_endp}/assets/${ASSET_ID} -d "${asset_post}" >/dev/null
     #sleep 5
+#  echo "CURL8"
     post_res=$(curl -sX POST -H "Authorization: Bearer ${gh_tok}" -H "Content-Type: application/octet-stream" ${gh_upl_url}?name=${asset_name} --data-binary "@${asset_path}")
     #echo "$post_res"
     #curl -sX "PATCH"  -H "Authorization: Bearer ${gh_tok}" ${gh_rel_endp}/assets/${ASSET_ID} -d "${asset_post}" >/dev/null

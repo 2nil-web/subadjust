@@ -55,6 +55,7 @@ Source: "build\msvc\win\x64\Release\{#MyAppExeName}"; DestDir: "{app}"; Flags: i
 Source: "build\msvc\win\x64\Release\iconv-2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "build\msvc\win\x64\Release\intl-8.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "locale\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "assets\README.pdf"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]

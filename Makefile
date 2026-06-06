@@ -113,37 +113,45 @@ sunset_calculator${EXEXT} : assets/sunset_calculator.cpp
 gen_subs${EXEXT} : assets/gen_subs.cpp
 	${GXX_COMPILE} assets/gen_subs.cpp ${GXX_LINK_OPT} -o gen_subs${EXEXT}
 
-SETUP_PKG_PREFIX=$(patsubst s%,S%,${PREFIX}-${VERSION}-${SYS_VER})
-ifeq (${OS},Windows_NT)
-SETUP_PKG=${SETUP_PKG_PREFIX}.exe
+PKG_PFX=$(patsubst s%,S%,${PREFIX}-${VERSION}-${SYS_VER})
+PKG_ZIP=assets/${PKG_PFX}.zip
+PKG_DEP=assets/README.pdf ${TARGET}
 
-assets/${SETUP_PKG} : README.md ${TARGET}
-	@( strip ${TARGET} | true  ) >/dev/null 2>&1
-	@( upx ${TARGET} | true  ) >/dev/null 2>&1
-	@echo "Generating ${SETUP_PKG}"
-	@sed 's/^#define MyAppVersion .*$\/#define MyAppVersion "${VERSION}"/' ${PREFIX}.iss >${PREFIX}-${VERSION}.iss
-	@'/c/Program Files (x86)/Inno Setup 6/ISCC.exe' //Q //O"assets" //F"${SETUP_PKG_PREFIX}" ${PREFIX}-${VERSION}.iss
-	@rm -f ${PREFIX}-${VERSION}.iss
-else
-SETUP_PKG=${SETUP_PKG_PREFIX}.zip
+assets/README.pdf : README.md
+	pandoc -V geometry:paperwidth=210mm -V geometry:paperheight=297mm -V geometry:margin=1cm -o assets/README.pdf README.md
 
-assets/${SETUP_PKG} : README.md ${TARGET}
+${PKG_ZIP} : ${PKG_DEP}
 	@( strip ${TARGET} | true  ) >/dev/null 2>&1
 	@( upx ${TARGET} | true  ) >/dev/null 2>&1
 	@mkdir -p assets/setup
-	pandoc -V geometry:paperwidth=210mm -V geometry:paperheight=297mm -V geometry:margin=1cm -o assets/setup/README.pdf README.md
 	@cp -R locale assets/setup
 	@cp ${TARGET} assets/setup
-	@cd assets/setup && zip -rq ../${SETUP_PKG} .
-	@echo "Package assets/${SETUP_PKG} is ready"
+ifeq (${OS},Windows_NT)
+	@cp ${TARGET_DIR}/*.dll assets/setup
+endif
+	@cd assets/setup && zip -rq ../${PKG_PFX}.zip .
+	@echo "Package ${PKG_ZIP} is ready"
 	@rm -rf assets/setup
+
+ifeq (${OS},Windows_NT)
+ISCC='/c/Program Files (x86)/Inno Setup 6/ISCC.exe'
+PKG_EXE=assets/${PKG_PFX}.exe
+${PKG_EXE} : ${PKG_DEP}
+	@sed 's/^#define MyAppVersion .*$\/#define MyAppVersion "${VERSION}"/' ${PREFIX}.iss >${PREFIX}-${VERSION}.iss
+	@${ISCC} //Q //O"assets" //F"${PKG_PFX}" ${PREFIX}-${VERSION}.iss
+	@echo "Package ${PKG_EXE} is ready"
+	@rm -f ${PREFIX}-${VERSION}.iss
 endif
 
-setup : assets/${SETUP_PKG}
+setup : ${PKG_ZIP} ${PKG_EXE}
 
-deliv : assets/${SETUP_PKG}
+deliv : ${PKG_ZIP} ${PKG_EXE}
 	@echo "Delivering it to github."
-	@./assets/github_release.sh $<
+	./assets/github_release.sh ${PKG_ZIP}
+ifeq (${OS},Windows_NT)
+	zip ${PKG_EXE}.zip ${PKG_EXE}
+	./assets/github_release.sh ${PKG_EXE}.zip
+endif
 
 
 # FLUID file rules
@@ -228,7 +236,7 @@ cfg :
 	@echo "OS_ID: ${OS_ID}"
 	@echo "Building TARGET [${TARGET}] for system [${UNAME}] with built tool [${BUILD_SYS}]"
 	@echo "fltk tools come from ${FLTK_DIR}"
-	@which ISCC.exe
+	@echo "ISCC: $(shell which ${ISCC})"
 	@which ${FLTK_CONFIG}
 	@echo "CPPFLAGS: ${CPPFLAGS}"
 	@echo "LINK.cc: ${LINK.cc}"
@@ -236,6 +244,8 @@ cfg :
 	@echo "OBJS: ${OBJS}"
 	@echo "LOADLIBES: ${LOADLIBES}"
 	@echo "LDLIBS: ${LDLIBS}"
+	@echo "PKG_ZIP: ${PKG_ZIP}"
+	@echo "PKG_EXE: ${PKG_EXE}"
 
 help :
 	@echo "$(shell tput bold; tput smul)What to do to build and/or deliver a new version of ${PREFIX} ?$(shell tput sgr0)"
