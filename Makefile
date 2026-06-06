@@ -113,9 +113,17 @@ sunset_calculator${EXEXT} : assets/sunset_calculator.cpp
 gen_subs${EXEXT} : assets/gen_subs.cpp
 	${GXX_COMPILE} assets/gen_subs.cpp ${GXX_LINK_OPT} -o gen_subs${EXEXT}
 
-
-SETUP_PKG=${PREFIX}-${VERSION}-${SYS_VER}.zip
-
+SETUP_PKG_PREFIX=$(patsubst s%,S%,${PREFIX}-${VERSION}-${SYS_VER})
+ifeq (${OS},Windows_NT)
+SETUP_PKG=${SETUP_PKG_PREFIX}-Setup
+assets/${SETUP_PKG} : README.md ${TARGET}
+	@echo "Generating ${SETUP_PKG}"
+	@sed 's/^#define MyAppVersion .*$\/#define MyAppVersion "${VERSION}"/' ${PREFIX}.iss >${PREFIX}-${VERSION}.iss
+	@echo "ISCC /O\"assets\" /F\"${SETUP_PKG}\" ${PREFIX}-${VERSION}.iss"
+	@'/c/Program Files (x86)/Inno Setup 6/ISCC.exe' //Q //O"assets" //F"${SETUP_PKG}" ${PREFIX}-${VERSION}.iss
+	@rm -f ${PREFIX}-${VERSION}.iss
+else
+SETUP_PKG=${SETUP_PKG_PREFIX}.zip
 assets/${SETUP_PKG} : README.md ${TARGET}
 	@( strip ${TARGET} | true  ) >/dev/null 2>&1
 	@( upx ${TARGET} | true  ) >/dev/null 2>&1
@@ -123,12 +131,10 @@ assets/${SETUP_PKG} : README.md ${TARGET}
 	pandoc -V geometry:paperwidth=210mm -V geometry:paperheight=297mm -V geometry:margin=1cm -o assets/setup/README.pdf README.md
 	@cp -R locale assets/setup
 	@cp ${TARGET} assets/setup
-ifeq (${OS},Windows_NT)
-	@cp ${TARGET_DIR}/*.dll assets/setup
-endif
 	@cd assets/setup && zip -rq ../${SETUP_PKG} .
 	@echo "Package assets/${SETUP_PKG} is ready"
 	@rm -rf assets/setup
+endif
 
 setup : assets/${SETUP_PKG}
 
@@ -215,9 +221,11 @@ ${SRC_DIR}/app_info_check.txt : FORCE
 	@-( if diff $@.new $@ >/dev/null 2>&1; then rm -f $@.new; else mv -f $@.new $@; rm -f ${PREFIX}.iss ${PREFIX}-standalone.iss; fi )
 
 cfg : 
-	@echo "ECHO: ${ECHO}"
+	@echo "OS: ${OS}"
+	@echo "OS_ID: ${OS_ID}"
 	@echo "Building TARGET [${TARGET}] for system [${UNAME}] with built tool [${BUILD_SYS}]"
 	@echo "fltk tools come from ${FLTK_DIR}"
+	@which ISCC.exe
 	@which ${FLTK_CONFIG}
 	@echo "CPPFLAGS: ${CPPFLAGS}"
 	@echo "LINK.cc: ${LINK.cc}"
