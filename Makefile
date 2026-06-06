@@ -121,7 +121,7 @@ assets/${SETUP_PKG} : README.md ${TARGET}
 	@sed 's/^#define MyAppVersion .*$\/#define MyAppVersion "${VERSION}"/' ${PREFIX}.iss >${PREFIX}-${VERSION}.iss
 	@echo "ISCC /O\"assets\" /F\"${SETUP_PKG}\" ${PREFIX}-${VERSION}.iss"
 	@'/c/Program Files (x86)/Inno Setup 6/ISCC.exe' //Q //O"assets" //F"${SETUP_PKG}" ${PREFIX}-${VERSION}.iss
-	@rm -f ${PREFIX}-${VERSION}.iss
+#	@rm -f ${PREFIX}-${VERSION}.iss
 else
 SETUP_PKG=${SETUP_PKG_PREFIX}.zip
 assets/${SETUP_PKG} : README.md ${TARGET}
