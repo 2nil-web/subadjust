@@ -221,7 +221,7 @@ ${SRC_DIR}/app_info.json : ${SRC_DIR}/app_info_check.txt
 ${SRC_DIR}/app_info_check.txt : FORCE
 	@${ECHO} -e "Version:${VERSION}, decoration:${DECORATION}, commit:${COMMIT}, platform:${PLATFORM}" >$@.new
 	@-( if [ ! -f $@ ]; then cp $@.new $@; sleep 0.4; fi )
-	@-( if diff $@.new $@ >/dev/null 2>&1; then rm -f $@.new; else mv -f $@.new $@; rm -f ${PREFIX}.iss ${PREFIX}-standalone.iss; fi )
+	@-( if diff $@.new $@ >/dev/null 2>&1; then rm -f $@.new; else mv -f $@.new $@; fi )
 
 cfg : 
 	@echo "OS: ${OS}"
