@@ -115,15 +115,18 @@ gen_subs${EXEXT} : assets/gen_subs.cpp
 
 SETUP_PKG_PREFIX=$(patsubst s%,S%,${PREFIX}-${VERSION}-${SYS_VER})
 ifeq (${OS},Windows_NT)
-SETUP_PKG=${SETUP_PKG_PREFIX}-Setup
+SETUP_PKG=${SETUP_PKG_PREFIX}.exe
+
 assets/${SETUP_PKG} : README.md ${TARGET}
+	@( strip ${TARGET} | true  ) >/dev/null 2>&1
+	@( upx ${TARGET} | true  ) >/dev/null 2>&1
 	@echo "Generating ${SETUP_PKG}"
 	@sed 's/^#define MyAppVersion .*$\/#define MyAppVersion "${VERSION}"/' ${PREFIX}.iss >${PREFIX}-${VERSION}.iss
-	@echo "ISCC /O\"assets\" /F\"${SETUP_PKG}\" ${PREFIX}-${VERSION}.iss"
-	@'/c/Program Files (x86)/Inno Setup 6/ISCC.exe' //Q //O"assets" //F"${SETUP_PKG}" ${PREFIX}-${VERSION}.iss
+	@'/c/Program Files (x86)/Inno Setup 6/ISCC.exe' //Q //O"assets" //F"${SETUP_PKG_PREFIX}" ${PREFIX}-${VERSION}.iss
 #	@rm -f ${PREFIX}-${VERSION}.iss
 else
 SETUP_PKG=${SETUP_PKG_PREFIX}.zip
+
 assets/${SETUP_PKG} : README.md ${TARGET}
 	@( strip ${TARGET} | true  ) >/dev/null 2>&1
 	@( upx ${TARGET} | true  ) >/dev/null 2>&1
