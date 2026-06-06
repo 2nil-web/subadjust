@@ -15,17 +15,14 @@ endif
 endif
 
 # Available at least under Fedora, Debian, Ubuntu, Arch and even under msys2
-OS_ID=$(shell sed -n 's/^ID=//p' /etc/os-release)
+OS_REL=$(shell sed -n 's/^ID=//p' /etc/os-release)
+OS_ID=$(subst ",,${OS_REL})
 
 ifeq ($(OS),Linux)
 ifeq ($(OS_ID),arch)
 SYS_VER=Arch_Linux_$(shell sed -n 's/^VERSION_ID=//p' /etc/os-release)
 else
-ifeq ($(OS_ID),"opensuse-tumbleweed")
-SYS_VER=openSUSE_Tumbleweed_$(shell sed -n 's/^VERSION_ID=//p' /etc/os-release)
-else
 SYS_VER=$(shell lsb_release -irs | sed 'N;s/\n/_/' | sed 's/ /_/g')
-endif
 endif
 endif
 
@@ -43,7 +40,7 @@ ifeq ($(findstring NT-, $(UNAME)),)
 #FLTK_DIR=/opt/fltk/1.5
 FLTK_DIR=/opt/fltk/1.4.5
 EXEXT=
-TARGET_DIR=build/gcc/linux
+TARGET_DIR=build/gcc/linux/${OS_ID}
 ifeq ($(BUILD_SYS),)
 BUILD_SYS=gcc
 endif
@@ -146,11 +143,12 @@ endif
 setup : ${PKG_ZIP} ${PKG_EXE}
 
 deliv : ${PKG_ZIP} ${PKG_EXE}
-	@echo "Delivering it to github."
-	./assets/github_release.sh ${PKG_ZIP}
+	@echo "Delivering ${PKG_ZIP} to github."
+	@./assets/github_release.sh ${PKG_ZIP}
 ifeq (${OS},Windows_NT)
-	zip ${PKG_EXE}.zip ${PKG_EXE}
-	./assets/github_release.sh ${PKG_EXE}.zip
+	@sleep 3
+	@echo "Delivering ${PKG_EXE} to github."
+	@./assets/github_release.sh ${PKG_EXE}
 endif
 
 
@@ -234,9 +232,12 @@ ${SRC_DIR}/app_info_check.txt : FORCE
 cfg : 
 	@echo "OS: ${OS}"
 	@echo "OS_ID: ${OS_ID}"
+	@echo "SYS_VER: ${SYS_VER}"
 	@echo "Building TARGET [${TARGET}] for system [${UNAME}] with built tool [${BUILD_SYS}]"
 	@echo "fltk tools come from ${FLTK_DIR}"
+ifeq (${OS},Windows_NT)
 	@echo "ISCC: $(shell which ${ISCC})"
+endif
 	@which ${FLTK_CONFIG}
 	@echo "CPPFLAGS: ${CPPFLAGS}"
 	@echo "LINK.cc: ${LINK.cc}"

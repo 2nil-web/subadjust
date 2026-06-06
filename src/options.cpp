@@ -14,6 +14,7 @@
 #endif
 
 #include "app_info.h"
+#include "log.h"
 #include "options.h"
 #include "utils.h"
 
@@ -98,6 +99,7 @@ options::options(std::string p_progname, arg_dq l_args, opti_dq p_opt_inf)
 std::string options::version(bool trac)
 {
   std::string vers = Progname + " version " + app_info.version;
+  logD("VERSION: ", full_path.string());
   if (!app_info.decoration.empty())
     vers += ' ' + app_info.decoration;
   vers += '\n';

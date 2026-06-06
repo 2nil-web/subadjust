@@ -56,7 +56,7 @@ function gh_curr_rel () {
     rel_name+=-${branch_name}
   fi
 
-  if true; then
+  if false; then
   echo "System         : ${SYS_VER}"
   echo "Current branch : ${branch_name}"
   echo "Current tag    : ${tag_name}"
@@ -94,7 +94,7 @@ function gh_curr_rel () {
   #echo "RELEASE_ID: $RELEASE_ID"
   #echo "Upload url: $gh_upl_url"
 
-#  echo "CURL5: ${gh_upl_url}?name=${asset_name} --data-binary @${asset_path}"
+  #echo "CURL5: asset_name=${asset_name} asset_path: ${asset_path}"
   post_res=$(curl -s -X POST -H "Authorization: Bearer ${gh_tok}" -H "Content-Type: application/octet-stream" ${gh_upl_url}?name=${asset_name} --data-binary "@${asset_path}")
 
   if grep 'errors.*code' <<<${post_res} >/dev/null
@@ -102,7 +102,7 @@ function gh_curr_rel () {
     upl_res=$(echo ${post_res} | jq -r 'select(.errors[].code != null)|.errors[].code')
   fi
 
-  #echo "$upl_res"
+  #echo "upl_res: $upl_res"
 
   # If post return the error code "already_exists" then there is a need to delete the previous release and repeat the upload of the new one
   if [ "$upl_res" = "already_exists" ]
