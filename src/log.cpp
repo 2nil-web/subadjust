@@ -3,6 +3,8 @@
 #include "utils.h"
 #include <filesystem>
 
+std::filesystem::path DEF_LOG(std::filesystem::temp_directory_path() / "subadjust.log");
+
 /*
  Explications de la journalisation
 Les différents niveaux de journalisation possibles, dans leur ordre de priorité, sont :

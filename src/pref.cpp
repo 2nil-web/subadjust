@@ -767,19 +767,47 @@ void default_edit(std::filesystem::path p)
   std::system(edit_cmd.c_str());
 }
 
-void view_config(Fl_Widget *, void *)
+void RESview_file(std::filesystem::path path)
 {
-  std::string config_file = std::filesystem::path(pref_filename()).make_preferred().string();
+  std::string file = path.make_preferred().string();
 #ifdef _WIN32
-  std::wstring stemp = L"\"" + std::wstring(config_file.begin(), config_file.end()) + L"\"";
-  if ((INT_PTR)ShellExecute(nullptr, L"edit", stemp.c_str(), nullptr, nullptr, SW_SHOWNORMAL) < 32)
+  std::wstring stemp = L"\"" + std::wstring(file.begin(), file.end()) + L"\"";
+  if ((INT_PTR)ShellExecute(nullptr, L"open", stemp.c_str(), nullptr, nullptr, SW_SHOWNORMAL) < 32)
   {
-    logD(std::to_string(GetLastError()));
-    logD("Try with variable EDITOR, if available");
+    logE(ErrorString(), ", when trying to open file ", file, ". Try with the environment variable EDITOR, if possible ...");
   }
   else
 #endif
-    default_edit(config_file);
+    default_edit(file);
+}
+void view_file(std::filesystem::path path)
+{
+  std::string file = path.make_preferred().string();
+#ifdef _WIN32
+  std::wstring stemp = L"\"" + std::wstring(file.begin(), file.end()) + L"\"";
+  SHELLEXECUTEINFO ShExecInfo;
+  ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
+  ShExecInfo.fMask = NULL;
+  ShExecInfo.hwnd = NULL;
+  ShExecInfo.lpVerb = NULL;
+  ShExecInfo.lpFile = stemp.c_str();
+  ShExecInfo.lpParameters = NULL;
+  ShExecInfo.lpDirectory = NULL;
+  ShExecInfo.nShow = SW_SHOWNORMAL;
+  ShExecInfo.hInstApp = NULL;
+  if (!ShellExecuteEx(&ShExecInfo))
+  {
+    logE(ErrorString(), ", when trying to open file ", file, ". Try with the environment variable EDITOR, if possible ...");
+  }
+  else
+#endif
+    default_edit(file);
+}
+
+void view_config(Fl_Widget *, void *)
+{
+  view_file(DEF_LOG);         // DEF_LOG declared/defined in log.{h,cpp}
+  view_file(pref_filename()); // pref_filename() declared/defined in pref.{h,cpp}
 }
 
 void pref_dialog(Fl_Widget *, void *)

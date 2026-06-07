@@ -56,6 +56,28 @@
 #include "utils.h"
 
 #ifdef _WIN32
+std::string ErrorString(DWORD gla)
+{
+  char *msg;
+  DWORD len = FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, gla, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&msg, 0, NULL);
+
+  if (len > 0)
+  {
+    msg[len - 1] = '\0';
+    static std::string ret("Error number " + std::to_string(gla) + ". " + msg);
+    LocalFree(msg);
+    return ret;
+  }
+
+  return "";
+}
+
+std::string ErrorString()
+{
+  DWORD gla = GetLastError();
+  return ErrorString(gla);
+}
+
 std::tm *localtime_r(const time_t *tt, std::tm *tms)
 {
   localtime_s(tms, tt);

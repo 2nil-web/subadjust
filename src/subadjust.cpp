@@ -134,30 +134,6 @@ void quit_cb()
   quit_cb(nullptr, nullptr);
 }
 
-#ifdef _WIN32
-std::string TxtError(DWORD gla)
-{
-  char *msg;
-  DWORD len = FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, gla, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&msg, 0, NULL);
-
-  if (len > 0)
-  {
-    msg[len - 1] = '\0';
-    std::string ret(msg);
-    LocalFree(msg);
-    return ret;
-  }
-
-  return "";
-}
-
-std::string TxtError()
-{
-  DWORD gla = GetLastError();
-  return TxtError(gla);
-}
-#endif
-
 std::string theme = "";
 bool gui_mode = true;
 options myopt;

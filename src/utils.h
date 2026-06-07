@@ -21,6 +21,8 @@
 
 #if defined(_WIN32)
 #include <windows.h>
+std::string ErrorString(DWORD gla);
+std::string ErrorString();
 
 #define DIR_SEP "\\"
 size_t my_wcstombs(char *, const wchar_t *, size_t);

@@ -18,3 +18,4 @@ setup/
 assets/README.pdf
 assets/*.zip
 subadjust-*.iss
+src/subadjust_icon.h
