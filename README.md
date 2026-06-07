@@ -97,7 +97,3 @@ Although untested, this process should work identically under macOS, provided th
 - [gettext](https://www.gnu.org/s/gettext)
 - [libiconv](https://www.gnu.org/software/libiconv)
 - [Visual C++](https://docs.microsoft.com/fr-fr/cpp/) should be enough if you only want to compile under Windows, as .slnx/.vcxproj files are provided.
-
-###### To do:
-
-- *Release with a setup and/or package, actually it is only a zip file.*
