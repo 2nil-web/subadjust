@@ -588,8 +588,10 @@ void old_pref_reset()
 
 void pref_reset()
 {
-  logT("Resetting prefs");
-  myprefs.clear();
+  logD("Resetting prefs: ", pref_filename());
+  std::filesystem::remove(pref_filename());
+  //  myprefs.delete_all_entries();
+  //  myprefs.delete_all_groups();
   std::filesystem::remove_all(placement_dir);
   std::filesystem::remove(already_opened_list); // already_opened_list is defined in file_feature.h
 }

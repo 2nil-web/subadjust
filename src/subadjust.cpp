@@ -106,7 +106,7 @@ void quit_cb(Fl_Widget *, void *)
     already_done = true;
 
     fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
-    if (file_is_modified && !fl_choice(_("It seems that the subtitle file has been modified.\nDo you still want to quit without saving it ?"), _("No"), _("Yes"), 0L))
+    if (file_is_modified && !fl_choice(_("It seems that the subtitles file has been modified.\nDo you still want to quit without saving it ?"), _("No"), _("Yes"), 0L))
     {
       already_done = false;
       return;
@@ -177,12 +177,30 @@ int main(int argc, char **argv)
             {
                 option_info(""),
                 option_info(
-                    'f', "input file", [&](s_opt_params &p) -> void { ifile = p.val; }, _("Name of the file to read. It is the same than directly passing a file name as an argument without this option."), required),
-
-                option_info(
                     'g', "gui-mode", [&](s_opt_params &) -> void { gui_mode = true; }, _("Process the input file and show it with the gui, this is the default behavior.")),
                 option_info(
                     'c', "batch-mode", [&](s_opt_params &) -> void { gui_mode = false; }, _("Process the input the file and print the result.")),
+                option_info(
+                    'f', "input-file", [&](s_opt_params &p) -> void { ifile = p.val; }, _("Name of the file to read. It is the same than directly passing a file name as an argument without this option."), required),
+
+                option_info(
+                    'o', "output-file",
+                    [&](s_opt_params &p) -> void {
+                      ofilename = p.val;
+                      gui_mode = false;
+                    },
+                    _("Process the input file in batch mode and write the result into the file whose name is passed in argument.\n    Based on the file extension, may write it to SubRip (.srt), WEBVTT (.vtt) or even CSV (.csv) format."), required),
+                option_info(
+                    'i', "modify-input", [&](s_opt_params &) -> void { modify_input = true; }, _("Write the processing result into the same input file. Only has a meaning in batch mode, ignored in GUI mode.")),
+
+                option_info(""),
+                option_info(
+                    'r', "reset-conf",
+                    [&](s_opt_params &) -> void {
+                      gui_mode = false;
+                      pref_reset();
+                    },
+                    _("Reset the configuration and exit.")),
 
                 option_info(""),
                 option_info(
@@ -223,36 +241,24 @@ int main(int argc, char **argv)
                 option_info(_("These 5 previous options are processed after reading the file and have effect in both GUI and batch mode.")),
 
                 option_info(""),
-                option_info(
-                    'o', "output-file",
-                    [&](s_opt_params &p) -> void {
-                      ofilename = p.val;
-                      gui_mode = false;
-                    },
-                    _("Process the input file in batch mode and write the result into the file whose name is passed in argument.\n    Based on the ouptut file extension, may write it to SubRip, WEBVTT or even CSV format."), required),
-                option_info(
-                    'i', "modify-input", [&](s_opt_params &) -> void { modify_input = true; }, _("Write the processing result into the same input file. Only has a meaning in batch mode, ignored in GUI mode.")),
-
-                option_info(""),
-                option_info(
-                    'r', "reset-pref", [&](s_opt_params &) -> void { pref_reset(); }, _("Reset the preferences to default values.")),
-                option_info(
-                    'x', "xpos", [&](s_opt_params &p) -> void { x = std::stoi(p.val); }, _("Set the x origin of the subadjust window."), required),
-                option_info(
-                    'y', "ypos", [&](s_opt_params &p) -> void { y = std::stoi(p.val); }, _("Set the y origin of the subadjust window."), required),
-                option_info(
-                    'w', "width", [&](s_opt_params &p) -> void { w = std::stoi(p.val); }, _("Set the width of the subadjust window."), required),
-                option_info(
-                    'h', "height", [&](s_opt_params &p) -> void { h = std::stoi(p.val); }, _("Set the height of the subadjust window."), required),
-                option_info(
-                    't', "theme", [](s_opt_params &p) -> void { theme = p.val; }, _(R"EOF(Set the graphic theme to use. It is a string to choose between one of :
-    classic, aero, metro, aqua, greybird, ocean, blue, olive, rose_gold, dark, brushed_metal or high_contrast.)EOF"),
-                    required),
-                option_info(_(R"EOF(These 5 previous options only have effect in GUI mode. In this case, they have precedence and will update what is defined in the configuration file.
-The configuration file is located there : ")EOF") +
-                            std::filesystem::path(pref_filename()).make_preferred().string() + "\"."),
-
-                option_info(""),
+                /*
+                                option_info(
+                                    'x', "xpos", [&](s_opt_params &p) -> void { x = std::stoi(p.val); }, _("Set the x origin of the subadjust window."), required),
+                                option_info(
+                                    'y', "ypos", [&](s_opt_params &p) -> void { y = std::stoi(p.val); }, _("Set the y origin of the subadjust window."), required),
+                                option_info(
+                                    'w', "width", [&](s_opt_params &p) -> void { w = std::stoi(p.val); }, _("Set the width of the subadjust window."), required),
+                                option_info(
+                                    'h', "height", [&](s_opt_params &p) -> void { h = std::stoi(p.val); }, _("Set the height of the subadjust window."), required),
+                                option_info(
+                                    't', "theme", [](s_opt_params &p) -> void { theme = p.val; }, _(R"EOF(Set the graphic theme to use. It is a string to choose between one of :
+                    classic, aero, metro, aqua, greybird, ocean, blue, olive, rose_gold, dark, brushed_metal or high_contrast.)EOF"),
+                                    required),
+                                option_info(_(R"EOF(These 5 previous options only have effect in GUI mode. In this case, they have precedence and will update what is defined in the configuration file.
+                The configuration file is located there : ")EOF") +
+                                            std::filesystem::path(pref_filename()).make_preferred().string() + "\"."),
+                                option_info(""),
+                */
                 option_info(
                     'l', "log-level",
                     [&](s_opt_params &p) -> void {
@@ -276,15 +282,11 @@ The configuration file is located there : ")EOF") +
     OFF   Disables logging.)EOF"),
                     required),
                 option_info(
-                    'm', "log-file", [&](s_opt_params &p) -> void { my_setenv("LOGFILE", p.val); }, _(R"EOF(Define the file where log messages will be stored.
-    Default it to store them in the following file )EOF") + DEF_LOG.string() + _("\n    The special value 'console' will allows to output the log messages to the console, if possible."),
-                    required),
-                //                option_info(_(R"EOF(These 2 previous options have precedence on the environments variable LOG and LOGFILE.)
-                option_info(_(R"EOF(If none of these are defined, the default is to send the WARN and following log messages into the file ")EOF") + DEF_LOG.string() + "\"."),
-                // option_info(""),
+                    'm', "log-file", [&](s_opt_params &p) -> void { my_setenv("LOGFILE", p.val); },
+                    _("Define the file where log messages will be stored.\n    Default it to store them in ") + DEF_LOG.string() + _("\n    The special value 'console' will allows to output the log messages to the console, if possible."), required),
             });
 
-  myopt.set_desc(_("A tool that allows to process subtitles files.\nThe batch mode allows processing at the command line or by script.\nMeanwhile the GUI mode adds a search and replace feature with regular expressions."));
+  myopt.set_desc(_("A tool that allows to process subtitles text files.\nThe batch mode allows processing at the command line or by script.\nMeanwhile the GUI mode adds a search and replace feature with regular expressions."));
 
   // Calls to logFunctions before opt.parse may not work correctly ...
   myopt.parse();
@@ -382,7 +384,7 @@ The configuration file is located there : ")EOF") +
       {
         std::filesystem::path abs_path = std::filesystem::absolute(s);
         fl_message_position(main_window->x_root(), main_window->y_root() + 100, 0);
-        if (!abs_path.empty() && (!file_is_modified || fl_choice(_("It seems that the subtitle file has been modified.\nDo you still want to reload it ?"), _("No"), _("Yes"), 0L)))
+        if (!abs_path.empty() && (!file_is_modified || fl_choice(_("It seems that the subtitles file has been modified.\nDo you still want to reload it ?"), _("No"), _("Yes"), 0L)))
         {
           gui_display(file_read(abs_path), false);
         }

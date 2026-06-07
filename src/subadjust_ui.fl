@@ -108,7 +108,7 @@ Available shortcut is 'Ctrl+Q'.} image {../assets/svg_icons/exit.svg} compress_i
             class Fl_Spinner_L10n
           }
           Fl_Input time_to_go {
-            tooltip {Search in the subtitle, line whose timstamp is close to ...} xywh {129 123 138 21} labeltype NO_LABEL
+            tooltip {Search in the subtitles, line whose timstamp is close to ...} xywh {129 123 138 21} labeltype NO_LABEL
             class Fl_Time_Input
           }
         }
@@ -136,7 +136,7 @@ You may undo/redo this action with Ctrl+Z/Ctrl+Y.} image {../assets/svg_icons/de
         }
       }
       Fl_Group {} {
-        label {Subtitle adjustment by ...}
+        label {Subtitles adjustment by ...}
         xywh {2 165 378 116} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
       } {
         Fl_Group {} {
@@ -145,19 +145,19 @@ You may undo/redo this action with Ctrl+Z/Ctrl+Y.} image {../assets/svg_icons/de
         } {
           Fl_Input time_start {
             label {    }
-            tooltip {Modify the start time of the subtitle file} xywh {225 225 138 22} labeltype NO_LABEL align 516 when 1
+            tooltip {Modify the start time of the subtitles file} xywh {225 225 138 22} labeltype NO_LABEL align 516 when 1
             class Fl_Time_Input
           }
           Fl_Input time_end {
             label { }
-            tooltip {Modify the end time of the subtitle file} xywh {225 250 138 22} labeltype NO_LABEL align 260 when 1
+            tooltip {Modify the end time of the subtitles file} xywh {225 250 138 22} labeltype NO_LABEL align 260 when 1
             class Fl_Time_Input
           }
           Fl_Box {} {
-            tooltip {Modify the start time of the subtitle file} image {../assets/svg_icons/limit begin.svg} compress_image 1 xywh {152 218 68 29} box BORDER_FRAME color 221 labelsize 10 align 516
+            tooltip {Modify the start time of the subtitles file} image {../assets/svg_icons/limit begin.svg} compress_image 1 xywh {152 218 68 29} box BORDER_FRAME color 221 labelsize 10 align 516
           }
           Fl_Box {} {
-            tooltip {Modify the end time of the subtitle file} image {../assets/svg_icons/limit end.svg} compress_image 1 xywh {152 247 68 29} box BORDER_FRAME color 221 labelsize 10 align 520
+            tooltip {Modify the end time of the subtitles file} image {../assets/svg_icons/limit end.svg} compress_image 1 xywh {152 247 68 29} box BORDER_FRAME color 221 labelsize 10 align 520
           }
         }
         Fl_Group {} {

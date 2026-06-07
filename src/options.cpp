@@ -313,9 +313,9 @@ void options::add_default()
   // Check if the options -H/--help, -V/--version or --traceability are overwritten, if so they are not defined here.
   for (auto opt : opt_inf)
   {
-    if (opt.short_name == 'H' || opt.long_name == "help")
+    if (opt.short_name == 'h' || opt.long_name == "help")
       no_h = false;
-    if (opt.short_name == 'V' || opt.long_name == "version")
+    if (opt.short_name == 'v' || opt.long_name == "version")
       no_v = false;
     if (opt.long_name == "traceability")
       no_t = false;
@@ -324,7 +324,7 @@ void options::add_default()
   if (no_h)
   {
     opt_inf.push_front(option_info(
-        'H', "help",
+        'h', "help",
         [this](s_opt_params &) -> void {
           // Could use ncurse (pdcurses.org) to define max_width as the console window width ... Defaulting to 100
           gui_mode = false;
@@ -337,7 +337,7 @@ void options::add_default()
   if (no_v)
   {
     opt_inf.push_front(option_info(
-        'V', "version",
+        'v', "version",
         [this](s_opt_params &) -> void {
           gui_mode = false;
           version(std::cout);

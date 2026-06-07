@@ -447,7 +447,8 @@ void cui_display(bool file_read_ok, std::filesystem::path opath)
   }
   else
   {
-    std::cerr << "Unable to load the file " << current_abs_path << std::endl;
+    if (!current_abs_path.empty())
+      std::cerr << "Unable to load the file " << current_abs_path << std::endl;
   }
 }
 
@@ -459,7 +460,8 @@ void cui_display(bool file_read_ok, std::ostream &ofs)
   }
   else
   {
-    std::cerr << "Unable to load the file " << current_abs_path << std::endl;
+    if (!current_abs_path.empty())
+      std::cerr << "Unable to load the file " << current_abs_path << std::endl;
   }
 }
 
