@@ -14,7 +14,7 @@ Also allows to export to CSV format.
 
 <sup>*It should also be possible to build and deliver it for macOS ![macOS](assets/MacOS.svg "MacOS").*</sup>
 
-After the download, just run the setup or unzip the zip ball and run the app it with .srt or .vtt files.
+After the download, just run the setup or unzip the zip ball and run the app with .srt or .vtt files.
 
 ### ***The Graphical User Interface aims to be self-explanatory***
 
