@@ -104,6 +104,9 @@ font_gui${EXEXT} : assets/font_gui.cpp
 font_list${EXEXT} : assets/font_list.cpp
 	${GXX_COMPILE} assets/font_list.cpp ${GXX_LINK_OPT} -o font_list${EXEXT}
 
+mytail${EXEXT} : assets/mytail.cpp
+	c++ $< -o $@
+
 sunset_calculator${EXEXT} : assets/sunset_calculator.cpp
 	${GXX_COMPILE} assets/sunset_calculator.cpp ${GXX_LINK_OPT} -o sunset_calculator${EXEXT}
 
