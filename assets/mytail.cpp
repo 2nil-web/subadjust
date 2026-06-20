@@ -5,8 +5,8 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
-#include <vector>
 #include <string>
+#include <vector>
 
 #ifdef __OSX__
 const char delimiter = '\r';
@@ -22,7 +22,8 @@ char *stream_in_mem(std::istream &is, std::intmax_t &size)
   is.seekg(0, std::ios::beg);
   char *buf = new char[size + 1];
   // If not enough memory, then unuseful to read the file
-  if (buf != nullptr) is.read(buf, size);
+  if (buf != nullptr)
+    is.read(buf, size);
   // If ok buf will not be nullptr
   return buf;
 }
@@ -56,15 +57,18 @@ char *count_line(std::filesystem::path filepath, std::intmax_t &fsize, std::intm
 
   nl = nw = 0;
 
-  for (uintmax_t i=0; i < fsize; i++) {
-    if (s[i] == delimiter) nl++;
-    if (isspace(s[i])) nw++;
+  for (uintmax_t i = 0; i < fsize; i++)
+  {
+    if (s[i] == delimiter)
+      nl++;
+    if (isspace(s[i]))
+      nw++;
   }
 
   return s;
 }
 
-void tail_stream(std::istream &is, const std::intmax_t nl2read, std::intmax_t nlread, std::string& buf)
+void tail_stream(std::istream &is, const std::intmax_t nl2read, std::intmax_t nlread, std::string &buf)
 {
   is.seekg(-1, std::ios::end);
   char ch;
@@ -88,7 +92,7 @@ void tail_stream(std::istream &is, const std::intmax_t nl2read, std::intmax_t nl
   }
 }
 
-bool tail(std::filesystem::path filepath, const std::intmax_t nl2read, std::intmax_t nlread, std::string& buf)
+bool tail(std::filesystem::path filepath, const std::intmax_t nl2read, std::intmax_t nlread, std::string &buf)
 {
   std::uintmax_t fsize;
 
@@ -114,17 +118,18 @@ bool tail(std::filesystem::path filepath, const std::intmax_t nl2read, std::intm
 
 int main(int argc, char **argv)
 {
-  char run_func='t';
+  char run_func = 't';
   std::vector<std::string> args(argv + 1, argv + argc);
 
-  std::filesystem::path path="-";
+  std::filesystem::path path = "-";
   if (args.size() > 0)
   {
-    path=args[0];
+    path = args[0];
     args.erase(args.begin());
   }
 
-  if (args.size() > 0 && args[0] == "-c") {
+  if (args.size() > 0 && args[0] == "-c")
+  {
     args.erase(args.begin());
     std::intmax_t fsize, nl;
     count_line(path, fsize, nl);
@@ -134,7 +139,8 @@ int main(int argc, char **argv)
 
   std::uintmax_t nl2read = 10, nlread;
   std::string buf;
-  if (args.size() > 1) nl2read = std::stoll(args[1]);
+  if (args.size() > 1)
+    nl2read = std::stoll(args[1]);
 
   tail(path, nl2read, nlread, buf);
   std::cout << buf << std::flush;
