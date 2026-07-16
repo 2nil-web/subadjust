@@ -153,6 +153,7 @@
     <ClCompile Include="src/Fl_Time_Picker.cpp" />
     <ClCompile Include="src/Fl_Time_Input.cpp" />
     <ClCompile Include="src/my_ask.cpp" />
+    <ClCompile Include="src/my_which.cpp" />
     <ClCompile Include="src/utils.cpp" />
     <ClCompile Include="src/log.cpp" />
     <ClCompile Include="src/options.cpp" />
@@ -173,6 +174,7 @@
     <ClCompile Include="src/Fl_Time_Picker.H" />
     <ClCompile Include="src/Fl_Time_Input.H" />
     <ClCompile Include="src/my_ask.h" />
+    <ClCompile Include="src/my_which.h" />
     <ClCompile Include="src/Fl_Hover.H" />
     <ClCompile Include="src/Fl_I18n.H" />
     <ClCompile Include="src/Fl_Browser_Keyboard.H" />

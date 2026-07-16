@@ -10,6 +10,7 @@
 #include "file_features.h"
 #include "fonts.h"
 #include "log.h"
+#include "my_which.h"
 #include "place.h"
 #include "pref.h"
 #include "subadjust_ui.h"
@@ -759,7 +760,11 @@ void default_edit(std::filesystem::path p)
   std::string editor = my_getenv("EDITOR");
   if (editor.empty())
   {
-    editor = "vi";
+    std::filesystem::path pth;
+    if (which("gvim", pth) || which("vi", pth))
+      editor = pth.string();
+    else
+      editor = "vi";
   }
 
   std::string edit_cmd("\"" + editor + "\" " + p.string() + " &");
@@ -787,7 +792,7 @@ void view_file(std::filesystem::path path)
   std::wstring stemp = L"\"" + std::wstring(file.begin(), file.end()) + L"\"";
   SHELLEXECUTEINFO ShExecInfo;
   ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
-  ShExecInfo.fMask = NULL;
+  ShExecInfo.fMask = 0;
   ShExecInfo.hwnd = NULL;
   ShExecInfo.lpVerb = NULL;
   ShExecInfo.lpFile = stemp.c_str();

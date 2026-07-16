@@ -68,7 +68,7 @@ char *count_line(std::filesystem::path filepath, std::intmax_t &fsize, std::intm
   return s;
 }
 
-void tail_stream(std::istream &is, const std::intmax_t nl2read, std::intmax_t& nlread, std::string &buf)
+void tail_stream(std::istream &is, const std::intmax_t nl2read, std::intmax_t &nlread, std::string &buf)
 {
   is.seekg(-1, std::ios::end);
   char ch;
@@ -92,7 +92,7 @@ void tail_stream(std::istream &is, const std::intmax_t nl2read, std::intmax_t& n
   }
 }
 
-bool tail(std::filesystem::path filepath, const std::intmax_t nl2read, std::intmax_t& nlread, std::string &buf)
+bool tail(std::filesystem::path filepath, const std::intmax_t nl2read, std::intmax_t &nlread, std::string &buf)
 {
   std::uintmax_t fsize;
 
@@ -133,7 +133,7 @@ int main(int argc, char **argv)
     args.erase(args.begin());
     std::intmax_t fsize, nw, nl;
     count_line(path, fsize, nw, nl);
-    std::cout << path << " - file size: " << fsize << ", word count: " << nw  << ", line count: " << nl << std::endl;
+    std::cout << path << " - file size: " << fsize << ", word count: " << nw << ", line count: " << nl << std::endl;
     return 0;
   }
 

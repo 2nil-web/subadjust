@@ -9,7 +9,7 @@
 #endif
 
 #ifdef MAIN_RUN
-std::string my_getenv(const std::string var, bool msg_if_empty=false)
+std::string my_getenv(const std::string var, bool msg_if_empty = false)
 {
   char *pVal = nullptr;
   std::string sVal = "";
@@ -61,27 +61,31 @@ const char PATHSEP =
 #endif
     ;
 
-bool which(std::string cmd, std::filesystem::path& res)
+bool which(std::string cmd, std::filesystem::path &res)
 {
-  static std::vector<std::string> path_val_vec={};
-  if (path_val_vec.empty()) {
-    std::string path_val=my_getenv("PATH", false);
-    //std::cout << "PATH: " << path_val << std::endl;
+  static std::vector<std::string> path_val_vec = {};
+  if (path_val_vec.empty())
+  {
+    std::string path_val = my_getenv("PATH", false);
+    // std::cout << "PATH: " << path_val << std::endl;
     path_val_vec = split(path_val, PATHSEP);
   }
 
   bool ret = false;
-  std::filesystem::path cpth= {};
+  std::filesystem::path cpth = {};
 
-  for (auto p : path_val_vec) {
+  for (auto p : path_val_vec)
+  {
     std::filesystem::path cpth = std::filesystem::path(p) / std::filesystem::path(cmd);
     if (std::filesystem::exists(cpth)
 #ifdef _WIN32
-    || std::filesystem::exists(std::filesystem::path(p) / std::filesystem::path(cmd+".exe"))
+        || std::filesystem::exists(std::filesystem::path(p) / std::filesystem::path(cmd + ".exe"))
 #endif
-    ) {
-      if (res.empty()) res=cpth;
-      ret=true;
+    )
+    {
+      if (res.empty())
+        res = cpth;
+      ret = true;
     }
   }
 
@@ -105,6 +109,8 @@ int main(int argc, char **argv)
   {
     std::cout << pth << std::endl;
     return 0;
-  } else return EINVAL;
+  }
+  else
+    return EINVAL;
 }
 #endif
