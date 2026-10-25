@@ -220,6 +220,7 @@ std::string options::usage_opt(size_t max_width)
         usage += in_frame(opt.help, '\n' + std::string(longest_opt + 1, ' '), max_width - longest_opt);
       else
         usage += opt.help;
+      if (!opt.help.empty() && opt.help.back() != '.') usage += '.';
       usage += '\n';
     }
   }

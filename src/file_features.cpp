@@ -47,7 +47,7 @@ void set_file_state(bool modified)
 
   if (modified)
   {
-    // logD("Modified put in red");
+    //logD("Modified put in red");
     //     if (file_path->labelcolor() != FL_RED)
     //     {
     file_path_label->labelcolor(FL_RED);
@@ -226,6 +226,9 @@ bool file_read(std::filesystem::path abs_path)
   {
     cSub csub_tmp;
     csub_tmp.parse(txt_tmp.text());
+
+    //if (csub_tmp.c_str() != txt_tmp.text()) { txt_tmp.input_file_was_transcoded = true; }
+
     txt_buf.text(csub_tmp.c_str());
 
     if (txt_tmp.input_file_was_transcoded)

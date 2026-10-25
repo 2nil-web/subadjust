@@ -92,6 +92,7 @@ bool to_line(int d)
 int to_sub(int d)
 {
   file_content->scroll(1, 0);
+  logD("PARSE1");
   csub.parse(txt_buf.text());
 
   if (csub.vec().size() > 1)
@@ -174,6 +175,7 @@ int to_sub(int d)
 bool to_time(int d)
 {
   file_content->scroll(1, 0);
+  logD("PARSE2");
   csub.parse(txt_buf.text());
 
   if (csub.vec().size() > 0 && d < csub.vec().back().appearance)
@@ -385,6 +387,23 @@ void reparse(Fl_Widget *, void *)
 
   csub.parse(txt_buf.text());
   reset_param();
+}
+
+// Pour remplacer reparse un jour peut-être ...
+void reparse2()
+{
+  csub.parse(txt_buf.text());
+  txt_buf.text(csub.str().c_str());
+  csub.parse(txt_buf.text());
+  reset_param();
+}
+
+bool ignore_empty_subs_opt=false;
+void remove_empty_subs(Fl_Widget *, void *)
+{
+  ignore_empty_subs_opt=true;
+  reparse2();
+  ignore_empty_subs_opt=false;
 }
 
 void sync(Fl_Widget *, void *)

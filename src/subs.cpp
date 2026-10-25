@@ -56,12 +56,14 @@ bool parse_1sub(std::string ssub, std::smatch sub_match, std::regex re_times, sS
   return true;
 }
 
+// 10 ==> '\n' ==> LF
+// 13 ==> '\r' ==> CR
 std::vector<sSub> cSub::to_vec(const std::string _sub_str)
 {
   if (_sub_str.empty())
     return {};
 
-  std::vector<sSub> _vec;
+  std::vector<sSub> _vec = {};
   std::smatch sub_match;
   sSub one_sub = {};
 
@@ -79,20 +81,15 @@ std::vector<sSub> cSub::to_vec(const std::string _sub_str)
   {
     std::string s = ssub;
     trim(s);
-    // logD("look vtt: ", s);
+
     if (!s.empty() && s != "WEBVTT")
       break;
     if (s == "WEBVTT")
       isvtt = true;
     vsub.erase(vsub.begin());
   }
-  /*
-    if (isvtt)
-      logD("After look vtt: ISVTT");
-    else
-      logD("After look vtt: ISNOVTT");
-    logD("After look vtt - vsub[0]: ", vsub[0]);
-  */
+
+  extern bool ignore_empty_subs_opt;
   bool has_started_sub = false;
   std::string ssub;
 
@@ -106,9 +103,24 @@ std::vector<sSub> cSub::to_vec(const std::string _sub_str)
     {
       if (has_started_sub)
       {
-        // logD("ssub empty pushing back: ", one_sub.index, "\n", one_sub.appearance, ">>>", one_sub.disappearance, "\n", one_sub.text);
-        _vec.push_back(one_sub);
+        if (one_sub.text.empty() || one_sub.text == "\n" || one_sub.text == "\r") {
+          if (ignore_empty_subs_opt) {
+            ns--;
+            one_sub.text="";
+          } else {
+            one_sub.text="\n";
+            //logD("PUSH1:", one_sub.index, ", ", one_sub.appearance, " ==> ", one_sub.appearance, ":", one_sub.text);
+            _vec.push_back(one_sub);
+          }
+
+          //logD("IS EMPTY:", one_sub.index, ", ", one_sub.appearance, " ==> ", one_sub.appearance);
+        } else {
+          //logD("PUSH2:", one_sub.index, ", ", one_sub.appearance, " ==> ", one_sub.appearance, ":", one_sub.text);
+          _vec.push_back(one_sub);
+        }
+
       }
+
       one_sub = {};
       has_started_sub = false;
     }
@@ -116,11 +128,8 @@ std::vector<sSub> cSub::to_vec(const std::string _sub_str)
     {
       if (isvtt)
       {
-        // logD("isvtt - ssub: ", ssub);
-
         if (parse_1sub(ssub, sub_match, re_times, one_sub))
         {
-          // logD("isvtt - ssub: ", ssub);
           one_sub.index = ns++;
           has_started_sub = true;
         }
@@ -134,6 +143,7 @@ std::vector<sSub> cSub::to_vec(const std::string _sub_str)
           else
           {
             one_sub.index = std::stoi(sub_match[1]);
+
             if (sub_match.size() > 2)
               std::cerr << "Expected only one sub index, got more, ignoring error." << std::endl;
           }
@@ -147,7 +157,6 @@ std::vector<sSub> cSub::to_vec(const std::string _sub_str)
     }
   }
 
-  // logD("end to_vec: ");
   return _vec;
 }
 
@@ -383,6 +392,8 @@ size_t cSub::linecount(const std::string s)
 void cSub::parse_apart(std::string &s, std::vector<sSub> &v, size_t &nl)
 {
   v = to_vec(s);
+  s={};
+  //for (auto v1:v) { logD(v1.index, ':', v1.appearance, v1.disappearance, '=', v1.text); }
   s = to_str(v, dec_sep);
   nl = linecount(s);
 }
@@ -398,8 +409,10 @@ void cSub::parse(const char *s)
 {
   if (s == nullptr)
     parse("");
-  else
-    parse(std::string(s));
+  else {
+    std::string ss(s);
+    parse(ss);
+  }
 }
 
 // Find and return the closest appearance and disappearance to app and dis in v

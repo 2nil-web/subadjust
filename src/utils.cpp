@@ -339,7 +339,7 @@ bool check_read(FILE *file, uchar *expected, size_t n)
 
 std::string ws_str()
 {
-  static std::string ws;
+  static std::string ws="";
 
   if (ws.empty())
   {

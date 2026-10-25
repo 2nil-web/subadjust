@@ -75,6 +75,11 @@ void subadjust(Fl_Widget *, void *)
   int beg_ts = time_start->get_time_ms(), end_ts = time_end->get_time_ms();
 
   csub.parse(txt_buf.text());
+  // txt_buf.text() == csub.str() ?
+  if (txt_buf.text() != csub.str()) {
+    logD("txt_buf.text() != csub.str()");
+    set_file_state(true);
+  }
 
   double offs_start = get_reset_val(offset_start, 0);
   double offs_stop = get_reset_val(offset_stop, 0);
@@ -153,11 +158,11 @@ int main(int argc, char **argv)
             {
                 option_info(""),
                 option_info(
-                    'g', "gui-mode", [&](s_opt_params &) -> void { gui_mode = true; }, _("Process the input file and show it with the gui, this is the default behavior.")),
+                    'g', "gui-mode", [&](s_opt_params &) -> void { gui_mode = true; }, _("Process the input file and show it with the gui, this is the default behavior")),
                 option_info(
-                    'c', "batch-mode", [&](s_opt_params &) -> void { gui_mode = false; }, _("Process the input the file and print the result.")),
+                    'c', "batch-mode", [&](s_opt_params &) -> void { gui_mode = false; }, _("Process the input the file and print the result")),
                 option_info(
-                    'f', "input-file", [&](s_opt_params &p) -> void { ifile = p.val; }, _("Name of the file to read. It is the same than directly passing a file name as an argument without this option."), required),
+                    'f', "input-file", [&](s_opt_params &p) -> void { ifile = p.val; }, _("Name of the file to read. It is the same than directly passing a file name as an argument without this option"), required),
 
                 option_info(
                     'o', "output-file",
@@ -165,9 +170,9 @@ int main(int argc, char **argv)
                       ofilename = p.val;
                       gui_mode = false;
                     },
-                    _("Process the input file in batch mode and write the result into the file whose name is passed in argument.\n    Based on the file extension, may write it to SubRip (.srt), WEBVTT (.vtt) or even CSV (.csv) format."), required),
+                    _("Process the input file in batch mode and write the result into the file whose name is passed in argument.\n    Based on the file extension, may write it to SubRip (.srt), WEBVTT (.vtt) or even CSV (.csv) format"), required),
                 option_info(
-                    'i', "modify-input", [&](s_opt_params &) -> void { modify_input = true; }, _("Write the processing result into the same input file. Only has a meaning in batch mode, ignored in GUI mode.")),
+                    'i', "modify-input", [&](s_opt_params &) -> void { modify_input = true; }, _("Write the processing result into the same input file. Only has a meaning in batch mode, ignored in GUI mode")),
 
                 option_info(""),
                 option_info(
@@ -176,7 +181,7 @@ int main(int argc, char **argv)
                       gui_mode = false;
                       pref_reset();
                     },
-                    _("Reset the configuration and exit.")),
+                    _("Reset the configuration and exit")),
 
                 option_info(""),
                 option_info(
@@ -185,47 +190,47 @@ int main(int argc, char **argv)
                       run_pre_proc = true;
                       pp_time_start = str_to_ms(p.val);
                     },
-                    _("Change the beginning time stamp to the provided argument."), required),
+                    _("Change the beginning time stamp to the provided argument"), required),
                 option_info(
                     'e', "end-time",
                     [&](s_opt_params &p) -> void {
                       run_pre_proc = true;
                       pp_time_stop = str_to_ms(p.val);
                     },
-                    _("Change the end time stamp to the provided argument."), required),
+                    _("Change the end time stamp to the provided argument"), required),
                 option_info(
                     'k', "duration-coeff",
                     [&](s_opt_params &p) -> void {
                       run_pre_proc = true;
                       pp_dur_k = std::stoi(p.val);
                     },
-                    _("Change the duration coefficient to the provided argument."), required),
+                    _("Change the duration coefficient to the provided argument"), required),
                 option_info(
                     'a', "start-offset",
                     [&](s_opt_params &p) -> void {
                       run_pre_proc = true;
                       pp_offs_start = stoi(p.val);
                     },
-                    _("Change the start offset to the provided argument."), required),
+                    _("Change the start offset to the provided argument"), required),
                 option_info(
                     's', "stop-offset",
                     [&](s_opt_params &p) -> void {
                       run_pre_proc = true;
                       pp_offs_stop = stoi(p.val);
                     },
-                    _("Change the stop offset to the provided argument."), required),
-                option_info(_("These 5 previous options are processed after reading the file and have effect in both GUI and batch mode.")),
+                    _("Change the stop offset to the provided argument"), required),
+                option_info(_("These 5 previous options are processed after reading the file and have effect in both GUI and batch mode")),
 
                 option_info(""),
                 /*
                                 option_info(
-                                    'x', "xpos", [&](s_opt_params &p) -> void { x = std::stoi(p.val); }, _("Set the x origin of the subadjust window."), required),
+                                    'x', "xpos", [&](s_opt_params &p) -> void { x = std::stoi(p.val); }, _("Set the x origin of the subadjust window"), required),
                                 option_info(
-                                    'y', "ypos", [&](s_opt_params &p) -> void { y = std::stoi(p.val); }, _("Set the y origin of the subadjust window."), required),
+                                    'y', "ypos", [&](s_opt_params &p) -> void { y = std::stoi(p.val); }, _("Set the y origin of the subadjust window"), required),
                                 option_info(
-                                    'w', "width", [&](s_opt_params &p) -> void { w = std::stoi(p.val); }, _("Set the width of the subadjust window."), required),
+                                    'w', "width", [&](s_opt_params &p) -> void { w = std::stoi(p.val); }, _("Set the width of the subadjust window"), required),
                                 option_info(
-                                    'h', "height", [&](s_opt_params &p) -> void { h = std::stoi(p.val); }, _("Set the height of the subadjust window."), required),
+                                    'h', "height", [&](s_opt_params &p) -> void { h = std::stoi(p.val); }, _("Set the height of the subadjust window"), required),
                                 option_info(
                                     't', "theme", [](s_opt_params &p) -> void { theme = p.val; }, _(R"EOF(Set the graphic theme to use. It is a string to choose between one of :
                     classic, aero, metro, aqua, greybird, ocean, blue, olive, rose_gold, dark, brushed_metal or high_contrast.)EOF"),
@@ -259,10 +264,10 @@ int main(int argc, char **argv)
                     required),
                 option_info(
                     'm', "log-file", [&](s_opt_params &p) -> void { my_setenv("LOGFILE", p.val); },
-                    _("Define the file where log messages will be stored.\n    Default it to store them in ") + DEF_LOG.string() + _("\n    The special value 'console' will allows to output the log messages to the console, if possible."), required),
+                    _("Define the file where log messages will be stored.\n    Default it to store them in ") + DEF_LOG.string() + _("\n    The special value 'console' will allows to output the log messages to the console, if possible"), required),
             });
 
-  myopt.set_desc(_("A tool that allows to process subtitles text files.\nThe batch mode allows processing at the command line or by script.\nMeanwhile the GUI mode adds a search and replace feature with regular expressions."));
+  myopt.set_desc(_("A tool that allows to process subtitles text files.\nThe batch mode allows processing at the command line or by script.\nMeanwhile the GUI mode adds a search and replace feature with regular expressions"));
 
   // Calls to logFunctions before opt.parse may not work correctly ...
   myopt.parse();
@@ -420,6 +425,7 @@ int main(int argc, char **argv)
     // Buttons find/replace and Inputs : str_find & str_replace
     find->callback(re_find);
     case_sensitive_find->callback(case_find);
+    ignore_empty_subtitles->callback(remove_empty_subs);
     replace_next->callback(re_replace_next);
     replace_all->callback(re_replace_all);
 

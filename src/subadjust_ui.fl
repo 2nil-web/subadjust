@@ -118,7 +118,7 @@ Available shortcut is 'Ctrl+Q'.} image {../assets/svg_icons/exit.svg} compress_i
           class Fl_Button_Hover
         }
         Fl_Button goto_end {
-          label End selected
+          label End
           tooltip {Goto end of file - Ctrl+J} image {../assets/svg_icons/goto-end.svg} compress_image 1 xywh {327 40 52 54} shortcut 0x4006a labeltype NO_LABEL align 514
           class Fl_Button_Hover
         }
@@ -136,7 +136,7 @@ You may undo/redo this action with Ctrl+Z/Ctrl+Y.} image {../assets/svg_icons/de
         }
       }
       Fl_Group {} {
-        label {Subtitles adjustment by ...}
+        label {Subtitles adjustment by ...} open
         xywh {2 165 378 116} box BORDER_FRAME color 37 labeltype NO_LABEL align -207
       } {
         Fl_Group {} {
@@ -163,18 +163,18 @@ You may undo/redo this action with Ctrl+Z/Ctrl+Y.} image {../assets/svg_icons/de
         Fl_Group {} {
           label Coefficients open
           tooltip {Begin and end offsets are in floating point seconds.
-They are added to their corresponding time limit} xywh {4 167 141 110} box BORDER_FRAME color 37 labelfont 3 align -207
+They are added to their corresponding time limit} xywh {4 167 133 110} box BORDER_FRAME color 37 labelfont 3 align -207
         } {
           Fl_Input offset_start {
-            tooltip {An offset that applies to the beginning of the sub,  in floating point seconds} xywh {80 221 63 22} labeltype NO_LABEL when 5
+            tooltip {An offset that applies to the beginning of the sub,  in floating point seconds} xywh {79 221 58 22} labeltype NO_LABEL when 5
             class Fl_Float_Input_L10n
           }
           Fl_Input offset_stop {
-            tooltip {An offset that applies to the end of the sub,  in floating seconds} xywh {80 250 63 22} labeltype NO_LABEL when 5
+            tooltip {An offset that applies to the end of the sub,  in floating seconds} xywh {79 250 58 22} labeltype NO_LABEL when 5
             class Fl_Float_Input_L10n
           }
           Fl_Input dur_coeff {
-            tooltip {A coefficient that allows to grow or shrink the sub duration} xywh {71 189 72 22} labeltype NO_LABEL when 5
+            tooltip {A coefficient that allows to grow or shrink the sub duration} xywh {70 189 67 22} labeltype NO_LABEL when 5
             class Fl_Float_Input_L10n
           }
           Fl_Box {} {
@@ -191,17 +191,17 @@ end offsets
         }
         Fl_Button sub_adjust {
           label Adjustment
-          tooltip {Will adjust the subtitles text according to the limits, offsets or duration coefficient, settings.} xywh {147 170 90 28} labelfont 1 labelsize 15
+          tooltip {Will adjust the subtitles text according to the limits, offsets or duration coefficient, settings.} xywh {139 170 88 28} labelfont 1 labelsize 15
           class Fl_Button_Hover
         }
         Fl_Button sub_reparse {
           label Reparse
-          tooltip {Will forcibly parse the subtitles text and accordingly modify the settings} xywh {238 170 75 28} labelsize 15
+          tooltip {Will forcibly parse the subtitles text and accordingly modify the settings, needed when the subtitle text has been directly modified} xywh {228 170 81 28} labelsize 15
           class Fl_Button_Hover
         }
         Fl_Button sub_sync {
           label Sync
-          tooltip {Will forcibly parse the subtitles text and accordingly modify the settings} xywh {314 170 63 28} labelsize 15
+          tooltip {Will forcibly parse the subtitles text and accordingly modify the settings, needed when the subtitle text has been directly modified} xywh {310 170 68 28} labelsize 15
           class Fl_Button_Hover
         }
       }
@@ -214,56 +214,50 @@ end offsets
 All your pattern will be uniquely stored for futur reuse.} xywh {2 285 384 86} box BORDER_FRAME color 37
     } {
       Fl_Group {} {open
-        xywh {3 285 151 86}
+        xywh {3 285 165 86}
       } {
         Fl_Button find {
-          label { }
-          tooltip {Will find the next occurrence of the find pattern, the one actually pointed by the cursor is not taken into account.} image {../assets/svg_icons/find.svg} compress_image 1 xywh {5 289 48 42} align 512
-          class Fl_Button_Hover
-        }
-        Fl_Box {} {
-          label Replace
-          xywh {53 332 101 18} box BORDER_FRAME color 192 labelsize 10
-        }
-        Fl_Box {} {
-          label Next
-          xywh {53 350 53 20} box BORDER_FRAME color 192 labelsize 10
-        }
-        Fl_Box {} {
-          label All
-          xywh {106 350 48 20} box BORDER_FRAME color 192 labelsize 10
-        }
-        Fl_Box {} {
           label {Find
 Next}
-          xywh {4 332 48 38} box BORDER_FRAME color 192 labelsize 10
+          tooltip {Will find the next occurrence of the find pattern, the one actually pointed by the cursor is not taken into account.} image {../assets/svg_icons/find.svg} compress_image 1 xywh {4 289 54 80}
+          class Fl_Button_Hover
         }
         Fl_Button replace_next {
-          label Next
-          tooltip {Search and replace only the next occurence of your pattern. Can be undone.} image {../assets/svg_icons/replace.svg} compress_image 1 xywh {55 289 48 42} labeltype NO_LABEL align 514
+          label {Repl.
+Next}
+          tooltip {Search and replace only the next occurence of your pattern. Can be undone.} image {../assets/svg_icons/replace.svg} compress_image 1 xywh {59 289 54 80}
           class Fl_Button_Hover
         }
         Fl_Button replace_all {
-          label All
-          tooltip {Search and replace all occurrences of your pattern. Can be undone.} image {../assets/svg_icons/replace all.svg} compress_image 1 xywh {105 289 48 42} labeltype NO_LABEL align 514
+          label {Repl.
+All}
+          tooltip {Search and replace all occurrences of your pattern. Can be undone.} image {../assets/svg_icons/replace all.svg} compress_image 1 xywh {114 289 54 80}
           class Fl_Button_Hover
         }
       }
       Fl_Group {} {open
-        xywh {154 285 232 86} resizable
+        xywh {168 285 218 86} resizable
       } {
         Fl_Input_Choice str_find {
-          tooltip {For more details about ECMAScript regex, see https://en.cppreference.com/w/cpp/regex/ecmascript.html} xywh {155 289 229 22} labeltype NO_LABEL
+          tooltip {For more details about ECMAScript regex, see https://en.cppreference.com/w/cpp/regex/ecmascript.html} xywh {169 287 213 20} labeltype NO_LABEL
           class Fl_Input_Choice_L10n
         } {}
         Fl_Input_Choice str_replace {
-          xywh {155 320 229 22} labeltype NO_LABEL
+          xywh {169 307 213 20} labeltype NO_LABEL
           class Fl_Input_Choice_L10n
         } {}
         Fl_Check_Button case_sensitive_find {
           label {Case sensitive search}
-          tooltip {Run case sensitive find or not} xywh {155 349 224 22} down_box DOWN_BOX align 32
+          tooltip {Run case sensitive find or not} xywh {169 330 207 18} down_box DOWN_BOX
           class Fl_Check_Button_Hover compact 1
+        }
+        Fl_Button ignore_empty_subtitles {
+          label {Remove empty subtitles} selected
+          tooltip {A reparse ignoring empty subtitles is launched.} xywh {170 349 207 20} down_box DOWN_BOX
+          class Fl_Button_Hover
+        }
+        Fl_Box {} {
+          xywh {378 330 2 36} labeltype NO_LABEL labelsize 10
         }
         Fl_Box {} {
           xywh {380 342 2 20} labeltype NO_LABEL labelsize 10 resizable
