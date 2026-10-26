@@ -377,7 +377,7 @@ void reset_param()
   dur_coeff->value(1);
 }
 
-void reparse(Fl_Widget *, void *)
+void reparseRES(Fl_Widget *, void *)
 {
   csub.parse(txt_buf.text());
   int ns = (int)csub.vec().size();
@@ -389,8 +389,8 @@ void reparse(Fl_Widget *, void *)
   reset_param();
 }
 
-// Pour remplacer reparse un jour peut-être ...
-void reparse2()
+// Remplace reparseRES
+void reparse(Fl_Widget *, void *)
 {
   csub.parse(txt_buf.text());
   txt_buf.text(csub.str().c_str());
@@ -402,7 +402,7 @@ bool ignore_empty_subs_opt=false;
 void remove_empty_subs(Fl_Widget *, void *)
 {
   ignore_empty_subs_opt=true;
-  reparse2();
+  reparse();
   ignore_empty_subs_opt=false;
 }
 
